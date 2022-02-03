@@ -1,0 +1,36 @@
+.subTitle {
+    width: 90%;
+    color: white;
+    opacity: 0.6;
+    font-size: 14px !important;
+    margin-bottom:0.5rem !important;
+}
+
+.menuFooter{
+    height: 70px;
+    justify-content: center !important;
+    position: absolute !important;
+    bottom: 0;
+    font-size: 20px;
+    letter-spacing: 3px;
+    color: #363636 !important;
+    text-align: center !important;
+    background-color: #e2a021;
+}
+
+.profileImage {
+    max-height: 75px;
+    max-width: 75px; 
+    border-radius: 50%; 
+    border: 3px solid #e2a021 ;
+}
+
+.nav-image {
+    max-height: 35px; 
+    border-radius: 50%; 
+}
+
+.nav-search{
+    max-width: 200px; 
+    border-radius: 3%;
+}
