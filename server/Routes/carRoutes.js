@@ -16,14 +16,3 @@ router.put("/edit/:id", carController.updateCar);
 router.delete("/delete/:id", carController.deleteCar);
 
 module.exports = router;
-
-/* 
-
-deleteCar,
-  updateCar,
-  createCar,
-  getCarByCompany,
-  getCarById,
-  getAllCars,
-
-*/
