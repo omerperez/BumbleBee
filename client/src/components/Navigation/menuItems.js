@@ -17,10 +17,15 @@ export const menuItems = [
     isDisabled: false,
   },
   {
-    title: "My Favorite",
-    path: "/my-favorite",
+    title: "Add New Car",
+    path: "/create-car",
     isDisabled: false,
   },
+  // {
+  //   title: "My Favorite",
+  //   path: "/my-favorite",
+  //   isDisabled: false,
+  // },
   {
     title: "Gov IL Form",
     image: govilImage,

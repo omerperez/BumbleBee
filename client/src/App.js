@@ -16,6 +16,8 @@ import UpdateProfile from './components/authComponents/UpdateProfile';
 import AuthLayout from './components/Layout/AuthLayout';
 import DealerLogin from './components/authComponents/DealerLogin';
 import DHL from './components/Pages/DHL';
+import CreateCarForm from './components/CarComponents/CreateCarForm';
+import CreateCarPage from './components/Pages/CreateCarPage';
 
 const maxWidthCard = { maxWidth: 400 };
 const minHeightContainer = { minHeight: "100vh" };
@@ -91,6 +93,14 @@ function App() {
                 </PrivateRoute>
               }
             />
+            <Route
+              path='create-car'
+              element={
+                <PrivateRoute>
+                  <CreateCarPage />
+                </PrivateRoute>
+              }
+              />
             <Route
               path="update-profile"
               element={
