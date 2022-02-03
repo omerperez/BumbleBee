@@ -18,6 +18,7 @@ import DealerLogin from './components/authComponents/DealerLogin';
 import DHL from './components/Pages/DHL';
 import CreateCarForm from './components/CarComponents/CreateCarForm';
 import CreateCarPage from './components/Pages/CreateCarPage';
+import ManageUserPage from './components/Pages/ManageUserPage';
 
 const maxWidthCard = { maxWidth: 400 };
 const minHeightContainer = { minHeight: "100vh" };
@@ -94,13 +95,21 @@ function App() {
               }
             />
             <Route
-              path='create-car'
+              path="our-users"
+              element={
+                <PrivateRoute>
+                  <ManageUserPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="create-car"
               element={
                 <PrivateRoute>
                   <CreateCarPage />
                 </PrivateRoute>
               }
-              />
+            />
             <Route
               path="update-profile"
               element={

@@ -17,6 +17,11 @@ export const menuItems = [
     isDisabled: false,
   },
   {
+    title: "Mange Users",
+    path: "/our-users",
+    isDisabled: false,
+  },
+  {
     title: "Add New Car",
     path: "/create-car",
     isDisabled: false,
