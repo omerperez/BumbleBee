@@ -12,7 +12,7 @@ import { styled } from "@mui/material/styles";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { makeStyles } from "@mui/styles";
-import { menuItems } from "./menuItems";
+import { clientMenuItems, managerMenuItems  } from "./menuItems";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,6 +81,12 @@ export default function Navigation() {
       setError("Failed to log out");
     }
   }
+
+  let menuItems = clientMenuItems;
+  if(currentUser.role == 2){
+    menuItems = managerMenuItems;
+  }
+
   const drawer = (
     <div>
       <UserProfile />
