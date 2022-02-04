@@ -82,19 +82,19 @@ export default function CreateCarForm() {
   const fileInput = useRef(null);
   const [image, setImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState("");
-  // const handleFile = (file) => {
-  //   setImage(file);
-  //   setPreviewUrl(URL.createObjectURL(file));
-  // };
+  const handleFile = (file) => {
+    setImage(file);
+    setPreviewUrl(URL.createObjectURL(file));
+  };
 
-  // const handleDragOver = (event) => {
-  //   event.preventDefault();
-  // };
-  // const handleOnDrop = (event) => {
-  //   event.preventDefault();
-  //   event.stopPropagation();
-  //   let imageFile = event.dataTransfer.files[0];
-  // };
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
+  const handleOnDrop = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    let imageFile = event.dataTransfer.files[0];
+  };
 
 
   // const handleChangeDay = (event) => {
@@ -111,13 +111,25 @@ export default function CreateCarForm() {
   //   setScreenNumber(typeof value === "string" ? value.split(",") : value);
   // };
 
-  // const templateChange = (event) => {
-  //   setTemplate(event.target.value);
-  // };
+  const usedChange = (event) => {
+    setUsed(event.target.value);
+  };
 
-  // const startDateChange = (event) => {
-  //   setDateToStart(event.target.value);
-  // };
+  const yearChange = (event) => {
+    setYear(event.target.value);
+  };
+
+  const doorChange = (event) => {
+    setDoorCount(event.target.value);
+  };
+
+  const colorChange = (event) => {
+    setColour(event.target.value);
+  };
+
+  const dateChange = (event) => {
+    setFirstRegistration(event.target.value);
+  };
 
   // const endDateChange = (event) => {
   //   setDateToEnd(event.target.value);
@@ -179,17 +191,17 @@ export default function CreateCarForm() {
               </div>
               <div className="col-9">
                 <Form onSubmit={handleSubmit}>
-                  {/* <Card.Body>
+                  <Card.Body>
                     <Form.Group id="first-name" className="mt-3">
                       <div className="row">
                         <div className="col">
                           <TextField
                             className="form-control"
-                            id="messageName"
-                            label="Advertisement Name (for you only)"
-                            value={messageName}
+                            id="company"
+                            label="Company"
+                            value={company}
                             onChange={(e) => {
-                              setMessageName(e.target.value);
+                              setCompany(e.target.value);
                             }}
                             type="text"
                             variant="outlined"
@@ -199,15 +211,14 @@ export default function CreateCarForm() {
                         <div className="col">
                           <TextField
                             className="form-control"
-                            id="title"
-                            label="Title"
-                            defaultValue={title}
+                            id="company"
+                            label="Company"
+                            value={company}
+                            onChange={(e) => {
+                              setCompany(e.target.value);
+                            }}
                             type="text"
                             variant="outlined"
-                            required
-                            onChange={(e) => {
-                              setTitle(e.target.value);
-                            }}
                             required
                           />
                         </div>
@@ -218,49 +229,47 @@ export default function CreateCarForm() {
                         <div className="col d-flex justify-content-center">
                           <FormControl fullWidth>
                             <InputLabel id="demo-simple-select-helper-label">
-                              Template
+                              Number Of Vehicle Owners
                             </InputLabel>
                             <Select
                               labelId="demo-simple-select-label"
-                              id="template"
-                              label="Template"
-                              value={template}
+                              id="Number Of Vehicle Owners"
+                              label="Number Of Vehicle Owners"
+                              value={used}
                               style={{ width: "100%", height: "85%" }}
-                              onChange={templateChange}
+                              onChange={usedChange}
                               required
                             >
-                              <MenuItem value={1}>Template 1</MenuItem>
-                              <MenuItem value={2}>Template 2</MenuItem>
-                              <MenuItem value={3}>Template 3</MenuItem>
+                              <MenuItem value={1}>01</MenuItem>
+                              <MenuItem value={2}>02</MenuItem>
+                              <MenuItem value={3}>03</MenuItem>
+                              <MenuItem value={4}>04</MenuItem>
+                              <MenuItem value={5}>05</MenuItem>
+                              <MenuItem value={6}>06</MenuItem>
+                              <MenuItem value={7}>07</MenuItem>
+                              <MenuItem value={8}>08</MenuItem>
+                              <MenuItem value={9}>09</MenuItem>
+                              <MenuItem value={10}>+10</MenuItem>
                             </Select>
                           </FormControl>
                         </div>
                         <div className="col d-flex justify-content-center">
                           <FormControl fullWidth>
-                            <InputLabel id="screen-simple-select-label">
-                              Screen Number
+                            <InputLabel id="demo-simple-select-helper-label">
+                              Year
                             </InputLabel>
                             <Select
-                              className="w-100"
-                              style={{ height: "83.5%" }}
-                              labelId="screen-simple-select-label"
-                              id="screenNumber-multiple-checkbox"
-                              multiple
-                              value={screenNumber}
-                              onChange={handleChangeScreens}
-                              input={<OutlinedInput label="Screen" />}
-                              renderValue={(selected) => selected.join(", ")}
-                              MenuProps={MenuProps}
+                              labelId="demo-simple-select-label"
+                              id="template"
+                              label="Number Of Vehicle Owners"
+                              value={year}
+                              style={{ width: "100%", height: "85%" }}
+                              onChange={yearChange}
                               required
                             >
-                              {screens.map((screen) => (
-                                <MenuItem key={screen} value={screen}>
-                                  <Checkbox
-                                    checked={screenNumber.indexOf(screen) > -1}
-                                  />
-                                  <ListItemText primary={screen} />
-                                </MenuItem>
-                              ))}
+                              <MenuItem value={2020}>2020</MenuItem>
+                              <MenuItem value={2021}>2021</MenuItem>
+                              <MenuItem value={2022}>2022</MenuItem>
                             </Select>
                           </FormControl>
                         </div>
@@ -268,12 +277,12 @@ export default function CreateCarForm() {
                     </Form.Group>
                     <Form.Group className="w-100 mt-4">
                       <div className="row">
-                        <div className="col d-flex" onChange={startDateChange}>
+                        <div className="col d-flex" onChange={dateChange}>
                           <TextField
                             id="datetime-local-start"
                             label="Date and time to end"
                             type="datetime-local"
-                            defaultValue={dateToStart}
+                            defaultValue={firstRegistration}
                             sx={{ width: 250 }}
                             InputLabelProps={{
                               shrink: true,
@@ -281,43 +290,47 @@ export default function CreateCarForm() {
                             required
                           />
                         </div>
-                        <div className="col d-flex" onChange={endDateChange}>
-                          <TextField
-                            id="datetime-local-end"
-                            label="Date and time to end"
-                            type="datetime-local"
-                            defaultValue={dateToEnd}
-                            sx={{ width: 250 }}
-                            InputLabelProps={{
-                              shrink: true,
-                            }}
-                            required
-                          />
+                        <div className="col d-flex">
+                          <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-helper-label">
+                              Count Of Doors
+                            </InputLabel>
+                            <Select
+                              labelId="demo-simple-select-label"
+                              id="Count Of Doors"
+                              label="Count Of Doors"
+                              value={year}
+                              style={{ width: "100%", height: "85%" }}
+                              onChange={doorChange}
+                              required
+                            >
+                              <MenuItem value={2}>2</MenuItem>
+                              <MenuItem value={3}>3</MenuItem>
+                              <MenuItem value={4}>4</MenuItem>
+                              <MenuItem value={5}>5</MenuItem>
+                              <MenuItem value={6}>6</MenuItem>
+                            </Select>
+                          </FormControl>
                         </div>
                         <div className="col">
                           <FormControl fullWidth>
-                            <InputLabel id="screen-simple-select-label">
-                              Select Days
+                            <InputLabel id="demo-simple-select-helper-label">
+                              Color
                             </InputLabel>
                             <Select
-                              className="w-100"
-                              style={{ height: "55%" }}
-                              labelId="days-multiple-checkbox-label"
-                              id="days-multiple-checkbox"
-                              multiple
-                              value={days}
-                              onChange={handleChangeDay}
-                              input={<OutlinedInput label="Tag" />}
-                              renderValue={(selected) => selected.join(", ")}
-                              MenuProps={MenuProps}
+                              labelId="demo-simple-select-label"
+                              id="template"
+                              label="Number Of Vehicle Owners"
+                              value={colour}
+                              style={{ width: "100%", height: "85%" }}
+                              onChange={colorChange}
                               required
                             >
-                              {names.map((name) => (
-                                <MenuItem key={name} value={name}>
-                                  <Checkbox checked={days.indexOf(name) > -1} />
-                                  <ListItemText primary={name} />
-                                </MenuItem>
-                              ))}
+                              <MenuItem value={"Black"}>Black</MenuItem>
+                              <MenuItem value={"Yellow"}>Yellow</MenuItem>
+                              <MenuItem value={"Blue"}>Blue</MenuItem>
+                              <MenuItem value={"White"}>White</MenuItem>
+                              <MenuItem value={"Grey"}>Grey</MenuItem>
                             </Select>
                           </FormControl>
                         </div>
@@ -326,10 +339,10 @@ export default function CreateCarForm() {
                             className="w-100"
                             style={{ height: "85px" }}
                             id="visableTimeInSeconds-text-fields"
-                            label="Visable Time (seconds)"
-                            defaultValue={visableTime}
+                            label="Price I=in $"
+                            defaultValue={price}
                             onChange={(e) => {
-                              setVisableTime(e.target.value);
+                              setPrice(e.target.value);
                             }}
                             type="number"
                             variant="outlined"
@@ -341,14 +354,14 @@ export default function CreateCarForm() {
                       <div className="row">
                         <div className="d-flex col-6 justify-content-center wrapper">
                           <FormControl fullWidth>
-                            <InputLabel>Text Fields</InputLabel>
+                            <InputLabel>Description</InputLabel>
                             <TextareaAutosize
                               style={{ height: "150px" }}
                               id="textFields-text-fields"
-                              label="Text Fields"
-                              defaultValue={textFields}
+                              label="Description"
+                              defaultValue={description}
                               onChange={(e) => {
-                                setTextFields(e.target.value);
+                                setDescription(e.target.value);
                               }}
                               type="text"
                               variant="outlined"
@@ -386,7 +399,7 @@ export default function CreateCarForm() {
                         </div>
                       </div>
                     </Form.Group>
-                  </Card.Body> */}
+                  </Card.Body>
                   <div className="justify-content-center d-flex">
                     <Button
                       disabled={loading}
