@@ -19,6 +19,7 @@ import DHL from './components/Pages/DHL';
 import CreateCarForm from './components/CarComponents/CreateCarForm';
 import CreateCarPage from './components/Pages/CreateCarPage';
 import ManageUserPage from './components/Pages/ManageUserPage';
+import CarProfilePage from './components/Pages/CarProfilePage';
 
 const maxWidthCard = { maxWidth: 400 };
 const minHeightContainer = { minHeight: "100vh" };
@@ -107,6 +108,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <CreateCarPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="car-profile/:id"
+              element={
+                <PrivateRoute>
+                  <CarProfilePage />
                 </PrivateRoute>
               }
             />

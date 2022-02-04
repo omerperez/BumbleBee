@@ -20,6 +20,7 @@ export default function HomePage() {
         {cars.map((car) => {
           return (
             <CarCard
+              _id={car._id}
               image={"mini.jpeg"}
               company={car.company}
               model={car.model}

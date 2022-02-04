@@ -51,12 +51,26 @@ const CssTextField = styled(TextField)({
   },
 });
 
+const defaultTextStyle = { color: "white", marginLeft: "10px" };
+const currentPageStyle = {
+  background: "#E2A025",
+  color: "#363636",
+  borderLeft: "solid 10px #BA8600"
+};
+
 export default function Navigation() {
   const classes = useStyles();
   const theme = useTheme();
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
+  const [check, setCheck] = useState("/homepage");
+
+  useEffect(() => {
+    const index = window.location.toString().lastIndexOf("/") + 1;
+    const id = window.location.toString().substring(index);
+    setCheck('/' + id)
+  }, [check]);
 
   async function handleLogout() {
     setError("");
@@ -85,15 +99,14 @@ export default function Navigation() {
               to={item.path}
               style={{
                 textDecoration: "none",
-                color: "black",
               }}
             >
-              <ListItem button disabled={item.isDisabled} key={item.title}>
-                <ListItemText
-                  primary={item.title}
-                  style={{ color: "white" }}
-                  className={"menu-items"}
-                />
+              <ListItem
+                key={item.title}
+                style={item.path == check ? currentPageStyle : defaultTextStyle}
+                onClick={() => setCheck(item.path)}
+              >
+                <ListItemText primary={item.title} className={"menu-items"} />
                 {item?.image ? (
                   <img src={item.image} className="nav-image" />
                 ) : null}
@@ -105,7 +118,7 @@ export default function Navigation() {
           <ListItem button disabled={false} key={"Log Out"}>
             <ListItemText
               primary={"Log Out"}
-              style={{ color: "white" }}
+              style={defaultTextStyle}
               className={"menu-items"}
             />
           </ListItem>

@@ -8,9 +8,10 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import PanToolIcon from "@mui/icons-material/PanTool";
 import EngineeringIcon from "@mui/icons-material/Engineering";
 import AddRoadIcon from "@mui/icons-material/AddRoad";
+import { Link } from "react-router-dom";
 
 
-export default function CarCard({image, company, model, year, used,engine, km, price}) {
+export default function CarCard({_id, image, company, model, year, used,engine, km, price}) {
     
   return (
     <div className="car-card-div">
@@ -44,7 +45,9 @@ export default function CarCard({image, company, model, year, used,engine, km, p
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">View More {" " + price}</Button>
+          <Link to={`/car-profile/${_id}`} className="cancel-underline">
+            <Button size="small">View More {" " + price}</Button>
+          </Link>
         </CardActions>
       </Card>
     </div>

@@ -25,10 +25,8 @@ export default function AuthProvider({ children }) {
     userData.append("role", "1");
 
     return api
-      .post("/register", userData)
-      .then(function (response) {
-
-      })
+      .post("/user/register", userData)
+      .then(function (response) {})
       .catch(function (error) {
         console.log(error);
       });
@@ -41,7 +39,7 @@ export default function AuthProvider({ children }) {
     };
 
     return api
-      .post("/login", user)
+      .post("/user/login", user)
       .then(function (response) {
         cookies.set("auth-token", response.data.token);
         cookies.set("connectUser", response.data.user);
