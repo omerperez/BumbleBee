@@ -212,6 +212,13 @@
   padding-right: 1%;
 }
 
+.pl-10 {
+  padding-left: 10%;
+}
+
+.pr-10 {
+  padding-right: 10%;
+}
 .f-lighter {
   font-weight: lighter;
 }
