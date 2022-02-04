@@ -24,7 +24,6 @@ export default function PrivateRoute({ children }) {
     const classes = useStyles();
     const theme = useTheme();
 
-    console.log(currentUser);
     return currentUser ? (
       <Grid style={{ layoutStyle }}>
         <Grid className="nav-width">
