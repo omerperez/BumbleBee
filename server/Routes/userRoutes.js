@@ -8,6 +8,7 @@ const uuid = require('uuid').v4;
 const path = require('path');
 const dotenv = require("dotenv");
 const aws = require("aws-sdk");
+const user = require("../Models/user");
 
 dotenv.config();
 aws.config.update({ region: "eu-west-1" });
@@ -54,9 +55,13 @@ router.post('/register', upload.single('image'), userController.register);
 
 router.post("/login", userController.login);
 
-router.get("/user/:id", userController.getUserById);
+router.get("/my-user/:id", userController.getUserById);
 
 router.get("/", userController.getAllUsers);
+
+router.put("/edit/:id", userController.editUser);
+
+router.delete("/delete/:id", userController.deleteUser);
 
 module.exports = router;
 

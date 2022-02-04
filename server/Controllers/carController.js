@@ -47,26 +47,38 @@ const getCarByCompany = (request, respons) => {
 async function createCar (req, res) {
   console.log(req.body);
   const createNewCar = {
-    // messageName: req.body.messageName,
-    // templateSrc: "./template " + req.body.templateSrc,
-    // title: req.body.title,
-    // textFields: req.body.textFields,
-    // images: req.body.images,
-    // visableTimeInSeconds: parseInt(req.body.visableFor),
-    // dateAndTimeToStartFrame: Date(req.body.dateAndTimeToStartFrame),
-    // dateAndTimeToEndFrame: Date(req.body.dateAndTimeToEndFrame),
-    // daysToshow: req.body.daysToshow,
-    // screens: req.body.screens,
+    _id: req.params.id,
+    company: req.body.company,
+    model: req.body.model,
+    year: req.body.year,
+    numberOfVehicleOwners: req.body.numberOfVehicleOwners,
+    engine: req.body.engine,
+    km: req.body.km,
+    price: req.body.price,
+    netPrice: req.body.netPrice,
+    vehicleStatus: req.body.vehicleStatus,
+    category: req.body.category,
+    availability: req.body.availability,
+    description: req.body.description,
+    images: req.body.images,
+    hp: req.body.hp,
+    fuelConsumption: req.body.fuelConsumption,
+    numberOfSeats: req.body.numberOfSeats,
+    doorCount: req.body.doorCount,
+    gearbox: req.body.gearbox,
+    emissionClass: req.body.emissionClass,
+    firstRegistration: Date(req.body.firstRegistration),
+    mnufacturerColour: req.body.mnufacturerColour,
+    colour: req.body.colour,
+    iteriorDesign: req.body.iteriorDesign,
+    dealer: req.body.dealerId,
   };
 
-  const findCar = carSchema.findOne({
-    // messageName: createNewMessage.messageName,
-  });
-  if (findCar != null) {
-    await carSchema.deleteOne({
-    //   messageName: createNewMessage.messageName,
-    });
-  }
+    // await userSchema.findOneAndUpdate(
+    //   { id: createNewCar.dealer },
+    //   { $push: { cars: createNewCar._id } }
+    // );
+
   await carSchema.create(createNewCar);
   return res.send(createNewCar);
 }
@@ -76,17 +88,31 @@ async function createCar (req, res) {
 const updateCar = (req, res) => {
   console.log(req.body);
   let newCar = new carSchema({
-    // _id: req.params.id,
-    // messageName: req.body.messageName,
-    // templateSrc: "./template " + req.body.templateSrc,
-    // title: req.body.title,
-    // textFields: req.body.textFields,
-    // images: req.body.images,
-    // visableTimeInSeconds: parseInt(req.body.visableFor),
-    // dateAndTimeToStartFrame: Date(req.body.dateAndTimeToStartFrame),
-    // dateAndTimeToEndFrame: Date(req.body.dateAndTimeToEndFrame),
-    // daysToshow: req.body.daysToshow,
-    // screens: req.body.screens,
+    _id: req.params.id,
+    company: req.body.company,
+    model: req.body.model,
+    year: req.body.year,
+    numberOfVehicleOwners: req.body.numberOfVehicleOwners,
+    engine: req.body.engine,
+    km: req.body.km,
+    price: req.body.price,
+    netPrice: req.body.netPrice,
+    vehicleStatus: req.body.vehicleStatus,
+    category: req.body.category,
+    availability: req.body.availability,
+    description: req.body.description,
+    images: req.body.images,
+    hp: req.body.hp,
+    fuelConsumption: req.body.fuelConsumption,
+    numberOfSeats: req.body.numberOfSeats,
+    doorCount: req.body.doorCount,
+    gearbox: req.body.gearbox,
+    emissionClass: req.body.emissionClass,
+    firstRegistration: Date(req.body.firstRegistration),
+    mnufacturerColour: req.body.mnufacturerColour,
+    colour: req.body.colour,
+    iteriorDesign: req.body.iteriorDesign,
+    dealer: req.body.dealerId,
   });
 
     carSchema

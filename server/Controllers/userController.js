@@ -3,9 +3,9 @@ const userSchema = require("../Models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { registerValidation, loginValidation } = require("../Validation");
-const uuid = require("uuid").v4;
-const path = require("path");
+const { request } = require("express");
 
+/* Get */
 const getAllUsers = (req, res) => {
    userSchema.find().then((results) => {
      try {
@@ -29,32 +29,32 @@ const getUserById= (request, respons) => {
   });
 }
 
+
 const uploadImage = (req, res) => {
     res.send("Single File upload success");
 }
+/* POST */
 
-const register = async (request, respons) => {
+const register = async (request, response) => {
     const { error } = registerValidation(request.body);
     if (error){
       console.log("error");
-      return respons.status(400).send(error.details[0].message);
+      return response.status(400).send(error.details[0].message);
     }
     const emailExist = await userSchema.findOne({ email: request.body.email });
     if (emailExist) {
-     return respons.status(400).send("Email already exists.");
+     return response.status(400).send("Email already exists.");
     }
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(request.body.password, salt);
-    
-    
-    // const ext = path.extname(request.file.originalname);
-    
+    // const ext = path.extname(request.file.originalname);  
     const newUser = {
       firstName: request.body.firstName,
       lastName: request.body.lastName,
       email: request.body.email,
       password: hashedPassword,
+      phoneNumber: request.body.phoneNumber,
       image: Date.now() + request.file.originalname,
       role: request.body.role,
     };
@@ -62,10 +62,10 @@ const register = async (request, respons) => {
     try {
         const savedUser = await userSchema.create(newUser);
         console.log('Success');
-        respons.send(savedUser);
+        response.send(savedUser);
     } catch (err) {
         console.log('filed')
-        respons.status(400).send(err);
+        response.status(400).send(err);
     }
 }
 
@@ -91,7 +91,42 @@ const login = async (request, response) => {
   response.header("auth-token", token).send( {token, user});
 }
 
+/* PUT */
+
+const editUser = (req, res) => {
+  console.log(req.body);
+  let editUser = new userSchema({
+    _id : request.params.id,
+    firstName: request.body.firstName,
+    lastName: request.body.lastName,
+    email: request.body.email,
+    password: hashedPassword,
+    phoneNumber: request.body.phoneNumber,
+    image: Date.now() + request.file.originalname,
+    role: request.body.role,
+  });
+
+  userSchema
+    .findOneAndUpdate({ _id: editUser._id }, editUser, { new: true })
+    .then((updatedUser) => res.json(updatedUser))
+    .catch((err) => res.status(400).json("Error: " + err));
+};
+
+/* DELETE */
+
+const deleteUser = (req, res) => {
+  console.log(req.params.id);
+  const userId = req.params.id;
+  const user = userSchema.deleteOne({ _id: userId }).then((results) => {
+    return res.json(results);
+  });
+};
+
+
+
 module.exports = {
+  editUser,
+  deleteUser,
   getAllUsers,
   getUserById,
   register,

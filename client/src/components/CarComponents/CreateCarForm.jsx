@@ -52,60 +52,76 @@ export default function CreateCarForm() {
   const { createMessage } = useAuth();
   const navigate = useNavigate();
 
-  const [messageName, setMessageName] = useState("");
-  const [textFields, setTextFields] = useState("");
-  const [title, setTitle] = useState("");
-  const [visableTime, setVisableTime] = useState(0);
-  const [template, setTemplate] = useState("");
-  const [screenNumber, setScreenNumber] = useState([]);
-  const [dateToStart, setDateToStart] = useState("2020-02-20T10:30");
-  const [dateToEnd, setDateToEnd] = useState("2020-02-20T10:30");
-  const [days, setDays] = React.useState([]);
+  const [company, setCompany] = useState("");
+  const [model, setModel] = useState("");
+  const [year, setYear] = useState(2020);
+  const [used, setUsed] = useState('00');
+  const [engine, setEngine] = useState('');
+  const [km, setKm] = useState("");
+  const [price, setPrice] = useState(15000);
+  const [netPrice, setNetPrice] = useState(10000);
+  const [vehicleStatus, setVehicleStatus] = useState('');
+  const [category, setCategory] = React.useState([]);
+  const [availability, setAvailability] = useState(false);
+  const [description, setDescription] = useState('');
+  const [images, setImages] = useState([]);
+  const [hp, setHp] = useState(0);
+  const [fuelConsumption, setFuelConsumption] = useState('');
+  const [numberOfSeats, setNumberOfSeats] = useState(5);
+  const [doorCount, setDoorCount] = useState(5);
+  const [gearbox, setGearbox] = useState('');
+  const [emissionClass, setEmissionClass] = useState('');
+  const [firstRegistration, setFirstRegistration] = useState("2020-02-20");
+  const [mnufacturerColour, setMnufacturerColour] = useState("");
+  const [colour, setColour] = useState("");
+  const [iteriorDesign, setIteriorDesign] = useState("");
+
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
+  /* DRAG IMAGES */
   const fileInput = useRef(null);
   const [image, setImage] = useState(null);
   const [previewUrl, setPreviewUrl] = useState("");
-  const handleFile = (file) => {
-    setImage(file);
-    setPreviewUrl(URL.createObjectURL(file));
-  };
+  // const handleFile = (file) => {
+  //   setImage(file);
+  //   setPreviewUrl(URL.createObjectURL(file));
+  // };
 
-  const handleDragOver = (event) => {
-    event.preventDefault();
-  };
-  const handleOnDrop = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    let imageFile = event.dataTransfer.files[0];
-  };
+  // const handleDragOver = (event) => {
+  //   event.preventDefault();
+  // };
+  // const handleOnDrop = (event) => {
+  //   event.preventDefault();
+  //   event.stopPropagation();
+  //   let imageFile = event.dataTransfer.files[0];
+  // };
 
-  const handleChangeDay = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setDays(typeof value === "string" ? value.split(",") : value);
-  };
 
-  const handleChangeScreens = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setScreenNumber(typeof value === "string" ? value.split(",") : value);
-  };
+  // const handleChangeDay = (event) => {
+  //   const {
+  //     target: { value },
+  //   } = event;
+  //   setDays(typeof value === "string" ? value.split(",") : value);
+  // };
 
-  const templateChange = (event) => {
-    setTemplate(event.target.value);
-  };
+  // const handleChangeScreens = (event) => {
+  //   const {
+  //     target: { value },
+  //   } = event;
+  //   setScreenNumber(typeof value === "string" ? value.split(",") : value);
+  // };
 
-  const startDateChange = (event) => {
-    setDateToStart(event.target.value);
-  };
+  // const templateChange = (event) => {
+  //   setTemplate(event.target.value);
+  // };
 
-  const endDateChange = (event) => {
-    setDateToEnd(event.target.value);
-  };
+  // const startDateChange = (event) => {
+  //   setDateToStart(event.target.value);
+  // };
+
+  // const endDateChange = (event) => {
+  //   setDateToEnd(event.target.value);
+  // };
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -113,15 +129,29 @@ export default function CreateCarForm() {
       setError("");
       setLoading(true);
       await createMessage(
-        messageName,
-        template,
-        title,
-        "Omer Test",
-        visableTime,
-        dateToStart,
-        dateToEnd,
-        days,
-        screenNumber
+        company,
+        model,
+        year,
+        used,
+        engine,
+        km,
+        price,
+        netPrice,
+        vehicleStatus,
+        category,
+        availability,
+        description,
+        images,
+        hp,
+        fuelConsumption,
+        numberOfSeats,
+        doorCount,
+        gearbox,
+        emissionClass,
+        firstRegistration,
+        mnufacturerColour,
+        colour,
+        iteriorDesign
       );
       navigate("/homepage");
     } catch {
@@ -149,7 +179,7 @@ export default function CreateCarForm() {
               </div>
               <div className="col-9">
                 <Form onSubmit={handleSubmit}>
-                  <Card.Body>
+                  {/* <Card.Body>
                     <Form.Group id="first-name" className="mt-3">
                       <div className="row">
                         <div className="col">
@@ -356,7 +386,7 @@ export default function CreateCarForm() {
                         </div>
                       </div>
                     </Form.Group>
-                  </Card.Body>
+                  </Card.Body> */}
                   <div className="justify-content-center d-flex">
                     <Button
                       disabled={loading}

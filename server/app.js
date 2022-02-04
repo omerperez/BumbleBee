@@ -2,6 +2,7 @@ const express = require("express");
 const db = require("./db/index");
 const bodyParser = require("body-parser");
 const user = require("./Routes/userRoutes");
+const car = require("./Routes/carRoutes");
 const dotenv = require("dotenv");
 
 const cors = require("cors");
@@ -17,7 +18,9 @@ db.on("error", (error) => {
 });
 
 
-app.use("/", user);
+app.use("/user", user);
+app.use("/car", car);
+
 app.use(express.static('front'));
 app.get('s3Url', (req, res) => {
     

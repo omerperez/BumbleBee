@@ -25,7 +25,7 @@ export default function ManageUserPage() {
   const [reset, setReset] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:8080/")
+    fetch("http://localhost:8080/user")
       .then((response) => response.json())
       .then((data) => setUsersToPresent(data));
   }, []);
