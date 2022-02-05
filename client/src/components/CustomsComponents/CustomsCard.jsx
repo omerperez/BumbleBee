@@ -5,7 +5,7 @@ export default function CustomsCard({name, link, image}) {
   return (
     <div style={{ width: "40%" }}>
       <Card style={{ margin: "10px", border: "solid 1px #363636" }}>
-        <a href={link} className="cancel-underline">
+        <a href={link} className="cancel-underline" target="_blank">
           <img
             src={image}
             style={{
