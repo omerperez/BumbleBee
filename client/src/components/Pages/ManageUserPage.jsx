@@ -92,37 +92,26 @@ export default function ManageUserPage() {
   return (
     <>
       <PageTitle page={"Users Information"} />
-      <div className="justify-content-center d-flex m-4 w-100 h-100">
-        <Container component="main">
-          {/* <UserFilter
-            patients={usersToPresent}
-            setList={(list) => {
-              setUsersToPresent(list);
-            }}
-            showDateFilters={true}
-            showFilterMode={() => {
-              setIsInFilterMode((prev) => !prev);
-            }}
-            showNoResults={setResults}
-            key={reset}
-          /> */}
-
-          <SmartTable
-            data={usersToPresent}
-            headCells={headCells}
-            columns={null}
-            cells={<UserCells />}
-            topNum={40}
-          />
-          {results && (
-            <TableNoResults
-              clearFilters={setUsersToPresent}
+      <div className="pl-1 pr-1">
+        <div className="justify-content-center d-flex">
+          <Container component="main">
+            <SmartTable
               data={usersToPresent}
-              setReset={setReset}
-              value={reset}
+              headCells={headCells}
+              columns={null}
+              cells={<UserCells />}
+              topNum={40}
             />
-          )}
-        </Container>
+            {results && (
+              <TableNoResults
+                clearFilters={setUsersToPresent}
+                data={usersToPresent}
+                setReset={setReset}
+                value={reset}
+              />
+            )}
+          </Container>
+        </div>
       </div>
     </>
   );
