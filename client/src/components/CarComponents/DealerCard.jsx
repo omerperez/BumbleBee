@@ -11,9 +11,22 @@ import PhoneInTalkIcon from "@mui/icons-material/PhoneInTalk";
 import { Button } from "@mui/material";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
-export default function DealerCard({fullName, email ,phoneNumber, image}) {
+export default function DealerCard({firstName, lastName, email ,phoneNumber, image}) {
 
   const theme = useTheme();
+
+  const whatsappMassege =
+    "Hi " +
+    firstName +
+    ", I see you sell this car is BumbleBee: " +
+    window.location.href +
+    " can you bring me more details please?";
+
+  const sendWhatsAppToDealer = () => {
+    window.open(
+      "https://wa.me/" + "+972522520484" + "?text=" + whatsappMassege
+    );
+  };
 
   return (
     <Card
@@ -23,7 +36,7 @@ export default function DealerCard({fullName, email ,phoneNumber, image}) {
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <CardContent sx={{ flex: "1 0 auto" }}>
           <Typography component="div" variant="h4">
-            {fullName}
+            {firstName + " " + lastName}
           </Typography>
           <Typography variant="subtitle1" color={"#e2a021"} className="mt-1">
             <StarIcon />
@@ -58,8 +71,13 @@ export default function DealerCard({fullName, email ,phoneNumber, image}) {
               className="mt-4 d-flex justify-content-center"
               style={{ whiteSpace: "nowrap" }}
             >
-              <Button variant="contained" style={{ background: "#4fa04f" }}>
-                Send <WhatsAppIcon style={{ margin: "3%" }} /> to {fullName}{" "}
+              <Button
+                variant="contained"
+                style={{ background: "#4fa04f" }}
+                onClick={sendWhatsAppToDealer}
+              >
+                Send <WhatsAppIcon style={{ margin: "3%" }} /> to{" "}
+                {firstName + " " + lastName}{" "}
               </Button>
             </div>
           </div>
@@ -71,7 +89,7 @@ export default function DealerCard({fullName, email ,phoneNumber, image}) {
           width={170}
           style={{
             borderRadius: "50%",
-            border: "solid 2px #363636"
+            border: "solid 2px #363636",
           }}
         />
       </div>

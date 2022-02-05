@@ -10,7 +10,7 @@ export default function CarImageGallery({id}) {
         fetch("http://localhost:8080/user/my-user/" + id)
           .then((response) => response.json())
           .then((data) => setDealer(data));
-    }, [])
+    })
 
     if(dealer == null ) return " "
     
@@ -43,7 +43,8 @@ export default function CarImageGallery({id}) {
         </div>
         <div style={{ flexBasis: 500, marginLeft: "2%" }}>
           <DealerCard
-            fullName={dealer.firstName + " " + dealer.lastName}
+            firstName={dealer.firstName}
+            lastName={dealer.lastName}
             email={dealer.email}
             phoneNumber={"+972-522520484"}
             image={"/profileImage.png"}
