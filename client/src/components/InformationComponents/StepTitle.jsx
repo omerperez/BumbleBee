@@ -4,10 +4,10 @@ export default function StepTitle({step}) {
 
   return (
     <>
-      <div style={{ flexBasis: "5%" }}>
-        <img src={step !== 5 ? `/${step + 1}.png` : "/claps.png"} width={65} />
+      <div style={{ flexBasis: "4.5%" }}>
+        <img src={step !== 5 ? `/${step + 1}.png` : "/claps.png"} width={55} />
       </div>
-      <div style={{ flexBasis: "95%", marginLeft: "1%" }}>
+      <div style={{ flexBasis: "95.5%", color: '#363636', marginTop: '0.5%' }}>
         {step === 0 ? (
           <h1>First Step</h1>
         ) : step === 1 ? (
