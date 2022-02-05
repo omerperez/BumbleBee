@@ -91,13 +91,13 @@ export default function Navigation() {
   const drawer = (
     <div>
       <UserProfile />
-      <div className="search-position">
+      {/* <div className="search-position">
         <CssTextField
           label="Search"
           className="nav-search"
           xs={{ height: 8 }}
         />
-      </div>
+      </div> */}
       <Divider className="yellow-divider" />
       <List>
         {menuItems.map((item, i) => {
