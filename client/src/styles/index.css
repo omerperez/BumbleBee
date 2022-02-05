@@ -212,6 +212,14 @@
   padding-right: 1%;
 }
 
+.pl-5 {
+  padding-left: 5%;
+}
+
+.pr-5 {
+  padding-right: 5%;
+}
+
 .pl-10 {
   padding-left: 10%;
 }

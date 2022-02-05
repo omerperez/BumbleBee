@@ -7,6 +7,7 @@ import StepButton from '@mui/material/StepButton';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import AboutUsBody from "../InformationComponents/AboutUsBody";
+import StepTitle from "../InformationComponents/StepTitle";
 
 const steps = [
   "Find the vehicle you want",
@@ -47,12 +48,11 @@ export default function AboutUs() {
     <>
       <PageTitle page={"About Us"} />
       <div className="pl-1 pr-1 w-75 f-lighter">
-        <h2 className="mb-3">Who we are ?</h2>
-        <AboutUsBody />
+        {/* <h2 className="mb-3">Who we are ?</h2> */}
         <AboutUsBody />
       </div>
-      <div className="justify-content-center d-flex mt-4 pl-1 pr-1">
-        <Box sx={{ width: "90%" }}>
+      <div className="pr-5 mt-4">
+        <Box sx={{ width: "100%" }}>
           <Stepper nonLinear activeStep={activeStep}>
             {steps.map((label, index) => (
               <Step key={label}>
@@ -74,23 +74,17 @@ export default function AboutUs() {
           </Stepper>
           <div>
             <React.Fragment>
-              <div className="d-flex justify-content-center mt-4">
+              <div className="mt-3 pl-1">
                 <Typography className="mb-5">
-                  <h1 className="text-center mb-4">
-                    {activeStep === 0
-                      ? "צעד ראשון"
-                      : activeStep === 1
-                      ? "צעד שני"
-                      : activeStep === 2
-                      ? "צעד שלישי"
-                      : activeStep === 3
-                      ? "צעד רביעי"
-                      : activeStep === 4
-                      ? "צעד חמישי"
-                      : "תתחדש"}
-                  </h1>
-                  <AboutUsBody />
-                  <AboutUsBody />
+                  <div
+                    className="mt-4 mb-4"
+                    style={{ alignItems: "center", display: "flex" }}
+                  >
+                    <StepTitle step={activeStep} />
+                  </div>
+                  <div className="f-lighter">
+                    <AboutUsBody />
+                  </div>
                 </Typography>
               </div>
               <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
