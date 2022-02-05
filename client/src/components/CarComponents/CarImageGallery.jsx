@@ -19,7 +19,7 @@ export default function CarImageGallery({id}) {
       <div className="pl-1 pr-1" style={{ display: "flex" }}>
         <ImageList
           style={{
-            flexBasis: 250,
+            flexBasis: '17%',
             height: 450,
             border: "solid 3px black",
           }}
@@ -33,15 +33,15 @@ export default function CarImageGallery({id}) {
             </ImageListItem>
           ))}
         </ImageList>
-        <div style={{ flexBasis: 625, height: 450 }}>
+        <div style={{ flexBasis: '50%', height: 450 }}>
           <img
             src={"/mini.jpeg"}
-            width={750}
+            width={'100%'}
             height={450}
             style={{ border: "solid 3px black", borderLeft: "none" }}
           />
         </div>
-        <div style={{ flexBasis: 500, marginLeft: "2%" }}>
+        <div style={{ flexBasis: '33%', marginLeft: "1%" }}>
           <DealerCard
             firstName={dealer.firstName}
             lastName={dealer.lastName}
