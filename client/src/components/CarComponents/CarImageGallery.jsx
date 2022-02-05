@@ -10,7 +10,7 @@ export default function CarImageGallery({id}) {
         fetch("http://localhost:8080/user/my-user/" + id)
           .then((response) => response.json())
           .then((data) => setDealer(data));
-    })
+    }, [id])
 
     if(dealer == null ) return " "
     
