@@ -10,7 +10,7 @@ export default function Login() {
   const { login } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -50,7 +50,7 @@ export default function Login() {
               </Form.Group>
               <Form.Group id="password" className="mb-5">
                 <TextField
-                  id="standard-email-input"
+                  id="standard-password-input"
                   label="Password"
                   type="password"
                   inputRef={passwordRef}
@@ -74,7 +74,7 @@ export default function Login() {
                   className="mb-3 w-100 grey-btn"
                   type="submit"
                 >
-                  Need an account? Sign In
+                  Need an account? Sign Up
                 </Button>
               </Link>
             </Form>

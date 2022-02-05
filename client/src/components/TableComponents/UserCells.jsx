@@ -41,9 +41,6 @@ export default function NeutropeniaCells({ item }) {
         {item.email}
       </TableCell>
       <TableCell className={classes.tableCell} align="left">
-        {item.lastSeen}
-      </TableCell>
-      <TableCell className={classes.tableCell} align="left">
         {item.role == "1" ? "Client" : "Manager"}
       </TableCell>
       <TableCell className={classes.tableCell} align="left">

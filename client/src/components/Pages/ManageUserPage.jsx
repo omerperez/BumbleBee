@@ -15,7 +15,7 @@ const currDose = (
 
 const smallLabel = {  minHeight: '50px !important', width: "15%", marginTop: "21px" };
 const medWidth = { minHeight: "50px", width: "25%" };
-const noBorder = { minHeight: "50px", width: "12%", border: '0 solid white !important' };
+const noBorder = { minHeight: "50px", width: "12%", border: 'none !important' };
 const largeWidth = { minHeight: '50px', width: "25%" };
 
 export default function ManageUserPage() {
@@ -60,14 +60,6 @@ export default function ManageUserPage() {
       numeric: false,
       disablePadding: true,
       label: "Email Address",
-      style: medWidth,
-      hasborder: true,
-    },
-    {
-      id: "Last Seen",
-      numeric: false,
-      disablePadding: true,
-      label: "Last Seen",
       style: medWidth,
       hasborder: true,
     },

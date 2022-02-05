@@ -48,7 +48,7 @@ export default function SmartTable({
   topNum,
 }) {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(100);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [orderDirection, setOrderDirection] = useState("asc");
   const [valueToOrderBy, setValueToOrderBy] = useState("PatietID");
   const classes = useStyles();
@@ -74,9 +74,9 @@ export default function SmartTable({
   };
 
   const cancelBorderBottom = {
-    borderBottom: "none",
-    paddingBottom: "0px !important",
+    borderRight: "none !important"
   };
+
   return (
     <>
       <ScrollToTop showBelow={250} />
@@ -95,14 +95,13 @@ export default function SmartTable({
                   <StyledTableCell
                     key={`${headCell.id}-c`}
                     align={"left"}
-                    sx={columns ? cancelBorderBottom : {}}
                     colSpan={headCell.span}
                     className={classes.callAfter}
                     style={headCell.style}
                   >
                     <div
                       className={
-                        headCell.id !== "lastSeen"
+                        headCell.label !== "Action"
                           ? classes.divWrapperOfHeader
                           : classes.divWrapperOfHeaderAction
                       }

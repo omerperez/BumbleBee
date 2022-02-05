@@ -5,8 +5,8 @@ import Link from "@mui/material/Link";
 import Divider from "@mui/material/Divider";
 import { carHeaderImage } from "../images/projectImages";
 
-export default function PageTitle({page}) {
-  
+export default function PageTitle({ page }) {
+
   return (
     <div className="m-18">
       <Breadcrumbs aria-label="breadcrumb">
@@ -16,6 +16,7 @@ export default function PageTitle({page}) {
           href={"/HomePage"}
         >
           <img
+            alt=""
             src={carHeaderImage}
             className="bumble-img-log"
             width={40}

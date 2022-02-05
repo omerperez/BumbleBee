@@ -12,7 +12,7 @@ import { styled } from "@mui/material/styles";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { makeStyles } from "@mui/styles";
-import { clientMenuItems, managerMenuItems  } from "./menuItems";
+import { clientMenuItems, managerMenuItems } from "./menuItems";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,7 +69,7 @@ export default function Navigation() {
   useEffect(() => {
     const index = window.location.toString().lastIndexOf("/");
     const id = window.location.toString().substring(index);
-    console.log(id);
+    // console.log(id);
     setCheck(id !== '/' ? id : '/homepage')
   }, [check]);
 
@@ -84,7 +84,7 @@ export default function Navigation() {
   }
 
   let menuItems = clientMenuItems;
-  if(currentUser.role == 2){
+  if (currentUser.role == 2) {
     menuItems = managerMenuItems;
   }
 
@@ -103,6 +103,7 @@ export default function Navigation() {
         {menuItems.map((item, i) => {
           return (
             <Link
+              key={i}
               to={item.path}
               style={{
                 textDecoration: "none",
@@ -115,9 +116,9 @@ export default function Navigation() {
               >
                 <ListItemText primary={item.title} />
                 {item.image ? (
-                  <img
+                  <img alt=""
                     style={
-                      item.path == check ? {marginRight : '5px'} : null
+                      item.path == check ? { marginRight: '5px' } : null
                     }
                     src={item.image}
                     className="nav-image"
