@@ -1,13 +1,13 @@
-import React, {useContext, useState, useEffect, createContext} from 'react'
+import React, { useContext, useState, useEffect, createContext } from 'react'
 import { auth } from '../AuthFirebase/firebase';
 import axios from "axios";
 import Cookies from 'universal-cookie';
 
 const api = axios.create({ baseURL: "http://localhost:8080" });
-const AuthContext = createContext(); 
+const AuthContext = createContext();
 
-export function useAuth(){ 
-    return useContext(AuthContext)
+export function useAuth() {
+  return useContext(AuthContext)
 }
 
 export default function AuthProvider({ children }) {
@@ -26,7 +26,7 @@ export default function AuthProvider({ children }) {
 
     return api
       .post("/user/register", userData)
-      .then(function (response) {})
+      .then(function (response) { })
       .catch(function (error) {
         console.log(error);
       });
@@ -93,25 +93,25 @@ export default function AuthProvider({ children }) {
 }
 
 
-  /*
-  Fire Base -  
-  
-  function signup(email, password) {
-    return auth.createUserWithEmailAndPassword(email, password);
-  } 
-   
-  function signup(email, password) {
-   return auth.signInWithEmailAndPassword(email, password);
-  }
-   
-  function logout() {
-    return auth.signOut();
-  }
-  useEffect(() => {
-    const unsubscriber = auth.onAuthStateChanged((user) => {
-      setCurrentUser(user);
-      setLoading(false);
-     })
-    return unsubscriber;
-  } 
-  */
+/*
+Fire Base -  
+ 
+function signup(email, password) {
+  return auth.createUserWithEmailAndPassword(email, password);
+} 
+ 
+function signup(email, password) {
+ return auth.signInWithEmailAndPassword(email, password);
+}
+ 
+function logout() {
+  return auth.signOut();
+}
+useEffect(() => {
+  const unsubscriber = auth.onAuthStateChanged((user) => {
+    setCurrentUser(user);
+    setLoading(false);
+   })
+  return unsubscriber;
+} 
+*/

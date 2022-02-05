@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid";
 import Drawer from "@mui/material/Drawer";
 import { makeStyles } from "@mui/styles";
 import { useTheme } from "@mui/material/styles";
-import {authBackground } from "../images/projectImages"
+import { authBackground } from "../images/projectImages"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,7 +34,7 @@ export default function AuthLayout({ children }) {
               keepMounted: true,
             }}
           >
-            <img src={authBackground} className="h-100" />
+            <img alt="" src={authBackground} className="h-100" />
           </Drawer>
         </Grid>
       </Grid>

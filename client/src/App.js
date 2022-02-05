@@ -1,5 +1,5 @@
-import './components/Navigation/Navigation.modules.css' ;
-import { BrowserRouter, Route, Routes , Navigate} from "react-router-dom";
+import './components/Navigation/Navigation.modules.css';
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import HomePage from './components/Pages/HomePage';
 import AboutUs from './components/Pages/AboutUs';
 import MyProfile from './components/Pages/MyProfile';

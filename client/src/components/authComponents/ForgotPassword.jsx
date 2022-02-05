@@ -14,13 +14,13 @@ export default function ForgotPassword() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-        setMessage('');
-        setError("");
-        setLoading(true);
-        await resetPassword(emailRef.current.value);
-        setMessage('Check your inbox for further instructions');
+      setMessage('');
+      setError("");
+      setLoading(true);
+      await resetPassword(emailRef.current.value);
+      setMessage('Check your inbox for further instructions');
     } catch {
-        setError("Failed to reset password");
+      setError("Failed to reset password");
     }
     setLoading(false);
   }
@@ -35,7 +35,7 @@ export default function ForgotPassword() {
         <Card.Body>
           <h4 className="mb-4">Password Reset</h4>
           <h5 className="second-title mb-4">
-            Do not worry, it takes a few moments
+            Don't worry, it takes a few moments
           </h5>
           <Form onSubmit={handleSubmit}>
             <Form.Group id="email" className="mb-4">
@@ -70,7 +70,7 @@ export default function ForgotPassword() {
       <div className="w-100 text-center mt-2">
         Need an account ?{" "}
         <Link to="/signup" className="cancel-underline">
-          Sign In
+          Sign Up
         </Link>
       </div>
     </>
