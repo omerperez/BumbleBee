@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from "react";
+import CarImageGallery from "../CarComponents/CarImageGallery";
+import CarProfileBody from "../CarComponents/CarProfileBody";
 import PageTitle from "../Layout/PageTitle";
 
 export default function CarProfilePage() {
@@ -19,6 +21,8 @@ export default function CarProfilePage() {
   return (
     <>
       <PageTitle page={car.company + ' ' + car.model} />
+      <CarImageGallery id={car.dealer}/>
+      <CarProfileBody car={car} />
     </>
   );
 }

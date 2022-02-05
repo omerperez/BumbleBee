@@ -55,7 +55,7 @@ const defaultTextStyle = { color: "white", marginLeft: "10px" };
 const currentPageStyle = {
   background: "#E2A025",
   color: "#363636",
-  borderLeft: "solid 10px #BA8600"
+  borderLeft: "solid 10px #BA8600",
 };
 
 export default function Navigation() {
@@ -67,9 +67,10 @@ export default function Navigation() {
   const [check, setCheck] = useState("/homepage");
 
   useEffect(() => {
-    const index = window.location.toString().lastIndexOf("/") + 1;
+    const index = window.location.toString().lastIndexOf("/");
     const id = window.location.toString().substring(index);
-    setCheck('/' + id)
+    console.log(id);
+    setCheck(id !== '/' ? id : '/homepage')
   }, [check]);
 
   async function handleLogout() {
@@ -112,9 +113,15 @@ export default function Navigation() {
                 style={item.path == check ? currentPageStyle : defaultTextStyle}
                 onClick={() => setCheck(item.path)}
               >
-                <ListItemText primary={item.title} className={"menu-items"} />
-                {item?.image ? (
-                  <img src={item.image} className="nav-image" />
+                <ListItemText primary={item.title} />
+                {item.image ? (
+                  <img
+                    style={
+                      item.path == check ? {marginRight : '5px'} : null
+                    }
+                    src={item.image}
+                    className="nav-image"
+                  />
                 ) : null}
               </ListItem>
             </Link>
