@@ -20,6 +20,7 @@ import CreateCarForm from './components/CarComponents/CreateCarForm';
 import CreateCarPage from './components/Pages/CreateCarPage';
 import ManageUserPage from './components/Pages/ManageUserPage';
 import CarProfilePage from './components/Pages/CarProfilePage';
+import CompaniesPage from './components/Pages/CompaniesPage';
 
 const maxWidthCard = { maxWidth: 400 };
 const minHeightContainer = { minHeight: "100vh" };
@@ -41,6 +42,14 @@ function App() {
             />
             <Route
               path="homepage"
+              element={
+                <PrivateRoute>
+                  <HomePage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/companies/:company"
               element={
                 <PrivateRoute>
                   <HomePage />
@@ -108,6 +117,14 @@ function App() {
               element={
                 <PrivateRoute>
                   <CreateCarPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="companies"
+              element={
+                <PrivateRoute>
+                  <CompaniesPage />
                 </PrivateRoute>
               }
             />

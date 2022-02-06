@@ -11,8 +11,8 @@ export default function MyProfile() {
   return (
     <>
         {/* <PageTitle page={"My Profile"} /> */}
-
         <TopProfilePage fullName={currentUser.firstName + ' ' + currentUser.lastName} image={'./mini.jpeg'} />
+        
   </>
   );
 }

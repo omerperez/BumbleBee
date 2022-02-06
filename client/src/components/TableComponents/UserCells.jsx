@@ -6,23 +6,13 @@ import { Grid } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Button } from "react-bootstrap";
 import axios from "axios";
+import DeleteDialog from "../DialogComponents/DeleteDialog";
 
 const useStyles = useTableStyles;
 const api = axios.create({ baseURL: "http://localhost:8080" });
 
 export default function NeutropeniaCells({ item }) {
   const classes = useStyles();
-
-  const deleteUser = () => {
-    api
-      .delete(`/delete/${item._id}`)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
 
   return (
     <TableRow className={classes.submit} key={item.subject}>
@@ -44,12 +34,13 @@ export default function NeutropeniaCells({ item }) {
         {item.role == "1" ? "Client" : "Manager"}
       </TableCell>
       <TableCell className={classes.tableCell} align="left">
-        <Button
+        {/* <Button
           onClick={deleteUser}
           style={{ background: "none", border: "none" }}
         >
           <DeleteIcon color="error" />
-        </Button>
+        </Button> */}
+        <DeleteDialog id={item._id} name={item.firstName + ' ' + item.lastName} email={item.email} role={item.role == 1 ? 'Client' : 'Manager'} />
       </TableCell>
     </TableRow>
   );

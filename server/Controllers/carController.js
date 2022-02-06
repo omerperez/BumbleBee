@@ -1,5 +1,6 @@
 const res = require("express/lib/response");
 const carSchema = require("../Models/car");
+const user = require("../Models/user");
 const userController = require("./userController");
 
 /* GET */
@@ -29,7 +30,6 @@ const getCarById = (req, res) => {
 };
 
 const getCarByCompany = (request, respons) => {
-  
   carSchema
     .find({ company: req.params.company })
     .then((results) => {
@@ -43,11 +43,10 @@ const getCarByCompany = (request, respons) => {
 };
 
 /* POST */
-
 async function createCar (req, res) {
   console.log(req.body);
   const createNewCar = {
-    _id: req.params.id,
+    // _id: req.params.id,
     company: req.body.company,
     model: req.body.model,
     year: req.body.year,
@@ -73,7 +72,7 @@ async function createCar (req, res) {
     iteriorDesign: req.body.iteriorDesign,
     dealer: req.body.dealerId,
   };
-
+  // if(user.)
     // await userSchema.findOneAndUpdate(
     //   { id: createNewCar.dealer },
     //   { $push: { cars: createNewCar._id } }

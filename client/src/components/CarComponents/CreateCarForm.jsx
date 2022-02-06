@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,6 +14,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import axios from "axios";
 import { FormControl } from "@mui/material";
+import { carsCompany } from "./exportForSelect";
 
 const api = axios.create({ baseURL: process.env.REACT_APP_FBASE_URL });
 
@@ -53,6 +54,8 @@ export default function CreateCarForm() {
   const navigate = useNavigate();
 
   const [company, setCompany] = useState("");
+  const [modelsOptions, setModelsOptions] = useState([]);
+  const [status, setStatus] = useState(true);
   const [model, setModel] = useState("");
   const [year, setYear] = useState(2020);
   const [used, setUsed] = useState('00');
@@ -78,6 +81,25 @@ export default function CreateCarForm() {
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(()=> {
+    fetch(
+      `https://car-data.p.rapidapi.com/cars?limit=50&page=0&year=2019&make=${company}`,
+      {
+        method: "GET",
+        headers: {
+          "x-rapidapi-host": "car-data.p.rapidapi.com",
+          "x-rapidapi-key":
+            "4607af252emsh3d7ae6deef5d96ep1f460fjsnd8f476e79f3a",
+        },
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => setModelsOptions(data));
+  }, [company]);
+
+  console.log(modelsOptions);
+  
   /* DRAG IMAGES */
   const fileInput = useRef(null);
   const [image, setImage] = useState(null);
@@ -110,6 +132,10 @@ export default function CreateCarForm() {
   //   } = event;
   //   setScreenNumber(typeof value === "string" ? value.split(",") : value);
   // };
+   const makeChange = (event) => {
+     setCompany(event.target.value);
+     setStatus(false);
+   };
 
   const usedChange = (event) => {
     setUsed(event.target.value);
@@ -195,32 +221,45 @@ export default function CreateCarForm() {
                     <Form.Group id="first-name" className="mt-3">
                       <div className="row">
                         <div className="col">
-                          <TextField
-                            className="form-control"
-                            id="company"
-                            label="Company"
+                          <InputLabel id="demo-simple-select-label">
+                            Make
+                          </InputLabel>
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="make"
+                            label="Make"
                             value={company}
-                            onChange={(e) => {
-                              setCompany(e.target.value);
-                            }}
-                            type="text"
-                            variant="outlined"
+                            style={{ width: "100%", height: "85%" }}
+                            onChange={makeChange}
                             required
-                          />
+                          >
+                            {carsCompany.map((make) => (
+                              <MenuItem key={make} value={make}>
+                                {make}
+                              </MenuItem>
+                            ))}
+                          </Select>
                         </div>
                         <div className="col">
-                          <TextField
-                            className="form-control"
-                            id="company"
-                            label="Company"
-                            value={company}
-                            onChange={(e) => {
-                              setCompany(e.target.value);
-                            }}
-                            type="text"
-                            variant="outlined"
-                            required
-                          />
+                          <FormControl disabled={status} fullWidth>
+                            <InputLabel id="demo-simple-select-helper-label">
+                              Model
+                            </InputLabel>
+                            <Select
+                              labelId="demo-simple-select-label"
+                              id="Model"
+                              label="Model"
+                              value={model}
+                              style={{ width: "100%", height: "85%" }}
+                              required
+                            >
+                              {modelsOptions.map((option) => (
+                                <MenuItem key={option} value={option}>
+                                  {option.model}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
                         </div>
                       </div>
                     </Form.Group>

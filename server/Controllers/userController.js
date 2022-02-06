@@ -29,6 +29,31 @@ const getUserById= (request, respons) => {
   });
 }
 
+// const removeFromFavorite = (req, res) => {
+//   const userId = req.body.userId;
+//   userSchema.findById(userId).then((results) => {
+//     try {
+//       results.favorite.filter((car) => car._id !== req.body.carId)
+//       .then((currentCars) => {
+        
+//       });
+//     } catch {
+//       console.log("Error");
+//     }
+//   });
+// };
+
+
+// const addToFavorite = (req, res) => {
+//   const userId = req.body.userId;
+//   userSchema.findById(userId).then((results) => {
+//     try {
+//       results.favorite.add(req.body.carId);
+//     } catch {
+//       console.log("Error");
+//     }
+//   })
+// };
 
 const uploadImage = (req, res) => {
     res.send("Single File upload success");
