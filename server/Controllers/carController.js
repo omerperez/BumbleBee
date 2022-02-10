@@ -4,7 +4,6 @@ const user = require("../Models/user");
 const userController = require("./userController");
 
 /* GET */
-
 const getAllCars = (req, res) => {
   carSchema.find().then((results) => {
     try {
@@ -83,7 +82,6 @@ async function createCar (req, res) {
 }
 
 /* PUT */
-
 const updateCar = (req, res) => {
   console.log(req.body);
   let newCar = new carSchema({
@@ -121,7 +119,6 @@ const updateCar = (req, res) => {
 };
 
 /* DELETE */
-
 const deleteCar = (req, res) => {
   console.log(req.params.id);
   const _id = req.params.id;
@@ -131,7 +128,6 @@ const deleteCar = (req, res) => {
 };
 
 /* EXPORTS */
-
 module.exports = {
   deleteCar,
   updateCar,

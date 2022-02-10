@@ -14,446 +14,436 @@ import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import axios from "axios";
 import { FormControl } from "@mui/material";
-import { carsCompany } from "./exportForSelect";
+import {
+  companiesHeAndEn,
+  carsCompany,
+  hebrewCarsCompany,
+  doorCountOptions,
+  countOfSeatsOptions,
+  gearBoxesList,
+  colorList,
+} from "./exportForSelect";
+import DeleteDialog from "../DialogComponents/DeleteDialog";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+
 
 const api = axios.create({ baseURL: process.env.REACT_APP_FBASE_URL });
 
-const Root = styled("div")(({ theme }) => ({
-  width: "100%",
-  ...theme.typography.body2,
-  "& > :not(style) + :not(style)": {
-    marginTop: theme.spacing(2),
-  },
-}));
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
-const names = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
-
-const screens = ["Screen 1", "Screen 2", "Screen 3"];
-
 export default function CreateCarForm() {
-  const { createMessage } = useAuth();
-  const navigate = useNavigate();
+  
+  const [dataFromApi, setDataFromApi] = useState([]);
+  const [dataFromSecApi, setDataFromSecApi] = useState([]);
 
-  const [company, setCompany] = useState("");
-  const [modelsOptions, setModelsOptions] = useState([]);
+  const [company, setCompany] = useState({});
+
   const [status, setStatus] = useState(true);
   const [model, setModel] = useState("");
-  const [year, setYear] = useState(2020);
-  const [used, setUsed] = useState('00');
-  const [engine, setEngine] = useState('');
-  const [km, setKm] = useState("");
-  const [price, setPrice] = useState(15000);
-  const [netPrice, setNetPrice] = useState(10000);
-  const [vehicleStatus, setVehicleStatus] = useState('');
-  const [category, setCategory] = React.useState([]);
-  const [availability, setAvailability] = useState(false);
-  const [description, setDescription] = useState('');
-  const [images, setImages] = useState([]);
-  const [hp, setHp] = useState(0);
-  const [fuelConsumption, setFuelConsumption] = useState('');
+
+  const [carType, setCarType] = useState("");
+
+  const [yearStatus, setYearStatus] = useState(true);
+  const [year, setYear] = useState("");
+
+  const [engine, setEngine] = useState("");
+
+  const [hpStatus, setHpStatus] = useState(true);
+  const [horsePower, setHorsePower] = useState("");
+
+  const [type, setType] = useState("");
+
   const [numberOfSeats, setNumberOfSeats] = useState(5);
   const [doorCount, setDoorCount] = useState(5);
-  const [gearbox, setGearbox] = useState('');
-  const [emissionClass, setEmissionClass] = useState('');
-  const [firstRegistration, setFirstRegistration] = useState("2020-02-20");
+  
+  const [gearbox, setGearbox] = useState("");
   const [mnufacturerColour, setMnufacturerColour] = useState("");
   const [colour, setColour] = useState("");
-  const [iteriorDesign, setIteriorDesign] = useState("");
 
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [firstRegistrationDate, setFirstRegistrationDate] = useState(
+    new Date("2020-08-18")
+  );
 
-  useEffect(()=> {
+  useEffect(() => {
     fetch(
-      `https://car-data.p.rapidapi.com/cars?limit=50&page=0&year=2019&make=${company}`,
-      {
-        method: "GET",
-        headers: {
-          "x-rapidapi-host": "car-data.p.rapidapi.com",
-          "x-rapidapi-key":
-            "4607af252emsh3d7ae6deef5d96ep1f460fjsnd8f476e79f3a",
-        },
-      }
+      `https://data.gov.il/api/3/action/datastore_search?resource_id=03adc637-b6fe-402b-9937-7c3d3afc9140&limit=100000&q=פרטי נוסעים&q=${company.hebrew}`
     )
       .then((response) => response.json())
-      .then((data) => setModelsOptions(data));
-  }, [company]);
-
-  console.log(modelsOptions);
-  
-  /* DRAG IMAGES */
-  const fileInput = useRef(null);
-  const [image, setImage] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState("");
-  const handleFile = (file) => {
-    setImage(file);
-    setPreviewUrl(URL.createObjectURL(file));
-  };
-
-  const handleDragOver = (event) => {
-    event.preventDefault();
-  };
-  const handleOnDrop = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    let imageFile = event.dataTransfer.files[0];
-  };
-
-
-  // const handleChangeDay = (event) => {
-  //   const {
-  //     target: { value },
-  //   } = event;
-  //   setDays(typeof value === "string" ? value.split(",") : value);
-  // };
-
-  // const handleChangeScreens = (event) => {
-  //   const {
-  //     target: { value },
-  //   } = event;
-  //   setScreenNumber(typeof value === "string" ? value.split(",") : value);
-  // };
-   const makeChange = (event) => {
-     setCompany(event.target.value);
-     setStatus(false);
-   };
-
-  const usedChange = (event) => {
-    setUsed(event.target.value);
-  };
-
-  const yearChange = (event) => {
-    setYear(event.target.value);
-  };
-
-  const doorChange = (event) => {
-    setDoorCount(event.target.value);
-  };
-
-  const colorChange = (event) => {
-    setColour(event.target.value);
-  };
-
-  const dateChange = (event) => {
-    setFirstRegistration(event.target.value);
-  };
-
-  // const endDateChange = (event) => {
-  //   setDateToEnd(event.target.value);
-  // };
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    try {
-      setError("");
-      setLoading(true);
-      await createMessage(
-        company,
-        model,
-        year,
-        used,
-        engine,
-        km,
-        price,
-        netPrice,
-        vehicleStatus,
-        category,
-        availability,
-        description,
-        images,
-        hp,
-        fuelConsumption,
-        numberOfSeats,
-        doorCount,
-        gearbox,
-        emissionClass,
-        firstRegistration,
-        mnufacturerColour,
-        colour,
-        iteriorDesign
+      .then((data) =>
+        setDataFromApi(
+          data.result.records.filter((car) => car.shnat_yitzur >= 2020)
+        )
       );
-      navigate("/homepage");
-    } catch {
-      setError("Failed to create an advertisement");
-    }
-    setLoading(false);
+
+      fetch(
+        `https://car-data.p.rapidapi.com/cars?&year=2020&make=${company.english}`,
+        {
+          method: "GET",
+          headers: {
+            "x-rapidapi-host": "car-data.p.rapidapi.com",
+            "x-rapidapi-key":
+              "4607af252emsh3d7ae6deef5d96ep1f460fjsnd8f476e79f3a",
+          },
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setDataFromSecApi(data.filter((car) => car.year >= 2020 ));
+          console.log(data);
+        });
+  }, [company]);
+  
+  
+  const makeCahnge = (e) => {
+    setCompany(e.target.value);
+    setStatus(false);
   }
 
-  return (
-    <>
-      <div className="pr-1 pl-1">
-        <div className="pr-1 pl-1 mt-3">
-          <Card style={{ boxShadow: "15px 15px 15px 15px #708090" }}>
-            <div className="row">
-              <div className="col-3" style={{ backgroundColor: "#87CEFA" }}>
-                <h1
-                  style={{
-                    textAlign: "center",
-                    margin: "auto",
-                    marginTop: "50%",
-                  }}
-                >
-                  <img src="/new.png" width={200} />
-                </h1>
-              </div>
-              <div className="col-9">
-                <Form onSubmit={handleSubmit}>
-                  <Card.Body>
-                    <Form.Group id="first-name" className="mt-3">
-                      <div className="row">
-                        <div className="col">
-                          <InputLabel id="demo-simple-select-label">
-                            Make
-                          </InputLabel>
-                          <Select
-                            labelId="demo-simple-select-label"
-                            id="make"
-                            label="Make"
-                            value={company}
-                            style={{ width: "100%", height: "85%" }}
-                            onChange={makeChange}
-                            required
-                          >
-                            {carsCompany.map((make) => (
-                              <MenuItem key={make} value={make}>
-                                {make}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                        </div>
-                        <div className="col">
-                          <FormControl disabled={status} fullWidth>
-                            <InputLabel id="demo-simple-select-helper-label">
-                              Model
-                            </InputLabel>
-                            <Select
-                              labelId="demo-simple-select-label"
-                              id="Model"
-                              label="Model"
-                              value={model}
-                              style={{ width: "100%", height: "85%" }}
-                              required
-                            >
-                              {modelsOptions.map((option) => (
-                                <MenuItem key={option} value={option}>
-                                  {option.model}
-                                </MenuItem>
-                              ))}
-                            </Select>
-                          </FormControl>
-                        </div>
-                      </div>
-                    </Form.Group>
-                    <Form.Group id="template-form" className="w-100 mt-4">
-                      <div className="row">
-                        <div className="col d-flex justify-content-center">
-                          <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-helper-label">
-                              Number Of Vehicle Owners
-                            </InputLabel>
-                            <Select
-                              labelId="demo-simple-select-label"
-                              id="Number Of Vehicle Owners"
-                              label="Number Of Vehicle Owners"
-                              value={used}
-                              style={{ width: "100%", height: "85%" }}
-                              onChange={usedChange}
-                              required
-                            >
-                              <MenuItem value={1}>01</MenuItem>
-                              <MenuItem value={2}>02</MenuItem>
-                              <MenuItem value={3}>03</MenuItem>
-                              <MenuItem value={4}>04</MenuItem>
-                              <MenuItem value={5}>05</MenuItem>
-                              <MenuItem value={6}>06</MenuItem>
-                              <MenuItem value={7}>07</MenuItem>
-                              <MenuItem value={8}>08</MenuItem>
-                              <MenuItem value={9}>09</MenuItem>
-                              <MenuItem value={10}>+10</MenuItem>
-                            </Select>
-                          </FormControl>
-                        </div>
-                        <div className="col d-flex justify-content-center">
-                          <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-helper-label">
-                              Year
-                            </InputLabel>
-                            <Select
-                              labelId="demo-simple-select-label"
-                              id="template"
-                              label="Number Of Vehicle Owners"
-                              value={year}
-                              style={{ width: "100%", height: "85%" }}
-                              onChange={yearChange}
-                              required
-                            >
-                              <MenuItem value={2020}>2020</MenuItem>
-                              <MenuItem value={2021}>2021</MenuItem>
-                              <MenuItem value={2022}>2022</MenuItem>
-                            </Select>
-                          </FormControl>
-                        </div>
-                      </div>
-                    </Form.Group>
-                    <Form.Group className="w-100 mt-4">
-                      <div className="row">
-                        <div className="col d-flex" onChange={dateChange}>
-                          <TextField
-                            id="datetime-local-start"
-                            label="Date and time to end"
-                            type="datetime-local"
-                            defaultValue={firstRegistration}
-                            sx={{ width: 250 }}
-                            InputLabelProps={{
-                              shrink: true,
-                            }}
-                            required
-                          />
-                        </div>
-                        <div className="col d-flex">
-                          <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-helper-label">
-                              Count Of Doors
-                            </InputLabel>
-                            <Select
-                              labelId="demo-simple-select-label"
-                              id="Count Of Doors"
-                              label="Count Of Doors"
-                              value={year}
-                              style={{ width: "100%", height: "85%" }}
-                              onChange={doorChange}
-                              required
-                            >
-                              <MenuItem value={2}>2</MenuItem>
-                              <MenuItem value={3}>3</MenuItem>
-                              <MenuItem value={4}>4</MenuItem>
-                              <MenuItem value={5}>5</MenuItem>
-                              <MenuItem value={6}>6</MenuItem>
-                            </Select>
-                          </FormControl>
-                        </div>
-                        <div className="col">
-                          <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-helper-label">
-                              Color
-                            </InputLabel>
-                            <Select
-                              labelId="demo-simple-select-label"
-                              id="template"
-                              label="Number Of Vehicle Owners"
-                              value={colour}
-                              style={{ width: "100%", height: "85%" }}
-                              onChange={colorChange}
-                              required
-                            >
-                              <MenuItem value={"Black"}>Black</MenuItem>
-                              <MenuItem value={"Yellow"}>Yellow</MenuItem>
-                              <MenuItem value={"Blue"}>Blue</MenuItem>
-                              <MenuItem value={"White"}>White</MenuItem>
-                              <MenuItem value={"Grey"}>Grey</MenuItem>
-                            </Select>
-                          </FormControl>
-                        </div>
-                        <div className="col">
-                          <TextField
-                            className="w-100"
-                            style={{ height: "85px" }}
-                            id="visableTimeInSeconds-text-fields"
-                            label="Price I=in $"
-                            defaultValue={price}
-                            onChange={(e) => {
-                              setPrice(e.target.value);
-                            }}
-                            type="number"
-                            variant="outlined"
-                          />
-                        </div>
-                      </div>
-                    </Form.Group>
-                    <Form.Group id="text-field-form">
-                      <div className="row">
-                        <div className="d-flex col-6 justify-content-center wrapper">
-                          <FormControl fullWidth>
-                            <InputLabel>Description</InputLabel>
-                            <TextareaAutosize
-                              style={{ height: "150px" }}
-                              id="textFields-text-fields"
-                              label="Description"
-                              defaultValue={description}
-                              onChange={(e) => {
-                                setDescription(e.target.value);
-                              }}
-                              type="text"
-                              variant="outlined"
-                              maxRows={10}
-                            />
-                          </FormControl>
-                        </div>{" "}
-                        <div className="d-flex justify-content-center col-6 wrapper">
-                          <div
-                            className="drop_zone"
-                            onDragOver={handleDragOver}
-                            onDrop={handleOnDrop}
-                            onClick={() => fileInput.current.click()}
-                          >
-                            <p>
-                              Click to select or Drag and drop image here....
-                            </p>
-                            <input
-                              id="file"
-                              accept="image/*"
-                              class="form-control"
-                              label="Profile Image"
-                              type="file"
-                              name="image"
-                              required
-                              ref={fileInput}
-                              hidden
-                              onChange={(e) => handleFile(e.target.files[0])}
-                              // onChange={(event) => {
-                              //   const file = event.target.files[0];
-                              //   setImages(file);
-                              // }}
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-                    </Form.Group>
-                  </Card.Body>
-                  <div className="justify-content-center d-flex">
-                    <Button
-                      disabled={loading}
-                      className="w-25 blue-btn mb-4"
-                      type="submit"
+  const changeModel = (e) => {
+    setModel(e.target.value);
+    setYearStatus(false);
+  }
+
+    return (
+      <div className="pl-1 pr-1">
+        <div>
+          <Card style={{ boxShadow: "15px 15px 15px 15px #363636" }}>
+            <Form>
+              {/* Make */}
+              <div className="row d-flex justify-content-center mt-4 mb-4">
+                <div className="col-3">
+                  <FormControl fullWidth>
+                    <InputLabel id="make-label">Make</InputLabel>
+                    <Select
+                      className="w-100"
+                      labelId="make-label"
+                      id="make"
+                      label="Make"
+                      value={company}
+                      onChange={makeCahnge}
+                      required
                     >
-                      Add Advertisement
-                    </Button>
-                  </div>
-                </Form>
+                      {companiesHeAndEn.map((make) => (
+                        <MenuItem key={make} value={make}>
+                          {make.english}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </div>
+                <div className="col-3">
+                  {/* Model */}
+                  <FormControl disabled={status} fullWidth>
+                    <InputLabel id="model-label">Model</InputLabel>
+                    <Select
+                      labelId="model-label"
+                      id="model"
+                      label="Model"
+                      value={model}
+                      onChange={changeModel}
+                      required
+                    >
+                      {Array.from(
+                        new Set(dataFromApi.map((obj) => obj.degem_nm))
+                      ).map((degem_nm) => {
+                        return (
+                          <MenuItem key={degem_nm} value={degem_nm}>
+                            {degem_nm}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </div>
+                <div className="col-3">
+                  <FormControl disabled={status} fullWidth>
+                    <InputLabel id="type-label">Type</InputLabel>
+                    <Select
+                      className="w-100"
+                      labelId="type-label"
+                      id="type"
+                      label="Type"
+                      value={type}
+                      onChange={(e) => setType(e.target.value)}
+                      required
+                    >
+                      {Array.from(
+                        new Set(dataFromSecApi.map((obj) => obj.type))
+                      ).map((type) => {
+                        return (
+                          <MenuItem key={type} value={type}>
+                            {type}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </div>
               </div>
-            </div>
+              <div className="row d-flex justify-content-center mt-4  mb-4">
+                <div className="col-3">
+                  {/* Year */}
+                  <FormControl fullWidth disabled={yearStatus}>
+                    <InputLabel id="year-label">Year</InputLabel>
+                    <Select
+                      labelId="year-label"
+                      id="year"
+                      label="Year"
+                      value={year}
+                      onChange={(e) => setYear(e.target.value)}
+                      required
+                    >
+                      {Array.from(
+                        new Set(
+                          dataFromApi
+                            .filter((car) => car.degem_nm == model)
+                            .map((obj) => obj.shnat_yitzur)
+                        )
+                      ).map((shnat_yitzur) => {
+                        return (
+                          <MenuItem key={shnat_yitzur} value={shnat_yitzur}>
+                            {shnat_yitzur}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </div>
+                <div className="col-3">
+                  {/* Engine */}
+                  <FormControl fullWidth disabled={yearStatus}>
+                    <InputLabel id="engine-label">Engine</InputLabel>
+                    <Select
+                      labelId="engine-label"
+                      id="engine"
+                      label="Engine"
+                      value={engine}
+                      onChange={(e) => {
+                        setEngine(e.target.value);
+                        setHpStatus(false);
+                      }}
+                      required
+                    >
+                      {Array.from(
+                        new Set(
+                          dataFromApi
+                            .filter((car) => car.degem_nm == model)
+                            .map((obj) => obj.nefach_manoa)
+                        )
+                      ).map((nefach_manoa) => {
+                        return (
+                          <MenuItem key={nefach_manoa} value={nefach_manoa}>
+                            {nefach_manoa}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </div>
+              </div>
+              <div className="row d-flex justify-content-center mt-4  mb-4">
+                <div className="col-3">
+                  {/* HP */}
+                  <FormControl fullWidth disabled={hpStatus}>
+                    <InputLabel id="hp-label">Horse Power</InputLabel>
+                    <Select
+                      labelId="hp-label"
+                      id="hp"
+                      label="hp"
+                      value={horsePower}
+                      onChange={(e) => setHorsePower(e.target.value)}
+                      required
+                    >
+                      {Array.from(
+                        new Set(
+                          dataFromApi
+                            .filter(
+                              (car) =>
+                                car.degem_nm == model &&
+                                car.nefach_manoa == engine
+                            )
+                            .map((obj) => obj.sug_delek_nm)
+                        )
+                      ).map((sug_delek_nm) => {
+                        return (
+                          <MenuItem key={sug_delek_nm} value={sug_delek_nm}>
+                            {sug_delek_nm}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </div>
+                <div className="col-3">
+                  {/* Category */}
+                  <FormControl fullWidth disabled={yearStatus}>
+                    <InputLabel id="category-label">Category</InputLabel>
+                    <Select
+                      labelId="category-label"
+                      id="category"
+                      label="Category"
+                      value={carType}
+                      onChange={(e) => setCarType(e.target.value)}
+                      required
+                    >
+                      {Array.from(
+                        new Set(
+                          dataFromApi
+                            .filter((car) => car.degem_nm == model)
+                            .map((obj) => obj.sug_rechev_nm)
+                        )
+                      ).map((sug_rechev_nm) => {
+                        return (
+                          <MenuItem key={sug_rechev_nm} value={sug_rechev_nm}>
+                            {sug_rechev_nm}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </div>
+              </div>
+              <div className="row d-flex justify-content-center mt-4  mb-4">
+                <div className="col-2">
+                  <TextField
+                    id="datetime-local-start"
+                    label="Date"
+                    type="date"
+                    defaultValue={firstRegistrationDate}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    required
+                  />
+                </div>
+                <div className="col-1">
+                  <FormControl fullWidth>
+                    <InputLabel id="door-label">Door Count</InputLabel>
+                    <Select
+                      className="w-100"
+                      labelId="door-label"
+                      id="door"
+                      label="Door Count"
+                      value={doorCount}
+                      onChange={(e) => setDoorCount(e.target.value)}
+                      required
+                    >
+                      {doorCountOptions.map((doorOption) => {
+                        return (
+                          <MenuItem key={doorOption} value={doorOption}>
+                            {doorOption}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </div>
+                <div className="col-1">
+                  <FormControl fullWidth>
+                    <InputLabel id="seats-label">Seats Count</InputLabel>
+                    <Select
+                      className="w-100"
+                      labelId="seats-label"
+                      id="seats"
+                      label="Count Of Seats"
+                      value={numberOfSeats}
+                      onChange={(e) => setNumberOfSeats(e.target.value)}
+                      required
+                    >
+                      {countOfSeatsOptions.map((seatsOption) => {
+                        return (
+                          <MenuItem key={seatsOption} value={seatsOption}>
+                            {seatsOption}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </div>
+                <div className="col-2">
+                  <FormControl fullWidth>
+                    <InputLabel id="gearbox-label">Gearbox</InputLabel>
+                    <Select
+                      className="w-100"
+                      labelId="gearbox-label"
+                      id="gearbox"
+                      label="Gearbox"
+                      value={gearbox}
+                      onChange={(e) => setGearbox(e.target.value)}
+                      required
+                    >
+                      {gearBoxesList.map((gearboxOption) => {
+                        return (
+                          <MenuItem key={gearboxOption} value={gearboxOption}>
+                            {gearboxOption}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </div>
+              </div>
+              <div className="row d-flex justify-content-center mt-4  mb-4">
+                <div className="col-3">
+                  {/* Year */}
+                  <FormControl fullWidth>
+                    <InputLabel id="m-color-label">
+                      Mnufacturer Colour
+                    </InputLabel>
+                    <Select
+                      labelId="m-color-label"
+                      id="m-color"
+                      label="m-color"
+                      value={mnufacturerColour}
+                      onChange={(e) => setMnufacturerColour(e.target.value)}
+                      required
+                    >
+                      {colorList.map((color) => {
+                        return (
+                          <MenuItem key={color} value={color}>
+                            <div className="row">
+                              <div className="col-8">{color}</div>
+                              <div
+                                className="col-1 d-flex"
+                                style={{ background: color }}
+                              ></div>
+                            </div>
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </div>
+                <div className="col-3">
+                  {/* Year */}
+                  <FormControl fullWidth>
+                    <InputLabel id="m-color-label">Colour</InputLabel>
+                    <Select
+                      labelId="m-color-label"
+                      id="m-color"
+                      label="m-color"
+                      value={colour}
+                      onChange={(e) => setColour(e.target.value)}
+                      required
+                    >
+                      {colorList.map((color, i) => {
+                        return (
+                          <MenuItem key={color + i} value={color + i}>
+                            <div className="row">
+                              <div className="col-8">{color}</div>
+                              <div
+                                className="col-1 d-flex"
+                                style={{ background: color }}
+                              ></div>
+                            </div>
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </div>
+              </div>
+            </Form>
           </Card>
         </div>
       </div>
-    </>
-  );
+    );
 }
