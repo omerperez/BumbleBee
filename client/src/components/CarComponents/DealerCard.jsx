@@ -27,7 +27,7 @@ export default function DealerCard({firstName, lastName, email ,phoneNumber, ima
       "https://wa.me/" + "+972522520484" + "?text=" + whatsappMassege
     );
   };
-
+  
   return (
     <Card
       sx={{ display: "flex" }}
@@ -48,7 +48,7 @@ export default function DealerCard({firstName, lastName, email ,phoneNumber, ima
               for (let i = 0; i < 5; i++)  <StarIcon />;
             }} */}
           </Typography>
-          <div style={{ marginTop: "10%" }}>
+          <div className="mt-3">
             <div>
               <AlternateEmailIcon
                 style={{ marginRight: "5%", color: "#363636" }}

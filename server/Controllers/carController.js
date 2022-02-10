@@ -98,7 +98,7 @@ const updateCar = (req, res) => {
     category: req.body.category,
     availability: req.body.availability,
     description: req.body.description,
-    images: req.body.images,
+    images: req.files, 
     hp: req.body.hp,
     fuelConsumption: req.body.fuelConsumption,
     numberOfSeats: req.body.numberOfSeats,

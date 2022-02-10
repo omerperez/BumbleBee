@@ -14,7 +14,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import axios from "axios";
 import { FormControl } from "@mui/material";
-import { carsCompany, hebrewCarsCompany } from "./exportForSelect";
+// import { carsCompany } from "./exportForSelect";
 import DeleteDialog from "../DialogComponents/DeleteDialog";
 
 const api = axios.create({ baseURL: process.env.REACT_APP_FBASE_URL });
@@ -198,7 +198,7 @@ export default function CreateCarForm() {
     <>
       <div className="pr-1 pl-1">
         <div className="pr-1 pl-1 mt-3">
-          <Card style={{ boxShadow: "15px 15px 15px 15px #708090" }}>
+          <Card className="create-car-box-shadow">
             <div className="row">
               <div className="col-3" style={{ backgroundColor: "#87CEFA" }}>
                 <h1

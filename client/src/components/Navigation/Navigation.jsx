@@ -13,6 +13,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { makeStyles } from "@mui/styles";
 import { clientMenuItems, managerMenuItems } from "./menuItems";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
+import { Button } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,7 +65,7 @@ export default function Navigation() {
   const classes = useStyles();
   const theme = useTheme();
   const [error, setError] = useState("");
-  const { currentUser, logout } = useAuth();
+  const { currentUser, logout, changeMode, mode } = useAuth();
   const navigate = useNavigate();
   const [check, setCheck] = useState("/homepage");
 
@@ -98,6 +101,12 @@ export default function Navigation() {
           xs={{ height: 8 }}
         />
       </div> */}
+      <div className="d-flex justify-content-center">
+        <FormControlLabel
+          control={<Switch defaultChecked onClick={() => changeMode(mode)} />}
+          label={mode ? "Light Mode" : "Dark Mode"}
+        />
+      </div>
       <Divider className="yellow-divider" />
       <List>
         {menuItems.map((item, i) => {
@@ -116,10 +125,9 @@ export default function Navigation() {
               >
                 <ListItemText primary={item.title} />
                 {item.image ? (
-                  <img alt=""
-                    style={
-                      item.path == check ? { marginRight: '5px' } : null
-                    }
+                  <img
+                    alt=""
+                    style={item.path == check ? { marginRight: "5px" } : null}
                     src={item.image}
                     className="nav-image"
                   />

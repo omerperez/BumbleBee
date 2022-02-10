@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import PageTitle from "../Layout/PageTitle";
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
@@ -28,7 +28,7 @@ const stepsImages = [
 ];
 export default function AboutUs() {
 
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
     const newActiveStep = activeStep + 1;

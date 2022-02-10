@@ -1,6 +1,29 @@
 import { createTheme } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 
+export const darkTheme = createTheme({
+  palette: {
+    type: "dark",
+    background: {
+      default: "#111821",
+      paper: "black",
+    },
+    text: {
+      primary: "#fff",
+      secondary: "#cccccc",
+    },
+  },
+});
+export const whiteTheme = createTheme({
+  palette: {
+    type: "light",
+  },
+  text: {
+    primary: "black",
+    secondary: "black",
+  },
+});
+
 let theme = createTheme({
   palette: {
     primary: {

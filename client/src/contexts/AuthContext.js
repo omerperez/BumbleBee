@@ -13,8 +13,13 @@ export function useAuth(){
 export default function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
+  const [mode, setMode] = useState(true);
+  
   const cookies = new Cookies();
 
+  function changeMode(userMode) {
+    setMode(!userMode);
+  }
   function signup(firstName, lastName, email, password, image) {
     const userData = new FormData();
     userData.append("firstName", firstName);
@@ -78,6 +83,8 @@ export default function AuthProvider({ children }) {
   const value = {
     currentUser,
     login,
+    mode,
+    changeMode,
     signup,
     logout,
     resetPassword,

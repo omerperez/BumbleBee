@@ -248,3 +248,7 @@
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
+
+.create-car-box-shadow {
+  box-shadow: 15px 15px 15px 15px #708090
+}

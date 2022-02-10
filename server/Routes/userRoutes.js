@@ -4,11 +4,8 @@ const userController = require("../Controllers/userController");
 const multer = require("multer");
 const router = express.Router();
 const multerS3 = require('multer-s3');
-const uuid = require('uuid').v4;
-const path = require('path');
 const dotenv = require("dotenv");
 const aws = require("aws-sdk");
-const user = require("../Models/user");
 
 dotenv.config();
 aws.config.update({ region: "eu-west-1" });
@@ -49,7 +46,7 @@ const upload = multer({
 
 // const upload = multer({ storage: fileStorageEngine });
 
-router.post("/single", upload.single('image'), userController.uploadImage);
+router.post("/single", upload.single("image"), userController.uploadImage);
 
 router.post('/register', upload.single('image'), userController.register);
 

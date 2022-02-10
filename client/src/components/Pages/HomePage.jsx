@@ -8,15 +8,12 @@ export default function HomePage() {
   const [cars, setCars] = useState([]);
   
   useEffect(() => {
-
     fetch("http://localhost:8080/car")
       .then((response) => response.json())
       .then((data) => setCars(data));
-      
   }, []);
 
   if (cars == null) return "";
-
 
   return (
     <>

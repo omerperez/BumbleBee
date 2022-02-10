@@ -32,7 +32,7 @@ export default function CarCard({ _id, image, company, model, year, used, engine
               {used}
             </div>
           </div>
-          <div style={{ display: "flex" }}>
+          <div className="d-flex">
             <div className="flex-50">
               <EngineeringIcon className="icon-text-space" />
               {engine}
