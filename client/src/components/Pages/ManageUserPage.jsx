@@ -5,14 +5,6 @@ import SmartTable from "../TableComponents/SmartTable";
 import TableNoResults from "../TableComponents/TableNoResults";
 import UserCells from "../TableComponents/UserCells";
 
-const currDose = (
-  <div style={{}}>
-    {" "}
-    Current dose /
-    <br /> Related Reduction{" "}
-  </div>
-);
-
 const smallLabel = {  minHeight: '50px !important', width: "15%", marginTop: "21px" };
 const medWidth = { minHeight: "50px", width: "25%" };
 const noBorder = { minHeight: "50px", width: "12%", border: 'none !important' };

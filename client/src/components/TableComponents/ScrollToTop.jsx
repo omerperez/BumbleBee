@@ -11,7 +11,6 @@ const useStyles = makeStyles({
     position: "fixed",
     bottom: "2vh",
     backgroundColor: "#4679BF",
-
     borderRadius: "4px",
     cursor: "pointer",
     color: "white",

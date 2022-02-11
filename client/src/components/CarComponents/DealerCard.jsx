@@ -30,10 +30,14 @@ export default function DealerCard({firstName, lastName, email ,phoneNumber, ima
   
   return (
     <Card
+      className="grid-container"
       sx={{ display: "flex" }}
       style={{ borderRadius: "2%", boxShadow: "5px 5px 5px 5px #888888" }}
     >
-      <Box sx={{ display: "flex", flexDirection: "column" }}>
+      <Box
+        sx={{ display: "flex", flexDirection: "column" }}
+        className="grid-item"
+      >
         <CardContent sx={{ flex: "1 0 auto" }}>
           <Typography component="div" variant="h4">
             {firstName + " " + lastName}
@@ -83,7 +87,7 @@ export default function DealerCard({firstName, lastName, email ,phoneNumber, ima
           </div>
         </CardContent>
       </Box>
-      <div style={{ margin: "auto" }}>
+      <div style={{ margin: "auto" }} className="grid-item">
         <img
           src={image}
           width={170}

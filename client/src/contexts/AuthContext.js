@@ -73,6 +73,57 @@ export default function AuthProvider({ children }) {
     return currentUser.updatePassword(password);
   }
 
+  function createCar(
+    company,
+    model,
+    year,
+    used,
+    engine,
+    km,
+    price,
+    netPrice,
+    vehicleStatus,
+    category,
+    availability,
+    description,
+    images,
+    hp,
+    fuelConsumption,
+    numberOfSeats,
+    doorCount,
+    gearbox,
+    emissionClass,
+    firstRegistration,
+    mnufacturerColour,
+    colour,
+    iteriorDesign
+  ) {
+    const data = {
+      messageName: messageName,
+      templateSrc:
+        template == "Template 1" ? 1 : template == "Template 2" ? 2 : 3,
+      title: title,
+      textFields: textFields,
+      visableFor: visableTimeInSeconds,
+      images: [],
+      dateAndTimeToStartFrame: dateToStart,
+      dateAndTimeToEndFrame: dateToEnd,
+      daysToshow: daysToShow,
+      screens: screenNumber,
+    };
+
+    console.log(data);
+
+    return api
+      .post("/message/create", data)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   useEffect(() => {
     if (cookies.get("connectUser")) {
       setCurrentUser(cookies.get("connectUser"));
