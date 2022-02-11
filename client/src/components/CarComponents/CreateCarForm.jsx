@@ -19,6 +19,8 @@ const api = axios.create({ baseURL: process.env.REACT_APP_FBASE_URL });
 
 export default function CreateCarForm() {
   
+    const { createNewCar } = useAuth();
+
   const [dataFromApi, setDataFromApi] = useState([]);
   const [dataFromSecApi, setDataFromSecApi] = useState([]);
   const [company, setCompany] = useState({});
@@ -42,7 +44,14 @@ export default function CreateCarForm() {
   const [firstRegistrationDate, setFirstRegistrationDate] = useState(
     new Date("2020-08-18")
   );
+  const [images, setImages] = useState([]);
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
+  const fileSelectedHandler = (e) => {
+    setImages([...e.target.files])
+  }
   useEffect(() => {
     fetch(
       `https://data.gov.il/api/3/action/datastore_search?resource_id=03adc637-b6fe-402b-9937-7c3d3afc9140&limit=100000&q=פרטי נוסעים&q=${company.hebrew}`
@@ -70,38 +79,35 @@ export default function CreateCarForm() {
         });
   }, [company]);
   
-  // async function handleSubmit(e) {
-  //   e.preventDefault();
-  //   try {
-  //     setError("");
-  //     setLoading(true);
-  //     await caret(
-  //       company,
-  //       model,
-  //       year,
-  //       numberOfVehicleOwners,
-  //       engine,
-  //       km,
-  //       price,
-  //       price * 0.7,
-  //       vehicleStatus,
-  //       category,
-  //       images,
-  //       fuel,
-  //       numberOfSeats,
-  //       doorCount,
-  //       gearbox,
-  //       "Euro6",
-  //       firstRegistrationDate,
-  //       colour,
-  //       interiorDesign
-  //     );
-  //     navigate("/homepage");
-  //   } catch {
-  //     setError("Failed to sign in");
-  //   }
-  //   setLoading(false);
-  // }
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      setError("");
+      setLoading(true);
+      await createNewCar(
+        company,
+        model,
+        year,
+        numberOfVehicleOwners,
+        engine,
+        km,
+        price,
+        fuel,
+        numberOfSeats,
+        doorCount,
+        gearbox,
+        firstRegistrationDate,
+        colour,
+        condition,
+        interiorDesign,
+        images
+      );
+      navigate("/homepage");
+    } catch {
+      setError("Failed to sign in");
+    }
+    setLoading(false);
+  }
 
   const makeCahnge = (e) => {
     setCompany(e.target.value);
@@ -114,7 +120,8 @@ export default function CreateCarForm() {
   }
     return (
       <div className="pl-1 pr-1">
-        <Form action="/multiple">
+        <Form action="/multiple" onSubmit={handleSubmit}>
+          {error && <Alert variant="danger">{error}</Alert>}
           <div className="row d-flex justify-content-center m-3">
             <h5>General Information</h5>
             <div className="col">
@@ -459,16 +466,24 @@ export default function CreateCarForm() {
             </div>
             <div className="row d-flex justify-content-center"></div>
           </div>
-          <div
-            className="inputfile d-flex justify-content-center m-5"
-            // className=""
+          <FormControl fullWidth className="mt-3">
+            <div className="d-flex justify-content-center">
+              <label for="files">
+                Select files:
+                <div className="form-group">
+                  <input type="file" multiple onChange={fileSelectedHandler} />
+                </div>
+                <br />
+              </label>
+            </div>
+          </FormControl>
+          <Button
+            disabled={loading}
+            className="w-100 mb-3 yellow-btn"
+            type="submit"
           >
-            <input type="file" id="file" name="images" multiple />
-            <label for="file" className="btn-2">
-              Upload Images <FileUploadIcon />
-            </label>
-            {/* <input type={"file"} name="images" multiple /> */}
-          </div>
+            Create New Car
+          </Button>
         </Form>
       </div>
     );

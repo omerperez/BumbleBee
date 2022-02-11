@@ -31,6 +31,7 @@ const upload = multer({
     key: (req, file, cb) => {
       // const ext = path.extname(file.originalname);
       cb(null, Date.now() + file.originalname);
+      console.log('here' + file);
     },
   }),
 });

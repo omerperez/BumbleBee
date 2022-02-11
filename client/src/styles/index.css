@@ -268,14 +268,14 @@
     display: inline-block;
 	
 }
-
+/* 
 [type="file"] {
   height: 0;
   overflow: hidden;
   width: 0;
-}
+} */
 
-[type="file"] + label {
+/* [type="file"] + label {
   background: #e2a021;
   border: none;
   border-radius: 5px;
@@ -291,7 +291,7 @@
   position: relative;
   transition: all 0.3s;
   vertical-align: middle;
-}
+} */
 
 .grid-container {
   display: grid;

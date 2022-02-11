@@ -73,49 +73,79 @@ export default function AuthProvider({ children }) {
     return currentUser.updatePassword(password);
   }
 
-  function createCar(
+  function createNewCar(
     company,
     model,
     year,
-    used,
+    numberOfVehicleOwners,
     engine,
     km,
     price,
-    netPrice,
-    vehicleStatus,
-    category,
-    availability,
-    description,
-    images,
-    hp,
-    fuelConsumption,
+    fuel,
     numberOfSeats,
     doorCount,
     gearbox,
-    emissionClass,
-    firstRegistration,
-    mnufacturerColour,
+    firstRegistrationDate,
     colour,
-    iteriorDesign
+    condition,
+    interiorDesign,
+    images
   ) {
-    const data = {
-      messageName: messageName,
-      templateSrc:
-        template == "Template 1" ? 1 : template == "Template 2" ? 2 : 3,
-      title: title,
-      textFields: textFields,
-      visableFor: visableTimeInSeconds,
-      images: [],
-      dateAndTimeToStartFrame: dateToStart,
-      dateAndTimeToEndFrame: dateToEnd,
-      daysToshow: daysToShow,
-      screens: screenNumber,
-    };
+    const carData = new FormData();
+    carData.append("companyEnglish", company.english);
+    carData.append("companyHebrew", company.hebrew);
+    carData.append("model", model);
+    carData.append("year", year);
+    carData.append("numberOfVehicleOwners", numberOfVehicleOwners);
+    carData.append("engine", engine);
+    carData.append("km", km);
+    carData.append("price", price);
+    carData.append("netPrice", price*(0.7));
+    carData.append("images", images);
+    carData.append("fuelConsumption", fuel);
+    carData.append("numberOfSeats", numberOfSeats);
+    carData.append("doorCount", doorCount);
+    carData.append("gearbox", gearbox);
+    carData.append("emissionClass", "Euro6");
+    carData.append("firstRegistration", firstRegistrationDate);
+    carData.append("colour", colour);
+    carData.append("condition", condition);
+    carData.append("iteriorDesign", interiorDesign);
+    carData.append("dealer", currentUser._id);
+    
+      // const newCar = {
+      //   companyEnglish: company.english,
+      //   companyHebrew: company.hebrew,
+      //   model: model,
+      //   year: year,
+      //   numberOfVehicleOwners: numberOfVehicleOwners,
+      //   engine: engine,
+      //   km: km,
+      //   price: price,
+      //   netPrice: price * 0.7,
+      //   // description: ,
+      //   images: images,
+      //   fuelConsumption: fuel,
+      //   numberOfSeats: numberOfSeats,
+      //   doorCount: doorCount,
+      //   gearbox: gearbox,
+      //   emissionClass: "Euro6",
+      //   firstRegistration: firstRegistrationDate,
+      //   colour: colour,
+      //   condition: condition,
+      //   iteriorDesign: interiorDesign,
+      //   dealer: currentUser._id,
+      // };
 
-    console.log(data);
+    console.log(carData);
+    console.log(carData.images);
 
     return api
-      .post("/message/create", data)
+      .post("/car/create", carData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then(function (response) {
         console.log(response);
       })
@@ -135,6 +165,7 @@ export default function AuthProvider({ children }) {
     currentUser,
     login,
     mode,
+    createNewCar,
     changeMode,
     signup,
     logout,

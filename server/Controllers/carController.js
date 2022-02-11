@@ -46,7 +46,8 @@ async function createCar (req, res) {
   console.log(req.body);
   const createNewCar = {
     // _id: req.params.id,
-    company: req.body.company,
+    companyEnglish: req.body.companyEnglish,
+    companyHebrew: req.body.companyHebrew,
     model: req.body.model,
     year: req.body.year,
     numberOfVehicleOwners: req.body.numberOfVehicleOwners,
@@ -54,23 +55,21 @@ async function createCar (req, res) {
     km: req.body.km,
     price: req.body.price,
     netPrice: req.body.netPrice,
-    vehicleStatus: req.body.vehicleStatus,
-    category: req.body.category,
-    availability: req.body.availability,
-    description: req.body.description,
+    // description: req.body.description,
     images: req.body.images,
-    hp: req.body.hp,
     fuelConsumption: req.body.fuelConsumption,
     numberOfSeats: req.body.numberOfSeats,
     doorCount: req.body.doorCount,
     gearbox: req.body.gearbox,
     emissionClass: req.body.emissionClass,
     firstRegistration: Date(req.body.firstRegistration),
-    mnufacturerColour: req.body.mnufacturerColour,
     colour: req.body.colour,
+    condition: req.body.condition,
     iteriorDesign: req.body.iteriorDesign,
     dealer: req.body.dealerId,
   };
+
+  /* Next Step - One to Many */
   // if(user.)
     // await userSchema.findOneAndUpdate(
     //   { id: createNewCar.dealer },
@@ -86,7 +85,8 @@ const updateCar = (req, res) => {
   console.log(req.body);
   let newCar = new carSchema({
     _id: req.params.id,
-    company: req.body.company,
+    companyEnglish: req.body.companyEnglish,
+    companyHebrew: req.body.companyHebrew,
     model: req.body.model,
     year: req.body.year,
     numberOfVehicleOwners: req.body.numberOfVehicleOwners,
@@ -94,20 +94,16 @@ const updateCar = (req, res) => {
     km: req.body.km,
     price: req.body.price,
     netPrice: req.body.netPrice,
-    vehicleStatus: req.body.vehicleStatus,
-    category: req.body.category,
-    availability: req.body.availability,
     description: req.body.description,
-    images: req.files, 
-    hp: req.body.hp,
+    images: req.files,
     fuelConsumption: req.body.fuelConsumption,
     numberOfSeats: req.body.numberOfSeats,
     doorCount: req.body.doorCount,
     gearbox: req.body.gearbox,
     emissionClass: req.body.emissionClass,
     firstRegistration: Date(req.body.firstRegistration),
-    mnufacturerColour: req.body.mnufacturerColour,
     colour: req.body.colour,
+    condition: req.body.condition,
     iteriorDesign: req.body.iteriorDesign,
     dealer: req.body.dealerId,
   });
