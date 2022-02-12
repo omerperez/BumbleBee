@@ -2,24 +2,29 @@ import React, {useState, useEffect} from "react";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import DealerCard from "./DealerCard";
+import { useAuth } from "../../contexts/AuthContext";
 
-export default function CarImageGallery({id}) {
+export default function CarImageGallery({ id, car }) {
+  
+  const url = "https://firebasestorage.googleapis.com/v0/b/bumblebee-d5c23.appspot.com/o/files%2F";
+  const [dealer, setDealer] = useState(null);
 
-    const [dealer, setDealer] = useState();
-    useEffect(() => {
-        fetch("http://localhost:8080/user/my-user/" + id)
-          .then((response) => response.json())
-          .then((data) => setDealer(data));
-    }, [id])
+  useEffect(() => {
+    fetch(`http://localhost:8080/user/my-user/` + id)
+      .then((response) => response.json())
+      .then((data) => {
+        setDealer(data)
+        console.log(data);
+      });
+  }, [id]);
 
-    if(dealer == null ) return " "
-    
+  // if (dealer == null) return " ";
   return (
     <>
       <div className="pl-1 pr-1" style={{ display: "flex" }}>
         <ImageList
           style={{
-            flexBasis: '17%',
+            flexBasis: "17%",
             height: 450,
             border: "solid 3px black",
           }}
@@ -27,25 +32,36 @@ export default function CarImageGallery({id}) {
           sx={{ width: 200, height: 500 }}
           cols={1}
         >
-          {itemData.map((item) => (
-            <ImageListItem key={item.img}>
-              <img src={item.img} srcSet={item.img} />
-            </ImageListItem>
-          ))}
+          {car.images
+            ? car.images.map((img) => {
+                <ImageListItem key={img + "-" + car.dateForImages}>
+                  <img
+                    src={`${url + car.dateForImages}-${img}`}
+                    srcSet={`${url + car.dateForImages}-${img}`}
+                  />
+                </ImageListItem>;
+              })
+            : null}
         </ImageList>
-        <div style={{ flexBasis: '50%', height: 450 }}>
+        <div style={{ flexBasis: "50%", height: 450 }}>
           <img
-            src={"/mini.jpeg"}
-            width={'100%'}
+            src={
+              car.images
+                ? url +
+                  car.images[0].substring(0, car.images[0].indexOf(",")) +
+                  "?alt=media"
+                : null
+            }
+            width={"100%"}
             height={450}
             style={{ border: "solid 3px black", borderLeft: "none" }}
           />
         </div>
-        <div style={{ flexBasis: '33%', marginLeft: "1%" }}>
+        <div style={{ flexBasis: "33%", marginLeft: "1%" }}>
           <DealerCard
-            firstName={dealer.firstName}
-            lastName={dealer.lastName}
-            email={dealer.email}
+            firstName={dealer ? dealer.firstName : null}
+            lastName={dealer ? dealer.lastName : null}
+            email={dealer ? dealer.email : null}
             phoneNumber={"+972-522520484"}
             image={"/profileImage.png"}
           />
@@ -55,26 +71,26 @@ export default function CarImageGallery({id}) {
   );
 }
 
-const itemData = [
-  {
-    img: "/mini.jpeg",
-  },
-  {
-    img: "/mini.jpeg",
-  },
-  {
-    img: "/mini.jpeg",
-  },
-  {
-    img: "/mini.jpeg",
-  },
-  {
-    img: "/mini.jpeg",
-  },
-  {
-    img: "/mini.jpeg",
-  },
-  {
-    img: "/mini.jpeg",
-  },
-];
+// const itemData = [
+//   {
+//     img: "/mini.jpeg",
+//   },
+//   {
+//     img: "/mini.jpeg",
+//   },
+//   {
+//     img: "/mini.jpeg",
+//   },
+//   {
+//     img: "/mini.jpeg",
+//   },
+//   {
+//     img: "/mini.jpeg",
+//   },
+//   {
+//     img: "/mini.jpeg",
+//   },
+//   {
+//     img: "/mini.jpeg",
+//   },
+// ];

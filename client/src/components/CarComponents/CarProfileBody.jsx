@@ -10,7 +10,7 @@ export default function CarProfileBody({car}) {
             <table>
               <tr>
                 <th>Company</th>
-                <td>{car.company}</td>
+                <td>{car.companyEnglish}</td>
               </tr>
               <tr>
                 <th>Model</th>
@@ -20,14 +20,7 @@ export default function CarProfileBody({car}) {
                 <th>Year</th>
                 <td>{car.year}</td>
               </tr>
-              <tr>
-                <th>
-                  Number Of Vehicle
-                  <br />
-                  Owners
-                </th>
-                <td>{car.numberOfVehicleOwners}</td>
-              </tr>
+
               <tr>
                 <th>Type Of Engine</th>
                 <td>{car.engine}</td>
@@ -36,36 +29,24 @@ export default function CarProfileBody({car}) {
                 <th>Mileage</th>
                 <td>{car.km + " km"}</td>
               </tr>
-              <tr>
-                <th>Price (Net)</th>
-                <td>{car.price + "$ (" + car.netPrice + "$)"}</td>
-              </tr>
             </table>
           </div>
           <div className="col">
             <table>
               <tr>
-                <th>Vehicle condition</th>
-                <td>{car.vehicleStatus}</td>
+                <th>Owners</th>
+                <td>{car.numberOfVehicleOwners}</td>
               </tr>
               <tr>
-                <th>Category</th>
-                <td>{car.category}</td>
-              </tr>
-              <tr>
-                <th>Availability</th>
-                <td>{car.availability ? "Yes" : "No"}</td>
-              </tr>
-              <tr>
-                <th>Power (HP)</th>
-                <td>{car.hp}</td>
+                <th>Price (Net)</th>
+                <td>{car.price + "$ (" + car.netPrice + "$)"}</td>
               </tr>
               <tr>
                 <th>Fuel Consumption</th>
                 <td>{car.fuelConsumption}</td>
               </tr>
               <tr>
-                <th>Number of Seats</th>
+                <th>Seats</th>
                 <td>{car.numberOfSeats}</td>
               </tr>
               <tr>
@@ -97,10 +78,6 @@ export default function CarProfileBody({car}) {
                       Date(car.firstRegistration).toString().indexOf(" ")
                     )}
                 </td>
-              </tr>
-              <tr>
-                <th>Colour (Manufacturer)</th>
-                <td>{car.mnufacturerColour}</td>
               </tr>
               <tr>
                 <th>Colour</th>

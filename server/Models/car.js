@@ -12,6 +12,7 @@ const carSchema = new Schema({
   price: Number,
   netPrice: Number,
   // description: String,
+  dateForImages : Date,
   images: [String],
   fuelConsumption: String,
   numberOfSeats: Number,

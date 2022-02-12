@@ -14,7 +14,6 @@ import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 export default function DealerCard({firstName, lastName, email ,phoneNumber, image}) {
 
   const theme = useTheme();
-
   const whatsappMassege =
     "Hi " +
     firstName +

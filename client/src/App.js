@@ -21,15 +21,16 @@ import CreateCarPage from './components/Pages/CreateCarPage';
 import ManageUserPage from './components/Pages/ManageUserPage';
 import CarProfilePage from './components/Pages/CarProfilePage';
 import CompaniesPage from './components/Pages/CompaniesPage';
-import { ThemeProvider, createMuiTheme } from "@mui/material/styles";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
+import EditCarForm from './components/CarComponents/EditCarForm';
 
 const maxWidthCard = { maxWidth: 400 };
 const minHeightContainer = { minHeight: "100vh" };
 
 function App() {
 
-  const darkTheme = createMuiTheme({
+  const darkTheme = createTheme({
     palette: {
       type: "dark",
       background: {
@@ -42,7 +43,7 @@ function App() {
       },
     },
   });
-  const whiteTheme = createMuiTheme({
+  const whiteTheme = createTheme({
     palette: {
       type: "light",
     },
@@ -145,6 +146,14 @@ function App() {
                       <CreateCarPage />
                     </PrivateRoute>
                   }
+                />
+                <Route 
+                path="edit-car/:id"
+                element={
+                  <PrivateRoute>
+                    <EditCarForm />
+                  </PrivateRoute>
+                }
                 />
                 <Route
                   path="companies"

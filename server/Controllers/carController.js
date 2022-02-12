@@ -1,4 +1,5 @@
 const res = require("express/lib/response");
+const { isValidObjectId } = require("mongoose");
 const carSchema = require("../Models/car");
 const user = require("../Models/user");
 const userController = require("./userController");
@@ -16,9 +17,9 @@ const getAllCars = (req, res) => {
 };
 
 const getCarById = (req, res) => {
-  const messageId = req.params.id;
+  const carId = req.params.id;
   console.log(req.params);
-  carSchema.findById(messageId).then((results) => {
+  carSchema.findById(carId).then((results) => {
     try {
       res.json(results);
       console.log("OK");
@@ -55,6 +56,7 @@ async function createCar (req, res) {
     km: req.body.km,
     price: req.body.price,
     netPrice: req.body.netPrice,
+    dateForImages: req.body.dateForImages,
     // description: req.body.description,
     images: req.body.images,
     fuelConsumption: req.body.fuelConsumption,
@@ -66,7 +68,7 @@ async function createCar (req, res) {
     colour: req.body.colour,
     condition: req.body.condition,
     iteriorDesign: req.body.iteriorDesign,
-    dealer: req.body.dealerId,
+    dealer: ObjectId(req.body.dealerId),
   };
 
   /* Next Step - One to Many */

@@ -14,30 +14,41 @@ import Alert from "@mui/material/Alert";
 
 const api = axios.create({ baseURL: process.env.REACT_APP_FBASE_URL });
 
-export default function CreateCarForm() {
+export default function EditCarForm() {
+
+  const [car, setCar] = useState();
+
+  useEffect(() => {
+    const index = window.location.toString().lastIndexOf("/") + 1;
+    const id = window.location.toString().substring(index);
+    fetch("http://localhost:8080/car/show/" + id)
+      .then((response) => response.json())
+      .then((data) => setCar(data));
+  }, []);
   
+
   const { createNewCar, progress } = useAuth();
   const [dataFromApi, setDataFromApi] = useState([]);
   const [dataFromSecApi, setDataFromSecApi] = useState([]);
-  const [company, setCompany] = useState({});
+  const [company, setCompany] = useState(car.companyEnglish);
   const [firstStatus, setFirstStatus] = useState(true);
-  const [model, setModel] = useState("");
+  const [model, setModel] = useState(car.model);
   const [secondStatus, setSecondStatus] = useState(true);
-  const [year, setYear] = useState("");
-  const [engine, setEngine] = useState("");
+  const [year, setYear] = useState(car.year);
+  const [engine, setEngine] = useState(car.engine);
   const [hpStatus, setHpStatus] = useState(true);
-  const [fuel, setFuel] = useState("");
+  const [fuel, setFuel] = useState(car.fuelConsumption);
   const [type, setType] = useState("");
-  const [numberOfSeats, setNumberOfSeats] = useState(5);
-  const [doorCount, setDoorCount] = useState(5);
-  const [gearbox, setGearbox] = useState("");
-  const [colour, setColour] = useState("");
-  const [price, setPrice] = useState(10000);
-  const [ numberOfVehicleOwners, setNumberOfVehicleOwners ] = useState("00");
-  const [km, setKm] = useState(10000);
-  const [interiorDesign, setInteriorDesign] = useState("");
+  const [numberOfSeats, setNumberOfSeats] = useState(car.numberOfSeats);
+  const [doorCount, setDoorCount] = useState(car.doorCount);
+  const [gearbox, setGearbox] = useState(car.gearbox);
+  const [colour, setColour] = useState(car.colour);
+  const [price, setPrice] = useState(car.price);
+  const [ numberOfVehicleOwners, setNumberOfVehicleOwners ] = useState(car.numberOfVehicleOwners);
+  const [km, setKm] = useState(car.km);
+  const [interiorDesign, setInteriorDesign] = useState(car.iteriorDesign);
   const [condition, setCondition] = useState("");
-  const [firstRegistrationDate, setFirstRegistrationDate] = useState("2020-08-18");
+  const [firstRegistrationDate, setFirstRegistrationDate] = useState(car.firstRegistration);
   const [images, setImages] = useState();
   const navigate = useNavigate();
   const [error, setError] = useState("");

@@ -30,7 +30,7 @@ const upload = multer({
     },
     key: (req, file, cb) => {
         // const ext = path.extname(file.originalname);
-        cb(null, Date.now() + file.originalname)
+        cb(null, req.body.date + file.originalname)
     }
   }),
 });

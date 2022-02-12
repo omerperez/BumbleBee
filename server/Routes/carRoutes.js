@@ -21,20 +21,34 @@ const s3 = new aws.S3({
   secretAccessKey,
 });
 
-const upload = multer({
-  storage: multerS3({
-    s3,
-    bucket: bucketName,
-    metadata: (req, file, cb) => {
-      cb(null, { filedName: file.fieldname });
-    },
-    key: (req, file, cb) => {
-      // const ext = path.extname(file.originalname);
-      cb(null, Date.now() + file.originalname);
-      console.log('here' + file);
-    },
-  }),
+// var multipleUpload = multer({
+//   storage: multerS3({
+//     s3,
+//     bucket: bucketName,
+//     metadata: (req, file, cb) => {
+//         console.log(file);
+//         console.log('yes');
+//       cb(null, { filedName: file.fieldname });
+//     },
+//     key: (req, file, cb) => {
+//       // const ext = path.extname(file.originalname);
+//       cb(null, Date.now() + file.originalname);
+//       console.log("here" + file);
+//     },
+//   }),
+// });
+
+
+const fileStorageEngine = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, new Date().toISOString() + "--" + file.originalname);
+  },
 });
+
+const upload = multer({ storage: fileStorageEngine });
 
 router.get("/company/:company", carController.getCarByCompany);
 
@@ -42,7 +56,9 @@ router.get("/show/:id", carController.getCarById);
 
 router.get("/", carController.getAllCars);
 
-router.post("/create", upload.array("images", 7), carController.createCar);
+// fields([{name: 'images', maxCount: 10}]),
+
+router.post("/create", upload.fields([{name: 'images', maxCount: 10}]), carController.createCar);
 
 router.put("/edit/:id", carController.updateCar);
 

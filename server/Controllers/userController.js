@@ -18,6 +18,7 @@ const getAllUsers = (req, res) => {
 };
 
 const getUserById= (request, respons) => {
+  console.log(request.params.id);
   const userId = request.params.id;
   userSchema.findById(userId).then((results) => {
     try {
@@ -80,7 +81,7 @@ const register = async (request, response) => {
       email: request.body.email,
       password: hashedPassword,
       phoneNumber: request.body.phoneNumber,
-      image: Date.now() + request.file.originalname,
+      image: req.body.date + request.file.originalname,
       role: request.body.role,
     };
     
