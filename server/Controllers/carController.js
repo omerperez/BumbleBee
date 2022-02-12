@@ -68,7 +68,7 @@ async function createCar (req, res) {
     colour: req.body.colour,
     condition: req.body.condition,
     iteriorDesign: req.body.iteriorDesign,
-    dealer: ObjectId(req.body.dealerId),
+    dealer: req.body.dealerId,
   };
 
   /* Next Step - One to Many */

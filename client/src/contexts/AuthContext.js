@@ -17,6 +17,7 @@ export default function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [mode, setMode] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [imagesArray, setImagesArray] = useState([]);
   const cookies = new Cookies();
 
   function changeMode(userMode) {
@@ -134,7 +135,8 @@ export default function AuthProvider({ children }) {
     var imagesNames = [''];
     for (var i = 0; i < images.length; i++) {
       var imageFile = images[i];
-      imagesNames.push(`${date}-${imageFile.name}`);
+      let fileName = `${date}-${imageFile.name}`;
+      setImagesArray((prevState) => [...prevState, fileName]);
     }
 
     const carData = new FormData();
@@ -148,7 +150,7 @@ export default function AuthProvider({ children }) {
     carData.append("price", price);
     carData.append("netPrice", price * 0.7);
     carData.append("dateForImages", date);
-    carData.append("images", imagesNames);
+    carData.append("images", imagesArray);
     carData.append("fuelConsumption", fuel);
     carData.append("numberOfSeats", numberOfSeats);
     carData.append("doorCount", doorCount);
@@ -158,7 +160,7 @@ export default function AuthProvider({ children }) {
     carData.append("colour", colour);
     carData.append("condition", condition);
     carData.append("iteriorDesign", interiorDesign);
-    carData.append("dealer", currentUser._id);
+    carData.append("dealer", Object(currentUser._id));
 
     uploadFiles(images, carData);
     console.log(imagesNames);
@@ -188,7 +190,7 @@ export default function AuthProvider({ children }) {
 
     console.log(carData);
     console.log(carData.images);
-
+    setImagesArray([]);
     return api
       .post("/car/create", carData, {
         headers: {
@@ -201,6 +203,7 @@ export default function AuthProvider({ children }) {
       .catch(function (error) {
         console.log(error);
       });
+      
   }
 
   useEffect(() => {
