@@ -24,7 +24,7 @@ export default function AuthProvider({ children }) {
     setMode(!userMode);
   }
 
-  function signup(firstName, lastName, email, password, image) {
+  function signup(firstName, lastName, email, password, image, date) {
     const userData = new FormData();
     userData.append("firstName", firstName);
     userData.append("lastName", lastName);
@@ -32,8 +32,9 @@ export default function AuthProvider({ children }) {
     userData.append("password", password);
     userData.append("image", image);
     userData.append("role", "1");
-    userData.append("date", Date.now());
+    userData.append("date", date);
     
+    console.log(userData)
     return api
       .post("/user/register", userData)
       .then(function (response) {})
@@ -129,14 +130,13 @@ export default function AuthProvider({ children }) {
     condition,
     interiorDesign,
     images
-  ) {
+  ){
     let date = Date.now();
-
-    var imagesNames = [''];
-    for (var i = 0; i < images.length; i++) {
-      var imageFile = images[i];
-      let fileName = `${date}-${imageFile.name}`;
-      setImagesArray((prevState) => [...prevState, fileName]);
+    let imagesNames = [];
+    for (let i = 0; i < images.length; i++) {
+      const imageFile = images[i];
+      imagesNames[i] = (`${date}-${imageFile.name}`);
+      console.log(imagesNames)
     }
 
     const carData = new FormData();
@@ -150,7 +150,7 @@ export default function AuthProvider({ children }) {
     carData.append("price", price);
     carData.append("netPrice", price * 0.7);
     carData.append("dateForImages", date);
-    carData.append("images", imagesArray);
+    carData.append("images", [...imagesNames]);
     carData.append("fuelConsumption", fuel);
     carData.append("numberOfSeats", numberOfSeats);
     carData.append("doorCount", doorCount);
@@ -163,33 +163,6 @@ export default function AuthProvider({ children }) {
     carData.append("dealer", Object(currentUser._id));
 
     uploadFiles(images, carData);
-    console.log(imagesNames);
-    // const newCar = {
-    //   companyEnglish: company.english,
-    //   companyHebrew: company.hebrew,
-    //   model: model,
-    //   year: year,
-    //   numberOfVehicleOwners: numberOfVehicleOwners,
-    //   engine: engine,
-    //   km: km,
-    //   price: price,
-    //   netPrice: price * 0.7,
-    //   // description: ,
-    //   images: images,
-    //   fuelConsumption: fuel,
-    //   numberOfSeats: numberOfSeats,
-    //   doorCount: doorCount,
-    //   gearbox: gearbox,
-    //   emissionClass: "Euro6",
-    //   firstRegistration: firstRegistrationDate,
-    //   colour: colour,
-    //   condition: condition,
-    //   iteriorDesign: interiorDesign,
-    //   dealer: currentUser._id,
-    // };
-
-    console.log(carData);
-    console.log(carData.images);
     setImagesArray([]);
     return api
       .post("/car/create", carData, {

@@ -64,7 +64,6 @@ const uploadImage = (req, res) => {
 const register = async (request, response) => {
     const { error } = registerValidation(request.body);
     if (error){
-      console.log("error");
       return response.status(400).send(error.details[0].message);
     }
     const emailExist = await userSchema.findOne({ email: request.body.email });
@@ -75,6 +74,7 @@ const register = async (request, response) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(request.body.password, salt);
     // const ext = path.extname(request.file.originalname);  
+    console.log("here");
     const newUser = {
       firstName: request.body.firstName,
       lastName: request.body.lastName,

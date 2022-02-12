@@ -33,7 +33,8 @@ export default function Signup() {
         lastNameRef.current.value,
         emailRef.current.value,
         passwordRef.current.value,
-        file
+        file,
+        Date.now()
       );
       navigate("/homepage");
     } catch {
@@ -123,7 +124,6 @@ export default function Signup() {
                   onChange={event => {
                     const file = event.target.files[0];
                     setFile(file);
-                    console.log(file);
                     }
                   }
                   variant="standard"
