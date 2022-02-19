@@ -6,19 +6,19 @@ import { useAuth } from "../../contexts/AuthContext";
 
 export default function CarImageGallery({ id, car }) {
   
-  const url = "https://firebasestorage.googleapis.com/v0/b/bumblebee-d5c23.appspot.com/o/files%2F";
-  const [dealer, setDealer] = useState(null);
+  // const url = "https://firebasestorage.googleapis.com/v0/b/bumblebee-d5c23.appspot.com/o/files%2F";
+  const url = "https://bumblebee-pro.s3.eu-west-1.amazonaws.com/";
+  const [dealer, setDealer] = useState(car.dealer);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/user/my-user/` + id)
+    fetch(`http://localhost:8080/user/my-user/` + car.dealer)
       .then((response) => response.json())
       .then((data) => {
-        setDealer(data)
+        setDealer(data);
         console.log(data);
       });
-  }, [id]);
+  }, [dealer]);
 
-  // if (dealer == null) return " ";
   return (
     <>
       <div className="pl-1 pr-1" style={{ display: "flex" }}>
@@ -33,24 +33,26 @@ export default function CarImageGallery({ id, car }) {
           cols={1}
         >
           {car.images
-            ? car.images.map((img) => {
-                <ImageListItem key={img + "-" + car.dateForImages}>
-                  <img
-                    src={`${url + car.dateForImages}-${img}`}
-                    srcSet={`${url + car.dateForImages}-${img}`}
-                  />
-                </ImageListItem>;
-              })
+            ? car.images.map((image) => {
+            return (
+              <ImageListItem key={image}>
+                <img
+                  src={image}
+                />
+              </ImageListItem>
+            );
+            })
             : null}
         </ImageList>
         <div style={{ flexBasis: "50%", height: 450 }}>
           <img
             src={
               car.images
-                ? url +
-                  car.images[0].substring(0, car.images[0].indexOf(",")) +
-                  "?alt=media"
-                : null
+                ? car.images[0]
+                : //  url +
+                  //   car.images[0].substring(0, car.images[0].indexOf(",")) +
+                  //   "?alt=media"
+                  null
             }
             width={"100%"}
             height={450}

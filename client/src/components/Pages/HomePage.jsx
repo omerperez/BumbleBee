@@ -19,9 +19,6 @@ export default function HomePage() {
     <>
       <PageTitle page={"Home Page"} />
       <div className="pl-1 pr-1">
-        {/* <Link to={'/companies'}>
-          <Button>All Makers</Button>
-        </Link> */}
         <div className="cars-grid">
           {cars.map((car) => {
             return (
@@ -29,7 +26,7 @@ export default function HomePage() {
                 key={car._id}
                 _id={car._id}
                 image={"mini.jpeg"}
-                company={car.company}
+                company={car.company ? car.company : car.companyEnglish}
                 model={car.model}
                 year={car.year}
                 used={car.numberOfVehicleOwners}

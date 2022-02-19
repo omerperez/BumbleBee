@@ -2,13 +2,60 @@ const express = require("express");
 const mongoose = require("mongoose");
 const carController = require("../Controllers/carController");
 const router = express.Router();
-const multer = require("multer");
-const multerS3 = require("multer-s3");
 const dotenv = require("dotenv");
-const aws = require("aws-sdk");
+// const multer = require("multer");
+// const multerS3 = require("multer-s3");
+// const aws = require("aws-sdk");
 
 dotenv.config();
+
+router.get("/show/:id", carController.getCarById);
+
+router.get("/", carController.getAllCars);
+
+router.post("/create", carController.createCar);
+
+router.put("/edit/:id", carController.updateCar);
+
+router.delete("/delete/:id", carController.deleteCar);
+
+module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+
 aws.config.update({ region: "eu-west-1" });
+router.get("/company/:company", carController.getCarByCompany);
 
 const region = "eu-west-1";
 const bucketName = "bumblebee-pro";
@@ -50,18 +97,8 @@ const fileStorageEngine = multer.diskStorage({
 
 const upload = multer({ storage: fileStorageEngine });
 
-router.get("/company/:company", carController.getCarByCompany);
 
-router.get("/show/:id", carController.getCarById);
 
-router.get("/", carController.getAllCars);
 
-// fields([{name: 'images', maxCount: 10}]),
 
-router.post("/create", upload.fields([{name: 'images', maxCount: 10}]), carController.createCar);
-
-router.put("/edit/:id", carController.updateCar);
-
-router.delete("/delete/:id", carController.deleteCar);
-
-module.exports = router;
+*/

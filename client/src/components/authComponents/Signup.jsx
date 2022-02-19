@@ -11,6 +11,7 @@ export default function Signup() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
+  const phoneRef = useRef();
   const [file, setFile] = useState();
   const { signup } = useAuth();
   const [error, setError] = useState(''); 
@@ -18,9 +19,7 @@ export default function Signup() {
   const navigate = useNavigate(); 
 
   async function handleSubmit(e) { 
-
     e.preventDefault();
-
     if( passwordRef.current.value !== 
         passwordConfirmRef.current.value){
           return setError('Password do not match');
@@ -33,8 +32,8 @@ export default function Signup() {
         lastNameRef.current.value,
         emailRef.current.value,
         passwordRef.current.value,
-        file,
-        Date.now()
+        phoneRef.current.value,
+        file
       );
       navigate("/homepage");
     } catch {
@@ -115,17 +114,28 @@ export default function Signup() {
                   required
                 />
               </Form.Group>
+              <Form.Group id="phone" className="mb-4">
+                <TextField
+                  id="standard-email-input"
+                  label="Mobile Number"
+                  inputRef={phoneRef}
+                  type="number"
+                  variant="standard"
+                  fullWidth
+                  required
+                />
+              </Form.Group>
               <Form.Group id="image" className="mb-5">
                 <TextField
                   id="file"
                   label="Profile Image"
                   type="file"
                   name="image"
-                  onChange={event => {
-                    const file = event.target.files[0];
-                    setFile(file);
-                    }
-                  }
+                  onChange={(event) => {
+                    const img = event.target.files[0];
+                    setFile(img);
+                    console.log(img);
+                  }}
                   variant="standard"
                   fullWidth
                 />
@@ -143,7 +153,6 @@ export default function Signup() {
         <div className="w-100 text-center mt-2">
           Already have an account?
           <Link to="/login" className="cancel-underline">
-            {" "}
             Log In
           </Link>
         </div>

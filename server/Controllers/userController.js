@@ -1,11 +1,9 @@
-const res = require("express/lib/response");
 const userSchema = require("../Models/user");
+const { registerValidation, loginValidation } = require("../Validation");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const { registerValidation, loginValidation } = require("../Validation");
-const { request } = require("express");
+const router = require("express").Router();
 
-/* Get */
 const getAllUsers = (req, res) => {
    userSchema.find().then((results) => {
      try {
@@ -19,6 +17,7 @@ const getAllUsers = (req, res) => {
 
 const getUserById= (request, respons) => {
   console.log(request.params.id);
+  
   const userId = request.params.id;
   userSchema.findById(userId).then((results) => {
     try {
@@ -30,70 +29,36 @@ const getUserById= (request, respons) => {
   });
 }
 
-// const removeFromFavorite = (req, res) => {
-//   const userId = req.body.userId;
-//   userSchema.findById(userId).then((results) => {
-//     try {
-//       results.favorite.filter((car) => car._id !== req.body.carId)
-//       .then((currentCars) => {
-        
-//       });
-//     } catch {
-//       console.log("Error");
-//     }
-//   });
-// };
+const register = async (req, res) => {
 
+  const { error } = registerValidation(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+ 
+  const emailExist = await userSchema.findOne({ email: req.body.email });
+  if (emailExist) return res.status(400).send('Email already exists.');
 
-// const addToFavorite = (req, res) => {
-//   const userId = req.body.userId;
-//   userSchema.findById(userId).then((results) => {
-//     try {
-//       results.favorite.add(req.body.carId);
-//     } catch {
-//       console.log("Error");
-//     }
-//   })
-// };
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-const uploadImage = (req, res) => {
-    res.send("Single File upload success");
-}
-/* POST */
-
-const register = async (request, response) => {
-    const { error } = registerValidation(request.body);
-    if (error){
-      return response.status(400).send(error.details[0].message);
-    }
-    const emailExist = await userSchema.findOne({ email: request.body.email });
-    if (emailExist) {
-     return response.status(400).send("Email already exists.");
-    }
-
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(request.body.password, salt);
-    // const ext = path.extname(request.file.originalname);  
-    console.log("here");
-    const newUser = {
-      firstName: request.body.firstName,
-      lastName: request.body.lastName,
-      email: request.body.email,
-      password: hashedPassword,
-      phoneNumber: request.body.phoneNumber,
-      image: req.body.date + request.file.originalname,
-      role: request.body.role,
-    };
-    
-    try {
-        const savedUser = await userSchema.create(newUser);
-        console.log('Success');
-        response.send(savedUser);
-    } catch (err) {
-        console.log('filed')
-        response.status(400).send(err);
-    }
-}
+  const user = new userSchema({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    phoneNumber: req.body.phoneNumber,
+    password: hashedPassword,
+    image: "omer",
+    role: req.body.role,
+  });  
+  
+  try {
+      await user.save();
+      console.log('Success');
+      res.send(user);
+  } catch (err) {
+      console.log('filed')
+      res.status(400).send(err);
+  }
+};
 
 const login = async (request, response) => {
 
@@ -117,8 +82,6 @@ const login = async (request, response) => {
   response.header("auth-token", token).send( {token, user});
 }
 
-/* PUT */
-
 const editUser = (req, res) => {
   console.log(req.body);
   let editUser = new userSchema({
@@ -138,8 +101,6 @@ const editUser = (req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
-/* DELETE */
-
 const deleteUser = (req, res) => {
   console.log(req.params.id);
   const userId = req.params.id;
@@ -148,14 +109,11 @@ const deleteUser = (req, res) => {
   });
 };
 
-
-
 module.exports = {
   editUser,
   deleteUser,
   getAllUsers,
   getUserById,
   register,
-  uploadImage,
   login,
 };

@@ -1,18 +1,24 @@
-const aws =require('aws-sdk');
-const dotenv = require('dotenv');
+// const AWS = require("aws-sdk");
+// const dotenv = require("dotenv");
+// const multer = require("multer");
 
-dotenv.config();
+// dotenv.config();
 
-const region = "eu-west-1";
-const bucketName = "bumblebee-pro";
-const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
-const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+// const s3 = new AWS.S3({
+//   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+//   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+// });
 
-const s3 = new aws.S3({
-    region,
-    accessKeyId,
-    secretAccessKey,
-    signatureVersion: '4'
-})
+// const storage = multer.memoryStorage({
+//   destination: function (req, files, callback) {
+//     callback(null, "");
+//   },
+// });
 
-module.exports = s3;
+// var upload = multer({ storage }).any();
+
+// module.exports = {
+//     s3,
+//     storage,
+//     upload
+// };
