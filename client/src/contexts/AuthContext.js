@@ -26,31 +26,28 @@ export default function AuthProvider({ children }) {
 
   function signup(firstName, lastName, email, password, phoneNumber, image) {
     
-    console.log(image);
-
-    const newUser = {
-      firstName : firstName,
-      lastName : lastName,
-      email : email,
-      phoneNumber : phoneNumber,
-      password : password,
-      image: image,
-      role: '1'
-    };
-    const formData = new FormData();
-    formData.append("image", image);
-
-    // userData.append("firstName", firstName);
-    // userData.append("lastName", lastName);
-    // userData.append("email", email);
-    // userData.append("password", password);
-    // userData.append("image", image);
-    // userData.append("role", "1");
+    const userData = new FormData();
+    userData.append("firstName", firstName);
+    userData.append("lastName", lastName);
+    userData.append("email", email);
+    userData.append("password", password);
+    userData.append("phoneNumber", phoneNumber);
+    userData.append("image", image);
+    userData.append("role", "1");
+    
+    // const newUser = {
+    //   firstName : firstName,
+    //   lastName : lastName,
+    //   email : email,
+    //   phoneNumber : phoneNumber,
+    //   password : password,
+    //   image: image,
+    //   role: '1'
+    // };
+    
     return api
-      .post("/user/register", newUser)
-      .then((res) => {
-        console.log(res);
-      })
+      .post("/user/register", userData)
+      .then(function (response) {})
       .catch(function (error) {
         console.log(error);
       });

@@ -17,7 +17,7 @@ const getAllUsers = (req, res) => {
 
 const getUserById= (request, respons) => {
   console.log(request.params.id);
-  
+
   const userId = request.params.id;
   userSchema.findById(userId).then((results) => {
     try {
@@ -29,34 +29,36 @@ const getUserById= (request, respons) => {
   });
 }
 
-const register = async (req, res) => {
-
-  const { error } = registerValidation(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
- 
-  const emailExist = await userSchema.findOne({ email: req.body.email });
-  if (emailExist) return res.status(400).send('Email already exists.');
+const register = async (request, response) => {
+  const { error } = registerValidation(request.body);
+  if (error) {
+    console.log("error");
+    return response.status(400).send(error.details[0].message);
+  }
+  const emailExist = await userSchema.findOne({ email: request.body.email });
+  if (emailExist) {
+    return response.status(400).send("Email already exists.");
+  }
 
   const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(req.body.password, salt);
-
-  const user = new userSchema({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    phoneNumber: req.body.phoneNumber,
+  const hashedPassword = await bcrypt.hash(request.body.password, salt);
+  const newUser = {
+    firstName: request.body.firstName,
+    lastName: request.body.lastName,
+    email: request.body.email,
     password: hashedPassword,
-    image: "omer",
-    role: req.body.role,
-  });  
-  
+    phoneNumber: request.body.phoneNumber,
+    image: request.file.originalname,
+    role: request.body.role,
+  };
+
   try {
-      await user.save();
-      console.log('Success');
-      res.send(user);
+    const savedUser = await userSchema.create(newUser);
+    console.log("Success");
+    response.send(savedUser);
   } catch (err) {
-      console.log('filed')
-      res.status(400).send(err);
+    console.log("filed");
+    response.status(400).send(err);
   }
 };
 
