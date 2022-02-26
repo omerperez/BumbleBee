@@ -35,16 +35,6 @@ export default function AuthProvider({ children }) {
     userData.append("image", image);
     userData.append("role", "1");
     
-    // const newUser = {
-    //   firstName : firstName,
-    //   lastName : lastName,
-    //   email : email,
-    //   phoneNumber : phoneNumber,
-    //   password : password,
-    //   image: image,
-    //   role: '1'
-    // };
-    
     return api
       .post("/user/register", userData)
       .then(function (response) {})
