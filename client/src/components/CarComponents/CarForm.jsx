@@ -62,6 +62,12 @@ export default function CarForm() {
     carChange(e);
    }
 
+   const fileSelectedHandler = (e) => {
+    e.preventDefault();
+    const files = e.target.files;
+    carChange(e);
+   };
+
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [firstStatus, setFirstStatus] = useState(true);
@@ -222,6 +228,22 @@ export default function CarForm() {
               />
             </FormControl>
           </div>
+          <FormControl fullWidth className="mt-3">
+            <div className="d-flex justify-content-center">
+              <div className="form-group">
+                <label for="images">
+                  Select files:
+                  <input
+                    type="file"
+                    name="images"
+                    multiple
+                    onChange={fileSelectedHandler}
+                  />
+                  <br />
+                </label>
+              </div>
+            </div>
+          </FormControl>
         </div>
         <Button
           disabled={loading}
