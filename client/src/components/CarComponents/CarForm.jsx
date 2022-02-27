@@ -70,7 +70,6 @@ export default function CarForm() {
 
    const fileSelectedHandler = (e) => {
     e.preventDefault();
-    const files = e.target.files;
     carChange(e);
    };
 
@@ -89,8 +88,8 @@ export default function CarForm() {
 
     return (
       <div className="p1l-1 pr-1">
+        {error && <Alert variant="danger">{error}</Alert>}
         <div className="row d-flex justify-content-center m-3">
-          {error && <Alert variant="danger">{error}</Alert>}
           <h5>General Information</h5>
           <div className="col">
             {/* Company */}
@@ -111,7 +110,7 @@ export default function CarForm() {
               </Select>
             </FormControl>
           </div>
-          <div className="col mb-3">
+          <div className="col">
             {/* model */}
             <FormControl fullWidth disabled={firstStatus} className="mt-3">
               <InputLabel>Model</InputLabel>
@@ -134,7 +133,7 @@ export default function CarForm() {
               </Select>
             </FormControl>
           </div>
-          <div className="col mb-3">
+          <div className="col">
             {/* type */}
             <FormControl disabled={secondStatus} fullWidth className="mt-3">
               <InputLabel>Body Type</InputLabel>
@@ -157,7 +156,7 @@ export default function CarForm() {
               </Select>
             </FormControl>
           </div>
-          <div className="col mb-3">
+          <div className="col">
             {/* year */}
             <FormControl fullWidth disabled={secondStatus} className="mt-3">
               <InputLabel>Year</InputLabel>
@@ -184,7 +183,7 @@ export default function CarForm() {
               </Select>
             </FormControl>
           </div>
-          <div className="col mb-3">
+          <div className="col">
             {/* engine */}
             <FormControl fullWidth disabled={secondStatus} className="mt-3">
               <InputLabel>Engine</InputLabel>
@@ -211,9 +210,9 @@ export default function CarForm() {
               </Select>
             </FormControl>
           </div>
-          <div className="col">
+          <div className="col mt-3">
             {/* First Registration */}
-            <FormControl className="mt-3" fullWidth>
+            <FormControl fullWidth>
               <TextField
                 label="firstRegistrationDate"
                 name="firstRegistrationDate"
@@ -227,254 +226,250 @@ export default function CarForm() {
               />
             </FormControl>
           </div>
-          <div className="row d-flex justify-content-left m-3">
-            <h5>Performance Specs</h5>
-            <div className="col-3 mt-3">
-              {/* condition */}
-              <FormControl fullWidth>
-                <InputLabel>Condition</InputLabel>
-                <Select
-                  label="condition"
-                  name="condition"
-                  value={values.condition}
-                  onChange={(e) => carChange(e)}
-                  required
-                >
-                  {carsProperties.Condition.map((cond) => {
-                    return (
-                      <MenuItem key={cond} value={cond}>
-                        {cond}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-            </div>
-            <div className="col-2 mt-3">
-              {/* Fuel Type */}
-              <FormControl > {/*fullWidth disabled={hpStatus}*/}
-                <InputLabel>Fuel Type</InputLabel>
-                <Select
-                  label
-                  name="fuel"
-                  value={values.fuel}
-                  onChange={(e) => carChange(e)}
-                  required
-                >
-                  {Array.from(
-                    new Set(
-                      dataFromApi
-                        .filter(
-                          (car) =>
-                            car.degem_nm == model && car.nefach_manoa == values.engine
-                        )
-                        .map((obj) => obj.sug_delek_nm)
-                    )
-                  ).map((sug_delek_nm) => {
-                    return (
-                      <MenuItem key={sug_delek_nm} value={sug_delek_nm}>
-                        {sug_delek_nm}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-            </div>
-            <div className="col-2 mt-3">
-              {/* GearBox */}
-              <FormControl fullWidth>
-                <InputLabel>Gearbox</InputLabel>
-                <Select
-                  label
-                  name="gearbox"
-                  value={values.gearbox}
-                  onChange={(e) => carChange(e)}
-                  required
-                >
-                  {carsProperties.gearBoxesList.map((gearboxOption) => {
-                    return (
-                      <MenuItem key={gearboxOption} value={gearboxOption}>
-                        {gearboxOption}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-            </div>
-            <div className="col-1 mt-3">
-              {/* Number Of Vehicle Owners */}
-              <FormControl fullWidth>
-                <InputLabel>Owners</InputLabel>
-                <Select
-                  label
-                  name="numberOfVehicleOwners"
-                  value={values.numberOfVehicleOwners}
-                  onChange={(e) => carChange(e)}
-                  required
-                >
-                  {carsProperties.NumberOfOwners.map((num) => {
-                    return (
-                      <MenuItem key={num} value={num}>
-                        {num}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-            </div>
-            <div className="col-1 mt-3">
-              {/* Door Count */}
-              <FormControl fullWidth>
-                <InputLabel>Doors</InputLabel>
-                <Select
-                  label
-                  name="doorCount"
-                  value={values.doorCount}
-                  onChange={(e) => carChange(e)}
-                  required
-                >
-                  {carsProperties.doorCountOptions.map((doorOption) => {
-                    return (
-                      <MenuItem key={doorOption} value={doorOption}>
-                        {doorOption}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-            </div>
-            <div className="col-1 mt-3">
-              {/* Seats Count */}
-              <FormControl fullWidth>
-                <InputLabel>Seats</InputLabel>
-                <Select
-                  label
-                  name="numberOfSeats"
-                  value={values.numberOfSeats}
-                  onChange={(e) => carChange(e)}
-                  required
-                >
-                  {carsProperties.countOfSeatsOptions.map((seatsOption) => {
-                    return (
-                      <MenuItem key={seatsOption} value={seatsOption}>
-                        {seatsOption}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-            </div>
-            <div className="col-2 mt-3">
-              {/* Color */}
-              <FormControl fullWidth>
-                <InputLabel>Color</InputLabel>
-                <Select
-                  label
-                  name="colour"
-                  value={values.colour}
-                  onChange={(e) => carChange(e)}
-                  required
-                >
-                  {carsProperties.colorList.map((color, i) => {
-                    return (
-                      <MenuItem key={color + i} value={color + i}>
-                        <div className="row">
-                          <div className="col-8">{color}</div>
-                          <div
-                            className="col-1 d-flex bumble-img-log"
-                            style={{ background: color }}
-                          ></div>
-                        </div>
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-            </div>
-          </div>
-          <div
-            className="d-flex row justify-content-center m-3"
-            style={{ alignItems: "center" }}
-          >
-            <h5>Part 3</h5>
-            <div className="col">
-              {/* Kilometers */}
-              <FormControl fullWidth className="mt-3">
-                <TextField
-                  label="km"
-                  name="km"
-                  type="number"
-                  defaultValue={values.km}
-                  onChange={(e) => carChange(e)}
-                  required
-                />
-              </FormControl>
-            </div>
-            <div className="col">
-              {/* Interior Design */}
-              <FormControl fullWidth className="mt-3">
-                <InputLabel>Interior Design</InputLabel>
-                <Select
-                  label
-                  name="interiorDesign"
-                  value={values.interiorDesign}
-                  onChange={(e) => carChange(e)}
-                  required
-                >
-                  {carsProperties.InteriorDesign.map((designOption, i) => {
-                    return (
-                      <MenuItem key={designOption} value={designOption}>
-                        {designOption}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-            </div>
-            <div className="col">
-              {/* Price */}
-              <FormControl fullWidth className="mt-3">
-                <TextField
-                  label="Price $"
-                  name="price"
-                  type="number"
-                  value={values.price}
-                  onChange={(e) => carChange(e)}
-                />
-              </FormControl>
-            </div>
-            <div className="col">
-              <Alert severity="info" className="mt-3">
-                <AlertTitle>Net Price - {values.price * 0.7 + " "}$</AlertTitle>
-              </Alert>
-            </div>
-            <div className="row d-flex justify-content-center"></div>
-          </div>
-          <FormControl fullWidth className="mt-3">
-            <div className="d-flex justify-content-center">
-              <div className="form-group">
-                <label for="images">
-                  Select files:
-                  <input
-                    type="file"
-                    name="images"
-                    multiple
-                    onChange={fileSelectedHandler}
-                  />
-                  <br />
-                </label>
-              </div>
-            </div>
-          </FormControl>
         </div>
-        <Button
-          disabled={loading}
-          className="w-100 mb-3 yellow-btn"
-          // type="submit"
-          onClick={handleClickSubmit}
-        >
-          Create New Car
-        </Button>
+        <div className="row d-flex justify-content-left m-3">
+          <h5>Performance Specs</h5>
+          <div className="col-3 mt-3">
+            {/* condition */}
+            <FormControl fullWidth>
+              <InputLabel>Condition</InputLabel>
+              <Select
+                label="condition"
+                name="condition"
+                value={values.condition}
+                onChange={(e) => carChange(e)}
+                required
+              >
+                {carsProperties.Condition.map((cond) => {
+                  return (
+                    <MenuItem key={cond} value={cond}>
+                      {cond}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </div>
+          <div className="col-2 mt-3">
+            {/* Fuel Type */}
+            <FormControl fullWidth>
+              <InputLabel>Fuel Type</InputLabel>
+              <Select
+                label
+                name="fuel"
+                value={values.fuel}
+                onChange={(e) => carChange(e)}
+                required
+              >
+                {Array.from(
+                  new Set(
+                    dataFromApi
+                      .filter(
+                        (car) =>
+                          car.degem_nm == model &&
+                          car.nefach_manoa == values.engine
+                      )
+                      .map((obj) => obj.sug_delek_nm)
+                  )
+                ).map((sug_delek_nm) => {
+                  return (
+                    <MenuItem key={sug_delek_nm} value={sug_delek_nm}>
+                      {sug_delek_nm}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </div>
+          <div className="col-2 mt-3">
+            {/* GearBox */}
+            <FormControl fullWidth>
+              <InputLabel>Gearbox</InputLabel>
+              <Select
+                label
+                name="gearbox"
+                value={values.gearbox}
+                onChange={(e) => carChange(e)}
+                required
+              >
+                {carsProperties.gearBoxesList.map((gearboxOption) => {
+                  return (
+                    <MenuItem key={gearboxOption} value={gearboxOption}>
+                      {gearboxOption}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </div>
+          <div className="col-1 mt-3">
+            {/* Number Of Vehicle Owners */}
+            <FormControl fullWidth>
+              <InputLabel>Owners</InputLabel>
+              <Select
+                label
+                name="numberOfVehicleOwners"
+                value={values.numberOfVehicleOwners}
+                onChange={(e) => carChange(e)}
+                required
+              >
+                {carsProperties.NumberOfOwners.map((num) => {
+                  return (
+                    <MenuItem key={num} value={num}>
+                      {num}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </div>
+          <div className="col-1 mt-3">
+            {/* Door Count */}
+            <FormControl fullWidth>
+              <InputLabel>Doors</InputLabel>
+              <Select
+                label
+                name="doorCount"
+                value={values.doorCount}
+                onChange={(e) => carChange(e)}
+                required
+              >
+                {carsProperties.doorCountOptions.map((doorOption) => {
+                  return (
+                    <MenuItem key={doorOption} value={doorOption}>
+                      {doorOption}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </div>
+          <div className="col-1 mt-3">
+            {/* Seats Count */}
+            <FormControl fullWidth>
+              <InputLabel>Seats</InputLabel>
+              <Select
+                label
+                name="numberOfSeats"
+                value={values.numberOfSeats}
+                onChange={(e) => carChange(e)}
+                required
+              >
+                {carsProperties.countOfSeatsOptions.map((seatsOption) => {
+                  return (
+                    <MenuItem key={seatsOption} value={seatsOption}>
+                      {seatsOption}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </div>
+          <div className="col-2 mt-3">
+            {/* Color */}
+            <FormControl fullWidth>
+              <InputLabel>Color</InputLabel>
+              <Select
+                label
+                name="colour"
+                value={values.colour}
+                onChange={(e) => carChange(e)}
+                required
+              >
+                {carsProperties.colorList.map((color, i) => {
+                  return (
+                    <MenuItem key={color + i} value={color + i}>
+                      <div className="row">
+                        <div className="col-8">{color}</div>
+                        <div
+                          className="col-1 d-flex bumble-img-log"
+                          style={{ background: color }}
+                        ></div>
+                      </div>
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </div>
+        </div>
+        <div className="row d-flex justify-content-center m-3">
+          <h5>Part 3</h5>
+          <div className="col">
+            {/* Kilometers */}
+            <FormControl fullWidth className="mt-3">
+              <TextField
+                label="km"
+                name="km"
+                type="number"
+                defaultValue={values.km}
+                onChange={(e) => carChange(e)}
+                required
+              />
+            </FormControl>
+          </div>
+          <div className="col">
+            {/* Interior Design */}
+            <FormControl fullWidth className="mt-3">
+              <InputLabel>Interior Design</InputLabel>
+              <Select
+                label
+                name="interiorDesign"
+                value={values.interiorDesign}
+                onChange={(e) => carChange(e)}
+                required
+              >
+                {carsProperties.InteriorDesign.map((designOption, i) => {
+                  return (
+                    <MenuItem key={designOption} value={designOption}>
+                      {designOption}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </div>
+          <div className="col">
+            {/* Price */}
+            <FormControl fullWidth className="mt-3">
+              <TextField
+                label="Price $"
+                name="price"
+                type="number"
+                value={values.price}
+                onChange={(e) => carChange(e)}
+              />
+            </FormControl>
+          </div>
+          <div className="col">
+            <Alert severity="info" className="mt-3">
+              <AlertTitle>
+                Net Price - {values.price ? values.price * 0.7 + " " : " "}$
+              </AlertTitle>
+            </Alert>
+          </div>
+        </div>
+        <div className="d-flex justify-content-center mt-5">
+            <label for="images">
+              Select files:
+              <input
+                type="file"
+                name="images"
+                multiple
+                onChange={fileSelectedHandler}
+              />
+              <br />
+            </label>
+        </div>
+      <div className="mt-4 justify-content-center d-flex">
+          <Button
+            disabled={loading}
+            className="mb-3 yellow-btn col-4"
+            onClick={handleClickSubmit}
+          >
+            Add New Car
+          </Button>
+        </div>
       </div>
     );
 }
