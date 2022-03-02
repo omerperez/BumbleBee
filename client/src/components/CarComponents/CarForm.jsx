@@ -18,11 +18,11 @@ const api = axios.create({ baseURL: process.env.REACT_APP_FBASE_URL });
 export default function CarForm() {
 
   const [values, carChange] = useForm();
+  const navigate = useNavigate();
   const { createNewCar, progress } = useAuth();
   const [dataFromApi, setDataFromApi] = useState([]);
   const [dataFromSecApi, setDataFromSecApi] = useState([]);
   const [company, setCompany] = useState({});
-  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [firstStatus, setFirstStatus] = useState(true);
   const [model, setModel] = useState("");
