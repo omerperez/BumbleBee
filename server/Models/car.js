@@ -22,7 +22,7 @@ const carSchema = new Schema({
   firstRegistration: Date,
   colour: String,
   iteriorDesign: String,
-  dealer: { type: Schema.Types.ObjectId, ref: "User" },
+  dealer: { type: Schema.Types.ObjectId, ref: "users" },
 });
 
 module.exports = new mongoose.model("Car", carSchema);

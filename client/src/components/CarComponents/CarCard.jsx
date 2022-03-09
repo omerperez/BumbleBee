@@ -4,12 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActions } from "@mui/material";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import PanToolIcon from "@mui/icons-material/PanTool";
-import EngineeringIcon from "@mui/icons-material/Engineering";
-import AddRoadIcon from "@mui/icons-material/AddRoad";
 import { Link } from "react-router-dom";
-
 
 export default function CarCard({ _id, image, company, model, year, used, engine, km, price }) {
 
@@ -18,11 +13,56 @@ export default function CarCard({ _id, image, company, model, year, used, engine
       <Card className="car-card-width">
         <CardMedia component="img" height="170" image={image} />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {company + " " + model}
+          <Typography gutterBottom component="div">
+            {company}
           </Typography>
-          {/* <Typography variant="body2" color="text.secondary"> */}
-          <div className="car-card-body">
+          <Typography gutterBottom component="div" style={{ fontSize: 22 }}>
+            {model}
+          </Typography>
+          <div className="row mt-4">
+            <div className="col-6 d-flex justify-content-start">
+              <h4>{price} $</h4>
+            </div>
+            <div className="col-6 d-flex justify-content-end">
+              <Link
+                to={`/car-profile/${_id}`}
+                className="cancel-underline"
+                style={{ border: "solid 2px", borderRadius: "5%" }}
+              >
+                <Button>More Details</Button>
+              </Link>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
+<div className="car-card-body">
             <div className="flex-50">
               <CalendarTodayIcon className="icon-text-space" />
               {year}
@@ -41,15 +81,5 @@ export default function CarCard({ _id, image, company, model, year, used, engine
               <AddRoadIcon className="icon-text-space " />
               {km}
             </div>
-          </div>
-          {/* </Typography> */}
-        </CardContent>
-        <CardActions>
-          <Link to={`/car-profile/${_id}`} className="cancel-underline">
-            <Button size="small">View More {" " + price}</Button>
-          </Link>
-        </CardActions>
-      </Card>
-    </div>
-  );
-}
+          </div>   
+*/

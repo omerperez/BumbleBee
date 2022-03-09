@@ -1,8 +1,5 @@
 const res = require("express/lib/response");
-const { isValidObjectId } = require("mongoose");
 const carSchema = require("../Models/car");
-const user = require("../Models/user");
-const userController = require("./userController");
 
 /* GET */
 const getAllCars = (req, res) => {
@@ -18,7 +15,6 @@ const getAllCars = (req, res) => {
 
 const getCarById = (req, res) => {
   const carId = req.params.id;
-  console.log(req.params);
   carSchema.findById(carId).then((results) => {
     try {
       res.json(results);
@@ -46,7 +42,6 @@ const getCarByCompany = (request, respons) => {
 async function createCar (req, res) {
   console.log(req.body);
   const createNewCar = {
-    // _id: req.params.id,
     companyEnglish: req.body.companyEnglish,
     companyHebrew: req.body.companyHebrew,
     model: req.body.model,
@@ -57,7 +52,6 @@ async function createCar (req, res) {
     price: req.body.price,
     netPrice: req.body.netPrice,
     dateForImages: req.body.dateForImages,
-    // description: req.body.description,
     images: req.body.images,
     fuelConsumption: req.body.fuelConsumption,
     numberOfSeats: req.body.numberOfSeats,
@@ -71,20 +65,14 @@ async function createCar (req, res) {
     dealer: req.body.dealerId,
   };
 
-  /* Next Step - One to Many */
-  // if(user.)
-    // await userSchema.findOneAndUpdate(
-    //   { id: createNewCar.dealer },
-    //   { $push: { cars: createNewCar._id } }
-    // );
-
   await carSchema.create(createNewCar);
   return res.send(createNewCar);
 }
 
 /* PUT */
 const updateCar = (req, res) => {
-  console.log(req.body);
+  
+  // const dealerId = req.body.dealer;
   let newCar = new carSchema({
     _id: req.params.id,
     companyEnglish: req.body.companyEnglish,
@@ -107,7 +95,7 @@ const updateCar = (req, res) => {
     colour: req.body.colour,
     condition: req.body.condition,
     iteriorDesign: req.body.iteriorDesign,
-    dealer: req.body.dealerId,
+    dealer: req.body.dealer,
   });
 
     carSchema

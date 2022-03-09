@@ -13,26 +13,37 @@ export function useAuth(){
 }
 
 export default function AuthProvider({ children }) {
+
+  const cookies = new Cookies();
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
   const [mode, setMode] = useState(true);
   const [progress, setProgress] = useState(0);
-  const [imagesArray, setImagesArray] = useState([]);
-  const cookies = new Cookies();
 
   function changeMode(userMode) {
     setMode(!userMode);
   }
 
-  function signup(firstName, lastName, email, password, image) {
+  function signup(firstName, lastName, email, password, phoneNumber, image) {
+    
     const userData = new FormData();
     userData.append("firstName", firstName);
     userData.append("lastName", lastName);
     userData.append("email", email);
     userData.append("password", password);
+    userData.append("phoneNumber", phoneNumber);
     userData.append("image", image);
     userData.append("role", "1");
-    userData.append("date", Date.now());
+    
+    // const newUser = {
+    //   firstName : firstName,
+    //   lastName : lastName,
+    //   email : email,
+    //   phoneNumber : phoneNumber,
+    //   password : password,
+    //   image: image,
+    //   role: '1'
+    // };
     
     return api
       .post("/user/register", userData)
@@ -129,74 +140,54 @@ export default function AuthProvider({ children }) {
     condition,
     interiorDesign,
     images
-  ) {
-    let date = Date.now();
+  ){
+    
+    const car = {
+      companyEnglish: company.english,
+      companyHebrew: company.hebrew,
+      model: model,
+      year: year,
+      numberOfVehicleOwners: numberOfVehicleOwners,
+      engine: engine,
+      km: km,
+      price: price,
+      netPrice: price * 0.7,
+      images: images,
+      fuelConsumption: fuel,
+      numberOfSeats: numberOfSeats,
+      doorCount: doorCount,
+      gearbox: gearbox,
+      emissionClass: "Euro6",
+      firstRegistration: firstRegistrationDate,
+      colour: colour,
+      condition: condition,
+      dealer: currentUser._id,
+    };
+    // const carData = new FormData();
+    // carData.append("companyEnglish", company.english);
+    // carData.append("companyHebrew", company.hebrew);
+    // carData.append("model", model);
+    // carData.append("year", year);
+    // carData.append("numberOfVehicleOwners", numberOfVehicleOwners);
+    // carData.append("engine", engine);
+    // carData.append("km", km);
+    // carData.append("price", price);
+    // carData.append("netPrice", price * 0.7);
+    // carData.append("dateForImages", date);
+    // carData.append("images", [...imagesNames]);
+    // carData.append("fuelConsumption", fuel);
+    // carData.append("numberOfSeats", numberOfSeats);
+    // carData.append("doorCount", doorCount);
+    // carData.append("gearbox", gearbox);
+    // carData.append("emissionClass", "Euro6");
+    // carData.append("firstRegistration", firstRegistrationDate);
+    // carData.append("colour", colour);
+    // carData.append("condition", condition);
+    // carData.append("iteriorDesign", interiorDesign);
+    // carData.append("dealer", Object(currentUser._id));
 
-    var imagesNames = [''];
-    for (var i = 0; i < images.length; i++) {
-      var imageFile = images[i];
-      let fileName = `${date}-${imageFile.name}`;
-      setImagesArray((prevState) => [...prevState, fileName]);
-    }
-
-    const carData = new FormData();
-    carData.append("companyEnglish", company.english);
-    carData.append("companyHebrew", company.hebrew);
-    carData.append("model", model);
-    carData.append("year", year);
-    carData.append("numberOfVehicleOwners", numberOfVehicleOwners);
-    carData.append("engine", engine);
-    carData.append("km", km);
-    carData.append("price", price);
-    carData.append("netPrice", price * 0.7);
-    carData.append("dateForImages", date);
-    carData.append("images", imagesArray);
-    carData.append("fuelConsumption", fuel);
-    carData.append("numberOfSeats", numberOfSeats);
-    carData.append("doorCount", doorCount);
-    carData.append("gearbox", gearbox);
-    carData.append("emissionClass", "Euro6");
-    carData.append("firstRegistration", firstRegistrationDate);
-    carData.append("colour", colour);
-    carData.append("condition", condition);
-    carData.append("iteriorDesign", interiorDesign);
-    carData.append("dealer", Object(currentUser._id));
-
-    uploadFiles(images, carData);
-    console.log(imagesNames);
-    // const newCar = {
-    //   companyEnglish: company.english,
-    //   companyHebrew: company.hebrew,
-    //   model: model,
-    //   year: year,
-    //   numberOfVehicleOwners: numberOfVehicleOwners,
-    //   engine: engine,
-    //   km: km,
-    //   price: price,
-    //   netPrice: price * 0.7,
-    //   // description: ,
-    //   images: images,
-    //   fuelConsumption: fuel,
-    //   numberOfSeats: numberOfSeats,
-    //   doorCount: doorCount,
-    //   gearbox: gearbox,
-    //   emissionClass: "Euro6",
-    //   firstRegistration: firstRegistrationDate,
-    //   colour: colour,
-    //   condition: condition,
-    //   iteriorDesign: interiorDesign,
-    //   dealer: currentUser._id,
-    // };
-
-    console.log(carData);
-    console.log(carData.images);
-    setImagesArray([]);
     return api
-      .post("/car/create", carData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+      .post("/car/create", car)
       .then(function (response) {
         console.log(response);
       })
@@ -234,27 +225,3 @@ export default function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
-
-
-  /*
-  Fire Base -  
-  
-  function signup(email, password) {
-    return auth.createUserWithEmailAndPassword(email, password);
-  } 
-   
-  function signup(email, password) {
-   return auth.signInWithEmailAndPassword(email, password);
-  }
-   
-  function logout() {
-    return auth.signOut();
-  }
-  useEffect(() => {
-    const unsubscriber = auth.onAuthStateChanged((user) => {
-      setCurrentUser(user);
-      setLoading(false);
-     })
-    return unsubscriber;
-  } 
-  */

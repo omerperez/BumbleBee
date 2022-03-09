@@ -96,7 +96,18 @@ export default function CreateCarForm() {
         colour,
         condition,
         interiorDesign,
-        images
+        [
+          "https://i.ytimg.com/vi/ekgUjyWe1Yc/maxresdefault.jpg",
+          "https://i.ytimg.com/vi/ekgUjyWe1Yc/maxresdefault.jpg",
+          "https://i.ytimg.com/vi/ekgUjyWe1Yc/maxresdefault.jpg",
+          "https://i.ytimg.com/vi/ekgUjyWe1Yc/maxresdefault.jpg",
+          "https://i.ytimg.com/vi/ekgUjyWe1Yc/maxresdefault.jpg",
+          "https://i.ytimg.com/vi/ekgUjyWe1Yc/maxresdefault.jpg",
+          "https://i.ytimg.com/vi/ekgUjyWe1Yc/maxresdefault.jpg",
+          "https://i.ytimg.com/vi/ekgUjyWe1Yc/maxresdefault.jpg",
+          "https://i.ytimg.com/vi/ekgUjyWe1Yc/maxresdefault.jpg",
+          "https://i.ytimg.com/vi/ekgUjyWe1Yc/maxresdefault.jpg",
+        ]
       );
       navigate("/homepage");
     } catch {
