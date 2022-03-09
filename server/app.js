@@ -10,19 +10,19 @@ const app = express();
 app.use(cors());
 dotenv.config();
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
 db.on("error", (error) => {
   console.log(error);
 });
 
+app.use(bodyParser.urlencoded({ extended: true, useUnifiedTopology: true }));
+app.use(bodyParser.json());
 
 app.use("/user", user);
 app.use("/car", car);
 
 // app.use(express.static('front'));
 // app.get('s3Url', (req, res) => {
-    
+
 // })
+
 app.listen(process.env.PORT);
