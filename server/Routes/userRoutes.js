@@ -48,25 +48,6 @@ router.delete("/delete/:id", userController.deleteUser);
 
 module.exports = router;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // const multerS3 = require('multer-s3');
 // const dotenv = require("dotenv");
 // const aws = require("aws-sdk");
