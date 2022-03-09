@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const userController = require("../Controllers/userController");
 
 dotenv.config();
 
