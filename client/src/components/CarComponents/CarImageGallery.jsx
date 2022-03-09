@@ -6,7 +6,7 @@ import { useAuth } from "../../contexts/AuthContext";
 
 export default function CarImageGallery({ id, car }) {
   // const url = "https://firebasestorage.googleapis.com/v0/b/bumblebee-d5c23.appspot.com/o/files%2F";
-  const url = "https://bumblebee-pro.s3.eu-west-1.amazonaws.com/";
+  // const url = "https://bumblebee-pro.s3.eu-west-1.amazonaws.com/";
   const [dealer, setDealer] = useState(car.dealer);
 
   useEffect(() => {

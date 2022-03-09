@@ -86,7 +86,7 @@ export default function DealerCard({ dealer }) {
       </Box>
       <div style={{ margin: "auto" }} className="grid-item">
         <img
-          src={`https://bumblebee-pro.s3.eu-west-1.amazonaws.com/${dealer.image}`}
+          // src={`https://bumblebee-pro.s3.eu-west-1.amazonaws.com/${dealer.image}`}
           width={170}
           style={{
             borderRadius: "50%",
