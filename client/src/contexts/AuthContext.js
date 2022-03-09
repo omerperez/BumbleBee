@@ -1,19 +1,46 @@
-import React, {useContext, useState, useEffect, createContext} from 'react'
-import { auth } from '../AuthFirebase/firebase';
+const express = require("express");
+const db = require("./db/index");
+const bodyParser = require("body-parser");
+const user = require("./Routes/userRoutes");
+const car = require("./Routes/carRoutes");
+const dotenv = require("dotenv");
+
+const cors = require("cors");
+const app = express();
+app.use(cors());
+dotenv.config();
+
+db.on("error", (error) => {
+  console.log(error);
+});
+
+app.use(bodyParser.urlencoded({ extended: true, useUnifiedTopology: true }));
+app.use(bodyParser.json());
+
+app.use("/user", user);
+app.use("/car", car);
+
+// app.use(express.static('front'));
+// app.get('s3Url', (req, res) => {
+
+// })
+
+app.listen(process.env.PORT);
+import React, { useContext, useState, useEffect, createContext } from "react";
+import { auth } from "../AuthFirebase/firebase";
 import axios from "axios";
-import Cookies from 'universal-cookie';
-import { storage } from '../AuthFirebase/storage';
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import Cookies from "universal-cookie";
+import { storage } from "../AuthFirebase/storage";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 const api = axios.create({ baseURL: "http://localhost:8080" });
-const AuthContext = createContext(); 
+const AuthContext = createContext();
 
-export function useAuth(){ 
-    return useContext(AuthContext)
+export function useAuth() {
+  return useContext(AuthContext);
 }
 
 export default function AuthProvider({ children }) {
-
   const cookies = new Cookies();
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
@@ -24,24 +51,26 @@ export default function AuthProvider({ children }) {
     setMode(!userMode);
   }
 
-  function signup(firstName, lastName, email, password, phoneNumber, image) {
-    
+  function signup(firstName, lastName, email, mobile, password, image) {
     const userData = new FormData();
     userData.append("firstName", firstName);
     userData.append("lastName", lastName);
     userData.append("email", email);
+    userData.append("mobile", mobile.toString());
     userData.append("password", password);
-    userData.append("phoneNumber", phoneNumber);
     userData.append("image", image);
     userData.append("role", "1");
-    
+
     return api
       .post("/user/register", userData)
-      .then(function (response) {})
+      .then(function (response) {
+        console.log(response);
+      })
       .catch(function (error) {
         console.log(error);
       });
 
+    // .post("/user/register", userData)
   }
 
   function login(email, password) {
@@ -81,13 +110,14 @@ export default function AuthProvider({ children }) {
   }
 
   //Listen for file selection
-  function uploadFiles(files, date){ //Get files
+  function uploadFiles(files, date) {
+    //Get files
     for (var i = 0; i < files.length; i++) {
       var imageFile = files[i];
 
       uploadImageAsPromise(imageFile, date);
     }
-  };
+  }
 
   //Handle waiting to upload each file using promise
   function uploadImageAsPromise(imageFile, date) {
@@ -110,11 +140,11 @@ export default function AuthProvider({ children }) {
             (url) => console.log.url
           );
         }
-      ); 
+      );
     });
   }
 
-  function createNewCar (carObj){
+  function createNewCar(carObj) {
     const car = {
       companyEnglish: carObj.company.english,
       companyHebrew: carObj.company.hebrew,
