@@ -3,6 +3,7 @@ import CreateCarForm from "../CarComponents/CreateCarForm";
 import PageTitle from "../Layout/PageTitle";
 import { useAuth } from "../../contexts/AuthContext";
 import Alert from "@mui/material/Alert";
+import CarForm from "../CarComponents/CarForm";
 
 
 export default function CreateCarPage() {
@@ -12,7 +13,8 @@ export default function CreateCarPage() {
   return currentUser.role == 2 ? (
     <div>
       <PageTitle page={"Create New Car"} />
-      <CreateCarForm />
+      {/* <CreateCarForm /> */}
+      <CarForm />
     </div>
   ) : (
     <>
