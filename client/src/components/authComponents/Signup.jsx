@@ -8,9 +8,9 @@ export default function Signup() {
   const firstNameRef = useRef();
   const lastNameRef = useRef();
   const emailRef = useRef();
+  const mobileRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  const phoneRef = useRef();
   const [file, setFile] = useState();
   const { signup } = useAuth();
   const [error, setError] = useState("");
@@ -30,8 +30,8 @@ export default function Signup() {
         firstNameRef.current.value,
         lastNameRef.current.value,
         emailRef.current.value,
+        mobileRef.current.value,
         passwordRef.current.value,
-        phoneRef,
         file
       );
       navigate("/homepage");
@@ -89,6 +89,18 @@ export default function Signup() {
                 required
               />
             </Form.Group>
+            <Form.Group id="mobile" className="mb-4">
+              <TextField
+                id="standard-email-input"
+                label="Mobile"
+                inputRef={mobileRef}
+                type="tel"
+                pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+                variant="standard"
+                fullWidth
+                required
+              />
+            </Form.Group>
             <Form.Group id="password" className="mb-5">
               <TextField
                 id="standard-password-input"
@@ -113,17 +125,6 @@ export default function Signup() {
                 required
               />
             </Form.Group>
-            <Form.Group id="mobile" className="mb-5">
-              <TextField
-                id="standard-mobile-input"
-                label="Mobile Phone Number"
-                type="number"
-                inputRef={phoneRef}
-                variant="standard"
-                fullWidth
-                required
-              />
-            </Form.Group>
             <Form.Group id="image" className="mb-5">
               <TextField
                 id="file"
@@ -131,8 +132,8 @@ export default function Signup() {
                 type="file"
                 name="image"
                 onChange={(event) => {
-                  const file = event.target.files[0];
-                  setFile(file);
+                  const userFile = event.target.files[0];
+                  setFile(userFile);
                 }}
                 variant="standard"
                 fullWidth
