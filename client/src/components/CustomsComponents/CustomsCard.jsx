@@ -1,33 +1,56 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
-import React from "react";
+import * as React from "react";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardContent from "@mui/material/CardContent";
+import CardActions from "@mui/material/CardActions";
+import Avatar from "@mui/material/Avatar";
+import Typography from "@mui/material/Typography";
+import { Button } from "@mui/material";
+import LanguageIcon from "@mui/icons-material/Language";
 
-export default function CustomsCard({name, link, image}) {
+export default function CustomsCard({ name, link, image, color }) {
   return (
-    <div style={{ width: "40%" }}>
-      <Card style={{ margin: "10px", border: "solid 1px #363636" }}>
-        <a href={link} className="cancel-underline" target="_blank">
-          <img
-            src={image}
-            style={{
-              backgroundSize: "cover",
-              width: "100%",
-              height: "200px",
-              borderBottom: "solid 1px #363636",
-            }}
-          />
-        </a>
-        <CardContent
+    <Card
+      style={{
+        border: `solid 1px ${color}`,
+        marginLeft: "2%",
+        marginRight: "2%",
+      }}
+    >
+      <CardHeader
+        avatar={<Avatar sx={{ bgcolor: color }}>{name[0]}</Avatar>}
+        titleTypographyProps={{ variant: "h4" }}
+        title={name}
+      />
+      <a href={link} className="cancel-underline" target="_blank">
+        <img
+          src={image}
           style={{
-            borderTop: "solid 1px #e2a021",
-            background: "#363636",
-            color: "#e2a021",
+            backgroundSize: "cover",
+            width: "100%",
+            height: "300px",
+            borderTop: `solid 1px ${color}`,
+            borderBottom: `solid 1px ${color}`,
           }}
-        >
-          <Typography gutterBottom variant="h4" component="div">
-            {name}
-          </Typography>
-        </CardContent>
-      </Card>
-    </div>
+        />
+      </a>
+      <CardContent>
+        <Typography variant="body2" color="text.secondary">
+          This impressive paella is a perfect party dish and a fun meal to cook
+          together with your guests. Add 1 cup of frozen peas along with the
+          mussels, if you like.
+        </Typography>
+      </CardContent>
+      <div className="row">
+        <Button style={{ background: color }}>
+          <a href={link} className="cancel-underline" target="_blank">
+            <span style={{ marginRight: 10, color: "white" }}>
+              Go to website
+            </span>
+            <LanguageIcon style={{ color: "white" }} />
+          </a>
+        </Button>
+      </div>
+    </Card>
   );
 }
