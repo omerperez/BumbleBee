@@ -5,17 +5,17 @@ const bcrypt = require("bcryptjs");
 const router = require("express").Router();
 
 const getAllUsers = (req, res) => {
-   userSchema.find().then((results) => {
-     try {
-       res.json(results);
-       console.log("OK");
-     } catch {
-       console.log("Error");
-     }
-   });
+  userSchema.find().then((results) => {
+    try {
+      res.json(results);
+      console.log("OK");
+    } catch {
+      console.log("Error");
+    }
+  });
 };
 
-const getUserById= (request, respons) => {
+const getUserById = (request, respons) => {
   console.log(request.params.id);
 
   const userId = request.params.id;
@@ -27,18 +27,23 @@ const getUserById= (request, respons) => {
       console.log("Error");
     }
   });
-}
+};
 
 const register = async (request, response) => {
-  const { error } = registerValidation(request.body);
-  if (error) {
-    console.log("error");
-    return response.status(400).send(error.details[0].message);
-  }
+  console.log(request.body);
+  // const { error } = registerValidation(request.body);
+  // if (error) {
+  //   console.log("error");
+  //   return response.status(400).send(error.details[0].message);
+  // }
   const emailExist = await userSchema.findOne({ email: request.body.email });
   if (emailExist) {
     return response.status(400).send("Email already exists.");
   }
+  // const mobileExist = await userSchema.findOne({ phone: request.body.mobile });
+  // if (mobileExist) {
+  //   return response.status(400).send("Mobile number already exists.");
+  // }
 
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(request.body.password, salt);
@@ -46,8 +51,8 @@ const register = async (request, response) => {
     firstName: request.body.firstName,
     lastName: request.body.lastName,
     email: request.body.email,
+    phoneNumber: request.body.mobile,
     password: hashedPassword,
-    phoneNumber: request.body.phoneNumber,
     image: request.file.originalname,
     role: request.body.role,
   };
@@ -63,31 +68,40 @@ const register = async (request, response) => {
 };
 
 const login = async (request, response) => {
+  console.log(request.body);
 
   const { error } = loginValidation(request.body);
   if (error) {
-      return response.status(400).send(error.details[0].message);
+    return response.status(400).send(error.details[0].message);
   }
   const user = await userSchema.findOne({ email: request.body.email });
   if (!user) {
-      console.log("Email or password is wrong");
-      console.log(request.body.email);
-      return response.status(400).send("Email or password is wrong");
+    console.log("Email or password is wrong");
+    console.log(request.body.email);
+    return response.status(400).send("Email or password is wrong");
   }
 
   const validPass = await bcrypt.compare(request.body.password, user.password);
   if (!validPass) {
-      return response.status(400).send("Invalid Password");
+    return response.status(400).send("Invalid Password");
   }
 
-  const token = jwt.sign({ _id: user._id, firstName: user.firstName, lastName: user.lastName, role: user.role }, process.env.ACCESS_TOKEN_SECRET);
-  response.header("auth-token", token).send( {token, user});
-}
+  const token = jwt.sign(
+    {
+      _id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      role: user.role,
+    },
+    process.env.ACCESS_TOKEN_SECRET
+  );
+  response.header("auth-token", token).send({ token, user });
+};
 
 const editUser = (req, res) => {
   console.log(req.body);
   let editUser = new userSchema({
-    _id : request.params.id,
+    _id: request.params.id,
     firstName: request.body.firstName,
     lastName: request.body.lastName,
     email: request.body.email,
