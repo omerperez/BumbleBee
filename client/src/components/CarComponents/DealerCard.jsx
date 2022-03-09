@@ -11,22 +11,20 @@ import PhoneInTalkIcon from "@mui/icons-material/PhoneInTalk";
 import { Button } from "@mui/material";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
-export default function DealerCard({firstName, lastName, email ,phoneNumber, image}) {
-
+export default function DealerCard({ dealer }) {
   const theme = useTheme();
+  const mobile = dealer.phoneNumber ? dealer.phoneNumber : "+972522520484";
   const whatsappMassege =
     "Hi " +
-    firstName +
+    dealer.firstName +
     ", I see you sell this car is BumbleBee: " +
     window.location.href +
     " can you bring me more details please?";
 
   const sendWhatsAppToDealer = () => {
-    window.open(
-      "https://wa.me/" + "+972522520484" + "?text=" + whatsappMassege
-    );
+    window.open("https://wa.me/" + mobile + "?text=" + whatsappMassege);
   };
-  
+
   return (
     <Card
       className="grid-container"
@@ -39,7 +37,7 @@ export default function DealerCard({firstName, lastName, email ,phoneNumber, ima
       >
         <CardContent sx={{ flex: "1 0 auto" }}>
           <Typography component="div" variant="h4">
-            {firstName + " " + lastName}
+            {dealer.firstName + " " + dealer.lastName}
           </Typography>
           <Typography variant="subtitle1" color={"#e2a021"} className="mt-1">
             <StarIcon />
@@ -56,7 +54,7 @@ export default function DealerCard({firstName, lastName, email ,phoneNumber, ima
               <AlternateEmailIcon
                 style={{ marginRight: "5%", color: "#363636" }}
               />
-              {email}
+              {dealer.email}
             </div>
             <div className="mt-3 d-flex" style={{ whiteSpace: "nowrap" }}>
               <LocationOnIcon style={{ color: "#363636", marginRight: "5%" }} />
@@ -68,7 +66,7 @@ export default function DealerCard({firstName, lastName, email ,phoneNumber, ima
               <PhoneInTalkIcon
                 style={{ color: "#363636", marginRight: "5%" }}
               />
-              {phoneNumber}
+              {mobile}
             </div>
             <div
               className="mt-4 d-flex justify-content-center"
@@ -80,7 +78,7 @@ export default function DealerCard({firstName, lastName, email ,phoneNumber, ima
                 onClick={sendWhatsAppToDealer}
               >
                 Send <WhatsAppIcon style={{ margin: "3%" }} /> to{" "}
-                {firstName + " " + lastName}{" "}
+                {dealer.firstName + " " + dealer.lastName}{" "}
               </Button>
             </div>
           </div>
@@ -88,7 +86,7 @@ export default function DealerCard({firstName, lastName, email ,phoneNumber, ima
       </Box>
       <div style={{ margin: "auto" }} className="grid-item">
         <img
-          src={image}
+          src={`https://bumblebee-pro.s3.eu-west-1.amazonaws.com/${dealer.image}`}
           width={170}
           style={{
             borderRadius: "50%",
