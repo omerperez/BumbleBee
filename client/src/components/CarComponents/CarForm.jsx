@@ -75,7 +75,6 @@ export default function CarForm() {
 
   const handleClickSubmit = async (e) => {
     e.preventDefault();
-    // console.log(values);
       try {
         setLoading(true);
         await createNewCar(values);
@@ -98,6 +97,7 @@ export default function CarForm() {
               <Select
                 label="company"
                 name="company"
+                defaultValue=''
                 value={values.company}
                 onChange={userSelectCompany}
                 required
@@ -117,6 +117,7 @@ export default function CarForm() {
               <Select
                 label
                 name="model"
+                defaultValue=''
                 value={values.model}
                 onChange={userSelectModel}
                 required
@@ -140,6 +141,7 @@ export default function CarForm() {
               <Select
                 label
                 name="type"
+                defaultValue=''
                 value={values.type}
                 onChange={(e) => carChange(e)}
                 required
@@ -163,6 +165,7 @@ export default function CarForm() {
               <Select
                 label
                 name="year"
+                defaultValue=''
                 value={values.year}
                 onChange={(e) => carChange(e)}
                 required
@@ -190,6 +193,7 @@ export default function CarForm() {
               <Select
                 label
                 name="engine"
+                defaultValue=''
                 value={values.engine}
                 onChange={(e) => carChange(e)}
                 required
@@ -217,7 +221,8 @@ export default function CarForm() {
                 label="firstRegistrationDate"
                 name="firstRegistrationDate"
                 type="date"
-                defaultValue={values.firstRegistrationDate}
+                defaultValue=''
+                Value={values.firstRegistrationDate}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -236,6 +241,7 @@ export default function CarForm() {
               <Select
                 label="condition"
                 name="condition"
+                defaultValue=''
                 value={values.condition}
                 onChange={(e) => carChange(e)}
                 required
@@ -257,6 +263,7 @@ export default function CarForm() {
               <Select
                 label
                 name="fuel"
+                defaultValue=''
                 value={values.fuel}
                 onChange={(e) => carChange(e)}
                 required
@@ -288,6 +295,7 @@ export default function CarForm() {
               <Select
                 label
                 name="gearbox"
+                defaultValue=''
                 value={values.gearbox}
                 onChange={(e) => carChange(e)}
                 required
@@ -309,6 +317,7 @@ export default function CarForm() {
               <Select
                 label
                 name="numberOfVehicleOwners"
+                defaultValue=''
                 value={values.numberOfVehicleOwners}
                 onChange={(e) => carChange(e)}
                 required
@@ -330,6 +339,7 @@ export default function CarForm() {
               <Select
                 label
                 name="doorCount"
+                defaultValue=''
                 value={values.doorCount}
                 onChange={(e) => carChange(e)}
                 required
@@ -351,6 +361,7 @@ export default function CarForm() {
               <Select
                 label
                 name="numberOfSeats"
+                defaultValue=''
                 value={values.numberOfSeats}
                 onChange={(e) => carChange(e)}
                 required
@@ -372,6 +383,7 @@ export default function CarForm() {
               <Select
                 label
                 name="colour"
+                defaultValue=''
                 value={values.colour}
                 onChange={(e) => carChange(e)}
                 required
@@ -402,7 +414,8 @@ export default function CarForm() {
                 label="km"
                 name="km"
                 type="number"
-                defaultValue={values.km}
+                defaultValue=''
+                Value={values.km}
                 onChange={(e) => carChange(e)}
                 required
               />
@@ -415,6 +428,7 @@ export default function CarForm() {
               <Select
                 label
                 name="interiorDesign"
+                defaultValue=''
                 value={values.interiorDesign}
                 onChange={(e) => carChange(e)}
                 required
@@ -436,6 +450,7 @@ export default function CarForm() {
                 label="Price $"
                 name="price"
                 type="number"
+                defaultValue=''
                 value={values.price}
                 onChange={(e) => carChange(e)}
               />
