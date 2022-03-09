@@ -26,21 +26,18 @@ const getCarById = (req, res) => {
 };
 
 const getCarByCompany = (request, respons) => {
-  carSchema
-    .find({ company: req.params.company })
-    .then((results) => {
-      try {
-        respons.json(results);
-        console.log("OK");
-      } catch {
-        console.log("Error");
-      }
-    });
+  carSchema.find({ company: req.params.company }).then((results) => {
+    try {
+      respons.json(results);
+      console.log("OK");
+    } catch {
+      console.log("Error");
+    }
+  });
 };
 
 /* POST */
-async function createCar (req, res) {
-  console.log(req.body);
+async function createCar(req, res) {
   const createNewCar = {
     companyEnglish: req.body.companyEnglish,
     companyHebrew: req.body.companyHebrew,
@@ -62,7 +59,7 @@ async function createCar (req, res) {
     colour: req.body.colour,
     condition: req.body.condition,
     iteriorDesign: req.body.iteriorDesign,
-    dealer: req.body.dealerId,
+    dealer: req.body.dealer,
   };
 
   await carSchema.create(createNewCar);
@@ -71,7 +68,6 @@ async function createCar (req, res) {
 
 /* PUT */
 const updateCar = (req, res) => {
-  
   // const dealerId = req.body.dealer;
   let newCar = new carSchema({
     _id: req.params.id,
@@ -98,10 +94,10 @@ const updateCar = (req, res) => {
     dealer: req.body.dealer,
   });
 
-    carSchema
-      .findOneAndUpdate({ _id: newCar._id }, newCar, { new: true })
-      .then((updateCar) => res.json(updateCar))
-      .catch((err) => res.status(400).json("Error: " + err));
+  carSchema
+    .findOneAndUpdate({ _id: newCar._id }, newCar, { new: true })
+    .then((updateCar) => res.json(updateCar))
+    .catch((err) => res.status(400).json("Error: " + err));
 };
 
 /* DELETE */
