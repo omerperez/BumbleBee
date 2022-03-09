@@ -75,7 +75,6 @@ export default function CarForm() {
 
   const handleClickSubmit = async (e) => {
     e.preventDefault();
-    // console.log(values);
       try {
         setLoading(true);
         await createNewCar(values);
