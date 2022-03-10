@@ -253,46 +253,6 @@
   box-shadow: 15px 15px 15px 15px #708090
 }
 
-.inputfile:focus + label,
-.inputfile + label:hover {
-  background-color: red;
-  outline: 1px dotted #000;
-	outline: -webkit-focus-ring-color auto 5px;
-}
-
-.inputfile + label {
-   font-size: 1.25em;
-    font-weight: 700;
-    color: white;
-    background-color: black;
-    display: inline-block;
-	
-}
-/* 
-[type="file"] {
-  height: 0;
-  overflow: hidden;
-  width: 0;
-} */
-
-/* [type="file"] + label {
-  background: #e2a021;
-  border: none;
-  border-radius: 5px;
-  color: #363636;
-  cursor: pointer;
-  display: inline-block;
-	font-family: 'Rubik', sans-serif;
-	font-size: 20px;
-  font-weight: 500;
-  margin-bottom: 1rem;
-  outline: none;
-  padding: 1rem 50px;
-  position: relative;
-  transition: all 0.3s;
-  vertical-align: middle;
-} */
-
 .grid-container {
   display: grid;
   padding: 5px;
@@ -300,4 +260,10 @@
 
 .grid-item {
   padding: 5px;
+}
+
+.costoms-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: auto;
 }
