@@ -6,7 +6,9 @@ const router = express.Router();
 const multerS3 = require("multer-s3");
 const dotenv = require("dotenv");
 const aws = require("aws-sdk");
+const { upload } = require("../s3");
 
+/* 
 dotenv.config();
 aws.config.update({ region: "eu-west-1" });
 
@@ -30,11 +32,13 @@ const upload = multer({
     },
     key: (req, file, cb) => {
       cb(null, file.originalname);
+      
     },
   }),
 });
+*/
 
-router.post("/register", upload.single("image"), userController.register);
+router.post("/register", upload.array('image',1), userController.register);
 
 router.post("/login", userController.login);
 
