@@ -11,7 +11,6 @@ export default function Signup() {
   const mobileRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  const phoneRef = useRef();
   const [file, setFile] = useState();
   const { signup } = useAuth();
   const [error, setError] = useState("");
@@ -110,7 +109,6 @@ export default function Signup() {
                 autoComplete="false"
                 inputRef={passwordRef}
                 variant="standard"
-                autoComplete="new-password"
                 fullWidth
                 required
               />

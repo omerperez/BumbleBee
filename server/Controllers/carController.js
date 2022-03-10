@@ -49,7 +49,7 @@ async function createCar(req, res) {
     price: req.body.price,
     netPrice: req.body.netPrice,
     dateForImages: req.body.dateForImages,
-    images: req.body.images,
+    images: req.body.imagesName,
     fuelConsumption: req.body.fuelConsumption,
     numberOfSeats: req.body.numberOfSeats,
     doorCount: req.body.doorCount,
@@ -62,8 +62,8 @@ async function createCar(req, res) {
     dealer: req.body.dealer,
   };
 
-  await carSchema.create(createNewCar);
-  return res.send(createNewCar);
+  const newCar = await carSchema.create(createNewCar);
+  return res.send(newCar._id);
 }
 
 /* PUT */

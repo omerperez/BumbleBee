@@ -25,7 +25,11 @@ export default function HomePage() {
               <CarCard
                 key={car._id}
                 _id={car._id}
-                image={"mini.jpeg"}
+                image={
+                  car.images && car.images.length > 0
+                    ? `https://bumblebee-pro.s3.eu-west-1.amazonaws.com/${car.images[0]}`
+                    : "/image_not_available.png"
+                }
                 company={car.company ? car.company : car.companyEnglish}
                 model={car.model}
                 year={car.year}

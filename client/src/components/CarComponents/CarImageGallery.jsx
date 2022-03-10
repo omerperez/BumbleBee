@@ -34,7 +34,7 @@ export default function CarImageGallery({ id, car }) {
             ? car.images.map((image) => {
                 return (
                   <ImageListItem key={image}>
-                    <img src={image} />
+                    <img src={url + image} />
                   </ImageListItem>
                 );
               })
@@ -44,10 +44,8 @@ export default function CarImageGallery({ id, car }) {
           <img
             src={
               car.images
-                ? car.images[0]
-                : //  url +
-                  //   car.images[0].substring(0, car.images[0].indexOf(",")) +
-                  //   "?alt=media"
+                ? url  + car.images[0]
+                : 
                   null
             }
             width={"100%"}
