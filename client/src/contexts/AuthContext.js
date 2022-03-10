@@ -2,8 +2,6 @@ import React, { useContext, useState, useEffect, createContext } from "react";
 import { auth } from "../AuthFirebase/firebase";
 import axios from "axios";
 import Cookies from "universal-cookie";
-import { storage } from "../AuthFirebase/storage";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 
 const api = axios.create({ baseURL: "http://localhost:8080" });
@@ -79,7 +77,7 @@ export default function AuthProvider({ children }) {
   function updatePassword(password) {
     return currentUser.updatePassword(password);
   }
-  
+
   function createNewCar(carObj) {
 
     const formData = new FormData();
@@ -125,6 +123,29 @@ export default function AuthProvider({ children }) {
       });
   }
 
+  function editCar(
+    id,
+    km,
+    price,
+    colour,
+  ){
+    const carData = {
+      id, km, price, colour
+    };
+    return api.put(`/car/edit/${id}`, carData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log("error");
+        console.log(error);
+      });
+  }
+
   useEffect(() => {
     if (cookies.get("connectUser")) {
       setCurrentUser(cookies.get("connectUser"));
@@ -144,6 +165,7 @@ export default function AuthProvider({ children }) {
     updateEmail,
     updatePassword,
     progress,
+    editCar,
   };
 
   return (

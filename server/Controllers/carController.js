@@ -68,38 +68,19 @@ async function createCar(req, res) {
 
 /* PUT */
 const updateCar = (req, res) => {
-  // const dealerId = req.body.dealer;
   let newCar = new carSchema({
     _id: req.params.id,
-    companyEnglish: req.body.companyEnglish,
-    companyHebrew: req.body.companyHebrew,
-    model: req.body.model,
-    year: req.body.year,
-    numberOfVehicleOwners: req.body.numberOfVehicleOwners,
-    engine: req.body.engine,
     km: req.body.km,
     price: req.body.price,
-    netPrice: req.body.netPrice,
-    description: req.body.description,
-    images: req.files,
-    fuelConsumption: req.body.fuelConsumption,
-    numberOfSeats: req.body.numberOfSeats,
-    doorCount: req.body.doorCount,
-    gearbox: req.body.gearbox,
-    emissionClass: req.body.emissionClass,
-    firstRegistration: Date(req.body.firstRegistration),
+    netPrice: req.body.price * 0.7,
     colour: req.body.colour,
-    condition: req.body.condition,
-    iteriorDesign: req.body.iteriorDesign,
-    dealer: req.body.dealer,
   });
 
-  carSchema
-    .findOneAndUpdate({ _id: newCar._id }, newCar, { new: true })
-    .then((updateCar) => res.json(updateCar))
-    .catch((err) => res.status(400).json("Error: " + err));
+    carSchema
+      .findOneAndUpdate({ _id: newCar._id }, newCar, { new: true })
+      .then((updateCar) => res.json(updateCar))
+      .catch((err) => res.status(400).json("Error: " + err));
 };
-
 /* DELETE */
 const deleteCar = (req, res) => {
   console.log(req.params.id);

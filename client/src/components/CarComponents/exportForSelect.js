@@ -39,32 +39,16 @@ export const carsProperties = {
   Condition: ["Used", "New", "Demonstration car"],
   makes: [
     {
-      english: "buick",
-      hebrew: "ביואיק",
-    },
-    {
-      english: "MINI",
-      hebrew: "מיני קופר",
-    },
-    {
       english: "Volvo",
-      hebrew: "וולו",
+      hebrew: "וולבו",
     },
     {
       english: "Ford",
       hebrew: "פורד",
     },
     {
-      english: "HAMMER",
-      hebrew: "האמר",
-    },
-    {
       english: "GMC",
-      hebrew: "ג'י אם סי",
-    },
-    {
-      english: "Subaru",
-      hebrew: "סובארו",
+      hebrew: "ג'י.אמ.סי",
     },
     {
       english: "Mitsubishi",
@@ -92,7 +76,7 @@ export const carsProperties = {
     },
     {
       english: "BMW",
-      hebrew: "במוו",
+      hebrew: "ב מ וו",
     },
     {
       english: "Bentley",
@@ -119,28 +103,16 @@ export const carsProperties = {
       hebrew: "פולקסווגן",
     },
     {
-      english: "Aston Martin",
-      hebrew: "אסטון מרטין",
-    },
-    {
       english: "Land Rover",
-      hebrew: "לנד רובר",
-    },
-    {
-      english: "Pontiac",
-      hebrew: "פונטיאק",
+      hebrew: "לנדרובר",
     },
     {
       english: "Cadillac",
-      hebrew: "קאדילק",
+      hebrew: "קאדילאק",
     },
     {
       english: "Fiat",
-      hebrew: "פיאט",
-    },
-    {
-      english: "Saab",
-      hebrew: "סאב",
+      hebrew: "פיאט קרייזלר",
     },
     {
       english: "Kia",
@@ -160,7 +132,7 @@ export const carsProperties = {
     },
     {
       english: "Mazda",
-      hebrew: "מאזדה",
+      hebrew: "מזדה",
     },
     {
       english: "Suzuki",
@@ -171,21 +143,10 @@ export const carsProperties = {
       hebrew: "טויוטה",
     },
     {
-      english: "Acura",
-      hebrew: "אקורה",
-    },
-    {
-      english: "Saturn",
-      hebrew: "סאטורן",
-    },
-    {
       english: "Chrysler",
       hebrew: "קרייזלר",
     },
-    {
-      english: "ISUSU",
-      hebrew: "איסוזו",
-    },
+   
     {
       english: "Ferrari",
       hebrew: "פרארי",
@@ -195,96 +156,24 @@ export const carsProperties = {
       hebrew: "טסלה",
     },
     {
-      english: "Infiniti",
-      hebrew: "אינפיניטי",
-    },
-    {
-      english: "Oldsmobile",
-      hebrew: "אולד מובייל",
-    },
-    {
-      english: "RAM",
-      hebrew: "ראם",
-    },
-    {
-      english: "Eagle",
-      hebrew: "איגל",
-    },
-    {
       english: "Porsche",
       hebrew: "פורשה",
     },
     {
-      english: "Mercury",
-      hebrew: "מרקורי",
-    },
-    {
-      english: "Scion",
-      hebrew: "סקיון",
-    },
-    {
-      english: "Lotus",
-      hebrew: "לוטוס",
-    },
-    {
-      english: "Plymouth",
-      hebrew: "פליימוט'",
-    },
-    {
-      english: "Freightliner",
-      hebrew: "פרייטליינר",
-    },
-    {
       english: "Rolls-Royce",
-      hebrew: "רולס רוייס",
-    },
-    {
-      english: "SRT",
-      hebrew: "אס אר טי",
-    },
-    {
-      english: "Maybach",
-      hebrew: "מייבאך",
-    },
-    {
-      english: "Alpha Romeo",
-      hebrew: "אלפא רומאו",
-    },
-    {
-      english: "Geo",
-      hebrew: "גאו",
+      hebrew: "רולס-רויס",
     },
     {
       english: "Smart",
       hebrew: "סמארט",
     },
     {
-      english: "Daihatsu",
-      hebrew: "דייאטסו",
-    },
-    {
-      english: "Daewoo",
-      hebrew: "דאייוו",
-    },
-    {
       english: "Maserati",
-      hebrew: "מזראטי",
-    },
-    {
-      english: "Genesis",
-      hebrew: "ג'נסיס",
+      hebrew: "מזארטי",
     },
     {
       english: "McLaren",
-      hebrew: "מקלארן",
-    },
-    {
-      english: "Fisker",
-      hebrew: "פיסקר",
-    },
-    {
-      english: "Panoz",
-      hebrew: "פאנוז",
+      hebrew: "מקלארין",
     },
   ],
 };
@@ -416,20 +305,12 @@ export const companiesHeAndEn = [
     hebrew: "לנד רובר",
   },
   {
-    english: "Pontiac",
-    hebrew: "פונטיאק",
-  },
-  {
     english: "Cadillac",
-    hebrew: "קאדילק",
+    hebrew: "קאדילאק",
   },
   {
     english: "Fiat",
     hebrew: "פיאט",
-  },
-  {
-    english: "Saab",
-    hebrew: "סאב",
   },
   {
     english: "Kia",
@@ -449,7 +330,7 @@ export const companiesHeAndEn = [
   },
   {
     english: "Mazda",
-    hebrew: "מאזדה",
+    hebrew: "מזדה",
   },
   {
     english: "Suzuki",
@@ -460,20 +341,8 @@ export const companiesHeAndEn = [
     hebrew: "טויוטה",
   },
   {
-    english: "Acura",
-    hebrew: "אקורה",
-  },
-  {
-    english: "Saturn",
-    hebrew: "סאטורן",
-  },
-  {
     english: "Chrysler",
     hebrew: "קרייזלר",
-  },
-  {
-    english: "ISUSU",
-    hebrew: "איסוזו",
   },
   {
     english: "Ferrari",
