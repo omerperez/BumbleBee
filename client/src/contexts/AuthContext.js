@@ -43,8 +43,6 @@ export default function AuthProvider({ children }) {
       .catch(function (error) {
         console.log(error);
       });
-
-    // .post("/user/register", userData)
   }
 
   function login(email, password) {
@@ -52,7 +50,6 @@ export default function AuthProvider({ children }) {
       email: email,
       password: password,
     };
-
     return api
       .post("/user/login", user)
       .then(function (response) {
@@ -82,64 +79,19 @@ export default function AuthProvider({ children }) {
   function updatePassword(password) {
     return currentUser.updatePassword(password);
   }
-
-  //Listen for file selection
-  function uploadFiles(files, date) {
-    //Get files
-    for (var i = 0; i < files.length; i++) {
-      var imageFile = files[i];
-
-      uploadImageAsPromise(imageFile, date);
-    }
-  }
-
-  //Handle waiting to upload each file using promise
-  function uploadImageAsPromise(imageFile, date) {
-    return new Promise(function (resolve, reject) {
-      const storageRef = ref(storage, `/files/${date}-${imageFile.name}`);
-      const uploadTask = uploadBytesResumable(storageRef, imageFile);
-
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const prog = Math.round(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
-          console.log("here2");
-          setProgress(prog);
-        },
-        (err) => console.log(err),
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(
-            (url) => console.log.url
-          );
-        }
-      );
-    });
-  }
-  function changeName(files, formData) {
-    const now = Date.now();
-    for (let i = 0; i < files.length; i++) {
-      formData.append(`image`, files[i], now + files[i].name);
-    }
-  }
-
+  
   function createNewCar(carObj) {
 
     const formData = new FormData();
   
     var files = carObj.image;
-    // for (let i = 0; i < files.length; i++) {
-    //   formData.append("image", files[i]);
-    // }
-    let imagesArray = [];
     const now = Date.now();
     for (let i = 0; i < files.length; i++) {
-      formData.append(`image`, files[i], now + files[i].name);
-      formData.append(`imagesName`, now + files[i].name);
+      const rnd = Math.floor(Math.random() * 1000000) + 1000;
+      formData.append(`image`, files[i], now + rnd + files[i].name);
+      formData.append(`imagesName`, now + rnd + files[i].name);
     }
 
-    // formData.append("imagesName", JSON.stringify(imagesArray));
     formData.append("companyEnglish", carObj.company.english);
     formData.append("companyHebrew", carObj.company.hebrew);
     formData.append("model", carObj.model);
@@ -192,7 +144,6 @@ export default function AuthProvider({ children }) {
     updateEmail,
     updatePassword,
     progress,
-    uploadFiles,
   };
 
   return (
@@ -201,26 +152,3 @@ export default function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
-
-
- // const car = {
-    //   companyEnglish: carObj.company.english,
-    //   companyHebrew: carObj.company.hebrew,
-    //   model: carObj.model,
-    //   year: carObj.year,
-    //   numberOfVehicleOwners: carObj.numberOfVehicleOwners,
-    //   engine: carObj.engine,
-    //   km: carObj.km,
-    //   price: carObj.price,
-    //   netPrice: carObj.price * 0.7,
-    //   images: carObj.image,
-    //   fuelConsumption: carObj.fuel,
-    //   numberOfSeats: carObj.numberOfSeats,
-    //   doorCount: carObj.doorCount,
-    //   gearbox: carObj.gearbox,
-    //   emissionClass: "Euro6",
-    //   firstRegistration: carObj.firstRegistrationDate,
-    //   colour: carObj.colour,
-    //   condition: carObj.condition,
-    //   dealer: currentUser._id,
-    // };
