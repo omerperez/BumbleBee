@@ -191,6 +191,29 @@ export default function AuthProvider({ children }) {
       });
   }
 
+  function editCar(
+    id,
+    km,
+    price,
+    colour,
+  ){
+    const carData = {
+      id, km, price, colour
+    };
+    return api.put(`/car/edit/${id}`, carData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log("error");
+        console.log(error);
+      });
+  }
+
   useEffect(() => {
     if (cookies.get("connectUser")) {
       setCurrentUser(cookies.get("connectUser"));
@@ -211,6 +234,7 @@ export default function AuthProvider({ children }) {
     updatePassword,
     progress,
     uploadFiles,
+    editCar,
   };
 
   return (
