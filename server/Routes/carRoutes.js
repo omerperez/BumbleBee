@@ -6,14 +6,19 @@ const dotenv = require("dotenv");
 // const multer = require("multer");
 // const multerS3 = require("multer-s3");
 // const aws = require("aws-sdk");
+const { upload } = require("../s3");
+
 
 dotenv.config();
+
+
+router.post("/create", upload.array('image', 10), carController.createCar);
 
 router.get("/show/:id", carController.getCarById);
 
 router.get("/", carController.getAllCars);
 
-router.post("/create", carController.createCar);
+//router.post("/create", carController.createCar);
 
 router.put("/edit/:id", carController.updateCar);
 

@@ -1,24 +1,31 @@
-// const AWS = require("aws-sdk");
-// const dotenv = require("dotenv");
-// const multer = require("multer");
+ const dotenv = require("dotenv");
+ const multer = require("multer");
+ const multerS3 = require("multer-s3");
+ const aws = require("aws-sdk");
 
-// dotenv.config();
+dotenv.config();
+aws.config.update({ 
+  region: "eu-west-1",
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+});
 
-// const s3 = new AWS.S3({
-//   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-//   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-// });
+const bucketName = "bumblebee-pro";
 
-// const storage = multer.memoryStorage({
-//   destination: function (req, files, callback) {
-//     callback(null, "");
-//   },
-// });
+const s3 = new aws.S3();
 
-// var upload = multer({ storage }).any();
+const upload = multer({
+  storage: multerS3({
+    s3,
+    bucket: bucketName,
+    key: function (req, file, cb) {
+      var fileExtension = file.originalname.split(".")[1];
+      var path = "uploads/" + req.user._id + Date.now() + "." + fileExtension; /* TODO: what is the path? */
+      cb(null, path);
+    }
+  })
+});
 
-// module.exports = {
-//     s3,
-//     storage,
-//     upload
-// };
+module.exports = {
+  upload,
+};
