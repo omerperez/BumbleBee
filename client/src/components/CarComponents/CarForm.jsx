@@ -108,7 +108,7 @@ export default function CarForm() {
       try {
         setLoading(true);
         await createNewCar(values);
-        navigate("/homepage");
+        // navigate("/homepage");
       } catch {
         setError("Failed to sign in");
       }
@@ -471,23 +471,23 @@ export default function CarForm() {
           </div>
         </div>
         <div className="d-flex justify-content-center mt-5">
-          <label htmlFor={"upload-button"}>
-            <div className={values.images ? classes.chooseFile : classes.noFile}>
+          <label htmlFor={"image"}>
+            <div className={values.image ? classes.chooseFile : classes.noFile}>
               <div style={{ margin: "auto", fontSize: 22 }}>
                 <FileUploadIcon fontSize="large" style={{ marginRight: 10 }} />
-                {values.images
-                  ? values.images.length + " images selected"
+                {values.image
+                  ? values.image.length + " images selected"
                   : "Upload Files"}
               </div>
             </div>
           </label>
           <input
-            id="upload-button"
+            id="image"
             type="file"
-            name="images"
+            name="image"
             multiple
             style={{ display: "none" }}
-            onChange={fileSelectedHandler}
+            onChange={(e) => carChange(e)}
           />
         </div>
         <div className="mt-4 justify-content-center d-flex">
