@@ -7,7 +7,6 @@ export default function CarProfileBody({car}) {
     return (
       <div className="pl-1 pr-1" style={{ fontSize: "24px" }}>
         <div className="row">
-         
           <div className="col">
               <table>
                 <tr>
@@ -92,9 +91,6 @@ export default function CarProfileBody({car}) {
               </tr>
             </table>
           </div>
-          {/* <div className="col-1">
-
-          </div> */}
         </div>
       </div>
     );
