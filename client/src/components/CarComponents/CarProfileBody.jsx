@@ -4,61 +4,11 @@ import { Button } from "react-bootstrap";
 import './table.css'
 export default function CarProfileBody({car}) {
 
-  const [edit, setEdit] = useState(false);
-  const [omer, setOmer] = useState("Eden");
-
     return (
       <div className="pl-1 pr-1" style={{ fontSize: "24px" }}>
         <div className="row">
-          {!edit ? (
-            <Button onClick={() => setEdit(!edit)}>Edit</Button>
-          ) : (
-            <div className="justify-content-center d-flex row">
-              <Button
-                className="col"
-                style={{ background: "red" }}
-                onClick={() => setEdit(!edit)}
-              >
-                Cancel
-              </Button>
-              <Button
-                className="col"
-                style={{ background: "yellow" }}
-                onClick={() => setEdit(!edit)}
-              >
-                Save Changes
-              </Button>
-            </div>
-          )}
+         
           <div className="col">
-            {edit ? (
-              <table>
-                <tr>
-                  <th>Company</th>
-                  <td>
-                    <input type="text" value={omer} onChange={(e) => setOmer(e.target.value)}/>
-                    {/* {car.companyEnglish} */}
-                  </td>
-                </tr>
-                <tr>
-                  <th>Model</th>
-                  <td>{car.model}</td>
-                </tr>
-                <tr>
-                  <th>Year</th>
-                  <td>{car.year}</td>
-                </tr>
-
-                <tr>
-                  <th>Type Of Engine</th>
-                  <td>{car.engine}</td>
-                </tr>
-                <tr>
-                  <th>Mileage</th>
-                  <td>{car.km + " km"}</td>
-                </tr>
-              </table>
-            ) : (
               <table>
                 <tr>
                   <th>Company</th>
@@ -82,7 +32,7 @@ export default function CarProfileBody({car}) {
                   <td>{car.km + " km"}</td>
                 </tr>
               </table>
-            )}
+            
           </div>
           <div className="col">
             <table>
