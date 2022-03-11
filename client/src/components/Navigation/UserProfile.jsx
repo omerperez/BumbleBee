@@ -3,6 +3,7 @@ import { makeStyles } from "@mui/styles";
 import Typography from "@mui/material/Typography";
 import "./Navigation.modules.css";
 import { useAuth } from '../../contexts/AuthContext';
+import { error403 } from "../images/error403";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -34,7 +35,8 @@ export default function UserProfile() {
       <div className={classes.container}>
         <img
           className="profileImage"
-          src={`https://bumblebee-pro.s3.eu-west-1.amazonaws.com/${currentUser.image}`}
+          src={`https://bumblebee-pro.s3.eu-west-1.amazonaws.com/Profile_Images/${currentUser.image}`}
+          onError={error403}
         />
         <Typography variant="h6" component={"h2"} className={classes.name}>
           {currentUser.firstName + " " + currentUser.lastName}

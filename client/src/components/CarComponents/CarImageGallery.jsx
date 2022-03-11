@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import DealerCard from "./DealerCard";
-import { useAuth } from "../../contexts/AuthContext";
+import { error403 } from "../images/error403";
 
 export default function CarImageGallery({ id, car }) {
   // const url = "https://firebasestorage.googleapis.com/v0/b/bumblebee-d5c23.appspot.com/o/files%2F";
-  const url = "https://bumblebee-pro.s3.eu-west-1.amazonaws.com/";
+  const url = "https://bumblebee-pro.s3.eu-west-1.amazonaws.com/Car_images/";
   const [dealer, setDealer] = useState(car.dealer);
 
   useEffect(() => {
@@ -34,7 +34,13 @@ export default function CarImageGallery({ id, car }) {
             car.images.map((image) => {
               return (
                 <ImageListItem key={image}>
-                  <img src={url + image} />
+                  <img
+                    src={url + image}
+                    onError={({ currentTarget }) => {
+                      currentTarget.onerror = null;
+                      currentTarget.src = "/noimages.png";
+                    }}
+                  />
                 </ImageListItem>
               );
             })
@@ -54,6 +60,7 @@ export default function CarImageGallery({ id, car }) {
             width={"100%"}
             height={450}
             style={{ border: "solid 3px black", borderLeft: "none" }}
+            onError={error403}
           />
         </div>
         <div style={{ flexBasis: "33%", marginLeft: "1%" }}>

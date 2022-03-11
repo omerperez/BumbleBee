@@ -13,23 +13,22 @@ export default function Customs() {
         processes. It serves as an agent and trustee of an importer or exporter
         towards the customs authorities.
       </div>
-      <div className="mt-4 cars-grid">
-        {costums.map((c, key) => {
+      <div className="mt-4 cars-grid pl-1 pr-1">
+        {costums.map((customs, key) => {
           return (
-            <div className="pl-1 pr-1">
               <CustomsCard
-                name={c.name}
-                image={c.image}
-                link={c.link}
-                color={c.color}
+                name={customs.name}
+                image={customs.image}
+                link={customs.link}
+                color={customs.color}
+                key={customs.name}
               />
-            </div>
           );
         })}
       </div>
       <div className="pl-1 pr-1 d-flex justify-content-center mt-5">
         <h4 style={{ marginRight: 10, color: "black", display: "inline" }}>
-          Need more Information?  
+          Need more Information?
         </h4>
         <a
           href={

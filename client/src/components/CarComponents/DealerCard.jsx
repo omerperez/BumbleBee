@@ -10,6 +10,7 @@ import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import PhoneInTalkIcon from "@mui/icons-material/PhoneInTalk";
 import { Button } from "@mui/material";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import { error403 } from "../images/error403";
 
 export default function DealerCard({ dealer }) {
   const theme = useTheme();
@@ -45,9 +46,6 @@ export default function DealerCard({ dealer }) {
             <StarIcon />
             <StarIcon />
             <StarIcon />
-            {/* {() => {
-              for (let i = 0; i < 5; i++)  <StarIcon />;
-            }} */}
           </Typography>
           <div className="mt-3">
             <div>
@@ -92,6 +90,7 @@ export default function DealerCard({ dealer }) {
             borderRadius: "50%",
             border: "solid 2px #363636",
           }}
+          onError={error403}
         />
       </div>
     </Card>

@@ -106,7 +106,7 @@ export default function AuthProvider({ children }) {
     formData.append("firstRegistration", carObj.firstRegistrationDate);
     formData.append("colour", carObj.colour);
     formData.append("condition", carObj.condition);
-    formData.append("dealer", currentUser._id);
+    formData.append("dealer", currentUser._id.toString());
 
     return api
       .post("/car/create", formData, {

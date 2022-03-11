@@ -49,10 +49,10 @@ export default function EditCarForm({car ,saveChanges}) {
   return (
     <div className="row">
       <div className="col-11">
-        <div className="pl-1 pr-1" style={{ fontSize: "24px" }}>
-          <div className="row">
-            <div className="col">
-              <table>
+        <div className="row pl-1 pr-1" style={{ fontSize: "24px" }}>
+          <div className="col">
+            <table>
+              <tbody>
                 <tr>
                   <th>Company</th>
                   <td>{car.companyEnglish}</td>
@@ -72,31 +72,38 @@ export default function EditCarForm({car ,saveChanges}) {
                 </tr>
                 <tr>
                   <th>Mileage</th>
-                  <TextField
-                    defaultValue={car.km}
-                    label="KM"
-                    type="number"
-                    onChange={(e) => setKm(e.target.value)}
-                    fullWidth
-                  />
+                  <td>
+                    <TextField
+                      component={"span"}
+                      defaultValue={car.km}
+                      label="KM"
+                      type="number"
+                      onChange={(e) => setKm(e.target.value)}
+                      fullWidth
+                    />
+                  </td>
                 </tr>
-              </table>
-            </div>
-            <div className="col">
-              <table>
+              </tbody>
+            </table>
+          </div>
+          <div className="col">
+            <table>
+              <tbody>
                 <tr>
                   <th>Owners</th>
                   <td>{car.numberOfVehicleOwners}</td>
                 </tr>
                 <tr>
                   <th>Price (Net)</th>
-                  <TextField
-                    defaultValue={car.price}
-                    label="price"
-                    type="number"
-                    onChange={(e) => setPrice(e.target.value)}
-                    fullWidth
-                  />
+                  <td>
+                    <TextField
+                      defaultValue={car.price}
+                      label="price"
+                      type="number"
+                      onChange={(e) => setPrice(e.target.value)}
+                      fullWidth
+                    />
+                  </td>
                 </tr>
                 <tr>
                   <th>Fuel Consumption</th>
@@ -110,11 +117,13 @@ export default function EditCarForm({car ,saveChanges}) {
                   <th>Door Count</th>
                   <td>{car.doorCount}</td>
                 </tr>
-              </table>
-            </div>
+              </tbody>
+            </table>
+          </div>
 
-            <div className="col">
-              <table>
+          <div className="col">
+            <table>
+              <tbody>
                 <tr>
                   <th>Gearbox</th>
                   <td>{car.gearbox}</td>
@@ -139,35 +148,37 @@ export default function EditCarForm({car ,saveChanges}) {
                 </tr>
                 <tr>
                   <th>Colour</th>
-                  <Select
-                    label="color"
-                    defaultValue={car.colour}
-                    onChange={(e) => setColour(e.target.value)}
-                    required
-                    fullWidth
-                    sx={{ minWidth: "200px" }}
-                  >
-                    {carsProperties.colorList.map((color, i) => {
-                      return (
-                        <MenuItem key={color + i} value={color}>
-                          <div className="row">
-                            <div className="col-8">{color}</div>
-                            <div
-                              className="col-1 d-flex bumble-img-log"
-                              style={{ background: color }}
-                            ></div>
-                          </div>
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
+                  <td>
+                    <Select
+                      label="color"
+                      defaultValue={car.colour}
+                      onChange={(e) => setColour(e.target.value)}
+                      required
+                      fullWidth
+                      sx={{ minWidth: "200px" }}
+                    >
+                      {carsProperties.colorList.map((color, i) => {
+                        return (
+                          <MenuItem key={color + i} value={color}>
+                            <div className="row">
+                              <div className="col-8">{color}</div>
+                              <div
+                                className="col-1 d-flex bumble-img-log"
+                                style={{ background: color }}
+                              ></div>
+                            </div>
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </td>
                 </tr>
                 <tr>
                   <th>Interior Design</th>
                   <td>{car.iteriorDesign}</td>
                 </tr>
-              </table>
-            </div>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -183,12 +194,12 @@ export default function EditCarForm({car ,saveChanges}) {
           <SaveIcon fontSize="large" style={{ color: "rgb(79, 160, 79)" }} />
         </Button>
         <Button
-        className="mt-3"
+          className="mt-3"
           onClick={handleClickCancel}
           style={{
             background: "#DC143C",
             borderRadius: "10%",
-            border: "solid 2px #363636"
+            border: "solid 2px #363636",
           }}
         >
           <CancelIcon fontSize="large" style={{ color: "#363636" }} />

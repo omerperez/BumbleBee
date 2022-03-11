@@ -5,13 +5,19 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActions } from "@mui/material";
 import { Link } from "react-router-dom";
+import { error403 } from "../images/error403";
 
 export default function CarCard({ _id, image, company, model, year, used, engine, km, price }) {
 
   return (
     <div className="car-card-div">
       <Card className="car-card-width">
-        <CardMedia component="img" height="170" image={image} />
+        <CardMedia
+          component="img"
+          height="170"
+          image={image}
+          onError={error403}
+        />
         <CardContent>
           <Typography gutterBottom component="div">
             {company}

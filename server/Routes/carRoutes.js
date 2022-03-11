@@ -29,7 +29,10 @@ const upload = multer({
       cb(null, { filedName: file.fieldname });
     },
     key: (req, file, cb) => {
-      cb(null, file.originalname);
+      cb(
+        null,
+        "Car_Images/" + file.originalname
+      );
     },
   }),
 });

@@ -18,7 +18,6 @@ export default function CompaniesPage() {
         return cars.find((a) => a.company === company);
       }
     );
-    console.log(companies);
 
   return (
     <>
