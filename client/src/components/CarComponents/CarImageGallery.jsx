@@ -30,23 +30,26 @@ export default function CarImageGallery({ id, car }) {
           sx={{ width: 200, height: 500 }}
           cols={1}
         >
-          {car.images
-            ? car.images.map((image) => {
-                return (
-                  <ImageListItem key={image}>
-                    <img src={url + image} />
-                  </ImageListItem>
-                );
-              })
-            : null}
+          {car.images && car.images.length > 0 ? (
+            car.images.map((image) => {
+              return (
+                <ImageListItem key={image}>
+                  <img src={url + image} />
+                </ImageListItem>
+              );
+            })
+          ) : (
+            <ImageListItem key={1}>
+              <img src="/noimages.png" />
+            </ImageListItem>
+          )}
         </ImageList>
         <div style={{ flexBasis: "50%", height: 450 }}>
           <img
             src={
-              car.images
-                ? url  + car.images[0]
-                : 
-                  null
+              car.images && car.images.length > 0
+                ? url + car.images[0]
+                : "/image_not_available.png"
             }
             width={"100%"}
             height={450}

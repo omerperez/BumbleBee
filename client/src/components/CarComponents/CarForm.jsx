@@ -117,7 +117,15 @@ export default function CarForm() {
 
     return (
       <div className="p1l-1 pr-1">
-        {error && <Alert variant="danger">{error}</Alert>}
+        {error != "" ? (
+          <Alert
+            severity="error"
+            className="mt-3 m-4"
+            style={{ border: "solid 2px #DC143C" }}
+          >
+            <AlertTitle>{error}</AlertTitle>
+          </Alert>
+        ) : null}
         <div className="row d-flex justify-content-center m-3">
           <h5>General Information</h5>
           <div className="col">
@@ -248,7 +256,28 @@ export default function CarForm() {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                onChange={(e) => carChange(e)}
+                onChange={(e) => {
+                  carChange(e);
+                  console.log(e.target.value);
+                  if (
+                    (Date.now() - new Date(e.target.value)) /
+                      (1000 * 60 * 60 * 24) >
+                      700 ||
+                    (Date.now() - new Date(e.target.value)) /
+                      (1000 * 60 * 60 * 24) <
+                      0
+                  ) {
+                    setError(
+                      error.includes(
+                        "Date of Registration need to be 2 years from now maxium "
+                      )
+                        ? error
+                        : "Date of Registration need to be 2 years from now maxium " + error
+                    );
+                  } else {
+                    setError("");
+                  }
+                }}
                 required
               />
             </FormControl>
@@ -425,8 +454,19 @@ export default function CarForm() {
                 label="km"
                 name="km"
                 type="number"
-                value={values.km ? values.km : ""}
-                onChange={(e) => carChange(e)}
+                value={values.km && values.km > -1 ? values.km : ""}
+                onChange={(e) => {
+                  carChange(e);
+                  if (e.target.value < 0) {
+                    setError(
+                      error.includes("Please Enter Positive Number ")
+                        ? error
+                        : "Please Enter Positive Number " + error
+                    );
+                  } else {
+                    setError("");
+                  }
+                }}
                 required
               />
             </FormControl>
@@ -457,8 +497,19 @@ export default function CarForm() {
                 label="Price $"
                 name="price"
                 type="number"
-                value={values.price ? values.price : ""}
-                onChange={(e) => carChange(e)}
+                value={values.price && values.price > -1 ? values.price : ""}
+                onChange={(e) => {
+                  carChange(e);
+                  if (e.target.value < 0) {
+                    setError(
+                      error.includes("Please Enter Positive Number ")
+                        ? error
+                        : "Please Enter Positive Number " + error
+                    );
+                  } else {
+                    setError("");
+                  }
+                }}
               />
             </FormControl>
           </div>
