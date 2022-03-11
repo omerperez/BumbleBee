@@ -27,6 +27,7 @@ export default function EditCarForm({car ,saveChanges}) {
             km,
             price,
             colour,
+            car.images
         );
         <CarProfilePage/>
         saveChanges();

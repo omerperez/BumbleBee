@@ -26,7 +26,6 @@ export default function PageTitle({ page }) {
         </Link>
         ) : (
       </Breadcrumbs>
-
       <Breadcrumbs className="header-title-space">
         <Typography className="page-title-font">{page}</Typography>
       </Breadcrumbs>

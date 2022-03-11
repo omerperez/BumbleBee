@@ -267,3 +267,25 @@
   grid-template-columns: repeat(2, 1fr);
   grid-auto-rows: auto;
 }
+
+.custom-file-upload {
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  padding: 4px;
+  cursor: pointer;
+  background: #363636;
+}
+
+.img-wrap{
+  position: relative;
+  width: 130px;
+  height: 130px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.img-wrop-src {
+  width: auto;
+  height: 100%;
+}

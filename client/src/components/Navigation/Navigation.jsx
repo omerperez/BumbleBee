@@ -7,15 +7,19 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { useTheme } from "@mui/material/styles";
 import UserProfile from "./UserProfile";
-import TextField from "@mui/material/TextField";
-import { styled } from "@mui/material/styles";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { makeStyles } from "@mui/styles";
-import { clientMenuItems, managerMenuItems } from "./menuItems";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-import { Button } from "@mui/material";
+import Alert from "@mui/material/Alert";
+
+import {
+  clientMenuItems,
+  managerMenuItems,
+  defaultTextStyle,
+  currentPageStyle,
+} from "./menuItems";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,55 +30,26 @@ const useStyles = makeStyles((theme) => ({
     background: "#363636 !important",
     boxShadow: "0px 0px 0px #00000017",
   },
-}));
-
-const CssTextField = styled(TextField)({
-  "& label.Mui-focused": {
-    color: "#e2a021",
-    background: "#363636",
-  },
-  "& .MuiInput-underline:after": {
-    borderBottomColor: "#e2a021",
-  },
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      borderColor: "#e2a021",
-      background: 'white',
-      height: "40px",
-      margin: "auto",
-    },
-    "&:hover fieldset": {
-      borderColor: "#e2a021",
-      background: "white",
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "#e2a021",
-      background: "white",
-    },
-  },
-});
-
-const defaultTextStyle = { color: "white", marginLeft: "10px" };
-const currentPageStyle = {
-  background: "#E2A025",
-  color: "#363636",
-  borderLeft: "solid 10px #BA8600",
-};
+})); 
 
 export default function Navigation() {
   const classes = useStyles();
   const theme = useTheme();
+  const navigate = useNavigate();
+
   const [error, setError] = useState("");
   const { currentUser, logout, changeMode, mode } = useAuth();
-  const navigate = useNavigate();
   const [check, setCheck] = useState("/homepage");
 
   useEffect(() => {
-    const index = window.location.toString().lastIndexOf("/");
+    const index = window.location.toString().indexOf("0/");
     const id = window.location.toString().substring(index);
-    // console.log(id);
-    setCheck(id !== '/' ? id : '/homepage')
-  }, [check]);
+    const temp = id.substring(id.indexOf("/") + 1);
+    const name =
+      "/" +
+    temp.substring(0, temp.includes("/") ? temp.indexOf("/") : temp.length); 
+    setCheck(name !== "/" && name !== "/car-profile" ? name : "/homepage");
+  }, [navigate]);
 
   async function handleLogout() {
     setError("");
@@ -94,13 +69,6 @@ export default function Navigation() {
   const drawer = (
     <div>
       <UserProfile />
-      {/* <div className="search-position">
-        <CssTextField
-          label="Search"
-          className="nav-search"
-          xs={{ height: 8 }}
-        />
-      </div> */}
       <div className="d-flex justify-content-center">
         <FormControlLabel
           control={<Switch defaultChecked onClick={() => changeMode(mode)} />}
@@ -144,6 +112,8 @@ export default function Navigation() {
               className={"menu-items"}
             />
           </ListItem>
+          {error ? <Alert severity="error" style={{ border: 'solid 2px #363636', margin: '5%'}}>
+            <h5>{error}</h5></Alert> : null}
         </div>
       </List>
       <ListItem className="menuFooter">

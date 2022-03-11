@@ -13,7 +13,6 @@ import Alert from "@mui/material/Alert";
 import useForm from "../../utils/useForm";
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { makeStyles } from "@mui/styles";
-import { grey } from "@mui/material/colors";
 
 const useStyles = makeStyles(() => ({
   chooseFile: {

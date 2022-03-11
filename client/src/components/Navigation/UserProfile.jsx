@@ -33,13 +33,8 @@ export default function UserProfile() {
     <div className={classes.root}>
       <div className={classes.container}>
         <img
-          src={
-            `https://bumblebee-pro.s3.eu-west-1.amazonaws.com/${currentUser.image}`
-            // "/profileImage.png"
-            // "https://bumblebee-pro.s3.eu-west-1.amazonaws.com/1643565628601WhatsApp+Image+2022-01-14+at+6.16.48+PM.jpeg"
-            // currentUser.image
-          }
           className="profileImage"
+          src={`https://bumblebee-pro.s3.eu-west-1.amazonaws.com/${currentUser.image}`}
         />
         <Typography variant="h6" component={"h2"} className={classes.name}>
           {currentUser.firstName + " " + currentUser.lastName}
