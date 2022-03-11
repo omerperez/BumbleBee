@@ -3,7 +3,9 @@ import Grid from "@mui/material/Grid";
 import Drawer from "@mui/material/Drawer";
 import { makeStyles } from "@mui/styles";
 import { useTheme } from "@mui/material/styles";
-import { authBackground } from "../images/projectImages"
+import { authBackground } from "../components/images/projectImages"
+import { useAuth } from "../contexts/AuthContext";
+import AccessDenied from "../components/Pages/AccessDenied"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,12 +16,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AuthLayout({ children }) {
+export default function PublicRoute({ children }) {
 
   const classes = useStyles();
   const theme = useTheme();
-
-  return (
+  const { currentUser } = useAuth();
+  
+  return currentUser ? (
+    <AccessDenied />
+  ) : 
+  (
     <Grid className="layout">
       <Grid>
         <Grid item xs={6}>

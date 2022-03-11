@@ -1,14 +1,14 @@
 import React, {useState} from 'react'
 import { Navigate } from "react-router-dom";
-import { useAuth } from '../../contexts/AuthContext'
+import { useAuth } from '../contexts/AuthContext'
 import { Grid } from '@mui/material';
-import Layout from './Layout';
+import Layout from '../components/Layout/Layout';
 import Drawer from "@mui/material/Drawer";
 import { makeStyles } from "@mui/styles";
 import { useTheme } from "@mui/material/styles";
 import { ThemeProvider } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
-import { darkTheme, whiteTheme } from '../../theme/theme';
+import { darkTheme, whiteTheme } from '../theme/theme';
 
 const layoutStyle = { display: "flex", flexDirection: "row" };
 
