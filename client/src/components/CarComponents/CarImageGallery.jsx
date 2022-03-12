@@ -5,8 +5,7 @@ import DealerCard from "./DealerCard";
 import { error403 } from "../images/error403";
 
 export default function CarImageGallery({ id, car }) {
-  // const url = "https://firebasestorage.googleapis.com/v0/b/bumblebee-d5c23.appspot.com/o/files%2F";
-  const url = "https://bumblebee-pro.s3.eu-west-1.amazonaws.com/Car_images/";
+  
   const [dealer, setDealer] = useState(car.dealer);
 
   useEffect(() => {
@@ -35,7 +34,7 @@ export default function CarImageGallery({ id, car }) {
               return (
                 <ImageListItem key={image}>
                   <img
-                    src={url + image}
+                    src={process.env.REACT_APP_S3 + image}
                     onError={({ currentTarget }) => {
                       currentTarget.onerror = null;
                       currentTarget.src = "/noimages.png";
@@ -54,7 +53,7 @@ export default function CarImageGallery({ id, car }) {
           <img
             src={
               car.images && car.images.length > 0
-                ? url + car.images[0]
+                ? process.env.REACT_APP_S3 + car.images[0]
                 : "/image_not_available.png"
             }
             width={"100%"}

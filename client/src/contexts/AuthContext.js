@@ -81,13 +81,22 @@ export default function AuthProvider({ children }) {
   function createNewCar(carObj) {
 
     const formData = new FormData();
-  
+
+    const folder = "Car_Images/";
+    const companyFolder = carObj.company.english + "/";
     var files = carObj.image;
     const now = Date.now();
     for (let i = 0; i < files.length; i++) {
       const rnd = Math.floor(Math.random() * 1000000) + 1000;
-      formData.append(`image`, files[i], now + rnd + files[i].name);
-      formData.append(`imagesName`, now + rnd + files[i].name);
+      formData.append(
+        `image`,
+        files[i],
+        now + rnd + files[i].name
+      );
+      formData.append(
+        `imagesName`,
+        now + rnd + files[i].name
+      );
     }
 
     formData.append("companyEnglish", carObj.company.english);
@@ -116,7 +125,6 @@ export default function AuthProvider({ children }) {
       })
       .then((res) => {
         navigate(`/car-profile/${res.data}`)
-        console.log(res);
       })
       .catch(function (error) {
         console.log(error);
@@ -136,7 +144,6 @@ export default function AuthProvider({ children }) {
         console.log(response);
       })
       .catch(function (error) {
-        console.log("error");
         console.log(error);
       });
   }

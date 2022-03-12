@@ -56,6 +56,14 @@ export default function ManageUserPage() {
       hasborder: true,
     },
     {
+      id: "phone",
+      numeric: false,
+      disablePadding: true,
+      label: "Mobile",
+      style: noBorder,
+      hasborder: true,
+    },
+    {
       id: "role",
       numeric: false,
       disablePadding: true,
@@ -82,7 +90,6 @@ export default function ManageUserPage() {
             <SmartTable
               data={usersToPresent}
               headCells={headCells}
-              columns={null}
               cells={<UserCells />}
               topNum={40}
             />

@@ -27,7 +27,7 @@ export default function HomePage() {
                 _id={car._id}
                 image={
                   car.images && car.images.length > 0
-                    ? `https://bumblebee-pro.s3.eu-west-1.amazonaws.com/Car_images/${car.images[0]}`
+                    ? process.env.REACT_APP_S3 + car.images[0]
                     : "/image_not_available.png"
                 }
                 company={car.company ? car.company : car.companyEnglish}

@@ -1,24 +1,35 @@
-// const AWS = require("aws-sdk");
-// const dotenv = require("dotenv");
-// const multer = require("multer");
+const multer = require("multer");
+const multerS3 = require("multer-s3");
+const dotenv = require("dotenv");
+const aws = require("aws-sdk");
 
-// dotenv.config();
+dotenv.config();
+aws.config.update({ region: "eu-west-1" });
 
-// const s3 = new AWS.S3({
-//   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-//   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-// });
+const region = "eu-west-1";
+const bucketName = "bumblebee-pro";
+const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
-// const storage = multer.memoryStorage({
-//   destination: function (req, files, callback) {
-//     callback(null, "");
-//   },
-// });
+const s3 = new aws.S3({
+  region,
+  accessKeyId,
+  secretAccessKey,
+});
 
-// var upload = multer({ storage }).any();
+const upload = multer({
+  storage: multerS3({
+    s3,
+    bucket: bucketName,
+    metadata: (req, file, cb) => {
+      cb(null, { filedName: file.fieldname });
+    },
+    key: (req, file, cb) => {
+      cb(null, file.originalname);
+    },
+  }),
+});
 
-// module.exports = {
-//     s3,
-//     storage,
-//     upload
-// };
+module.exports = {
+  upload,
+};

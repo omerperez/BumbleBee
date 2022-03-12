@@ -110,7 +110,7 @@ export default function Signup() {
                     <div className="img-wrap">
                       <img
                         className="img-wrop-src"
-                        for="file"
+                        fohtmlForr="file"
                         src={file ? "/profile-suc.png" : "/cmera-ic.png"}
                       />
                     </div>
@@ -122,6 +122,7 @@ export default function Signup() {
                       onChange={(event) => {
                         const userFile = event.target.files[0];
                         setFile(userFile);
+                        console.log(userFile);
                       }}
                     />
                   </label>

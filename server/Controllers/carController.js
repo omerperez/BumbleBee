@@ -84,10 +84,9 @@ const updateCar = async (req, res) => {
 
 /* DELETE */
 const deleteCar = (req, res) => {
-  console.log(req.params.id);
   const _id = req.params.id;
   const user = carSchema.deleteOne({ _id: _id }).then((results) => {
-    return res.json(results);
+   return res.json(results); 
   });
 };
 

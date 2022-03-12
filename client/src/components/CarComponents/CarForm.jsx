@@ -257,7 +257,6 @@ export default function CarForm() {
                 }}
                 onChange={(e) => {
                   carChange(e);
-                  console.log(e.target.value);
                   if (
                     (Date.now() - new Date(e.target.value)) /
                       (1000 * 60 * 60 * 24) >
@@ -430,7 +429,7 @@ export default function CarForm() {
               >
                 {carsProperties.colorList.map((color, i) => {
                   return (
-                    <MenuItem key={color.id} value={color}>
+                    <MenuItem key={color.id + i} value={color}>
                       <div className="row">
                         <div className="col-8">{color}</div>
                         <div
@@ -480,7 +479,7 @@ export default function CarForm() {
                 onChange={(e) => carChange(e)}
                 required
               >
-                {carsProperties.InteriorDesign.map((designOption, key) => {
+                {carsProperties.InteriorDesign.map((designOption) => {
                   return (
                     <MenuItem key={designOption.id} value={designOption}>
                       {designOption}

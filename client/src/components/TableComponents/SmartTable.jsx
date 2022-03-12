@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { makeStyles, withStyles } from "@mui/styles";
+import React, { useState } from "react";
+import { withStyles } from "@mui/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -91,12 +91,10 @@ export default function SmartTable({
           >
             <TableHead>
               <TableRow style={{ height: "1.21rem" }}>
-                {headCells.map((headCell) => (
+                {headCells.map((headCell, key) => (
                   <StyledTableCell
-                    key={`${headCell.id}-c`}
+                    key={headCell.label}
                     align={"left"}
-                    colSpan={headCell.span}
-                    className={classes.callAfter}
                     style={headCell.style}
                   >
                     <div
@@ -106,119 +104,37 @@ export default function SmartTable({
                           : classes.divWrapperOfHeaderAction
                       }
                     >
-                      {headCell.id === "lastSeen" ||
-                      headCell.id === "Alerts" ||
-                      headCell.id === "Status" ? (
-                        <div
-                          className={classes.sortLabel}
+                      <TableSortLabel
+                        key={headCell.id + key}
+                        className={classes.sortLabel}
+                        hideSortIcon={false}
+                        align={"left"}
+                        active={false}
+                        onClick={createSortHandler(headCell.id)}
+                      >
+                        <span
+                          className={classes.span}
                           style={{
-                            display: "flex",
-                            alignItems: "center",
                             color: "rgba(0, 0, 0, 0.87)",
                             fontSize: "0.875rem",
                           }}
                         >
                           {headCell.label}
-                        </div>
-                      ) : (
-                        <TableSortLabel
-                          className={
-                            headCell.hasborder
-                              ? classes.sortLabel
-                              : classes.sortLabelNoBorderAfter
-                          }
-                          active={
-                            headCell.id === "lastSeen" ||
-                            headCell.id === "Alerts"
-                              ? false
-                              : true
-                          }
-                          hideSortIcon={
-                            headCell.id === "lastSeen" ||
-                            headCell.id === "Alerts"
-                              ? false
-                              : false
-                          }
-                          align={"left"}
-                          active={valueToOrderBy === headCell.id}
-                          direction={
-                            valueToOrderBy == headCell.id
-                              ? orderDirection
-                              : "asc"
-                          }
-                          onClick={createSortHandler(headCell.id)}
-                        >
-                          <span
-                            className={classes.span}
-                            style={{
-                              color: "rgba(0, 0, 0, 0.87)",
-                              fontSize: "0.875rem",
-                            }}
-                          >
-                            {headCell.label}
-                            {headCell.SubTitle}
-                          </span>
-                        </TableSortLabel>
-                      )}
+                        </span>
+                      </TableSortLabel>
                     </div>
                   </StyledTableCell>
                 ))}
               </TableRow>
-
-              {columns ? (
-                <TableRow style={{ display: "contents", height: "0.605rem" }}>
-                  {columns.map((column) => (
-                    <StyledTableCell
-                      key={`${column.id}-c`}
-                      align={"left"}
-                      colSpan={column.span}
-                      className={classes.tableCell}
-                      style={{
-                        borderColor: "#CDCDCD",
-                        color: "rgba(0, 0, 0, 0.76)",
-                        fontSize: "0.875rem",
-                        zIndex: 1,
-                        top: topNum,
-                        minWidth: column.minWidth,
-                        paddingLeft: 10,
-                        paddingTop: 0,
-                      }}
-                    >
-                      <div
-                        className={
-                          column.hasborder
-                            ? classes.divWrapperOfHeader
-                            : classes.divWrapperOfHeaderAction
-                        }
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            color: "rgba(0, 0, 0, 0.87)",
-                            fontSize: "0.875rem",
-                            fontWeight: "normal",
-                          }}
-                        >
-                          {column.label}
-                        </div>
-                      </div>
-                    </StyledTableCell>
-                  ))}
-                </TableRow>
-              ) : null}
             </TableHead>
-
             <TableBody>
               {
-                (dataCount = stableSort(
-                  data,
-                  getComparator(orderDirection, valueToOrderBy)
-                )
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((item, i) => {
-                    return <>{React.cloneElement(cells, { item: item })}</>;
-                  }))
+                    return (
+                      <>{React.cloneElement(cells, { item: item })}</>
+                    );
+                  })
               }
             </TableBody>
           </Table>

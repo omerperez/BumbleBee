@@ -35,7 +35,7 @@ export default function UserProfile() {
       <div className={classes.container}>
         <img
           className="profileImage"
-          src={`https://bumblebee-pro.s3.eu-west-1.amazonaws.com/Profile_Images/${currentUser.image}`}
+          src={process.env.REACT_APP_S3 + currentUser.image}
           onError={error403}
         />
         <Typography variant="h6" component={"h2"} className={classes.name}>

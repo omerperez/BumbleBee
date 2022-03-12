@@ -16,8 +16,6 @@ const getAllUsers = (req, res) => {
 };
 
 const getUserById = (request, respons) => {
-  console.log(request.params.id);
-
   const userId = request.params.id;
   userSchema.findById(userId).then((results) => {
     try {

@@ -24,11 +24,9 @@ export const useTableStyles = makeStyles((theme) => ({
     color: "#212121",
   },
   sortLabel: {
-    // fontFamily: "FiraSansCondensed-Regular !important",
     fontWeight: 700,
     width: "100%",
     "&::after": {
-    //   content: '""',
       borderRight: "1px solid #CDCDCD",
       position: "absolute",
       width: 1,
