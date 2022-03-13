@@ -67,21 +67,11 @@ export default function Login() {
               >
                 Login
               </Button>
-
-              <Link to="/signup" className="link-in-btn">
-                <Button
-                  disabled={loading}
-                  className="mb-3 w-100 grey-btn"
-                  type="submit"
-                >
-                  Need an account? Sign Up
-                </Button>
-              </Link>
             </Form>
             <div className="w-100 text-center mt-3">
-              Forgot Password?{" "}
-              <Link to="/forgot-password" className="cancel-underline ">
-                Click here
+              Need an account?{" "}
+              <Link to="/signup" className="cancel-underline ">
+                Sign Up
               </Link>
             </div>
           </Card.Body>
