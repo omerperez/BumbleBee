@@ -1,9 +1,7 @@
 import React from "react";
 import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { error403 } from "../images/projectImages";
 
@@ -11,34 +9,41 @@ export default function CarCard({ _id, image, company, model, price }) {
 
   return (
     <div className="car-card-div">
-      <Card className="car-card-width">
-        <CardMedia
-          component="img"
-          height="170"
-          image={image}
-          onError={error403}
-        />
-        <CardContent>
-          <Typography gutterBottom component="div">
-            {company}
-          </Typography>
-          <Typography gutterBottom component="div" className="font-22">
-            {model}
-          </Typography>
-          <div className="row mt-4">
-            <div className="col-6 d-flex justify-content-start">
-              <h4>{price} $</h4>
-            </div>
-            <div className="col-6 d-flex justify-content-end">
-              <Link
-                to={`/car-profile/${_id}`}
-                className="cancel-underline border2 border-radius-5"
-              >
-                <Button>More Details</Button>
-              </Link>
-            </div>
+      <Card className="car-card-width box-shadow-none border-radius-10">
+        <Link to={`/car-profile/${_id}`}>
+          <CardMedia
+            className="border-radius-10 cur-pointer"
+            component="img"
+            height="140"
+            image={image}
+            onError={error403}
+          />
+        </Link>
+        <Typography
+          style={{ fontFamily: "sans-serif" }}
+          className="mt-2 text-center"
+          gutterBottom
+          component="div"
+        >
+          <b>
+            {company && company.length > 0
+              ? company.charAt(0).toUpperCase() +
+                company.toLowerCase().substr(1) +
+                " " +
+                model
+              : company + " " + model}
+          </b>
+          <br />
+          {price + "$"}
+          <div className="text-center">
+            <Link
+              to={`/car-profile/${_id}`}
+              className="cancel-underline f-14 capital-letter info-text-color"
+            >
+              click for more info
+            </Link>
           </div>
-        </CardContent>
+        </Typography>
       </Card>
     </div>
   );

@@ -9,11 +9,12 @@ const bumblebeeLogo = "/our-logo.png";
 const emptyProfileImage = "/cmera-ic.png";
 const profileSuccess = "/profile-suc.png";
 const clapsImage = "/claps.png";
-const image403 = "/image_not_available.png";
+const image403 = "/mini.jpeg";  //"/image_not_available.png";
 const uploadMultipleSucces = "/success.png";
 const uploadMultipleEmpty = "/Group 9.png";
 const uploadMainSucces = "/success-1.png";
 const uploadMainEmpty = "/Group 7.png";
+const editCarIcon = "/edit-car.png";
 
 const error403 = ({ currentTarget }) => {
   currentTarget.src = image403;
@@ -37,5 +38,6 @@ export {
   uploadMultipleEmpty,
   uploadMainSucces,
   uploadMainEmpty,
+  editCarIcon,
   error403,
 };

@@ -226,7 +226,7 @@
 
 .cars-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   grid-auto-rows: auto;
 }
 
@@ -271,7 +271,9 @@
 .font-24{
   font-size: 24px;
 }
-
+.f-14{
+  font-size: 14px;
+}
 .f-19{
   font-size: 19px;
 }
@@ -364,6 +366,10 @@
 
 .border2{
   border: solid 2px;
+}
+
+.border-radius-10{
+  border-radius: 10% !important;
 }
 
 .border-radius-5{
@@ -474,7 +480,22 @@
  box-shadow: none !important;
 }
 
+.box-shadow-none{
+  box-shadow: none !important;
+}
 
 .cur-pointer{
   cursor: pointer;
+}
+
+.text-center{
+  text-align: center;
+}
+
+.capital-letter{
+   text-transform: capitalize !important;
+}
+
+.info-text-color{
+  color: #778899;
 }

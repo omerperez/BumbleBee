@@ -7,7 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { carsProperties } from "./exportForSelect";
 import CarProfilePage from "../Pages/CarProfilePage";
 import SaveIcon from "@mui/icons-material/Save";
-import CancelIcon from "@mui/icons-material/Cancel";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 export default function EditCarForm({car ,saveChanges}) {
     
@@ -183,18 +183,34 @@ export default function EditCarForm({car ,saveChanges}) {
         </div>
       </div>
       <div className="col">
-        <Button
-          className="bg-bumble border-radius-5 border-3-green"
-          onClick={handleClickSaveChanges}
-        >
-          <SaveIcon fontSize="large" color="success" />
-        </Button>
-        <Button
-          className="border-2-black border-radius-5 mt-3 bg-red"
-          onClick={handleClickCancel}
-        >
-          <CancelIcon fontSize="large" className="color-black" />
-        </Button>
+        {loading ? (
+          <LoadingButton
+            size="small"
+            width={50}
+            color="secondary"
+            loading={loading}
+            loadingPosition="start"
+            startIcon={<SaveIcon />}
+            variant="contained"
+          >
+            Save...
+          </LoadingButton>
+        ) : (
+          <>
+            <img
+              src={"/apply-edit.png"}
+              width={60}
+              className="border-circle cur-pointer"
+              onClick={handleClickSaveChanges}
+            />
+            <img
+              src={"/cancel-edit.jpeg"}
+              width={60}
+              className="border-circle mt-2 cur-pointer"
+              onClick={handleClickCancel}
+            />
+          </>
+        )}
       </div>
     </div>
   );

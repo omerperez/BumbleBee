@@ -30,12 +30,9 @@ export default function CarImageGallery({ id, car }) {
               return (
                 <ImageListItem key={image}>
                   <img
-                    alt={"gallery" + inx}
+                    alt={"gallery"}
                     src={process.env.REACT_APP_S3 + image}
-                    onError={({ currentTarget }) => {
-                      currentTarget.onerror = null;
-                      currentTarget.src = { noAvailable };
-                    }}
+                    onError={error403}
                   />
                 </ImageListItem>
               );

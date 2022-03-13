@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from "react";
-import { Button } from "react-bootstrap";
 import CarImageGallery from "../CarComponents/CarImageGallery";
 import CarProfileBody from "../CarComponents/CarProfileBody";
 import PageTitle from "../Layout/PageTitle";
 import EditCarForm from "../CarComponents/EditCarForm";
-import EditIcon from "@mui/icons-material/Edit";
+import { editCarIcon } from "../images/projectImages";
 
 export default function CarProfilePage() {
   
@@ -28,12 +27,12 @@ export default function CarProfilePage() {
           <CarProfileBody car={car} />
         </div>
         <div className="col">
-          <Button
+          <img
+            className="cur-pointer"
+            src={editCarIcon}
+            width={85}
             onClick={() => setIsEdit(true)}
-            className="bg-bumble border-radius-5 yellow-border-2"
-          >
-            <EditIcon fontSize="large" className="color-yellow" />
-          </Button>
+          />
         </div>
       </div>
     );
