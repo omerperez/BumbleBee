@@ -9,31 +9,21 @@ import { useTheme } from "@mui/material/styles";
 import UserProfile from "./UserProfile";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { makeStyles } from "@mui/styles";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import Alert from "@mui/material/Alert";
-
 import {
   clientMenuItems,
   managerMenuItems,
-  defaultTextStyle,
-  currentPageStyle,
 } from "./menuItems";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
-  drawerPaper: {
-    width: "18%",
-    background: "#363636 !important",
-    boxShadow: "0px 0px 0px #00000017",
-  },
-})); 
+import {
+  defaultNavigationTextStyle,
+  navCurrentPageStyle,
+  navigationStyle,
+} from "../../styles/UseStylesMui";
 
 export default function Navigation() {
-  const classes = useStyles();
+  const classes = navigationStyle();
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -46,8 +36,8 @@ export default function Navigation() {
     const id = window.location.toString().substring(index);
     const temp = id.substring(id.indexOf("/") + 1);
     const name =
-      "/" +
-    temp.substring(0, temp.includes("/") ? temp.indexOf("/") : temp.length); 
+    (  "/" +
+      temp.substring(0, temp.includes("/") ? temp.indexOf("/") : temp.length)).toLowerCase(); 
     setCheck(name !== "/" && name !== "/car-profile" ? name : "/homepage");
   }, [navigate]);
 
@@ -62,7 +52,7 @@ export default function Navigation() {
   }
 
   let menuItems = clientMenuItems;
-  if (currentUser.role == 2) {
+  if (currentUser.role === 2) {
     menuItems = managerMenuItems;
   }
 
@@ -79,25 +69,24 @@ export default function Navigation() {
       <List>
         {menuItems.map((item, i) => {
           return (
-            <Link
-              key={i}
-              to={item.path}
-              style={{
-                textDecoration: "none",
-              }}
-            >
+            <Link key={i} to={item.path} className="link-in-btn">
               <ListItem
                 key={item.title}
-                style={item.path == check ? currentPageStyle : defaultTextStyle}
+                style={
+                  item.path === check
+                    ? navCurrentPageStyle
+                    : defaultNavigationTextStyle
+                }
                 onClick={() => setCheck(item.path)}
               >
                 <ListItemText primary={item.title} />
                 {item.image ? (
                   <img
-                    alt=""
-                    style={item.path == check ? { marginRight: "5px" } : null}
+                    alt="nav_img"
                     src={item.image}
-                    className="nav-image"
+                    className={
+                      item.path === check ? "mr-5 nav-image" : "nav-image"
+                    }
                   />
                 ) : null}
               </ListItem>
@@ -108,12 +97,15 @@ export default function Navigation() {
           <ListItem button disabled={false} key={"Log Out"}>
             <ListItemText
               primary={"Log Out"}
-              style={defaultTextStyle}
+              style={defaultNavigationTextStyle}
               className={"menu-items"}
             />
           </ListItem>
-          {error ? <Alert severity="error" style={{ border: 'solid 2px #363636', margin: '5%'}}>
-            <h5>{error}</h5></Alert> : null}
+          {error ? (
+            <Alert className="border-2-black m-3" severity="error">
+              <h5>{error}</h5>
+            </Alert>
+          ) : null}
         </div>
       </List>
       <ListItem className="menuFooter">

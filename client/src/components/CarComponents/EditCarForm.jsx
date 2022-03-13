@@ -49,7 +49,7 @@ export default function EditCarForm({car ,saveChanges}) {
   return (
     <div className="row">
       <div className="col-11">
-        <div className="row pl-1 pr-1" style={{ fontSize: "24px" }}>
+        <div className="row pl-1 pr-1 font-24">
           <div className="col">
             <table>
               <tbody>
@@ -184,25 +184,16 @@ export default function EditCarForm({car ,saveChanges}) {
       </div>
       <div className="col">
         <Button
+          className="bg-bumble border-radius-5 border-3-green"
           onClick={handleClickSaveChanges}
-          style={{
-            background: "#363636",
-            borderRadius: "10%",
-            border: "solid 2px rgb(79, 160, 79)",
-          }}
         >
-          <SaveIcon fontSize="large" style={{ color: "rgb(79, 160, 79)" }} />
+          <SaveIcon fontSize="large" color="success" />
         </Button>
         <Button
-          className="mt-3"
+          className="border-2-black border-radius-5 mt-3 bg-red"
           onClick={handleClickCancel}
-          style={{
-            background: "#DC143C",
-            borderRadius: "10%",
-            border: "solid 2px #363636",
-          }}
         >
-          <CancelIcon fontSize="large" style={{ color: "#363636" }} />
+          <CancelIcon fontSize="large" className="color-black" />
         </Button>
       </div>
     </div>

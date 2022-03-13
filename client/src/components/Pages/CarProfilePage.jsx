@@ -14,9 +14,9 @@ export default function CarProfilePage() {
   useEffect(() => {
     const index = window.location.toString().lastIndexOf("/") + 1;
     const id = window.location.toString().substring(index);
-    fetch("http://localhost:8080/car/show/" + id)
+    fetch(`${process.env.REACT_APP_SERVER_API}/car/show/${id}`)
       .then((response) => response.json())
-      .then((data) => setCar(data))  
+      .then((data) => setCar(data));  
   },[isEdit]);
 
   if(car == null ) return 'Sorry We dont find your car...'
@@ -30,13 +30,9 @@ export default function CarProfilePage() {
         <div className="col">
           <Button
             onClick={() => setIsEdit(true)}
-            style={{
-              background: "#363636",
-              borderRadius: "10%",
-              border: "solid 2px #e2a021",
-            }}
+            className="bg-bumble border-radius-5 yellow-border-2"
           >
-            <EditIcon fontSize="large" style={{ color: "#e2a021" }} />
+            <EditIcon fontSize="large" className="color-yellow" />
           </Button>
         </div>
       </div>

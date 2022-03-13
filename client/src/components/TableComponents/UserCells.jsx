@@ -1,13 +1,13 @@
 import React from "react";
 import TableCell from "@mui/material/TableCell";
-import { useTableStyles } from "./TableConstants";
+import { useTableStyles } from "../../styles/UseStylesMui";
 import TableRow from "@mui/material/TableRow";
 import { Grid } from "@mui/material";
 import axios from "axios";
 import DeleteDialog from "../DialogComponents/DeleteDialog";
 
 const useStyles = useTableStyles;
-const api = axios.create({ baseURL: "http://localhost:8080" });
+const api = axios.create({ baseURL: process.env.REACT_APP_SERVER_API });
 
 export default function TableCells({ item }) {
   const classes = useStyles();

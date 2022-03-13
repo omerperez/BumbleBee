@@ -1,6 +1,6 @@
-import { costomImage, govilImage, dhlImage } from "../images/projectImages";
+import { costomImage, dhlImage } from "../images/projectImages";
 
-export const managerMenuItems = [
+const managerMenuItems = [
   {
     title: "Home Page",
     path: "/homepage",
@@ -35,7 +35,7 @@ export const managerMenuItems = [
   },
 ];
 
-export const clientMenuItems = [
+const clientMenuItems = [
   {
     title: "Home Page",
     path: "/homepage",
@@ -64,10 +64,6 @@ export const clientMenuItems = [
   },
 ];
 
-export const defaultTextStyle = { color: "white", marginLeft: "10px" };
-export const currentPageStyle = {
-  background: "#E2A025",
-  color: "#363636",
-  borderLeft: "solid 10px #BA8600",
-};
+export { managerMenuItems, clientMenuItems };
+
     

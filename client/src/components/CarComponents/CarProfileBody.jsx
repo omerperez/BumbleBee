@@ -1,11 +1,10 @@
-import { Divider } from "@mui/material";
-import React, {useState, useEffect} from "react";
-import { Button } from "react-bootstrap";
+import React from "react";
 import './table.css'
+
 export default function CarProfileBody({car}) {
 
     return (
-      <div className="pl-1 pr-1" style={{ fontSize: "24px" }}>
+      <div className="pl-1 pr-1 font-24">
         <div className="row">
           <div className="col">
             <table>

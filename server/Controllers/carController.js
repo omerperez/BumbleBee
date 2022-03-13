@@ -50,6 +50,7 @@ async function createCar(req, res) {
     netPrice: req.body.netPrice,
     dateForImages: req.body.dateForImages,
     images: req.body.imagesName,
+    mainImage: req.body.mainName,
     fuelConsumption: req.body.fuelConsumption,
     numberOfSeats: req.body.numberOfSeats,
     doorCount: req.body.doorCount,

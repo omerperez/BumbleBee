@@ -5,6 +5,7 @@ import Alert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import PrivateRoute from "../../Routes/PrivateRoute";
+import {bumblebeeLogo} from "../images/projectImages"
 
 export default function AccessDenied() {
 
@@ -44,7 +45,7 @@ export default function AccessDenied() {
         </Alert>
       </div>
       <div className="d-flex justify-content-center">
-        <img src="/our-logo.png" />
+        <img src={bumblebeeLogo} />
       </div>
     </PrivateRoute>
   );

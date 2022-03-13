@@ -1,24 +1,15 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 import Drawer from "@mui/material/Drawer";
-import { makeStyles } from "@mui/styles";
+import { usePublicRouteStyles } from "../styles/UseStylesMui";
 import { useTheme } from "@mui/material/styles";
 import { authBackground } from "../components/images/projectImages"
 import { useAuth } from "../contexts/AuthContext";
 import AccessDenied from "../components/Pages/AccessDenied"
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
-  drawerPaper: {
-    width: "50%",
-  },
-}));
-
 export default function PublicRoute({ children }) {
 
-  const classes = useStyles();
+  const classes = usePublicRouteStyles();
   const theme = useTheme();
   const { currentUser } = useAuth();
   

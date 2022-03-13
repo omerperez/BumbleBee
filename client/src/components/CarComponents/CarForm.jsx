@@ -1,53 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
-import { FormControl } from "@mui/material";
-import { carsProperties } from "./exportForSelect";
+import { Button, FormControl } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { carsProperties, headersEnglisCarsApi } from "./exportForSelect";
 import AlertTitle from "@mui/material/AlertTitle";
 import Alert from "@mui/material/Alert";
 import useForm from "../../utils/useForm";
-import FileUploadIcon from '@mui/icons-material/FileUpload';
-import { makeStyles } from "@mui/styles";
-
-const useStyles = makeStyles(() => ({
-  chooseFile: {
-    display: "flex",
-    width: "100vh",
-    height: "15vh",
-    justifyContent: "center",
-    padding: 10,
-    borderStyle: "solid",
-    borderWidth: 2,
-    borderColor: "#363636",
-    borderRadius: 5,
-    color: "#363636",
-    background: "#FCB13F",
-  },
-  noFile: {
-    display: "flex",
-    width: "100vh",
-    height: "15vh",
-    justifyContent: "center",
-    padding: 10,
-    borderStyle: "solid",
-    borderWidth: 2,
-    borderColor: "#FCB13F",
-    borderRadius: 5,
-    color: "#363636",
-    background: "#F5F5F5",
-  },
-}));
+import {checkCarsFields} from "./carFunctions";
+import SaveIcon from "@mui/icons-material/Save";
+import {
+  uploadMultipleSucces,
+  uploadMultipleEmpty,
+  uploadMainSucces,
+  uploadMainEmpty,
+} from "../images/projectImages";
 
 export default function CarForm() {
   
-  const classes = useStyles();
   const [values, carChange] = useForm();
-  const navigate = useNavigate();
   const { createNewCar } = useAuth();
   const [dataFromApi, setDataFromApi] = useState([]);
   const [dataFromSecApi, setDataFromSecApi] = useState([]);
@@ -59,26 +33,17 @@ export default function CarForm() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-     fetch(
-       `https://data.gov.il/api/3/action/datastore_search?resource_id=03adc637-b6fe-402b-9937-7c3d3afc9140&limit=100000&q=פרטי נוסעים&q=${company.hebrew}`
-     )
+     fetch(process.env.REACT_APP_GOVIL_CARS_API + company.hebrew)
        .then((response) => response.json())
        .then((data) =>
          setDataFromApi(
            data.result.records.filter((car) => car.shnat_yitzur >= 2020)
          )
        );
-     fetch(
-       `https://car-data.p.rapidapi.com/cars?&year=2020&make=${company.english}`,
-       {
-         method: "GET",
-         headers: {
-           "x-rapidapi-host": "car-data.p.rapidapi.com",
-           "x-rapidapi-key":
-             "4607af252emsh3d7ae6deef5d96ep1f460fjsnd8f476e79f3a",
-         },
-       }
-     )
+     fetch(process.env.REACT_APP_CARS_ENGLISH_PROPERTIES + company.english, {
+       method: "GET",
+       headers: headersEnglisCarsApi,
+     })
        .then((response) => response.json())
        .then((data) => {
          setDataFromSecApi(data.filter((car) => car.year >= 2020));
@@ -97,31 +62,21 @@ export default function CarForm() {
     carChange(e);
    }
 
-   const fileSelectedHandler = (e) => {
-    e.preventDefault();
-    carChange(e);
-   };
-
   const handleClickSubmit = async (e) => {
     e.preventDefault();
       try {
         setLoading(true);
         await createNewCar(values);
-        // navigate("/homepage");
       } catch {
-        setError("Failed to sign in");
+        setError("Please Fill All Fields");
       }
     setLoading(false);
   }
 
     return (
       <div className="p1l-1 pr-1">
-        {error != "" ? (
-          <Alert
-            severity="error"
-            className="mt-3 m-4"
-            style={{ border: "solid 2px #DC143C" }}
-          >
+        {error ? (
+          <Alert severity="error" className="mt-3 m-4 alert-border">
             <AlertTitle>{error}</AlertTitle>
           </Alert>
         ) : null}
@@ -270,7 +225,8 @@ export default function CarForm() {
                         "Date of Registration need to be 2 years from now maxium "
                       )
                         ? error
-                        : "Date of Registration need to be 2 years from now maxium " + error
+                        : "Date of Registration need to be 2 years from now maxium " +
+                            error
                     );
                   } else {
                     setError("");
@@ -429,7 +385,7 @@ export default function CarForm() {
               >
                 {carsProperties.colorList.map((color, i) => {
                   return (
-                    <MenuItem key={color.id + i} value={color}>
+                    <MenuItem key={color.id} value={color}>
                       <div className="row">
                         <div className="col-8">{color}</div>
                         <div
@@ -518,35 +474,76 @@ export default function CarForm() {
               </AlertTitle>
             </Alert>
           </div>
-        </div>
-        <div className="d-flex justify-content-center mt-5">
-          <label htmlFor={"image"}>
-            <div className={values.image ? classes.chooseFile : classes.noFile}>
-              <div style={{ margin: "auto", fontSize: 22 }}>
-                <FileUploadIcon fontSize="large" style={{ marginRight: 10 }} />
-                {values.image
-                  ? values.image.length + " images selected"
-                  : "Upload Files"}
-              </div>
+          <div className="d-flex mt-4">
+            <label htmlFor={"main"}>
+              <img
+                alt="main_image"
+                className="cur-pointer"
+                width={200}
+                src={values.main ? uploadMainSucces : uploadMainEmpty}
+              />
+            </label>
+            <input
+              id="main"
+              type="file"
+              accept="image/png, image/jpeg"
+              name="main"
+              aria-required="true"
+              className="display-none"
+              onChange={(e) => carChange(e)}
+            />
+            <label htmlFor={"image"}>
+              <img
+                alt="other_images"
+                className="cur-pointer ml-25"
+                width={200}
+                src={
+                  values.image && values.image.length
+                    ? uploadMultipleSucces
+                    : uploadMultipleEmpty
+                }
+              />
+            </label>
+            <input
+              id="image"
+              type="file"
+              accept="image/png, image/jpeg"
+              name="image"
+              multiple
+              aria-required="true"
+              className="display-none"
+              onChange={(e) => carChange(e)}
+            />
+            <div style={{ marginLeft: "auto" }}>
+              {loading ? (
+                <LoadingButton
+                  className="creat-car-btn"
+                  size="large"
+                  color="secondary"
+                  loading={loading}
+                  loadingPosition="start"
+                  startIcon={<SaveIcon />}
+                  variant="contained"
+                >
+                  Creating...
+                </LoadingButton>
+              ) : (
+                <Button
+                  className={
+                    checkCarsFields(values)
+                      ? "creat-car-btn"
+                      : "creat-car-btn-dis"
+                  }
+                  disabled={!checkCarsFields(values)}
+                  variant="contained"
+                  onClick={handleClickSubmit}
+                  startIcon={<SaveIcon />}
+                >
+                  Create
+                </Button>
+              )}
             </div>
-          </label>
-          <input
-            id="image"
-            type="file"
-            name="image"
-            multiple
-            style={{ display: "none" }}
-            onChange={(e) => carChange(e)}
-          />
-        </div>
-        <div className="mt-4 justify-content-center d-flex">
-          <Button
-            disabled={loading}
-            className="mb-3 yellow-btn col-4"
-            onClick={handleClickSubmit}
-          >
-            Add New Car
-          </Button>
+          </div>
         </div>
       </div>
     );

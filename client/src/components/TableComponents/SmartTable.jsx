@@ -1,42 +1,15 @@
 import React, { useState } from "react";
-import { withStyles } from "@mui/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
 import TableSortLabel from "@mui/material/TableSortLabel";
-import {
-  useTableStyles,
-  descendingComparator,
-  getComparator,
-  stableSort,
-} from "./TableConstants";
-
+import { StyledTableCell, useTableStyles } from "../../styles/UseStylesMui";
 import ScrollToTop from "./ScrollToTop";
 
-const StyledTableCell = withStyles((theme) => ({
-  root: {
-    lineHeight: "1.21rem",
-    top: -1,
-  },
-
-  head: {
-    // backgroundColor: theme.palette.common.white,
-    color: "rgba(0, 0, 0, 0.87)",
-    paddingTop: "10px",
-    fontSize: "0.812rem",
-    fontWeight: 700,
-    height: "50px",
-    borderColor: "#CDCDCD",
-  },
-  body: {
-    color: "rgba(0, 0, 0, 0.76)",
-  },
-}))(TableCell);
 
 const useStyles = useTableStyles;
 
@@ -90,7 +63,7 @@ export default function SmartTable({
             aria-label="sticky table"
           >
             <TableHead>
-              <TableRow style={{ height: "1.21rem" }}>
+              <TableRow>
                 {headCells.map((headCell, key) => (
                   <StyledTableCell
                     key={headCell.label}
@@ -112,15 +85,7 @@ export default function SmartTable({
                         active={false}
                         onClick={createSortHandler(headCell.id)}
                       >
-                        <span
-                          className={classes.span}
-                          style={{
-                            color: "rgba(0, 0, 0, 0.87)",
-                            fontSize: "0.875rem",
-                          }}
-                        >
-                          {headCell.label}
-                        </span>
+                        <span className={classes.span}>{headCell.label}</span>
                       </TableSortLabel>
                     </div>
                   </StyledTableCell>
@@ -128,14 +93,11 @@ export default function SmartTable({
               </TableRow>
             </TableHead>
             <TableBody>
-              {
-                data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((item, i) => {
-                    return (
-                      <>{React.cloneElement(cells, { item: item })}</>
-                    );
-                  })
-              }
+              {data
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((item, i) => {
+                  return <>{React.cloneElement(cells, { item: item })}</>;
+                })}
             </TableBody>
           </Table>
         </TableContainer>

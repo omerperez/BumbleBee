@@ -4,38 +4,13 @@ import { useAuth } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
-import { makeStyles } from "@mui/styles";
-import FileUploadIcon from "@mui/icons-material/FileUpload"
-
-const useStyles = makeStyles(() => ({
-  chooseFile: {
-    display: "flex",
-    height: "10vh",
-    justifyContent: "center",
-    padding: 20,
-    borderStyle: "solid",
-    borderWidth: 1,
-    borderColor: "#363636",
-    borderRadius: 5,
-    color: "#363636",
-    background: "#FCB13F",
-  },
-  noFile: {
-    display: "flex",
-    height: "10vh",
-    justifyContent: "center",
-    padding: 20,
-    borderStyle: "solid",
-    borderWidth: 1,
-    borderColor: "#FCB13F",
-    borderRadius: 5,
-    color: "#363636",
-    background: "#F5F5F5",
-  },
-}));
+import {
+  israelFlag,
+  emptyProfileImage,
+  profileSuccess,
+} from "../images/projectImages";
 
 export default function Signup() {
-  const classes = useStyles();
   const firstNameRef = useRef();
   const lastNameRef = useRef();
   const emailRef = useRef();
@@ -109,16 +84,18 @@ export default function Signup() {
                   <label htmlFor="file" className="custom-file-upload">
                     <div className="img-wrap">
                       <img
+                      alt="img_signup"
                         className="img-wrop-src"
                         fohtmlForr="file"
-                        src={file ? "/profile-suc.png" : "/cmera-ic.png"}
+                        src={file ? profileSuccess : emptyProfileImage}
                       />
                     </div>
                     <input
                       id="file"
                       type="file"
+                      accept="image/png, image/jpeg"
                       name="image"
-                      style={{ display: "none" }}
+                      className="display-none"
                       onChange={(event) => {
                         const userFile = event.target.files[0];
                         setFile(userFile);
@@ -152,10 +129,11 @@ export default function Signup() {
                       startAdornment: (
                         <InputAdornment position="start">
                           <img
-                            src="/israel-icon.jpeg"
+                          alt="israel_flag"
+                            src={israelFlag}
                             width={25}
-                            style={{ borderRadius: "50%", marginRight: "10%" }}
-                          />{" "}
+                            className="border-circle mr-10"
+                          />
                           +972
                         </InputAdornment>
                       ),
@@ -221,23 +199,3 @@ export default function Signup() {
     </>
   );
 }
-
-
-
- {
-   /*             
-            <Form.Group id="image" className="mb-5">
-              <TextField
-                id="file"
-                label="Profile Image"
-                type="file"
-                name="image"
-                onChange={(event) => {
-                  const userFile = event.target.files[0];
-                  setFile(userFile);
-                }}
-                variant="standard"
-                fullWidth
-              />
-            </Form.Group> */
- }

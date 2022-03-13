@@ -1,4 +1,8 @@
-export const carsProperties = {
+const headersEnglisCarsApi = {
+  "x-rapidapi-host": "car-data.p.rapidapi.com",
+  "x-rapidapi-key": "4607af252emsh3d7ae6deef5d96ep1f460fjsnd8f476e79f3a",
+};
+const carsProperties = {
   doorCountOptions: ["2", "3", "4", "5"],
   countOfSeatsOptions: [2, 4, 5, 6, 7],
   gearBoxesList: ["Concentric", "Parallel", "Right Angle", "Shaft Mount	"],
@@ -146,7 +150,7 @@ export const carsProperties = {
       english: "Chrysler",
       hebrew: "קרייזלר",
     },
-   
+
     {
       english: "Ferrari",
       hebrew: "פרארי",
@@ -177,17 +181,15 @@ export const carsProperties = {
     },
   ],
 };
-export const doorCountOptions = ["2", "3", "4", "5"];
-
-export const countOfSeatsOptions = [2, 4, 5, 6, 7];
-export const gearBoxesList = [
+const doorCountOptions = ["2", "3", "4", "5"];
+const countOfSeatsOptions = [2, 4, 5, 6, 7];
+const gearBoxesList = [
   "Concentric",
   "Parallel",
   "Right Angle",
   "Shaft Mount	",
 ];
-
-export const NumberOfOwners = [
+const NumberOfOwners = [
   "00",
   "01",
   "02",
@@ -200,7 +202,7 @@ export const NumberOfOwners = [
   "09",
   "+10",
 ];
-export const colorList = [
+const colorList = [
   "Black",
   "Gray",
   "Silver",
@@ -214,8 +216,7 @@ export const colorList = [
   "Yellow",
   "Purple",
 ];
-
-export const companiesHeAndEn = [
+const companiesHeAndEn = [
   {
     english: "buick",
     hebrew: "ביואיק",
@@ -445,8 +446,7 @@ export const companiesHeAndEn = [
     hebrew: "פאנוז",
   },
 ];
-
-export const carsCompany = [
+const carsCompany = [
   "Buick",
   "MINI",
   "Volvo",
@@ -510,8 +510,7 @@ export const carsCompany = [
   "Fisker",
   "Panoz",
 ];
-
-export const hebrewCarsCompany = [
+const hebrewCarsCompany = [
   "ב מ וו",
   "פורשה",
   "רובר",
@@ -558,3 +557,14 @@ export const hebrewCarsCompany = [
   "סיאט",
 ];
 
+export {
+  headersEnglisCarsApi,
+  carsProperties,
+  doorCountOptions,
+  countOfSeatsOptions,
+  gearBoxesList,
+  colorList,
+  companiesHeAndEn,
+  carsCompany,
+  hebrewCarsCompany,
+};

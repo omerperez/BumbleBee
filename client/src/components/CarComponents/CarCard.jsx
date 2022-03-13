@@ -3,11 +3,11 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button, CardActions } from "@mui/material";
+import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import { error403 } from "../images/error403";
+import { error403 } from "../images/projectImages";
 
-export default function CarCard({ _id, image, company, model, year, used, engine, km, price }) {
+export default function CarCard({ _id, image, company, model, price }) {
 
   return (
     <div className="car-card-div">
@@ -22,7 +22,7 @@ export default function CarCard({ _id, image, company, model, year, used, engine
           <Typography gutterBottom component="div">
             {company}
           </Typography>
-          <Typography gutterBottom component="div" style={{ fontSize: 22 }}>
+          <Typography gutterBottom component="div" className="font-22">
             {model}
           </Typography>
           <div className="row mt-4">
@@ -32,8 +32,7 @@ export default function CarCard({ _id, image, company, model, year, used, engine
             <div className="col-6 d-flex justify-content-end">
               <Link
                 to={`/car-profile/${_id}`}
-                className="cancel-underline"
-                style={{ border: "solid 2px", borderRadius: "5%" }}
+                className="cancel-underline border2 border-radius-5"
               >
                 <Button>More Details</Button>
               </Link>

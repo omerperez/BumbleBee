@@ -22,10 +22,7 @@ import CarProfilePage from './components/Pages/CarProfilePage';
 import CompaniesPage from './components/Pages/CompaniesPage';
 import { createTheme } from "@mui/material/styles";
 import EditCarForm from './components/CarComponents/EditCarForm';
-import AccessDenied from './components/Pages/AccessDenied';
-
-const maxWidthCard = { maxWidth: 400 };
-const minHeightContainer = { minHeight: "100vh" };
+import { maxWidthCardApp, minHeightContainerApp } from "./styles/UseStylesMui";
 
 function App() {
 
@@ -175,9 +172,9 @@ function App() {
                 <PrivateRoute>
                   <div
                     className="d-flex align-items-center justify-content-center"
-                    style={minHeightContainer}
+                    style={minHeightContainerApp}
                   >
-                    <div className="w-100" style={maxWidthCard}>
+                    <div className="w-100" style={maxWidthCardApp}>
                       <UpdateProfile />
                     </div>
                   </div>

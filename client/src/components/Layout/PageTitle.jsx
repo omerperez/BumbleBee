@@ -13,7 +13,7 @@ export default function PageTitle({ page }) {
         <Link
           underline="hover"
           className="page-title-header"
-          href={"/HomePage"}
+          href={"/homepage"}
         >
           <img
             alt=""

@@ -1,4 +1,4 @@
-export const costums = [
+export const costumsList = [
   {
     name: "R.G.A",
     image: "/rga.jpeg",

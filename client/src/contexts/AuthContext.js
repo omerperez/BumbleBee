@@ -4,19 +4,18 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
 
-const api = axios.create({ baseURL: "http://localhost:8080" });
+const api = axios.create({ baseURL: process.env.REACT_APP_SERVER_API });
 const AuthContext = createContext();
+const cookies = new Cookies();
 
 export function useAuth() {
   return useContext(AuthContext);
 }
 
 export default function AuthProvider({ children }) {
-  const cookies = new Cookies();
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
   const [mode, setMode] = useState(true);
-  const [progress, setProgress] = useState(0);
   const navigate = useNavigate();
 
   function changeMode(userMode) {
@@ -51,6 +50,8 @@ export default function AuthProvider({ children }) {
     return api
       .post("/user/login", user)
       .then(function (response) {
+        cookies.remove("auth-token");
+        cookies.remove("connectUser");
         cookies.set("auth-token", response.data.token);
         cookies.set("connectUser", response.data.user);
         setCurrentUser(response.data.user);
@@ -63,7 +64,7 @@ export default function AuthProvider({ children }) {
   function logout() {
     setCurrentUser(null);
     cookies.remove("auth-token");
-    return cookies.remove("connectUser");
+    cookies.remove("connectUser");
   }
 
   function resetPassword(email) {
@@ -82,8 +83,6 @@ export default function AuthProvider({ children }) {
 
     const formData = new FormData();
 
-    const folder = "Car_Images/";
-    const companyFolder = carObj.company.english + "/";
     var files = carObj.image;
     const now = Date.now();
     for (let i = 0; i < files.length; i++) {
@@ -98,7 +97,10 @@ export default function AuthProvider({ children }) {
         now + rnd + files[i].name
       );
     }
-
+    var main = carObj.main;
+    formData.append("main", main[0], now + main[0].name);
+    formData.append(`mainName`, now + main[0].name);
+    formData.append("car", JSON.stringify(carObj));
     formData.append("companyEnglish", carObj.company.english);
     formData.append("companyHebrew", carObj.company.hebrew);
     formData.append("model", carObj.model);
@@ -166,7 +168,6 @@ export default function AuthProvider({ children }) {
     resetPassword,
     updateEmail,
     updatePassword,
-    progress,
     editCar,
   };
 
