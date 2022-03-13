@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -8,7 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 
-const api = axios.create({ baseURL: "http://localhost:8080" });
+const api = axios.create({ baseURL: process.env.REACT_APP_SERVER_API });
 
 export default function DeleteDialog({id, name, email, role}) {
   const [open, setOpen] = React.useState(false);
@@ -36,10 +36,7 @@ export default function DeleteDialog({id, name, email, role}) {
 
   return (
     <div>
-      <Button
-        onClick={handleClickOpen}
-        style={{ background: "none", border: "none" }}
-      >
+      <Button onClick={handleClickOpen}>
         <DeleteIcon color="error" />
       </Button>
       <Dialog
@@ -63,7 +60,7 @@ export default function DeleteDialog({id, name, email, role}) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={deleteUser} autoFocus style={{ color: "red" }}>
+          <Button onClick={deleteUser} autoFocus color="error">
             Delete
           </Button>
         </DialogActions>

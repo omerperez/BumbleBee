@@ -20,9 +20,4 @@ app.use(bodyParser.json());
 app.use("/user", user);
 app.use("/car", car);
 
-// app.use(express.static('front'));
-// app.get('s3Url', (req, res) => {
-
-// })
-
 app.listen(process.env.PORT);

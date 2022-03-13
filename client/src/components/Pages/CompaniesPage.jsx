@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import CustomsCard from "../CustomsComponents/CustomsCard";
 import PageTitle from "../Layout/PageTitle";
 
 export default function CompaniesPage() {
@@ -8,7 +7,7 @@ export default function CompaniesPage() {
     const [cars, setCars ] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:8080/car/")
+        fetch(`${process.env.REACT_APP_SERVER_API}/car/`)
           .then((response) => response.json())
           .then((data) => setCars(data));
     }, []);
@@ -18,7 +17,6 @@ export default function CompaniesPage() {
         return cars.find((a) => a.company === company);
       }
     );
-    console.log(companies);
 
   return (
     <>

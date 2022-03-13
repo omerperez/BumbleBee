@@ -1,35 +1,22 @@
-import React, {useState} from 'react'
+import React from 'react'
 import { Navigate } from "react-router-dom";
-import { useAuth } from '../../contexts/AuthContext'
+import { useAuth } from '../contexts/AuthContext'
 import { Grid } from '@mui/material';
-import Layout from './Layout';
+import Layout from '../components/Layout/Layout';
 import Drawer from "@mui/material/Drawer";
-import { makeStyles } from "@mui/styles";
-import { useTheme } from "@mui/material/styles";
+import { usePrivateRouteStyles, layoutStyle } from "../styles/UseStylesMui";
 import { ThemeProvider } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
-import { darkTheme, whiteTheme } from '../../theme/theme';
-
-const layoutStyle = { display: "flex", flexDirection: "row" };
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
-  drawerPaper: {
-    width: "82%",
-  },
-}));
+import { darkTheme, whiteTheme } from '../theme/theme';
 
 export default function PrivateRoute({ children }) {
 
     const { currentUser, mode } = useAuth();
-    const classes = useStyles();
-    const theme = useTheme();
+    const classes = usePrivateRouteStyles();
 
     return currentUser ? (
       <ThemeProvider theme={mode ? whiteTheme : darkTheme}>
-        <Paper variant="outlined" style={{ minHeight: "100vh" }}>
+        <Paper variant="outlined" >
           <Grid style={{ layoutStyle }}>
             <Grid className="nav-width">
               <Layout />

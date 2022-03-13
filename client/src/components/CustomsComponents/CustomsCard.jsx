@@ -1,8 +1,7 @@
-import * as React from "react";
+import React from "react";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
@@ -11,10 +10,9 @@ import LanguageIcon from "@mui/icons-material/Language";
 export default function CustomsCard({ name, link, image, color }) {
   return (
     <Card
+      className="ml-2 mr-2"
       style={{
         border: `solid 1px ${color}`,
-        marginLeft: "2%",
-        marginRight: "2%",
       }}
     >
       <CardHeader
@@ -25,10 +23,8 @@ export default function CustomsCard({ name, link, image, color }) {
       <a href={link} className="cancel-underline" target="_blank">
         <img
           src={image}
+          className="costoms-img"
           style={{
-            backgroundSize: "cover",
-            width: "100%",
-            height: "300px",
             borderTop: `solid 1px ${color}`,
             borderBottom: `solid 1px ${color}`,
           }}
@@ -44,10 +40,8 @@ export default function CustomsCard({ name, link, image, color }) {
       <div className="row">
         <Button style={{ background: color }}>
           <a href={link} className="cancel-underline" target="_blank">
-            <span style={{ marginRight: 10, color: "white" }}>
-              Go to website
-            </span>
-            <LanguageIcon style={{ color: "white" }} />
+            <span className="mr-10px color-white">Go to website</span>
+            <LanguageIcon className="color-white" />
           </a>
         </Button>
       </div>

@@ -1,6 +1,6 @@
-import { costomImage, govilImage, dhlImage } from "../images/projectImages";
+import { costomImage, dhlImage } from "../images/projectImages";
 
-export const managerMenuItems = [
+const managerMenuItems = [
   {
     title: "Home Page",
     path: "/homepage",
@@ -11,11 +11,6 @@ export const managerMenuItems = [
     path: "/about-us",
     isDisabled: false,
   },
-  // {
-  //   title: "My Profile",
-  //   path: "/my-profile",
-  //   isDisabled: false,
-  // },
   {
     title: "Mange Users",
     path: "/our-users",
@@ -26,17 +21,6 @@ export const managerMenuItems = [
     path: "/create-car",
     isDisabled: false,
   },
-  // {
-  //   title: "My Favorite",
-  //   path: "/my-favorite",
-  //   isDisabled: false,
-  // },
-  // {
-  //   title: "Gov IL Form",
-  //   image: govilImage,
-  //   path: "/govil",
-  //   isDisabled: false,
-  // },
   {
     title: "DHL Label form",
     image: dhlImage,
@@ -51,7 +35,7 @@ export const managerMenuItems = [
   },
 ];
 
-export const clientMenuItems = [
+const clientMenuItems = [
   {
     title: "Home Page",
     path: "/homepage",
@@ -64,25 +48,6 @@ export const clientMenuItems = [
     isDisabled: false,
     role: "1",
   },
-  // {
-  //   title: "My Profile",
-  //   path: "/my-profile",
-  //   isDisabled: false,
-  //   role: "1",
-  // },
-  // {
-  //   title: "My Favorite",
-  //   path: "/my-favorite",
-  //   isDisabled: false,
-  //   role: "1",
-  // },
-  // {
-  //   title: "Gov IL Form",
-  //   image: govilImage,
-  //   path: "/govil",
-  //   isDisabled: false,
-  //   role: "1",
-  // },
   {
     title: "DHL Label form",
     image: dhlImage,
@@ -98,4 +63,7 @@ export const clientMenuItems = [
     role: "1",
   },
 ];
+
+export { managerMenuItems, clientMenuItems };
+
     

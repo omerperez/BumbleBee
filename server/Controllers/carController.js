@@ -50,6 +50,7 @@ async function createCar(req, res) {
     netPrice: req.body.netPrice,
     dateForImages: req.body.dateForImages,
     images: req.body.imagesName,
+    mainImage: req.body.mainName,
     fuelConsumption: req.body.fuelConsumption,
     numberOfSeats: req.body.numberOfSeats,
     doorCount: req.body.doorCount,
@@ -67,26 +68,26 @@ async function createCar(req, res) {
 }
 
 /* PUT */
-const updateCar = (req, res) => {
-  let newCar = new carSchema({
-    _id: req.params.id,
+const updateCar = async (req, res) => {
+  const carId = { _id: req.body._id};
+  const newCarProperties = new carSchema({
     km: req.body.km,
     price: req.body.price,
     netPrice: req.body.price * 0.7,
     colour: req.body.colour,
   });
-
-    carSchema
-      .findOneAndUpdate({ _id: newCar._id }, newCar, { new: true })
-      .then((updateCar) => res.json(updateCar))
-      .catch((err) => res.status(400).json("Error: " + err));
+  
+  carSchema
+    .findOneAndUpdate(carId, newCarProperties, { new: true })
+    .then((updateCar) => res.json(updateCar))
+    .catch((err) => res.status(400).json("Error: " + err));
 };
+
 /* DELETE */
 const deleteCar = (req, res) => {
-  console.log(req.params.id);
   const _id = req.params.id;
   const user = carSchema.deleteOne({ _id: _id }).then((results) => {
-    return res.json(results);
+   return res.json(results); 
   });
 };
 

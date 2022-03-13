@@ -8,16 +8,14 @@ import UserCells from "../TableComponents/UserCells";
 const smallLabel = {  minHeight: '50px !important', width: "15%", marginTop: "21px" };
 const medWidth = { minHeight: "50px", width: "25%" };
 const noBorder = { minHeight: "50px", width: "12%", border: 'none !important' };
-const largeWidth = { minHeight: '50px', width: "25%" };
 
 export default function ManageUserPage() {
   const [usersToPresent, setUsersToPresent] = useState([]);
-  const [isFilterMode, setIsInFilterMode] = useState(false);
   const [results, setResults] = useState(false);
   const [reset, setReset] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:8080/user")
+    fetch(`${process.env.REACT_APP_SERVER_API}/user`)
       .then((response) => response.json())
       .then((data) => setUsersToPresent(data));
   }, []);
@@ -56,6 +54,14 @@ export default function ManageUserPage() {
       hasborder: true,
     },
     {
+      id: "phone",
+      numeric: false,
+      disablePadding: true,
+      label: "Mobile",
+      style: noBorder,
+      hasborder: true,
+    },
+    {
       id: "role",
       numeric: false,
       disablePadding: true,
@@ -82,7 +88,6 @@ export default function ManageUserPage() {
             <SmartTable
               data={usersToPresent}
               headCells={headCells}
-              columns={null}
               cells={<UserCells />}
               topNum={40}
             />

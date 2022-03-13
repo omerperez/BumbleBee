@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="345" height="177" viewBox="0 0 345 177">
+  <g id="success" transform="translate(-490 -379)">
+    <rect id="peugeot208gti_2_" data-name="peugeot208gti (2)" width="343" height="175" rx="22" transform="translate(491 380)" fill="#fff" stroke="#d2d2d2" stroke-width="2"/>
+    <text id="Pictures_successfully_uploaded_" data-name="Pictures successfully
+ uploaded!" transform="translate(663 493)" fill="#b5b5b5" font-size="25" font-family="SegoeUI, Segoe UI"><tspan x="-110.883" y="0">Pictures successfully</tspan><tspan x="-59.369" y="33" xml:space="preserve"> uploaded!</tspan></text>
+    <g id="Icon_feather-check-circle" data-name="Icon feather-check-circle" transform="translate(635.701 402.288)">
+      <path id="Path_1" data-name="Path 1" d="M56.6,27.341v2.466A26.8,26.8,0,1,1,40.706,5.312" transform="translate(-3 -2.991)" fill="none" stroke="#01ca87" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <path id="Path_2" data-name="Path 2" d="M48.339,6,21.54,32.826l-8.04-8.04" transform="translate(5.26 -0.623)" fill="none" stroke="#01ca87" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    </g>
+  </g>
+</svg>

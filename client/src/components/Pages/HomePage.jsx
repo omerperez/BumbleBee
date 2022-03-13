@@ -1,6 +1,4 @@
-import { Button } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import CarCard from "../CarComponents/CarCard";
 import PageTitle from "../Layout/PageTitle";
 
@@ -8,7 +6,7 @@ export default function HomePage() {
   const [cars, setCars] = useState([]);
   
   useEffect(() => {
-    fetch("http://localhost:8080/car")
+    fetch(`${process.env.REACT_APP_SERVER_API}/car`)
       .then((response) => response.json())
       .then((data) => setCars(data));
   }, []);
@@ -26,8 +24,11 @@ export default function HomePage() {
                 key={car._id}
                 _id={car._id}
                 image={
+                  car.mainImage ? 
+                  process.env.REACT_APP_S3 + car.mainImage
+                  :
                   car.images && car.images.length > 0
-                    ? `https://bumblebee-pro.s3.eu-west-1.amazonaws.com/${car.images[0]}`
+                    ? process.env.REACT_APP_S3 + car.images[0]
                     : "/image_not_available.png"
                 }
                 company={car.company ? car.company : car.companyEnglish}

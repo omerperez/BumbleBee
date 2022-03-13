@@ -10,23 +10,19 @@ import Signup from './components/authComponents/Signup';
 import { Container } from "react-bootstrap";
 import AuthProvider from '../src/contexts/AuthContext'
 import Login from './components/authComponents/Login';
-import PrivateRoute from './components/Layout/PrivateRoute';
+import PrivateRoute from './Routes/PrivateRoute';
 import ForgotPassword from './components/authComponents/ForgotPassword';
 import UpdateProfile from './components/authComponents/UpdateProfile';
-import AuthLayout from './components/Layout/AuthLayout';
+import PublicRoute from "./Routes/PublicRoute";
 import DealerLogin from './components/authComponents/DealerLogin';
 import DHL from './components/Pages/DHL';
-import CreateCarForm from './components/CarComponents/CreateCarForm';
 import CreateCarPage from './components/Pages/CreateCarPage';
 import ManageUserPage from './components/Pages/ManageUserPage';
 import CarProfilePage from './components/Pages/CarProfilePage';
 import CompaniesPage from './components/Pages/CompaniesPage';
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import Paper from "@mui/material/Paper";
+import { createTheme } from "@mui/material/styles";
 import EditCarForm from './components/CarComponents/EditCarForm';
-
-const maxWidthCard = { maxWidth: 400 };
-const minHeightContainer = { minHeight: "100vh" };
+import { maxWidthCardApp, minHeightContainerApp } from "./styles/UseStylesMui";
 
 function App() {
 
@@ -54,174 +50,173 @@ function App() {
   });
 
   return (
-    
-        <Container>
-          <BrowserRouter>
-            <AuthProvider>
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <PrivateRoute>
-                      <HomePage />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="homepage"
-                  element={
-                    <PrivateRoute>
-                      <HomePage />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="/companies/:company"
-                  element={
-                    <PrivateRoute>
-                      <HomePage />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="about-us"
-                  element={
-                    <PrivateRoute>
-                      <AboutUs />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="my-profile"
-                  element={
-                    <PrivateRoute>
-                      <MyProfile />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="my-favorite"
-                  element={
-                    <PrivateRoute>
-                      <MyFavorite />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="govil"
-                  element={
-                    <PrivateRoute>
-                      <GovIL />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="dhl-label"
-                  element={
-                    <PrivateRoute>
-                      <DHL />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="customs-broker"
-                  element={
-                    <PrivateRoute>
-                      <Customs />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="our-users"
-                  element={
-                    <PrivateRoute>
-                      <ManageUserPage />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="create-car"
-                  element={
-                    <PrivateRoute>
-                      <CreateCarPage />
-                    </PrivateRoute>
-                  }
-                />
-                <Route 
-                path="edit-car/:id"
-                element={
-                  <PrivateRoute>
-                    <EditCarForm />
-                  </PrivateRoute>
-                }
-                />
-                <Route
-                  path="companies"
-                  element={
-                    <PrivateRoute>
-                      <CompaniesPage />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="car-profile/:id"
-                  element={
-                    <PrivateRoute>
-                      <CarProfilePage />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="update-profile"
-                  element={
-                    <PrivateRoute>
-                      <div
-                        className="d-flex align-items-center justify-content-center"
-                        style={minHeightContainer}
-                      >
-                        <div className="w-100" style={maxWidthCard}>
-                          <UpdateProfile />
-                        </div>
-                      </div>
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="/signup"
-                  element={
-                    <AuthLayout>
-                      <Signup />
-                    </AuthLayout>
-                  }
-                />
-                <Route
-                  path="/login"
-                  element={
-                    <AuthLayout>
-                      <Login />
-                    </AuthLayout>
-                  }
-                />
-                <Route
-                  path="/dealer-login"
-                  element={
-                    <AuthLayout>
-                      <DealerLogin />
-                    </AuthLayout>
-                  }
-                />
-                <Route
-                  path="/forgot-password"
-                  element={
-                    <AuthLayout>
-                      <ForgotPassword />
-                    </AuthLayout>
-                  }
-                />
-              </Routes>
-            </AuthProvider>
-          </BrowserRouter>
-        </Container>
+    <Container>
+      <BrowserRouter>
+        <AuthProvider>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <PrivateRoute>
+                  <HomePage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="homepage"
+              element={
+                <PrivateRoute>
+                  <HomePage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/companies/:company"
+              element={
+                <PrivateRoute>
+                  <HomePage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="about-us"
+              element={
+                <PrivateRoute>
+                  <AboutUs />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="my-profile"
+              element={
+                <PrivateRoute>
+                  <MyProfile />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="my-favorite"
+              element={
+                <PrivateRoute>
+                  <MyFavorite />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="govil"
+              element={
+                <PrivateRoute>
+                  <GovIL />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="dhl-label"
+              element={
+                <PrivateRoute>
+                  <DHL />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="customs-broker"
+              element={
+                <PrivateRoute>
+                  <Customs />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="our-users"
+              element={
+                <PrivateRoute>
+                  <ManageUserPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="create-car"
+              element={
+                <PrivateRoute>
+                  <CreateCarPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="edit-car/:id"
+              element={
+                <PrivateRoute>
+                  <EditCarForm />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="companies"
+              element={
+                <PrivateRoute>
+                  <CompaniesPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="car-profile/:id"
+              element={
+                <PrivateRoute>
+                  <CarProfilePage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="update-profile"
+              element={
+                <PrivateRoute>
+                  <div
+                    className="d-flex align-items-center justify-content-center"
+                    style={minHeightContainerApp}
+                  >
+                    <div className="w-100" style={maxWidthCardApp}>
+                      <UpdateProfile />
+                    </div>
+                  </div>
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/signup"
+              element={
+                <PublicRoute>
+                  <Signup />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <PublicRoute>
+                  <Login />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="/dealer-login"
+              element={
+                <PublicRoute>
+                  <DealerLogin />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="/forgot-password"
+              element={
+                <PublicRoute>
+                  <ForgotPassword />
+                </PublicRoute>
+              }
+            />
+          </Routes>
+        </AuthProvider>
+      </BrowserRouter>
+    </Container>
   );
 }
 

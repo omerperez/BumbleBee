@@ -48,7 +48,6 @@ export default function AboutUs() {
     <>
       <PageTitle page={"About Us"} />
       <div className="pl-1 pr-1 w-75 f-lighter">
-        {/* <h2 className="mb-3">Who we are ?</h2> */}
         <AboutUsBody />
       </div>
       <div className="pr-5 mt-4">
@@ -75,11 +74,8 @@ export default function AboutUs() {
           <div>
             <React.Fragment>
               <div className="mt-3 pl-1">
-                <Typography className="mb-5">
-                  <div
-                    className="mt-4 mb-4"
-                    style={{ alignItems: "center", display: "flex" }}
-                  >
+                <Typography className="mb-5" component={"span"}>
+                  <div className="mt-4 mb-4">
                     <StepTitle step={activeStep} />
                   </div>
                   <div className="f-lighter">

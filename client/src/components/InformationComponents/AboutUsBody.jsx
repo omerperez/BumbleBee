@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 export default function AboutUsBody() {
 
   return (
-    <p className="f-19">
+    <div className="f-19">
       <b>Importing</b> a vehicle is complex, however by doing the necessary
       research and learning the rules and limitations involved in the process,
       importing may be worthwhile. Bumblebee is a platform that helps you buy
@@ -18,7 +18,7 @@ export default function AboutUsBody() {
       easily, and safely pass all documents needed. Once the transaction is
       done, Bumblebee gives you full visibility about your order status. You get
       a safe, easy and profitable end-to-end car import process.
-    </p>
+    </div>
   );
 }
 

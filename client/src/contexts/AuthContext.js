@@ -2,23 +2,20 @@ import React, { useContext, useState, useEffect, createContext } from "react";
 import { auth } from "../AuthFirebase/firebase";
 import axios from "axios";
 import Cookies from "universal-cookie";
-import { storage } from "../AuthFirebase/storage";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useNavigate } from "react-router-dom";
 
-const api = axios.create({ baseURL: "http://localhost:8080" });
+const api = axios.create({ baseURL: process.env.REACT_APP_SERVER_API });
 const AuthContext = createContext();
+const cookies = new Cookies();
 
 export function useAuth() {
   return useContext(AuthContext);
 }
 
 export default function AuthProvider({ children }) {
-  const cookies = new Cookies();
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
   const [mode, setMode] = useState(true);
-  const [progress, setProgress] = useState(0);
   const navigate = useNavigate();
 
   function changeMode(userMode) {
@@ -30,7 +27,7 @@ export default function AuthProvider({ children }) {
     userData.append("firstName", firstName);
     userData.append("lastName", lastName);
     userData.append("email", email);
-    userData.append("mobile", mobile.toString());
+    userData.append("mobile", "+972" + mobile.toString());
     userData.append("password", password);
     userData.append("image", image);
     userData.append("role", "1");
@@ -43,8 +40,6 @@ export default function AuthProvider({ children }) {
       .catch(function (error) {
         console.log(error);
       });
-
-    // .post("/user/register", userData)
   }
 
   function login(email, password) {
@@ -52,10 +47,11 @@ export default function AuthProvider({ children }) {
       email: email,
       password: password,
     };
-
     return api
       .post("/user/login", user)
       .then(function (response) {
+        cookies.remove("auth-token");
+        cookies.remove("connectUser");
         cookies.set("auth-token", response.data.token);
         cookies.set("connectUser", response.data.user);
         setCurrentUser(response.data.user);
@@ -68,7 +64,7 @@ export default function AuthProvider({ children }) {
   function logout() {
     setCurrentUser(null);
     cookies.remove("auth-token");
-    return cookies.remove("connectUser");
+    cookies.remove("connectUser");
   }
 
   function resetPassword(email) {
@@ -83,63 +79,28 @@ export default function AuthProvider({ children }) {
     return currentUser.updatePassword(password);
   }
 
-  //Listen for file selection
-  function uploadFiles(files, date) {
-    //Get files
-    for (var i = 0; i < files.length; i++) {
-      var imageFile = files[i];
-
-      uploadImageAsPromise(imageFile, date);
-    }
-  }
-
-  //Handle waiting to upload each file using promise
-  function uploadImageAsPromise(imageFile, date) {
-    return new Promise(function (resolve, reject) {
-      const storageRef = ref(storage, `/files/${date}-${imageFile.name}`);
-      const uploadTask = uploadBytesResumable(storageRef, imageFile);
-
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const prog = Math.round(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
-          console.log("here2");
-          setProgress(prog);
-        },
-        (err) => console.log(err),
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(
-            (url) => console.log.url
-          );
-        }
-      );
-    });
-  }
-  function changeName(files, formData) {
-    const now = Date.now();
-    for (let i = 0; i < files.length; i++) {
-      formData.append(`image`, files[i], now + files[i].name);
-    }
-  }
-
   function createNewCar(carObj) {
 
     const formData = new FormData();
-  
+
     var files = carObj.image;
-    // for (let i = 0; i < files.length; i++) {
-    //   formData.append("image", files[i]);
-    // }
-    let imagesArray = [];
     const now = Date.now();
     for (let i = 0; i < files.length; i++) {
-      formData.append(`image`, files[i], now + files[i].name);
-      formData.append(`imagesName`, now + files[i].name);
+      const rnd = Math.floor(Math.random() * 1000000) + 1000;
+      formData.append(
+        `image`,
+        files[i],
+        now + rnd + files[i].name
+      );
+      formData.append(
+        `imagesName`,
+        now + rnd + files[i].name
+      );
     }
-
-    // formData.append("imagesName", JSON.stringify(imagesArray));
+    var main = carObj.main;
+    formData.append("main", main[0], now + main[0].name);
+    formData.append(`mainName`, now + main[0].name);
+    formData.append("car", JSON.stringify(carObj));
     formData.append("companyEnglish", carObj.company.english);
     formData.append("companyHebrew", carObj.company.hebrew);
     formData.append("model", carObj.model);
@@ -156,7 +117,7 @@ export default function AuthProvider({ children }) {
     formData.append("firstRegistration", carObj.firstRegistrationDate);
     formData.append("colour", carObj.colour);
     formData.append("condition", carObj.condition);
-    formData.append("dealer", currentUser._id);
+    formData.append("dealer", currentUser._id.toString());
 
     return api
       .post("/car/create", formData, {
@@ -166,32 +127,25 @@ export default function AuthProvider({ children }) {
       })
       .then((res) => {
         navigate(`/car-profile/${res.data}`)
-        console.log(res);
       })
       .catch(function (error) {
         console.log(error);
       });
   }
 
-  function editCar(
-    id,
-    km,
-    price,
-    colour,
-  ){
-    const carData = {
-      id, km, price, colour
+  function editCar(id, km, price, colour ){
+    const updateCar = {
+      _id: id,
+      km: km,
+      price: price,
+      colour: colour
     };
-    return api.put(`/car/edit/${id}`, carData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+    return api
+      .put(`/car/edit/${id}`, updateCar)
       .then(function (response) {
         console.log(response);
       })
       .catch(function (error) {
-        console.log("error");
         console.log(error);
       });
   }
@@ -214,8 +168,6 @@ export default function AuthProvider({ children }) {
     resetPassword,
     updateEmail,
     updatePassword,
-    progress,
-    uploadFiles,
     editCar,
   };
 
@@ -225,26 +177,3 @@ export default function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
-
-
- // const car = {
-    //   companyEnglish: carObj.company.english,
-    //   companyHebrew: carObj.company.hebrew,
-    //   model: carObj.model,
-    //   year: carObj.year,
-    //   numberOfVehicleOwners: carObj.numberOfVehicleOwners,
-    //   engine: carObj.engine,
-    //   km: carObj.km,
-    //   price: carObj.price,
-    //   netPrice: carObj.price * 0.7,
-    //   images: carObj.image,
-    //   fuelConsumption: carObj.fuel,
-    //   numberOfSeats: carObj.numberOfSeats,
-    //   doorCount: carObj.doorCount,
-    //   gearbox: carObj.gearbox,
-    //   emissionClass: "Euro6",
-    //   firstRegistration: carObj.firstRegistrationDate,
-    //   colour: carObj.colour,
-    //   condition: carObj.condition,
-    //   dealer: currentUser._id,
-    // };

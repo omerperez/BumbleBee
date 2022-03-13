@@ -1,46 +1,66 @@
 import React from "react";
 import TableCell from "@mui/material/TableCell";
-import { useTableStyles } from "./TableConstants";
+import { useTableStyles } from "../../styles/UseStylesMui";
 import TableRow from "@mui/material/TableRow";
 import { Grid } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { Button } from "react-bootstrap";
 import axios from "axios";
 import DeleteDialog from "../DialogComponents/DeleteDialog";
 
 const useStyles = useTableStyles;
-const api = axios.create({ baseURL: "http://localhost:8080" });
+const api = axios.create({ baseURL: process.env.REACT_APP_SERVER_API });
 
-export default function NeutropeniaCells({ item }) {
+export default function TableCells({ item }) {
   const classes = useStyles();
 
   return (
-    <TableRow className={classes.submit} key={item.subject}>
+    <TableRow className={classes.submit}>
       <TableCell className={classes.tableCell} align="left">
         <Grid container direction="row" alignItems="center">
           <Grid item>{item._id}</Grid>
         </Grid>
       </TableCell>
-      <TableCell className={classes.tableCell} align="left">
+      <TableCell
+        key={item._id + item.firstName}
+        className={classes.tableCell}
+        align="left"
+      >
         {item.firstName}
       </TableCell>
-      <TableCell className={classes.tableCell} align="left">
+      <TableCell
+        key={item._id + item.email}
+        className={classes.tableCell}
+        align="left"
+      >
         {item.lastName}
       </TableCell>
-      <TableCell className={classes.tableCell} align="left">
+      <TableCell key={item.email} className={classes.tableCell} align="left">
         {item.email}
       </TableCell>
-      <TableCell className={classes.tableCell} align="left">
+      <TableCell
+        key={item.phoneNumber ? item.phoneNumber : item.firstName + item._id}
+        className={classes.tableCell}
+        align="left"
+      >
+        {item.phoneNumber}
+      </TableCell>
+      <TableCell
+        key={item._id + item.role}
+        className={classes.tableCell}
+        align="left"
+      >
         {item.role == "1" ? "Client" : "Manager"}
       </TableCell>
-      <TableCell className={classes.tableCell} align="left">
-        {/* <Button
-          onClick={deleteUser}
-          style={{ background: "none", border: "none" }}
-        >
-          <DeleteIcon color="error" />
-        </Button> */}
-        <DeleteDialog id={item._id} name={item.firstName + ' ' + item.lastName} email={item.email} role={item.role == 1 ? 'Client' : 'Manager'} />
+      <TableCell
+        key={item._id + "-cs"}
+        className={classes.tableCell}
+        align="left"
+      >
+        <DeleteDialog
+          id={item._id}
+          name={item.firstName + " " + item.lastName}
+          email={item.email}
+          role={item.role == 1 ? "Client" : "Manager"}
+        />
       </TableCell>
     </TableRow>
   );

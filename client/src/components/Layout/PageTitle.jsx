@@ -13,7 +13,7 @@ export default function PageTitle({ page }) {
         <Link
           underline="hover"
           className="page-title-header"
-          href={"/HomePage"}
+          href={"/homepage"}
         >
           <img
             alt=""
@@ -26,7 +26,6 @@ export default function PageTitle({ page }) {
         </Link>
         ) : (
       </Breadcrumbs>
-
       <Breadcrumbs className="header-title-space">
         <Typography className="page-title-font">{page}</Typography>
       </Breadcrumbs>

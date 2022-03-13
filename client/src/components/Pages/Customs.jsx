@@ -1,7 +1,7 @@
 import React from "react";
 import CustomsCard from "../CustomsComponents/CustomsCard";
 import PageTitle from "../Layout/PageTitle";
-import {costums} from "../CustomsComponents/customItems"
+import { costumsList } from "../CustomsComponents/customItems";
 
 export default function Customs() {
   return (
@@ -13,24 +13,21 @@ export default function Customs() {
         processes. It serves as an agent and trustee of an importer or exporter
         towards the customs authorities.
       </div>
-      <div className="mt-4 cars-grid">
-        {costums.map((c, key) => {
+      <div className="mt-4 cars-grid pl-1 pr-1">
+        {costumsList.map((customs, key) => {
           return (
-            <div className="pl-1 pr-1">
-              <CustomsCard
-                name={c.name}
-                image={c.image}
-                link={c.link}
-                color={c.color}
-              />
-            </div>
+            <CustomsCard
+              name={customs.name}
+              image={customs.image}
+              link={customs.link}
+              color={customs.color}
+              key={customs.name}
+            />
           );
         })}
       </div>
       <div className="pl-1 pr-1 d-flex justify-content-center mt-5">
-        <h4 style={{ marginRight: 10, color: "black", display: "inline" }}>
-          Need more Information?  
-        </h4>
+        <h4 className="mr-10px">Need more Information?</h4>
         <a
           href={
             "https://www.gov.il/he/departments/topics/customs_israel_tax_authority/govil-landing-page"
@@ -38,7 +35,7 @@ export default function Customs() {
           className="cancel-underline"
           target="_blank"
         >
-          <h4 style={{ display: "inline" }}>Click to Gov IL </h4>
+          <h4>Click to Gov IL </h4>
         </a>
       </div>
     </div>
