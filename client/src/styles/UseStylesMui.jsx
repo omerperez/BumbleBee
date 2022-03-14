@@ -1,5 +1,7 @@
-import { makeStyles, withStyles } from "@mui/styles";
+import { makeStyles, withStyles, styled } from "@mui/styles";
 import TableCell from "@mui/material/TableCell";
+import MuiDrawer from "@mui/material/Drawer";
+import MuiAppBar from "@mui/material/AppBar";
 
 /* Layout */
 const maxWidthCardApp = { maxWidth: 400 };
@@ -271,4 +273,7 @@ export {
   noResultsStyles,
   StyledTableCell,
   useTableStyles,
+  // DrawerHeader,
+  // AppBar,
+  // Drawer,
 };

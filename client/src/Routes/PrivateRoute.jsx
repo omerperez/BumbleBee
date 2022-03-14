@@ -8,6 +8,7 @@ import { usePrivateRouteStyles, layoutStyle } from "../styles/UseStylesMui";
 import { ThemeProvider } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import { darkTheme, whiteTheme } from '../theme/theme';
+import  Try from "../components/Navigation/try";
 
 export default function PrivateRoute({ children }) {
 
@@ -16,7 +17,7 @@ export default function PrivateRoute({ children }) {
 
     return currentUser ? (
       <ThemeProvider theme={mode ? whiteTheme : darkTheme}>
-        <Paper variant="outlined" >
+        {/* <Paper variant="outlined" >
           <Grid style={{ layoutStyle }}>
             <Grid className="nav-width">
               <Layout />
@@ -28,11 +29,12 @@ export default function PrivateRoute({ children }) {
                 paper: classes.drawerPaper,
               }}
               open={true}
-            >
+            > */}
+            <Try />
               {children}
-            </Drawer>
+            {/* </Drawer>
           </Grid>
-        </Paper>
+        </Paper> */}
       </ThemeProvider>
     ) : (
       <Navigate to="/login" />

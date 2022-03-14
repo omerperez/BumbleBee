@@ -23,6 +23,7 @@ import CompaniesPage from './components/Pages/CompaniesPage';
 import { createTheme } from "@mui/material/styles";
 import EditCarForm from './components/CarComponents/EditCarForm';
 import { maxWidthCardApp, minHeightContainerApp } from "./styles/UseStylesMui";
+import Try from "./components/Navigation/try";
 
 function App() {
 
@@ -58,7 +59,7 @@ function App() {
               path="/"
               element={
                 <PrivateRoute>
-                  <HomePage />
+                  <Try />
                 </PrivateRoute>
               }
             />
