@@ -17,7 +17,6 @@
     text-align: center !important;
     background-color: #e2a021;
 }
-
 .profileImage {
     height: 75px;
     width: 75px; 
@@ -25,13 +24,58 @@
     border: 3px solid #e2a021 ;
 }
 
-.nav-image {
+@media only screen and (min-height: 400px){
+    .nav-image {
     max-height: 35px; 
+    max-width: 35px;
+    /* border-radius: 50%;  */
+    }
+
+}
+
+@media only screen and (max-height: 400px){
+    .nav-image {
+    max-height: 25px; 
+    max-width: 25px;
+    /* border-radius: 50%;  */
+    }
+}
+
+
+.footer-image {
+    max-height: 55px; 
+    max-width: 55px;
+    padding: 10%;
     border-radius: 50%; 
-    margin-right: 15px;
+    border: solid 2px #363636 ;
 }
 
 .nav-search{
     max-width: 200px; 
     border-radius: 3%;
+}
+
+.mr10{
+    margin-left: -10px ;
+}
+
+.color-white{
+    color: white !important;
+}
+
+.color-yellow{
+    color: #e2a021 !important;
+}
+
+.h-3{
+    height: 2px !important;
+}
+
+.close-pos{
+    margin-left: auto !important;
+    margin-right: 10px !important;
+}
+
+.cur-pointer{
+  cursor: pointer !important;
 }

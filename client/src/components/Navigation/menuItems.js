@@ -4,32 +4,36 @@ const managerMenuItems = [
   {
     title: "Home Page",
     path: "/homepage",
+    image: "home.png",
     isDisabled: false,
   },
   {
     title: "About Us",
     path: "/about-us",
+    image: "about.png",
     isDisabled: false,
   },
   {
     title: "Mange Users",
     path: "/our-users",
+    image: "members.png",
     isDisabled: false,
   },
   {
     title: "Add New Car",
     path: "/create-car",
+    image: "car.png",
     isDisabled: false,
   },
   {
     title: "DHL Label form",
-    image: dhlImage,
+    image: "dhl.png",
     path: "/dhl-label",
     isDisabled: false,
   },
   {
     title: "Customs Broker",
-    image: costomImage,
+    image: "broker.png",
     path: "/customs-broker",
     isDisabled: false,
   },

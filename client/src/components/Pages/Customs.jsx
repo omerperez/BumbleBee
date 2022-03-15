@@ -13,7 +13,7 @@ export default function Customs() {
         processes. It serves as an agent and trustee of an importer or exporter
         towards the customs authorities.
       </div>
-      <div className="mt-4 cars-grid pl-1 pr-1">
+      <div className="mt-4 broker-grid pl-1 pr-1">
         {costumsList.map((customs, key) => {
           return (
             <CustomsCard

@@ -35,6 +35,9 @@
   display: inline-block;
 }
 
+.ml-10{
+  margin-left: 10px;
+}
 .header-title-space {
   margin: 8px 0 12px 0 !important;
 }
@@ -226,13 +229,14 @@
 
 .cars-grid {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-auto-rows: auto;
 }
 
 .broker-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  /* grid-template-columns: repeat(4, 1fr); */
   grid-auto-rows: auto;
 }
 
@@ -283,7 +287,7 @@
   position: relative;
 }
 .bg-bumble{
-  background: #363636;
+  background: #363636 !important;
 }
 .center {
   margin: 0;
@@ -485,7 +489,7 @@
 }
 
 .cur-pointer{
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 .text-center{
@@ -498,4 +502,9 @@
 
 .info-text-color{
   color: #778899;
+}
+
+.jc-end{
+  margin-left: auto;
+  margin-right: 5%;
 }

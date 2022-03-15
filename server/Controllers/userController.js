@@ -67,7 +67,6 @@ const register = async (request, response) => {
 
 const login = async (request, response) => {
   console.log(request.body);
-
   const { error } = loginValidation(request.body);
   if (error) {
     return response.status(400).send(error.details[0].message);
@@ -81,7 +80,8 @@ const login = async (request, response) => {
 
   const validPass = await bcrypt.compare(request.body.password, user.password);
   if (!validPass) {
-    return response.status(400).send("Invalid Password");
+    console.log("Email or password is wrong");
+    return response.status(400).send("Email or password is wrong");
   }
 
   const token = jwt.sign(

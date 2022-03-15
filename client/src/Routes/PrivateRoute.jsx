@@ -8,7 +8,7 @@ import { usePrivateRouteStyles, layoutStyle } from "../styles/UseStylesMui";
 import { ThemeProvider } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import { darkTheme, whiteTheme } from '../theme/theme';
-import  Try from "../components/Navigation/try";
+import NewNavigation from "../components/Navigation/NewNavigation";
 
 export default function PrivateRoute({ children }) {
 
@@ -30,9 +30,9 @@ export default function PrivateRoute({ children }) {
               }}
               open={true}
             > */}
-            <Try />
-              {children}
-            {/* </Drawer>
+        <NewNavigation>{children}</NewNavigation>
+
+        {/* </Drawer>
           </Grid>
         </Paper> */}
       </ThemeProvider>

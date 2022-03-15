@@ -1,19 +1,19 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Link from "@mui/material/Link";
+import {Link} from "react-router-dom";
 import Divider from "@mui/material/Divider";
 import { carHeaderImage } from "../images/projectImages";
 
 export default function PageTitle({ page }) {
 
   return (
-    <div className="m-18">
+    <div className="mb-2">
       <Breadcrumbs aria-label="breadcrumb">
         <Link
           underline="hover"
-          className="page-title-header"
-          href={"/homepage"}
+          className="page-title-header link-in-btn"
+          to="/homepage"
         >
           <img
             alt=""
