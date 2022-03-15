@@ -9,6 +9,7 @@ const userSchema = new Schema({
   password: String,
   image: String,
   role: Number,
+  cars: [{ type: Schema.Types.ObjectId, ref: "cars" }],
 });
 
 module.exports = new mongoose.model("User", userSchema);

@@ -126,7 +126,15 @@ export default function NewNavigation({ children }) {
         ) : null}
         <List>
           {menuItems.map((item, index) => (
-            <Link key={index} to={item.path} className="link-in-btn">
+            <Link
+              key={index}
+              to={
+                item.path.includes("mycars")
+                  ? item.path + "/" + currentUser._id
+                  : item.path
+              }
+              className="link-in-btn"
+            >
               <div>
                 <ListItem
                   key={item.title}

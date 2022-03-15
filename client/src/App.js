@@ -7,7 +7,6 @@ import MyFavorite from './components/Pages/MyFavorite';
 import GovIL from './components/Pages/GovIL';
 import Customs from './components/Pages/Customs';
 import Signup from './components/authComponents/Signup';
-import { Container } from "react-bootstrap";
 import AuthProvider from '../src/contexts/AuthContext'
 import Login from './components/authComponents/Login';
 import PrivateRoute from './Routes/PrivateRoute';
@@ -23,6 +22,7 @@ import CompaniesPage from './components/Pages/CompaniesPage';
 import { createTheme } from "@mui/material/styles";
 import EditCarForm from './components/CarComponents/EditCarForm';
 import { maxWidthCardApp, minHeightContainerApp } from "./styles/UseStylesMui";
+import MyCars from './components/Pages/MyCars';
 
 function App() {
 
@@ -68,6 +68,16 @@ function App() {
               <PrivateRoute>
                 <HomePage />
               </PrivateRoute>
+            }
+          />
+          <Route
+            path="mycars/:id"
+            element={
+              <>
+                <PrivateRoute>
+                  <MyCars />
+                </PrivateRoute>
+              </>
             }
           />
           <Route

@@ -20,6 +20,12 @@ const managerMenuItems = [
     isDisabled: false,
   },
   {
+    title: "My Cars",
+    path: "/mycars",
+    image: "mycars.png",
+    isDisabled: false,
+  },
+  {
     title: "Add New Car",
     path: "/create-car",
     image: "car.png",

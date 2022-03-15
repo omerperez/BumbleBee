@@ -53,6 +53,7 @@ const register = async (request, response) => {
     password: hashedPassword,
     image: request.file.originalname,
     role: request.body.role,
+    cars : [],
   };
 
   try {

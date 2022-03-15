@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import { error403 } from "../images/projectImages";
+import DeleteCarDialog from "../DialogComponents/DeleteCarDialog";
 
-export default function CarCard({ _id, image, company, model, price }) {
+export default function CarCard({ _id, image, company, model, price, currentPage }) {
 
   return (
     <div className="car-card-div">
@@ -44,6 +45,14 @@ export default function CarCard({ _id, image, company, model, price }) {
             </Link>
           </div>
         </Typography>
+        {currentPage && currentPage == 1 ? 
+          <div className="text-center">
+            <DeleteCarDialog 
+            id={_id}
+            name={company + ' ' + model}
+            />
+          </div> : null 
+      }
       </Card>
     </div>
   );

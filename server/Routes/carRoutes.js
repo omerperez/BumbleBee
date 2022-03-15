@@ -8,6 +8,8 @@ router.post("/create", upload. fields([{name: "image", maxCount: 1000}, {name: "
 
 router.get("/show/:id", carController.getCarById);
 
+router.get("/mycars/:id", carController.getMyCars);
+
 router.get("/", carController.getAllCars);
 
 router.put("/edit/:id", carController.updateCar);
