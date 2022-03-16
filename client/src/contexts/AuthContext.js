@@ -36,9 +36,11 @@ export default function AuthProvider({ children }) {
       .post("/user/register", userData)
       .then(function (response) {
         console.log(response);
+        return "Success"
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch(err => {
+        console.log(err);
+        return err.response.data.message;
       });
   }
 
@@ -56,8 +58,9 @@ export default function AuthProvider({ children }) {
         cookies.set("connectUser", response.data.user);
         setCurrentUser(response.data.user);
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch((err) => {
+        console.log(err);
+        return err.response.data.message;
       });
   }
 
@@ -127,9 +130,11 @@ export default function AuthProvider({ children }) {
       })
       .then((res) => {
         navigate(`/car-profile/${res.data}`)
+        return "Success"
       })
       .catch(function (error) {
         console.log(error);
+        return error.response.data.message;
       });
   }
 
@@ -150,15 +155,18 @@ export default function AuthProvider({ children }) {
       _id: id,
       km: km,
       price: price,
-      colour: colour
+      colour: colour,
+      dealer: currentUser._id
     };
     return api
       .put(`/car/edit/${id}`, updateCar)
       .then(function (response) {
         console.log(response);
+        navigate(`car-profile/${id}`);
       })
       .catch(function (error) {
         console.log(error);
+         return error.response.data.message;
       });
   }
 

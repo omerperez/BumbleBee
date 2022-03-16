@@ -1,4 +1,3 @@
-const res = require("express/lib/response");
 const carSchema = require("../Models/car");
 const userSchema = require("../Models/user");
 const mongoose = require("mongoose");
@@ -54,6 +53,7 @@ const getCarByCompany = (request, respons) => {
 
 /* POST */
 async function createCar(req, res) {
+
   const createNewCar = new carSchema({
     _id : new mongoose.Types.ObjectId(),
     companyEnglish: req.body.companyEnglish,
@@ -80,8 +80,13 @@ async function createCar(req, res) {
     dealer: req.body.dealer,
   });
 
-  const newCar = await carSchema.create(createNewCar);
   let updateDealer = await userSchema.findById(req.body.dealer);
+  if(updateDealer.role === 2){
+    return res.status(400).json({
+      message: "Access blocked - you are not an administrator user",
+    });
+  }
+  const newCar = await carSchema.create(createNewCar);
 
   const filter = { _id: updateDealer._id };
   const carList = await updateDealer.cars;
@@ -95,9 +100,16 @@ async function createCar(req, res) {
 }
 
 /* PUT */
-const updateCar = async (req, res) => {
+const updateCar = async (req, res) => { 
+  console.log(req.body.dealer);
   const carId = { _id: req.body._id};
-  const car = await carSchema.findById(req.body._id);
+  const car = await carSchema.findById(carId);
+
+  if (car.dealer.valueOf() != req.body.dealer) {
+    return res.status(400).json({
+      message: "Access blocked - you are not owner on this car",
+    });
+  }
   const newCarProperties = new carSchema({
     _id: req.body._id,
     km: req.body.km,

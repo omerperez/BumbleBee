@@ -17,9 +17,16 @@ export default function Login() {
     try {
       setError("");
       setLoading(true);
-      await login(emailRef.current.value, passwordRef.current.value);
-      navigate("/homepage");
-    } catch {
+       const results = await login(
+         emailRef.current.value,
+         passwordRef.current.value
+       );
+      if (results !== "Success") {
+        setError(results);
+      } else {
+        navigate("/homepage");
+      }
+    } catch(err) {
       setError("Failed to sign in");
     }
     setLoading(false);

@@ -1,7 +1,8 @@
 const userSchema = require("../Models/user");
-const { registerValidation, loginValidation } = require("../Validation");
+const { loginValidation, registerValidation } = require("../Validation");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const mongoose = require("mongoose");
 const router = require("express").Router();
 
 const getAllUsers = (req, res) => {
@@ -28,24 +29,29 @@ const getUserById = (request, respons) => {
 };
 
 const register = async (request, response) => {
-  console.log(request.body);
-  // const { error } = registerValidation(request.body);
-  // if (error) {
-  //   console.log("error");
-  //   return response.status(400).send(error.details[0].message);
-  // }
+  const { error } = registerValidation(request.body);
+  if (error) {
+    return response.status(400).json({
+      message: error.details[0].message,
+    });
+  }
   const emailExist = await userSchema.findOne({ email: request.body.email });
   if (emailExist) {
-    return response.status(400).send("Email already exists.");
+    return response.status(400).json({
+      message: "Email already exists.",
+    });
   }
-  // const mobileExist = await userSchema.findOne({ phone: request.body.mobile });
-  // if (mobileExist) {
-  //   return response.status(400).send("Mobile number already exists.");
-  // }
+  const mobileExist = await userSchema.findOne({ phoneNumber: request.body.mobile });
+  if (mobileExist) {
+    return response.status(400).json({
+      message: "Mobile number already exists.",
+    });
+  }
 
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(request.body.password, salt);
   const newUser = {
+    _id: new mongoose.Types.ObjectId(),
     firstName: request.body.firstName,
     lastName: request.body.lastName,
     email: request.body.email,
@@ -53,38 +59,37 @@ const register = async (request, response) => {
     password: hashedPassword,
     image: request.file.originalname,
     role: request.body.role,
-    cars : [],
+    cars: [],
   };
-
   try {
     const savedUser = await userSchema.create(newUser);
     console.log("Success");
     response.send(savedUser);
   } catch (err) {
     console.log("filed");
-    response.status(400).send(err);
+    response.status(400).json("Something happened, please try again");
   }
 };
 
 const login = async (request, response) => {
-  console.log(request.body);
   const { error } = loginValidation(request.body);
   if (error) {
-    return response.status(400).send(error.details[0].message);
+    return response.status(400).json({
+      message: error.details[0].message,
+    });
   }
   const user = await userSchema.findOne({ email: request.body.email });
   if (!user) {
-    console.log("Email or password is wrong");
-    console.log(request.body.email);
-    return response.status(400).send("Email or password is wrong");
+    return response.status(400).json({
+      message: "Email or password is wrong",
+    });
   }
-
   const validPass = await bcrypt.compare(request.body.password, user.password);
   if (!validPass) {
-    console.log("Email or password is wrong");
-    return response.status(400).send("Email or password is wrong");
+   return response.status(400).json({
+     message: "Email or password is wrong",
+   });
   }
-
   const token = jwt.sign(
     {
       _id: user._id,
@@ -98,7 +103,6 @@ const login = async (request, response) => {
 };
 
 const editUser = (req, res) => {
-  console.log(req.body);
   let editUser = new userSchema({
     _id: request.params.id,
     firstName: request.body.firstName,
@@ -107,9 +111,8 @@ const editUser = (req, res) => {
     password: hashedPassword,
     phoneNumber: request.body.phoneNumber,
     image: Date.now() + request.file.originalname,
-    role: request.body.role,
+    role: "1",
   });
-
   userSchema
     .findOneAndUpdate({ _id: editUser._id }, editUser, { new: true })
     .then((updatedUser) => res.json(updatedUser))

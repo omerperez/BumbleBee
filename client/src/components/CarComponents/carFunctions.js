@@ -17,6 +17,17 @@ export function sendWhatsAppToDealer(mobile, firstName) {
   );
 };
 
+export function CheckDisableStatus(values) {
+  return !(
+    values.company &&
+    values.model &&
+    values.type &&
+    values.year &&
+    values.engine &&
+    values.firstRegistrationDate
+  );
+}
+
 export function checkCarsFields(values){
   
   return (

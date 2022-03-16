@@ -9,11 +9,11 @@ import DeleteCarDialog from "../DialogComponents/DeleteCarDialog";
 export default function CarCard({ _id, image, company, model, price, currentPage }) {
 
   return (
-    <div className="car-card-div">
-      <Card className="car-card-width box-shadow-none border-radius-10">
+    <div className="car-card-div" style={{ maxWidth: "300px" }}>
+      <Card className="car-card-width box-shadow-none">
         <Link to={`/car-profile/${_id}`}>
           <CardMedia
-            className="border-radius-10 cur-pointer"
+            className=" border-radius-2 cur-pointer"
             component="img"
             height="140"
             image={image}
@@ -21,8 +21,7 @@ export default function CarCard({ _id, image, company, model, price, currentPage
           />
         </Link>
         <Typography
-          style={{ fontFamily: "sans-serif" }}
-          className="mt-2 text-center"
+          className="mt-2 text-center font-sans"
           gutterBottom
           component="div"
         >
@@ -45,14 +44,11 @@ export default function CarCard({ _id, image, company, model, price, currentPage
             </Link>
           </div>
         </Typography>
-        {currentPage && currentPage == 1 ? 
+        {currentPage && currentPage == 1 ? (
           <div className="text-center">
-            <DeleteCarDialog 
-            id={_id}
-            name={company + ' ' + model}
-            />
-          </div> : null 
-      }
+            <DeleteCarDialog id={_id} name={company + " " + model} />
+          </div>
+        ) : null}
       </Card>
     </div>
   );

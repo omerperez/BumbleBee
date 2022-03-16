@@ -22,7 +22,7 @@ export default function CarImageGallery({ id, car }) {
         <ImageList
           className="border-3-black flex-basis-17"
           gap={0}
-          sx={{ width: 200, height: 450 }}
+          sx={{ height: 400 }}
           cols={1}
         >
           {car.images && car.images.length > 0 ? (
@@ -54,7 +54,7 @@ export default function CarImageGallery({ id, car }) {
                 : image403
             }
             width={"100%"}
-            height={450}
+            height={400}
             className="border-3-black no-border-left"
             onError={error403}
           />

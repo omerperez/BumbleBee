@@ -137,6 +137,7 @@ export default function NewNavigation({ children }) {
             >
               <div>
                 <ListItem
+                  button
                   key={item.title}
                   style={
                     item.path === check
@@ -175,15 +176,11 @@ export default function NewNavigation({ children }) {
           <ListItem
             onClick={handleLogout}
             button
-            disabled={false}
             key={"Log Out"}
+            style={defaultNavigationTextStyle}
           >
             {open ? (
-              <ListItemText
-                primary={"Log Out"}
-                style={defaultNavigationTextStyle}
-                className="ml-10 menu-items"
-              />
+              <ListItemText primary={"Log Out"} className="ml-10 menu-items" />
             ) : null}
             <div className="d-flex justify-content-center">
               <ListItemIcon>
