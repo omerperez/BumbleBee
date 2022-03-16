@@ -1,5 +1,7 @@
-import { makeStyles, withStyles } from "@mui/styles";
+import { makeStyles, withStyles, styled } from "@mui/styles";
 import TableCell from "@mui/material/TableCell";
+
+
 
 /* Layout */
 const maxWidthCardApp = { maxWidth: 400 };
@@ -84,6 +86,31 @@ const carFormStyles = makeStyles(() => ({
 }));
 
 /* Navigation */
+const drawerWidth = 300;
+
+const openedMixin = (theme) => ({
+  width: drawerWidth,
+  background: "#363636",
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: "hidden",
+});
+
+const closedMixin = (theme) => ({
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  background: "#363636",
+  overflowX: "hidden",
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up("sm")]: {
+    width: `calc(${theme.spacing(9)} + 1px)`,
+  },
+});
+
 const navigationStyle = makeStyles(() => ({
   root: {
     display: "flex",
@@ -105,14 +132,14 @@ const userProfileStyles = makeStyles(() => ({
     flexDirection: "row",
     color: "#fff",
     justifyContent: "start",
-    marginLeft: "1.5rem",
+    marginLeft: "0.7rem",
     alignItems: "center",
   },
   name: {
     fontSize: "1.4rem",
     fontFamily: "sans-serif",
-    marginLeft: "15px !important",
-    marginRight: "15px",
+    marginLeft: "10px !important",
+    marginRight: "10px",
   },
 }));
 
@@ -135,12 +162,17 @@ const topProfilePageStyles = makeStyles(() => ({
   },
 }));
 
-const defaultNavigationTextStyle = { color: "white", marginLeft: "10px" };
+const defaultNavigationTextStyle = {
+  color: "white",
+  // marginLeft: "10px",
+  minHeight: "50px",
+};
 
 const navCurrentPageStyle = {
   background: "#E2A025",
   color: "#363636",
   borderLeft: "solid 10px #BA8600",
+  minHeight: '50px',
 };
 
 /* Table */
@@ -271,4 +303,6 @@ export {
   noResultsStyles,
   StyledTableCell,
   useTableStyles,
+  openedMixin,
+  closedMixin,
 };

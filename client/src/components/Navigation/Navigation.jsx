@@ -69,7 +69,15 @@ export default function Navigation() {
       <List>
         {menuItems.map((item, i) => {
           return (
-            <Link key={i} to={item.path} className="link-in-btn">
+            <Link
+              key={i}
+              to={
+                item.path.includes("mycars")
+                  ? item.path + "/" + currentUser._id
+                  : item.path
+              }
+              className="link-in-btn"
+            >
               <ListItem
                 key={item.title}
                 style={

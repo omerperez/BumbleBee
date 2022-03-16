@@ -4,6 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
+import { checkRegisterFields } from "./userFunctions";
 import {
   israelFlag,
   emptyProfileImage,
@@ -25,25 +26,43 @@ export default function Signup() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setError("Password do not match");
     }
-    try {
-      setError("");
-      setLoading(true);
-      await signup(
+    if (passwordRef.current.value.length < 6){
+      return setError("Password must be at least 6 characters long");
+    }
+    if (
+      checkRegisterFields(
         firstNameRef.current.value,
         lastNameRef.current.value,
         emailRef.current.value,
         mobileRef.current.value,
         passwordRef.current.value,
         file
-      );
-      navigate("/homepage");
-    } catch {
-      setError("Failed to create an account");
+      )
+    ) {
+      return setError("Please add image profile");
     }
+      try {
+        setError("");
+        setLoading(true);
+        const results = await signup(
+          firstNameRef.current.value,
+          lastNameRef.current.value,
+          emailRef.current.value,
+          mobileRef.current.value,
+          passwordRef.current.value,
+          file
+        );
+        if (results !== "Success"){
+          setError(results);
+        }else{
+          navigate("/homepage");
+        }
+      } catch(err) {
+        setError(err);
+      }
     setLoading(false);
   }
   return (

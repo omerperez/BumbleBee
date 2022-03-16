@@ -10,9 +10,9 @@ import LanguageIcon from "@mui/icons-material/Language";
 export default function CustomsCard({ name, link, image, color }) {
   return (
     <Card
-      className="ml-2 mr-2"
+      className="ml-2 mr-2 mb-3"
       style={{
-        border: `solid 1px ${color}`,
+        border: `solid 1px ${color}`, 
       }}
     >
       <CardHeader

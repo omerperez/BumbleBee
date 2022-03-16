@@ -30,15 +30,17 @@ export default function AuthProvider({ children }) {
     userData.append("mobile", "+972" + mobile.toString());
     userData.append("password", password);
     userData.append("image", image);
-    userData.append("role", "1");
+    userData.append("role", "2");
 
     return api
       .post("/user/register", userData)
       .then(function (response) {
         console.log(response);
+        return "Success"
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch(err => {
+        console.log(err);
+        return err.response.data.message;
       });
   }
 
@@ -56,8 +58,9 @@ export default function AuthProvider({ children }) {
         cookies.set("connectUser", response.data.user);
         setCurrentUser(response.data.user);
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch((err) => {
+        console.log(err);
+        return err.response.data.message;
       });
   }
 
@@ -127,26 +130,43 @@ export default function AuthProvider({ children }) {
       })
       .then((res) => {
         navigate(`/car-profile/${res.data}`)
+        return "Success"
       })
       .catch(function (error) {
         console.log(error);
+        return error.response.data.message;
       });
   }
+
+   function deleteCar(id) {
+     api
+       .delete(`/car/delete/${id}`)
+       .then(function (response) {
+         console.log(response);
+       })
+       .catch(function (error) {
+         console.log(error);
+       });
+     window.location.reload(true);
+   };
 
   function editCar(id, km, price, colour ){
     const updateCar = {
       _id: id,
       km: km,
       price: price,
-      colour: colour
+      colour: colour,
+      dealer: currentUser._id
     };
     return api
       .put(`/car/edit/${id}`, updateCar)
       .then(function (response) {
         console.log(response);
+        navigate(`car-profile/${id}`);
       })
       .catch(function (error) {
         console.log(error);
+         return error.response.data.message;
       });
   }
 
@@ -167,6 +187,7 @@ export default function AuthProvider({ children }) {
     logout,
     resetPassword,
     updateEmail,
+    deleteCar,
     updatePassword,
     editCar,
   };

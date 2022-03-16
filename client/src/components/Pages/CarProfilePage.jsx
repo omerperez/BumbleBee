@@ -4,11 +4,12 @@ import CarProfileBody from "../CarComponents/CarProfileBody";
 import PageTitle from "../Layout/PageTitle";
 import EditCarForm from "../CarComponents/EditCarForm";
 import { editCarIcon } from "../images/projectImages";
-
+import { useAuth } from "../../contexts/AuthContext";
 export default function CarProfilePage() {
   
   const [car, setCar] = useState();
   const [isEdit, setIsEdit] = useState(false);
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     const index = window.location.toString().lastIndexOf("/") + 1;
@@ -26,6 +27,7 @@ export default function CarProfilePage() {
         <div className="col-11">
           <CarProfileBody car={car} />
         </div>
+        {car.dealer == currentUser._id && currentUser.role === 2 ? (
         <div className="col">
           <img
             className="cur-pointer"
@@ -34,6 +36,7 @@ export default function CarProfilePage() {
             onClick={() => setIsEdit(true)}
           />
         </div>
+        ) : ( null )}
       </div>
     );
   }
