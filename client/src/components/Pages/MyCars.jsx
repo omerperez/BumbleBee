@@ -3,18 +3,29 @@ import CarCard from "../CarComponents/CarCard";
 import PageTitle from "../Layout/PageTitle";
 import { useAuth } from "../../contexts/AuthContext";
 import { Alert } from "@mui/material";
+import AccessDenied from "../authComponents/AccessDenied";
 
 export default function MyCars() {
   const [cars, setCars] = useState([]);
+  const [access, setAccess] = useState("");
   const { currentUser, deleteCar } = useAuth();
 
   useEffect(() => {
      const index = window.location.toString().lastIndexOf("/") + 1;
      const id = window.location.toString().substring(index);
+     setAccess(id);
      fetch(`${process.env.REACT_APP_SERVER_API}/car/mycars/${id}`)
        .then((response) => response.json())
        .then((data) => setCars(data));  
   }, []);
+
+  if (access != currentUser._id || currentUser.role === 1)
+    return (
+      <>
+        <PageTitle page={"Access Denied"} />
+        <AccessDenied />
+      </>
+    );
 
   if (cars.length == 0) return (
     <>
@@ -24,6 +35,9 @@ export default function MyCars() {
       </div>
     </>
   );
+
+  
+
   return (
     <>
       <PageTitle page={"My Cars"} />

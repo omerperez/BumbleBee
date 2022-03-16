@@ -5,7 +5,7 @@ import { usePublicRouteStyles } from "../styles/UseStylesMui";
 import { useTheme } from "@mui/material/styles";
 import { authBackground } from "../components/images/projectImages"
 import { useAuth } from "../contexts/AuthContext";
-import AccessDenied from "../components/Pages/AccessDenied"
+import AccessDenied from "../components/Pages/AccessDeniedPage"
 
 export default function PublicRoute({ children }) {
 
