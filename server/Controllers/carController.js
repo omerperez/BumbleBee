@@ -81,7 +81,7 @@ async function createCar(req, res) {
   });
 
   let updateDealer = await userSchema.findById(req.body.dealer);
-  if(updateDealer.role === 2){
+  if(updateDealer.role !== 2){
     return res.status(400).json({
       message: "Access blocked - you are not an administrator user",
     });
