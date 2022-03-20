@@ -27,7 +27,7 @@ export default function AuthProvider({ children }) {
     userData.append("firstName", firstName);
     userData.append("lastName", lastName);
     userData.append("email", email);
-    userData.append("mobile", "+972" + mobile.toString());
+    userData.append("mobile", `+972${mobile}`);
     userData.append("password", password);
     userData.append("image", image);
     userData.append("role", "2");

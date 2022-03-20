@@ -18,7 +18,7 @@ export default function DealerCard({ dealer }) {
   
   return (
     <div className="border-radius-2 dealer-box-shadow">
-      <Card className="grid-container d-flex">
+      <Card className="grid-container d-flex" style={{ minHeight: 400 }}>
         <Box className="grid-item">
           <CardContent>
             <Typography component="div" variant="h4">
@@ -52,7 +52,7 @@ export default function DealerCard({ dealer }) {
                   variant="contained"
                   onClick={() => sendWhatsAppToDealer(mobile, dealer.firstName)}
                 >
-                  Send <WhatsAppIcon className="m-2" /> 
+                  Send <WhatsAppIcon className="m-2" />
                   {"to " + dealer.firstName + " " + dealer.lastName}
                 </Button>
               </div>
