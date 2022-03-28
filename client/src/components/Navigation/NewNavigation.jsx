@@ -161,7 +161,7 @@ export default function NewNavigation({ children }) {
                         }
                         className={
                           item.path === check && open
-                            ? "ml-10 nav-image"
+                            ? "ml10 nav-image"
                             : item.path === check
                             ? "mr10 nav-image"
                             : "nav-image"

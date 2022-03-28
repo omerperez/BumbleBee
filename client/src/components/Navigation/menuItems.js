@@ -32,6 +32,12 @@ const managerMenuItems = [
     isDisabled: false,
   },
   {
+    title: "Gov IL",
+    image: "israel.png",
+    path: "/govil",
+    isDisabled: false,
+  },
+  {
     title: "DHL Label form",
     image: "dhl.png",
     path: "/dhl-label",

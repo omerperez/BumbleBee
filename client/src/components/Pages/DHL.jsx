@@ -1,6 +1,6 @@
 import React from "react";
 import PageTitle from "../Layout/PageTitle";
-
+ 
 export default function DHL() {
   return (
     <>
@@ -8,7 +8,7 @@ export default function DHL() {
       <div className="d-flex justify-content-center h-100">
         <iframe
           frameborder="0"
-          style={{overflow: 'hidden', height: '257%', width: '100%' }}
+          style={{ overflow: "hidden", height: "257%", width: "100%" }}
           // style="overflow:hidden;height:100%;width:100%"
           height="100%"
           width="100%"
@@ -16,6 +16,5 @@ export default function DHL() {
         ></iframe>
       </div>
     </>
-    //
   );
 }

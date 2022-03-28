@@ -71,12 +71,12 @@ export default function Navigation() {
           return (
             <Link
               key={i}
+              className="link-in-btn"
               to={
                 item.path.includes("mycars")
                   ? item.path + "/" + currentUser._id
                   : item.path
               }
-              className="link-in-btn"
             >
               <ListItem
                 key={item.title}
