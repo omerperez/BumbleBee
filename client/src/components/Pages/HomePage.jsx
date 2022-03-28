@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import CarCard from "../CarComponents/CarCard";
+import FilterCars from "../CarComponents/FilterCars";
 import PageTitle from "../Layout/PageTitle";
+import useFetch from "../../utils/useFetch";
 
 export default function HomePage() {
-  const [cars, setCars] = useState([]);
+
+  const { data: cars, loading } = useFetch(
+    `${process.env.REACT_APP_SERVER_API}/car`
+  );
   
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_SERVER_API}/car`)
-      .then((response) => response.json())
-      .then((data) => setCars(data));
-  }, []);
+  if(loading) return "Just a second"
 
   if (cars == null) return "";
 
@@ -17,6 +18,14 @@ export default function HomePage() {
     <>
       <PageTitle page={"Home Page"} />
       <div className="pl-1 pr-1">
+        {/* <div > */}
+        <FilterCars
+          data={cars}
+          labelName={"Company"}
+          formName={"company"}
+          onChange={(e) => console.log(e.target.value)}
+        />
+        {/* </div> */}
         <div className="cars-grid">
           {cars.map((car) => {
             return (
@@ -24,10 +33,9 @@ export default function HomePage() {
                 key={car._id}
                 _id={car._id}
                 image={
-                  car.mainImage ? 
-                  process.env.REACT_APP_S3 + car.mainImage
-                  :
-                  car.images && car.images.length > 0
+                  car.mainImage
+                    ? process.env.REACT_APP_S3 + car.mainImage
+                    : car.images && car.images.length > 0
                     ? process.env.REACT_APP_S3 + car.images[0]
                     : "/image_not_available.png"
                 }
@@ -40,8 +48,7 @@ export default function HomePage() {
                 price={car.price}
               />
             );
-          })
-          }
+          })}
         </div>
       </div>
     </>

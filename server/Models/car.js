@@ -5,7 +5,7 @@ const carSchema = new Schema({
   companyEnglish: String,
   companyHebrew: String,
   model: String,
-  year: Number,
+  year: String,
   numberOfVehicleOwners: String,
   engine: String,
   km: Number,
@@ -25,4 +25,4 @@ const carSchema = new Schema({
   dealer: { type: Schema.Types.ObjectId, ref: "users" },
 });
 
-module.exports = new mongoose.model("Car", carSchema);
+module.exports = new mongoose.model("Vehicles", carSchema);

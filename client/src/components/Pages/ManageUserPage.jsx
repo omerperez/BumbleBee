@@ -6,8 +6,8 @@ import TableNoResults from "../TableComponents/TableNoResults";
 import UserCells from "../TableComponents/UserCells";
 
 const smallLabel = {  minHeight: '50px !important', width: "15%", marginTop: "21px" };
-const medWidth = { minHeight: "50px", width: "25%" };
-const noBorder = { minHeight: "50px", width: "12%", border: 'none !important' };
+const medWidth = { minHeight: "50px", width: "20%" };
+const noBorder = { minHeight: "50px", width: "17%", border: 'none !important' };
 
 export default function ManageUserPage() {
   const [usersToPresent, setUsersToPresent] = useState([]);

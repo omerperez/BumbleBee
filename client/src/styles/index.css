@@ -225,8 +225,8 @@
   vertical-align: middle;
 }
 
-/* Home Page */
 
+/* Home Page */
 .cars-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -240,11 +240,11 @@
 }
 
 .pl-1 {
-  padding-left: 1%;
+  padding-left: 1% !important;
 }
 
 .pr-1 {
-  padding-right: 1%;
+  padding-right: 1% !important;
 }
 
 .pl-5 {
@@ -506,6 +506,11 @@
 .jc-end{
   margin-left: auto;
   margin-right: 5%;
+}
+
+.mlr-10{
+  margin-left: 2% !important;
+  margin-right: 2% !important;
 }
 
 .obj-fit{

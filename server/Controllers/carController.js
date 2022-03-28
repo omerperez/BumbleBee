@@ -1,7 +1,6 @@
 const carSchema = require("../Models/car");
 const userSchema = require("../Models/user");
 const mongoose = require("mongoose");
-const car = require("../Models/car");
 
 /* GET */
 const getAllCars = (req, res) => {
