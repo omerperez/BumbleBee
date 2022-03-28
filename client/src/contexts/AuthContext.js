@@ -57,6 +57,7 @@ export default function AuthProvider({ children }) {
         cookies.set("auth-token", response.data.token);
         cookies.set("connectUser", response.data.user);
         setCurrentUser(response.data.user);
+        navigate("/homepage")
       })
       .catch((err) => {
         console.log(err);

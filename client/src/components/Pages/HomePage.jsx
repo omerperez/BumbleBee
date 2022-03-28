@@ -19,12 +19,12 @@ export default function HomePage() {
       <PageTitle page={"Home Page"} />
       <div className="pl-1 pr-1">
         {/* <div > */}
-        <FilterCars
+        {/* <FilterCars
           data={cars}
           labelName={"Company"}
           formName={"company"}
           onChange={(e) => console.log(e.target.value)}
-        />
+        /> */}
         {/* </div> */}
         <div className="cars-grid">
           {cars.map((car) => {
