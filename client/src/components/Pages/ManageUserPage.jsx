@@ -82,25 +82,21 @@ export default function ManageUserPage() {
   return (
     <>
       <PageTitle page={"Users Information"} />
-      <div className="pl-1 pr-1">
-        <div className="justify-content-center d-flex">
-          <Container component="main">
-            <SmartTable
-              data={usersToPresent}
-              headCells={headCells}
-              cells={<UserCells />}
-              topNum={40}
-            />
-            {results && (
-              <TableNoResults
-                clearFilters={setUsersToPresent}
-                data={usersToPresent}
-                setReset={setReset}
-                value={reset}
-              />
-            )}
-          </Container>
-        </div>
+      <div className="mt-3">
+        <SmartTable
+          data={usersToPresent}
+          headCells={headCells}
+          cells={<UserCells />}
+          topNum={40}
+        />
+        {results && (
+          <TableNoResults
+            clearFilters={setUsersToPresent}
+            data={usersToPresent}
+            setReset={setReset}
+            value={reset}
+          />
+        )}
       </div>
     </>
   );

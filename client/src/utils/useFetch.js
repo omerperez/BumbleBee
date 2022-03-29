@@ -31,5 +31,5 @@ export default function useFetch(url = '', options = null) {
 
     return () => (isMounted = false);
   }, [url, options]);
-  return { data, loading, error };
+  return { data, setData, loading, error };
 }

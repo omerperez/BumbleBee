@@ -21,7 +21,7 @@ export default function CompaniesPage() {
   return (
     <>
       <PageTitle page={"All Makers"} />
-      <div className="cars-grid pl-1 pr-1">
+      <div className="cars-grid pr-1">
         {companies.map((car, key) => {
           return (
             <Link

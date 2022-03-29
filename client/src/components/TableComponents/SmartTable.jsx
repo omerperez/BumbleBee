@@ -52,13 +52,13 @@ export default function SmartTable({
 
   return (
     <>
-      <ScrollToTop showBelow={250} />
+      <ScrollToTop showBelow={250}  />
 
       <Paper className={classes.paper}>
         <TableContainer className={classes.tableWrapper}>
           <Table
             className={classes.table}
-            size="small"
+            // size="small"
             stickyHeader
             aria-label="sticky table"
           >

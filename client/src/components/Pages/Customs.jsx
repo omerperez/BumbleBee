@@ -5,9 +5,9 @@ import { costumsList } from "../CustomsComponents/customItems";
 
 export default function Customs() {
   return (
-    <div>
+    <div className="ml-8">
       <PageTitle page={"Customs Broker"} />
-      <div className="pl-1 mt-4 pr-1 w-75 f-lighter">
+      <div className="mt-4 w-75 f-lighter">
         <h4> Why do you need a customs broker? </h4>A customs broker is
         responsible for filling out existing forms in import and export
         processes. It serves as an agent and trustee of an importer or exporter
@@ -26,7 +26,7 @@ export default function Customs() {
           );
         })}
       </div>
-      <div className="pl-1 pr-1 d-flex justify-content-center mt-5">
+      <div className="d-flex justify-content-center mt-5">
         <h4 className="mr-10px">Need more Information?</h4>
         <a
           href={

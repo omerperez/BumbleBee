@@ -39,7 +39,7 @@ export default function MyCars() {
   
 
   return (
-    <>
+    <div className="ml-8">
       <PageTitle page={"My Cars"} />
       <div className="pl-1 pr-1">
         <div className="cars-grid">
@@ -70,7 +70,7 @@ export default function MyCars() {
           }
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

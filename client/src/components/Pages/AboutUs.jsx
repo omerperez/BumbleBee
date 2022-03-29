@@ -45,9 +45,9 @@ export default function AboutUs() {
 
 
   return (
-    <>
+    <div className="ml-8">
       <PageTitle page={"About Us"} />
-      <div className="pl-1 pr-1 w-75 f-lighter">
+      <div className="w-75 f-lighter">
         <AboutUsBody />
       </div>
       <div className="pr-5 mt-4">
@@ -73,7 +73,7 @@ export default function AboutUs() {
           </Stepper>
           <div>
             <React.Fragment>
-              <div className="mt-3 pl-1">
+              <div className="mt-3">
                 <Typography className="mb-5" component={"span"}>
                   <div className="mt-4 mb-4">
                     <StepTitle step={activeStep} />
@@ -105,7 +105,7 @@ export default function AboutUs() {
           </div>
         </Box>
       </div>
-    </>
+    </div>
   );
 }
 

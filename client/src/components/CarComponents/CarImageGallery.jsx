@@ -18,7 +18,7 @@ export default function CarImageGallery({ id, car }) {
 
   return (
     <>
-      <div className="pl-1 pr-1 d-flex">
+      <div className="d-flex">
         <ImageList
           className="border-3-black flex-basis-17"
           gap={0}

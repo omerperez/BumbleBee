@@ -10,9 +10,8 @@ export default function CreateCarPage() {
   const {currentUser} = useAuth();
 
   return currentUser.role == 2 ? (
-    <div>
+    <div className="ml-8">
       <PageTitle page={"Create New Car"} />
-      {/* <CreateCarForm /> */}
       <CarForm />
     </div>
   ) : (

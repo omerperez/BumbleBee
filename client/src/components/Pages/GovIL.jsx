@@ -26,53 +26,72 @@ const downloadFile = (filePath) =>{
   return (
     <>
       <PageTitle page={"Gov IL"} />
-      <div className="d-flex justify-content-center h-75">
-        <div className="pl-1 pr-1 w-100 f-lighter">
-          <div className="f-19">
-            <p style={{ direction: "rtl", fontSize: 24 }}>
-              <b>מה צריך לעשות ?</b>
+      <div className="d-flex justify-content-center">
+        <div>
+          <div>
+            <h1 style={{ textAlign: "center", fontWeight: 600 }}>
+              {/* direction: "rtl", */}
+              What should be done?
+              {/* מה צריך לעשות ? */}
+            </h1>
+            <p
+              style={{
+                textAlign: "center",
+                fontSize: 26,
+                fontWeight: "100",
+              }}
+            >
+              {/* הורד/י את הטפסים, בסיום המילואי עבור/י לשלב הבא להגשתם באתר. */}
+              Please download the forms, at the end of filling out the forms go
+              to the next step of submitting the forms on our site.
               <br />
-              להוריד את הטפסים ולאחר מילואי לעבור לשלב הבא. אנחנו כבר נדאג להגיש
-              עבורך את הטפסים.
+              {/* אנחנו כבר נדאג להגיש עבורך את הטפסים באתר הממשלתי עם שאר הדברים
+              הנלווים. */}
+              We will make sure to submit for you the forms on the government
+              website with the rest of the required things
             </p>
           </div>
-          <div
-            style={{ justifyContent: "center", display: "flex", marginTop: 50 }}
-          >
-            <Button
+          <div className="d-flex justify-content-center mt-4">
+            <iframe
+              width="850"
+              height="330"
+              src="https://www.youtube.com/embed/vV0mj43AI3E"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <div className="d-flex justify-content-center mt-1">
+            <img
+              className="cur-pointer"
+              src="/svg/download_file_3.svg"
+              width={300}
+              height={250}
               onClick={() =>
                 downloadFile("AgafHaRechev_Yavu_Rechev_FORMS_06427709.pdf")
               }
-              variant="contained"
-              style={{ padding: 15, margin: 10 }}
-              endIcon={<SimCardDownloadIcon />}
-            >
-              אישור מתן שירות לרכב ביבוא אישי - אישור שירות ממוסך
-            </Button>
-
-            <Button
+            />
+            <img
+              className="cur-pointer"
+              src="/svg/download_file_2.svg"
+              width={300}
+              height={250}
               onClick={() =>
                 downloadFile(
                   "Application_for_personal_import_brokerage_license.pdf"
                 )
               }
-              variant="contained"
-              style={{ padding: 15, margin: 10 }}
-              endIcon={<SimCardDownloadIcon />}
-            >
-              בקשה להוצאת רישיון כמתווך ביבוא אישי
-            </Button>
-
-            <Button
+            />
+            <img
+              className="cur-pointer"
+              src="/svg/download_file_1.svg"
+              width={300}
+              height={250}
               onClick={() =>
                 downloadFile("תצהיר יבוא אישי - ידני 22.4.21.pdf.pdf")
               }
-              variant="contained"
-              style={{ padding: 15, margin: 10 }}
-              endIcon={<SimCardDownloadIcon />}
-            >
-              הורדת טופס תצהיר המיועד למייבא רכב ביבוא אישי
-            </Button>
+            />
           </div>
         </div>
       </div>

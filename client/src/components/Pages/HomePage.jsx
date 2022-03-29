@@ -6,7 +6,7 @@ import useFetch from "../../utils/useFetch";
 
 export default function HomePage() {
 
-  const { data: cars, loading } = useFetch(
+  const { data: cars, setData : setCars, loading } = useFetch(
     `${process.env.REACT_APP_SERVER_API}/car`
   );
   
@@ -16,16 +16,11 @@ export default function HomePage() {
 
   return (
     <>
-      <PageTitle page={"Home Page"} />
-      <div className="pl-1 pr-1">
-        {/* <div > */}
-        {/* <FilterCars
-          data={cars}
-          labelName={"Company"}
-          formName={"company"}
-          onChange={(e) => console.log(e.target.value)}
-        /> */}
-        {/* </div> */}
+      <div className="ml-8">
+        <PageTitle page={"Home Page"} />
+      </div>
+      <div className="pr-1">
+        <FilterCars carsState={cars} carsSetState={setCars} />
         <div className="cars-grid">
           {cars.map((car) => {
             return (

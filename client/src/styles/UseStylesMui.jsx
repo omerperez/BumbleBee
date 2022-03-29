@@ -241,7 +241,7 @@ const useTableStyles = makeStyles(() => ({
   table: {
     minWidth: 666,
     fill: "rgba(0, 0, 0, 0.2)",
-    tableLayout: "fixed !important",
+    // tableLayout: "fixed !important",
   },
   tableWrapper: {
     overflowX: "initial",
@@ -252,14 +252,14 @@ const useTableStyles = makeStyles(() => ({
     borderRadius: "0",
   },
   divWrapperOfHeader: {
-    display: "flex",
-    height: "80%",
+    // display: "flex",
+    // height: "80%",
     borderRight: "1px solid #CDCDCD",
     color: "#212121",
   },
   divWrapperOfHeaderAction: {
-    display: "flex",
-    height: "80%",
+    // display: "flex",
+    // height: "80%",
     color: "#212121",
   },
   sortLabel: {

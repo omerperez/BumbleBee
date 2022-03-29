@@ -17,7 +17,7 @@ export default function DealerCard({ dealer }) {
   const mobile = dealer.phoneNumber ? dealer.phoneNumber : "+972522520484";
   
   return (
-    <div className="border-radius-2 dealer-box-shadow">
+    <div className="border-radius-2">
       <Card className="grid-container d-flex" style={{ minHeight: 400 }}>
         <Box className="grid-item">
           <CardContent>

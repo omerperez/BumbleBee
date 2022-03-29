@@ -1,8 +1,8 @@
-import useLocalStorage  from './useLocalStorage';
+import { useState } from 'react';
 
 const useForm = () => {
 
-    const [state, setState] = useLocalStorage('valuse', {});
+    const [state, setState] = useState({});
 
     function carChange(e) {
       if (e.target.files && e.target.files.length > 0) { 

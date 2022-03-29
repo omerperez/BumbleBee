@@ -81,13 +81,13 @@ export default function CarForm() {
   }
 
     return (
-      <div className="p1l-1 pr-1">
+      <div>
         {error ? (
           <Alert severity="error" className="mt-3 m-4 alert-border">
             <AlertTitle>{error}</AlertTitle>
           </Alert>
         ) : null}
-        <div className="row d-flex justify-content-center m-3">
+        <div className="row">
           <h5>General Information</h5>
           <div className="col">
             <FormControl fullWidth className="mt-3">
@@ -245,7 +245,7 @@ export default function CarForm() {
             </FormControl>
           </div>
         </div>
-        <div className="row d-flex justify-content-left m-3 mt-4">
+        <div className="row mt-4">
           <h5>Performance Specs</h5>
           <div className="col-3 mt-3">
             <FormControl fullWidth disabled={CheckDisableStatus(values)}>
@@ -274,7 +274,7 @@ export default function CarForm() {
                 label="fuel"
                 name="fuel"
                 value={values.fuel ? values.fuel : ""}
-                   onChange={(e) => carChange(e)}
+                onChange={(e) => carChange(e)}
                 required
               >
                 {Array.from(
@@ -408,7 +408,7 @@ export default function CarForm() {
             </FormControl>
           </div>
         </div>
-        <div className="row d-flex justify-content-center m-3 mt-4">
+        <div className="row mt-4">
           <h5>Others</h5>
           <div className="col">
             <FormControl
@@ -551,8 +551,8 @@ export default function CarForm() {
                       ? "creat-car-btn"
                       : "creat-car-btn-dis"
                   }
-                  disabled={!checkCarsFields(values)}
                   variant="contained"
+                  disabled={!checkCarsFields(values)}
                   onClick={handleClickSubmit}
                   startIcon={<SaveIcon />}
                 >

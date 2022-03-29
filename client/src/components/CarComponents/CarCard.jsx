@@ -9,11 +9,11 @@ import DeleteCarDialog from "../DialogComponents/DeleteCarDialog";
 export default function CarCard({ _id, image, company, model, price, currentPage }) {
 
   return (
-    <div className="car-card-div" style={{ maxWidth: "300px" }}>
+    <div className="car-card-div " style={{ maxWidth: "300px" }}>
       <Card className="car-card-width box-shadow-none">
         <Link to={`/car-profile/${_id}`}>
           <CardMedia
-            className=" border-radius-2 cur-pointer"
+            className="cur-pointer br-10"
             component="img"
             height="140"
             image={image}
