@@ -23,6 +23,7 @@ import { createTheme } from "@mui/material/styles";
 import EditCarForm from './components/CarComponents/EditCarForm';
 import { maxWidthCardApp, minHeightContainerApp } from "./styles/UseStylesMui";
 import MyCars from './components/Pages/MyCars';
+import EditProfile from './components/Pages/EditProfile';
 
 function App() {
 
@@ -101,6 +102,14 @@ function App() {
             element={
               <PrivateRoute>
                 <MyProfile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="my-profile/edit"
+            element={
+              <PrivateRoute>
+                <EditProfile />
               </PrivateRoute>
             }
           />

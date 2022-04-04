@@ -3,6 +3,7 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import DealerCard from "./DealerCard";
 import { error403, noAvailable, image403 } from "../images/projectImages";
+import CarImagesCarousel from "../DialogComponents/CarImagesCarousel";
 
 export default function CarImageGallery({ id, car }) {
   
@@ -25,27 +26,11 @@ export default function CarImageGallery({ id, car }) {
           sx={{ height: 400 }}
           cols={1}
         >
-          {car.images && car.images.length > 0 ? (
-            car.images.map((image, inx) => {
-              return (
-                <ImageListItem key={image}>
-                  <img
-                    alt={"gallery"}
-                    src={process.env.REACT_APP_S3 + image}
-                    onError={error403}
-                  />
-                </ImageListItem>
-              );
-            })
-          ) : (
-            <ImageListItem key={1}>
-              <img alt="no_avl_img" src={noAvailable} />
-            </ImageListItem>
-          )}
+          <CarImagesCarousel images={[...car.images, car.mainImage]} />
         </ImageList>
         <div className="flex-basis-50">
           <img
-          alt="main_image"
+            alt="main_image"
             src={
               car.mainImage
                 ? process.env.REACT_APP_S3 + car.mainImage

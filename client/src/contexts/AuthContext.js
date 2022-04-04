@@ -13,7 +13,7 @@ export function useAuth() {
 }
 
 export default function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState();
+  const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [mode, setMode] = useState(true);
   const navigate = useNavigate();
@@ -22,29 +22,91 @@ export default function AuthProvider({ children }) {
     setMode(!userMode);
   }
 
-  function signup(firstName, lastName, email, mobile, password, image) {
+  async function editUserPropertiesWithoutImage(user) {
+    return api
+      .put(`/user/edit/${currentUser._id}`, user)
+      .then(function (response) {
+        cookies.set("auth-token", response.data.token);
+        cookies.remove("connectUser", response.data.editUser);
+        setCurrentUser(response.data.editUser);
+        cookies.set("connectUser", response.data.editUser);
+        return currentUser;
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response.data.message;
+      });
+  }
+
+  async function editUserProperties(user, userObj) {
+    setLoading(true);
+    const now = Date.now();
+    const userData = new FormData();
+    var newProfileImage = userObj.image;
+    userData.append("image", newProfileImage[0], now + newProfileImage[0].name);
+    userData.append("user", JSON.stringify(user));
+
+    return api
+      .put(`/user/edit-with-image/${currentUser._id}`, userData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(function (response) {
+        cookies.set("auth-token", response.data.token);
+        cookies.remove("connectUser", response.data.editUser);
+        setCurrentUser(response.data.editUser);
+        cookies.set("connectUser", response.data.editUser);
+        setLoading(false);
+        return currentUser;
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response.data.message;
+      });
+  }
+
+  async function editPassword(oldPassword, newPassword) {
+    const user = {
+      email: currentUser.email,
+      oldPassword: oldPassword,
+      newPassword: newPassword,
+    };
+    return api
+      .put(`/user/edit-password/${currentUser._id}`, user)
+      .then(function (response) {
+        console.log(response);
+        return "Success";
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response.data.message;
+      });
+  }
+
+  async function signup(firstName, lastName, email, mobile, password, image) {
+    const now = Date.now();
     const userData = new FormData();
     userData.append("firstName", firstName);
     userData.append("lastName", lastName);
     userData.append("email", email);
     userData.append("mobile", `+972${mobile}`);
     userData.append("password", password);
-    userData.append("image", image);
-    userData.append("role", "2");
+    userData.append("image", image, now + image.name);
+    userData.append("role", "1");
 
     return api
       .post("/user/register", userData)
       .then(function (response) {
-        console.log(response);
-        return "Success"
+        return "Success";
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         return err.response.data.message;
       });
   }
 
-  function login(email, password) {
+  async function login(email, password) {
     const user = {
       email: email,
       password: password,
@@ -52,12 +114,15 @@ export default function AuthProvider({ children }) {
     return api
       .post("/user/login", user)
       .then(function (response) {
-        cookies.remove("auth-token");
-        cookies.remove("connectUser");
+        // cookies.remove("auth-token");
         cookies.set("auth-token", response.data.token);
+        if (cookies.get("connectUser")){
+          cookies.remove("connectUser");
+        }
         cookies.set("connectUser", response.data.user);
+        // setFlag(!flag)
         setCurrentUser(response.data.user);
-        navigate("/homepage")
+        navigate("/homepage");
       })
       .catch((err) => {
         console.log(err);
@@ -71,57 +136,21 @@ export default function AuthProvider({ children }) {
     cookies.remove("connectUser");
   }
 
-  function resetPassword(email) {
-    return auth.sendPasswordResetEmail(email);
-  }
-
-  function updateEmail(email) {
-    return currentUser.updateEmail(email);
-  }
-
-  function updatePassword(password) {
-    return currentUser.updatePassword(password);
-  }
-
-  function createNewCar(carObj) {
-
+  async function createNewCar(carObj) {
     const formData = new FormData();
-
     var files = carObj.image;
     const now = Date.now();
     for (let i = 0; i < files.length; i++) {
       const rnd = Math.floor(Math.random() * 1000000) + 1000;
-      formData.append(
-        `image`,
-        files[i],
-        now + rnd + files[i].name
-      );
-      formData.append(
-        `imagesName`,
-        now + rnd + files[i].name
-      );
+      formData.append(`image`, files[i], now + rnd + files[i].name);
+      formData.append(`imagesName`, now + rnd + files[i].name);
     }
     var main = carObj.main;
     formData.append("main", main[0], now + main[0].name);
     formData.append(`mainName`, now + main[0].name);
-    formData.append("car", JSON.stringify(carObj));
-    formData.append("companyEnglish", carObj.company.english);
-    formData.append("companyHebrew", carObj.company.hebrew);
-    formData.append("model", carObj.model);
-    formData.append("year", carObj.year);
-    formData.append("engine", carObj.engine);
-    formData.append("km", carObj.km);
-    formData.append("price", carObj.price);
     formData.append("netPrice", carObj.price * 0.7);
-    formData.append("fuelConsumption", carObj.fuel);
-    formData.append("numberOfSeats", carObj.numberOfSeats);
-    formData.append("doorCount", carObj.doorCount);
-    formData.append("gearbox", carObj.gearbox);
-    formData.append("emissionClass", "Euro6");
-    formData.append("firstRegistration", carObj.firstRegistrationDate);
-    formData.append("colour", carObj.colour);
-    formData.append("condition", carObj.condition);
     formData.append("dealer", currentUser._id.toString());
+    formData.append("car", JSON.stringify(carObj));
 
     return api
       .post("/car/create", formData, {
@@ -130,8 +159,8 @@ export default function AuthProvider({ children }) {
         },
       })
       .then((res) => {
-        navigate(`/car-profile/${res.data}`)
-        return "Success"
+        navigate(`/car-profile/${res.data}`);
+        return "Success";
       })
       .catch(function (error) {
         console.log(error);
@@ -139,25 +168,24 @@ export default function AuthProvider({ children }) {
       });
   }
 
-   function deleteCar(id) {
-     api
-       .delete(`/car/delete/${id}`)
-       .then(function (response) {
-         console.log(response);
-       })
-       .catch(function (error) {
-         console.log(error);
-       });
-     window.location.reload(true);
-   };
+  async function deleteCar(id) {
+    api
+      .delete(`/car/delete/${id}`)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
-  function editCar(id, km, price, colour ){
+  async function editCar(id, km, price, colour) {
     const updateCar = {
       _id: id,
       km: km,
       price: price,
       colour: colour,
-      dealer: currentUser._id
+      dealer: currentUser._id,
     };
     return api
       .put(`/car/edit/${id}`, updateCar)
@@ -167,12 +195,25 @@ export default function AuthProvider({ children }) {
       })
       .catch(function (error) {
         console.log(error);
-         return error.response.data.message;
+        return error.response.data.message;
       });
   }
 
   useEffect(() => {
-    if (cookies.get("connectUser")) {
+    if (
+      JSON.stringify(cookies.get("connectUser")) !==
+        JSON.stringify(currentUser) &&
+      currentUser != null
+    ) {
+      fetch(
+        `${process.env.REACT_APP_SERVER_API}/user/my-user/` + currentUser._id
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setCurrentUser(data);
+          cookies.set("connectUser", currentUser);
+        });
+    } else {
       setCurrentUser(cookies.get("connectUser"));
     }
     return setLoading(false);
@@ -186,11 +227,12 @@ export default function AuthProvider({ children }) {
     changeMode,
     signup,
     logout,
-    resetPassword,
-    updateEmail,
     deleteCar,
-    updatePassword,
     editCar,
+    editUserProperties,
+    editUserPropertiesWithoutImage,
+    editPassword,
+    loading,
   };
 
   return (
@@ -199,3 +241,22 @@ export default function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
+
+/*
+
+    // resetPassword,
+    // updatePassword,
+    // updateEmail,
+  function resetPassword(email) {
+    return auth.sendPasswordResetEmail(email);
+  }
+
+  function updateEmail(email) {
+    return currentUser.updateEmail(email);
+  }
+
+  function updatePassword(password) {
+    return currentUser.updatePassword(password);
+  }
+
+ */

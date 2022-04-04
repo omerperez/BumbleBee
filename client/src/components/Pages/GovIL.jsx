@@ -2,12 +2,8 @@ import React from "react";
 import PageTitle from "../Layout/PageTitle";
 import fileDownload from "js-file-download";
 import axios from "axios";
-import Button from "@mui/material/Button";
-import SimCardDownloadIcon from "@mui/icons-material/SimCardDownload";
 
 export default function GovIL() {
-
-const filePath = "/files/govil1.pdf";
 
 const downloadFile = (filePath) =>{
   axios
@@ -29,29 +25,16 @@ const downloadFile = (filePath) =>{
       <div className="d-flex justify-content-center">
         <div>
           <div>
-            <h1 style={{ textAlign: "center", fontWeight: 600 }}>
-              {/* direction: "rtl", */}
-              What should be done?
-              {/* מה צריך לעשות ? */}
-            </h1>
-            <p
-              style={{
-                textAlign: "center",
-                fontSize: 26,
-                fontWeight: "100",
-              }}
-            >
-              {/* הורד/י את הטפסים, בסיום המילואי עבור/י לשלב הבא להגשתם באתר. */}
+            <h1 className="text-center fw-600">What should be done?</h1>
+            <p className="text-center fw-100 font-26">
               Please download the forms, at the end of filling out the forms go
               to the next step of submitting the forms on our site.
               <br />
-              {/* אנחנו כבר נדאג להגיש עבורך את הטפסים באתר הממשלתי עם שאר הדברים
-              הנלווים. */}
               We will make sure to submit for you the forms on the government
               website with the rest of the required things
             </p>
           </div>
-          <div className="d-flex justify-content-center mt-4">
+          <div className="d-flex justify-content-center mt-5">
             <iframe
               width="850"
               height="330"
@@ -62,7 +45,7 @@ const downloadFile = (filePath) =>{
               allowfullscreen
             ></iframe>
           </div>
-          <div className="d-flex justify-content-center mt-1">
+          <div className="d-flex justify-content-center mt-4">
             <img
               className="cur-pointer"
               src="/svg/download_file_3.svg"

@@ -1,5 +1,40 @@
 import { costomImage, dhlImage } from "../images/projectImages";
 
+const topbarMenuItems = [
+  {
+    path: "/my-profile",
+    image: "profile",
+  },
+  // {
+  //   path: "/",
+  //   image: "notification_on",
+  // },
+  {
+    path: "/",
+    image: "notification",
+  },
+];
+
+const topbarMenuItemsForDealer = [
+  {
+    path: "/my-profile",
+    image: "profile",
+  },
+  {
+    path: "/create-car",
+    image: "plus",
+  },
+  // {
+  //   path: "/",
+  //   image: "notification_on",
+  // },
+  {
+    path: "/",
+    image: "notification",
+  },
+];
+
+
 const managerMenuItems = [
   {
     title: "Home Page",
@@ -80,6 +115,11 @@ const clientMenuItems = [
   },
 ];
 
-export { managerMenuItems, clientMenuItems };
+export {
+  managerMenuItems,
+  clientMenuItems,
+  topbarMenuItems,
+  topbarMenuItemsForDealer,
+};
 
     

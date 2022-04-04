@@ -5,9 +5,12 @@ import PageTitle from "../Layout/PageTitle";
 import EditCarForm from "../CarComponents/EditCarForm";
 import { editCarIcon } from "../images/projectImages";
 import { useAuth } from "../../contexts/AuthContext";
+import CircularProgress from "@mui/material/CircularProgress";
+
 export default function CarProfilePage() {
-  
+
   const [car, setCar] = useState();
+  const [loading, setLoading ] = useState(true);
   const [isEdit, setIsEdit] = useState(false);
   const { currentUser } = useAuth();
 
@@ -16,9 +19,20 @@ export default function CarProfilePage() {
     const id = window.location.toString().substring(index);
     fetch(`${process.env.REACT_APP_SERVER_API}/car/show/${id}`)
       .then((response) => response.json())
-      .then((data) => setCar(data));  
+      .then((data) => {
+        setLoading(false);
+        setCar(data)
+      });  
   },[isEdit]);
 
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center mt-15">
+        <CircularProgress size={200} />
+      </div>
+    );
+  }
+  
   if(car == null ) return 'Sorry We dont find your car...'
 
   function getEditButton(){

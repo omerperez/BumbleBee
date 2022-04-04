@@ -24,9 +24,16 @@ export default function DeleteCarDialog({id, name, role}) {
   };
 
   const handleDelete = () =>{
-    deleteCar(id).then(() => {
-      navigate(`mycars/${currentUser._id}`)
-    })
+    api
+      .delete(`/car/delete/${id}`)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    setOpen(false);
+    window.location.reload(true);
   }
 
   return (

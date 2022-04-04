@@ -17,24 +17,7 @@ export default function PrivateRoute({ children }) {
 
     return currentUser ? (
       <ThemeProvider theme={mode ? whiteTheme : darkTheme}>
-        {/* <Paper variant="outlined" >
-          <Grid style={{ layoutStyle }}>
-            <Grid className="nav-width">
-              <Layout />
-            </Grid>
-            <Drawer
-              variant="permanent"
-              anchor={"right"}
-              classes={{
-                paper: classes.drawerPaper,
-              }}
-              open={true}
-            > */}
         <NewNavigation>{children}</NewNavigation>
-
-        {/* </Drawer>
-          </Grid>
-        </Paper> */}
       </ThemeProvider>
     ) : (
       <Navigate to="/login" />

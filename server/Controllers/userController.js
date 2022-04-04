@@ -3,6 +3,7 @@ const { loginValidation, registerValidation } = require("../Validation");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
+const { request } = require("express");
 const router = require("express").Router();
 
 const getAllUsers = (req, res) => {
@@ -20,7 +21,7 @@ const getUserById = (request, respons) => {
   const userId = request.params.id;
   userSchema.findById(userId).then((results) => {
     try {
-      respons.json(results);
+      respons.json();
       console.log("OK");
     } catch {
       console.log("Error");
@@ -47,7 +48,6 @@ const register = async (request, response) => {
       message: "Mobile number already exists.",
     });
   }
-
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(request.body.password, salt);
   const newUser = {
@@ -79,6 +79,7 @@ const login = async (request, response) => {
     });
   }
   const user = await userSchema.findOne({ email: request.body.email });
+  
   if (!user) {
     return response.status(400).json({
       message: "Email or password is wrong",
@@ -102,21 +103,104 @@ const login = async (request, response) => {
   response.header("auth-token", token).send({ token, user });
 };
 
-const editUser = (req, res) => {
-  let editUser = new userSchema({
-    _id: request.params.id,
+const editPassword = async (request, response) => {
+  console.log(request.body.email);
+  console.log(request.body.oldPassword);
+  const userId = { _id: request.params.id };
+
+  const user = await userSchema.findOne({ email: request.body.email });
+  const validPass = await bcrypt.compare(request.body.oldPassword, user.password);
+  if (!validPass) {
+    return response.status(400).json({
+      message: "Password is wrong, please try again",
+    });
+  }
+
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(request.body.newPassword, salt);
+
+  let editPassword = new userSchema({
+    _id: userId,
+    password: hashedPassword,
+  });
+  
+  try {
+    const editUser = await userSchema.findOneAndUpdate(userId, editPassword, {
+      new: true,
+    });
+    console.log("Success");
+    response.send(editUser);
+  } catch (err) {
+    console.log("filed");
+    response.status(400).json("Something happened, please try again");
+  }
+  
+};
+
+const editUser = async (request, response) => {
+  const userId = { _id: request.body._id };
+  let updateUser = new userSchema({
+    _id: request.body._id,
     firstName: request.body.firstName,
     lastName: request.body.lastName,
     email: request.body.email,
-    password: hashedPassword,
     phoneNumber: request.body.phoneNumber,
-    image: Date.now() + request.file.originalname,
-    role: "1",
   });
-  userSchema
-    .findOneAndUpdate({ _id: editUser._id }, editUser, { new: true })
-    .then((updatedUser) => res.json(updatedUser))
-    .catch((err) => res.status(400).json("Error: " + err));
+
+  try {
+    const editUser = await userSchema.findOneAndUpdate(userId, updateUser, {
+      new: true,
+    });
+    const token = jwt.sign(
+      {
+        _id: editUser._id,
+        firstName: editUser.firstName,
+        lastName: editUser.lastName,
+        role: editUser.role,
+      },
+      process.env.ACCESS_TOKEN_SECRET
+    );
+    console.log(editUser);
+    response.send({ token, editUser });
+  } catch (err) {
+    console.log("filed");
+    response.status(400).json("Something happened, please try again");
+  }
+};
+
+const editUserAndImage = async (request, response) => {
+  console.log(request.params.id);
+  const userId = { _id: request.params.id };
+  const userFromJason = JSON.parse(request.body.user);
+  console.log(userFromJason);
+  let updateUser = new userSchema({
+    _id: userId,
+    firstName: userFromJason.firstName,
+    lastName: userFromJason.lastName,
+    email: userFromJason.email,
+    phoneNumber: userFromJason.phoneNumber,
+    image: request.file.originalname,
+  });
+  
+  try {
+    const editUser = await userSchema.findOneAndUpdate(userId, updateUser, {
+      new: true,
+    });
+    const token = jwt.sign(
+      {
+        _id: editUser._id,
+        firstName: editUser.firstName,
+        lastName: editUser.lastName,
+        role: editUser.role,
+      },
+      process.env.ACCESS_TOKEN_SECRET
+    );
+    console.log(editUser);
+    response.send({ token, editUser });
+  } catch (err) {
+    console.log("filed");
+    response.status(400).json("Something happened, please try again");
+  }
 };
 
 const deleteUser = (req, res) => {
@@ -134,4 +218,6 @@ module.exports = {
   getUserById,
   register,
   login,
+  editPassword,
+  editUserAndImage,
 };

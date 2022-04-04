@@ -56,7 +56,7 @@
   color: #363636 !important;
 }
 .color-white {
-  color: white;
+  color: white !important;
 }
 .page-space {
   margin-left: 1.5%;
@@ -85,6 +85,14 @@
 .card-width-max {
   max-width: 500px;  
 }
+.w-500 {
+  width: 500px !important;  
+}
+
+.mw-550 {
+  max-width: 550px !important;  
+}
+
 
 .no-border {
   border: none
@@ -101,6 +109,14 @@
 
 .second-title {
   font-weight: lighter;
+}
+
+.fw-600 {
+  font-weight: 600;
+}
+
+.fw-100 {
+  font-weight: 100;
 }
 
 .yellow-btn {
@@ -193,7 +209,9 @@
   margin-left: 25px;
 }
 
-
+.mr-25 { 
+  margin-right: 25px;
+}
 
 .mr-2 { 
   margin-right: 2%;
@@ -285,11 +303,14 @@
 .font-24{
   font-size: 24px;
 }
+.font-26{
+  font-size: 24px;
+}
 .f-14{
   font-size: 14px;
 }
 .f-19{
-  font-size: 19px;
+  font-size: 19px !important;
 }
 
 .container {
@@ -453,6 +474,9 @@
   height: 300px;
 }
 
+.cover-back{
+  background-size: cover !important;
+}
 .step-grid{
    grid-column-start: 2;
    grid-column-end: 90;
@@ -501,6 +525,39 @@
  max-width: 180px !important;
 }
 
+.profile-background{
+  background-color: #cccccc;
+}
+
+.edit-profile-btn {
+ text-transform: capitalize !important;
+ background: #e6af5c !important;
+ color: #363636 !important;
+ height: 45px;
+ border-radius: 30px !important;
+ font-size: 16px !important;
+ width: 170px;
+ box-shadow: none !important;
+}
+
+.bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+}
+
+.edit-profile-btn-dealer {
+ text-transform: capitalize !important;
+ background: blue !important;
+ opacity: 0.7;
+ color: white !important;
+ height: 45px;
+ border-radius: 30px !important;
+ font-size: 16px !important;
+ width: 170px;
+ box-shadow: none !important;
+}
+
 .creat-car-btn-dis {
  text-transform: capitalize !important;
  width: 200px;
@@ -544,4 +601,69 @@
 
 .font-sans{
   font-family: sans-serif;
+}
+
+.green-back{
+  background: #3cb371 !important;
+}
+
+.cancel-back{
+  background: #FF6347 !important;
+}
+
+.ls-2{
+  letter-spacing: 2px !important;
+}
+
+.color-primary{
+  color: #0d6efd;
+}
+
+.padding-usercard{
+  padding: 22px 0px 0px 15px;
+}
+
+.f-right{
+  float: right;
+}
+
+.dealer-tag{
+  background: blue !important;
+  opacity: 0.7 !important;
+  color: white !important;
+}
+
+.client-tag{
+  background: #e2a021 !important;
+  opacity: 0.6 !important;
+  color: black !important;
+}
+
+.opc-8{
+  opacity: 0.8;
+}
+
+.mt-15{
+  margin-top: 15%;
+}
+
+.pos-rel{
+    position: relative !important;
+}
+
+.grey-border{
+  border: solid 1px grey;
+}
+
+.w-150{
+  width: 150px !important;
+}
+
+.col-2-input{
+  display: grid !important; 
+  grid-template-columns: 1fr 1fr !important;
+}
+
+.m-6{
+  margin: 6px !important;
 }

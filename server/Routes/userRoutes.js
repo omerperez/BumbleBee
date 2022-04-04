@@ -14,6 +14,14 @@ router.get("/", userController.getAllUsers);
 
 router.put("/edit/:id", userController.editUser);
 
+router.put(
+  "/edit-with-image/:id",
+  upload.single("image"),
+  userController.editUserAndImage
+);
+
+router.put("/edit-password/:id", userController.editPassword);
+
 router.delete("/delete/:id", userController.deleteUser);
 
 module.exports = router;

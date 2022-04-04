@@ -1,6 +1,6 @@
 import React ,{useState, useEffect} from "react";
 import PageTitle from "../Layout/PageTitle";
-import Container from "@mui/material/Container";
+import CircularProgress from "@mui/material/CircularProgress";
 import SmartTable from "../TableComponents/SmartTable";
 import TableNoResults from "../TableComponents/TableNoResults";
 import UserCells from "../TableComponents/UserCells";
@@ -13,12 +13,27 @@ export default function ManageUserPage() {
   const [usersToPresent, setUsersToPresent] = useState([]);
   const [results, setResults] = useState(false);
   const [reset, setReset] = useState(false);
-
+  const [loading, setLoading] = useState(true);
+  
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_API}/user`)
       .then((response) => response.json())
-      .then((data) => setUsersToPresent(data));
+      .then((data) => {
+        setUsersToPresent(data);
+        setLoading(false);
+      });
   }, []);
+
+  if (loading) {
+    return (
+      <div
+        style={{ marginTop: "15%" }}
+        className="d-flex justify-content-center"
+      >
+        <CircularProgress size={200} />
+      </div>
+    );
+  }
 
   const headCells = [
     {

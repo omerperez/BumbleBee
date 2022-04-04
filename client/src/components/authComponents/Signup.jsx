@@ -27,8 +27,20 @@ export default function Signup() {
   const [checkbox2, setCheckbox2] = useState(false);
   const [checkbox3, setCheckbox3] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [profileImage, setProfileImage] = useState();
+
   const navigate = useNavigate();
 
+  const ImageHandler = (e) => {
+    const reader = new FileReader();
+    reader.onload = () =>{
+      if(reader.readyState === 2){
+        setProfileImage(reader.result)
+      }
+    }
+    reader.readAsDataURL(e.target.files[0]);
+  }
+  
   async function handleSubmit(e) {
     e.preventDefault();
     if (!checkbox1 || !checkbox2 || !checkbox3) {
@@ -112,8 +124,8 @@ export default function Signup() {
                     <img
                       alt="img_signup"
                       className="img-wrop-src"
-                      fohtmlForr="file"
-                      src={file ? profileSuccess : emptyProfileImage}
+                      htmlFor="file"
+                      src={file && profileImage ? profileImage : emptyProfileImage}
                     />
                   </div>
                   <input
@@ -125,6 +137,7 @@ export default function Signup() {
                     onChange={(event) => {
                       const userFile = event.target.files[0];
                       setFile(userFile);
+                      ImageHandler(event);
                       console.log(userFile);
                     }}
                   />

@@ -3,6 +3,7 @@ import CarCard from "../CarComponents/CarCard";
 import FilterCars from "../CarComponents/FilterCars";
 import PageTitle from "../Layout/PageTitle";
 import useFetch from "../../utils/useFetch";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function HomePage() {
 
@@ -10,7 +11,13 @@ export default function HomePage() {
     `${process.env.REACT_APP_SERVER_API}/car`
   );
   
-  if(loading) return "Just a second"
+  if(loading) {
+    return (
+      <div className="mt-15 d-flex justify-content-center">
+        <CircularProgress size={200} />
+      </div>
+    );
+  }
 
   if (cars == null) return "";
 

@@ -4,11 +4,14 @@ import PageTitle from "../Layout/PageTitle";
 import { useAuth } from "../../contexts/AuthContext";
 import { Alert } from "@mui/material";
 import AccessDenied from "../authComponents/AccessDenied";
+import CircularProgress from "@mui/material/CircularProgress";
+import FilterCars from "../CarComponents/FilterCars";
 
 export default function MyCars() {
   const [cars, setCars] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [access, setAccess] = useState("");
-  const { currentUser, deleteCar } = useAuth();
+  const { currentUser } = useAuth();
 
   useEffect(() => {
      const index = window.location.toString().lastIndexOf("/") + 1;
@@ -16,16 +19,29 @@ export default function MyCars() {
      setAccess(id);
      fetch(`${process.env.REACT_APP_SERVER_API}/car/mycars/${id}`)
        .then((response) => response.json())
-       .then((data) => setCars(data));  
+       .then((data) => {
+          setLoading(false);
+          setCars(data)
+        });  
   }, []);
 
-  if (access != currentUser._id || currentUser.role === 1)
-    return (
+
+  if (access != currentUser._id || currentUser.role === 1){
+      return (
       <>
         <PageTitle page={"Access Denied"} />
         <AccessDenied />
       </>
     );
+  }
+  
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center mt-15">
+        <CircularProgress size={200} />
+      </div>
+    );
+  }
 
   if (cars.length == 0) return (
     <>
@@ -42,6 +58,7 @@ export default function MyCars() {
     <div className="ml-8">
       <PageTitle page={"My Cars"} />
       <div className="pl-1 pr-1">
+        <FilterCars carsState={cars} carsSetState={setCars} />
         <div className="cars-grid">
           {cars.map((car) => {
             return (
@@ -49,10 +66,9 @@ export default function MyCars() {
                 key={car._id}
                 _id={car._id}
                 image={
-                  car.mainImage ? 
-                  process.env.REACT_APP_S3 + car.mainImage
-                  :
-                  car.images && car.images.length > 0
+                  car.mainImage
+                    ? process.env.REACT_APP_S3 + car.mainImage
+                    : car.images && car.images.length > 0
                     ? process.env.REACT_APP_S3 + car.images[0]
                     : "/image_not_available.png"
                 }
@@ -66,8 +82,7 @@ export default function MyCars() {
                 currentPage="1"
               />
             );
-          })
-          }
+          })}
         </div>
       </div>
     </div>
