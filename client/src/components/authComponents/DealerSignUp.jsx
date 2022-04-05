@@ -13,7 +13,7 @@ import {
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
-export default function Signup() {
+export default function DealerSignUp() {
   const firstNameRef = useRef();
   const lastNameRef = useRef();
   const emailRef = useRef();
@@ -23,9 +23,6 @@ export default function Signup() {
   const [file, setFile] = useState();
   const { signup } = useAuth();
   const [error, setError] = useState("");
-  const [checkbox1, setCheckbox1] = useState(false);
-  const [checkbox2, setCheckbox2] = useState(false);
-  const [checkbox3, setCheckbox3] = useState(false);
   const [loading, setLoading] = useState(false);
   const [profileImage, setProfileImage] = useState();
 
@@ -33,57 +30,54 @@ export default function Signup() {
 
   const ImageHandler = (e) => {
     const reader = new FileReader();
-    reader.onload = () =>{
-      if(reader.readyState === 2){
-        setProfileImage(reader.result)
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setProfileImage(reader.result);
       }
-    }
+    };
     reader.readAsDataURL(e.target.files[0]);
-  }
-  
+  };
+
   async function handleSubmit(e) {
     e.preventDefault();
-    if (!checkbox1 || !checkbox2 || !checkbox3) {
-      return setError("Please confirm all checkboxes");
-    }
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setError("Password do not match");
     }
-    if (passwordRef.current.value.length < 6){
+    if (passwordRef.current.value.length < 6) {
       return setError("Password must be at least 6 characters long");
     }
-      if (
-        checkRegisterFields(
-          firstNameRef.current.value,
-          lastNameRef.current.value,
-          emailRef.current.value,
-          mobileRef.current.value,
-          passwordRef.current.value,
-          file,
-          "2"
-        )
-      ) {
-        return setError("Please add image profile");
+    if (
+      checkRegisterFields(
+        firstNameRef.current.value,
+        lastNameRef.current.value,
+        emailRef.current.value,
+        mobileRef.current.value,
+        passwordRef.current.value,
+        file,
+        "1"
+      )
+    ) {
+      return setError("Please add image profile");
+    }
+    try {
+      setError("");
+      setLoading(true);
+      const results = await signup(
+        firstNameRef.current.value,
+        lastNameRef.current.value,
+        emailRef.current.value,
+        mobileRef.current.value,
+        passwordRef.current.value,
+        file
+      );
+      if (results !== "Success") {
+        setError(results);
+      } else {
+        navigate("/homepage");
       }
-      try {
-        setError("");
-        setLoading(true);
-        const results = await signup(
-          firstNameRef.current.value,
-          lastNameRef.current.value,
-          emailRef.current.value,
-          mobileRef.current.value,
-          passwordRef.current.value,
-          file
-        );
-        if (results !== "Success"){
-          setError(results);
-        }else{
-          navigate("/homepage");
-        }
-      } catch(err) {
-        setError(err);
-      }
+    } catch (err) {
+      setError(err);
+    }
     setLoading(false);
   }
   return (
@@ -94,7 +88,7 @@ export default function Signup() {
       </div>
       <Card.Body>
         <h5 className="second-title">Welcome</h5>
-        <h4 className="mb-2">Sign Up for new account</h4>
+        <h4 className="mb-2">Dealer Sign Up</h4>
         <Form onSubmit={handleSubmit}>
           <div className="d-flex justify-content-center mb-1"></div>
           <Form.Group id="first-name">
@@ -221,30 +215,9 @@ export default function Signup() {
               required
             />
           </Form.Group>
-          <Form.Group id="cb1">
-            <FormControlLabel
-              onChange={(e) => setCheckbox1(e.target.value)}
-              control={<Checkbox checkbox1 />}
-              label="Im an Israeli citizen"
-            />
-          </Form.Group>
-          <Form.Group id="cb2">
-            <FormControlLabel
-              onChange={(e) => setCheckbox2(e.target.value)}
-              control={<Checkbox checkbox2 />}
-              label="I have a valid driver's license"
-            />
-          </Form.Group>
-          <Form.Group id="cb3">
-            <FormControlLabel
-              onChange={(e) => setCheckbox3(e.target.checked)}
-              control={<Checkbox checkbox3 />}
-              label="I have not imported vehicles in the last 12 months"
-            />
-          </Form.Group>
           <Button
             disabled={loading}
-            className="w-100 h-75 yellow-btn"
+            className="w-100 h-75 mt-5 yellow-btn"
             type="submit"
           >
             Sign Up
@@ -252,9 +225,10 @@ export default function Signup() {
         </Form>
       </Card.Body>
       <div className="w-100 text-center mb-2">
-        Need a dealer account?
-        <Link to="/dealer-login" className="cancel-underline">
-          {" "} Click here
+        Need a regular account?
+        <Link to="/signup" className="cancel-underline">
+          {" "}
+          Click here
         </Link>
       </div>
       <div className="w-100 text-center">

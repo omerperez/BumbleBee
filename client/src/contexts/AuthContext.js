@@ -84,7 +84,7 @@ export default function AuthProvider({ children }) {
       });
   }
 
-  async function signup(firstName, lastName, email, mobile, password, image) {
+  async function signup(firstName, lastName, email, mobile, password, image, role) {
     const now = Date.now();
     const userData = new FormData();
     userData.append("firstName", firstName);
@@ -93,7 +93,7 @@ export default function AuthProvider({ children }) {
     userData.append("mobile", `+972${mobile}`);
     userData.append("password", password);
     userData.append("image", image, now + image.name);
-    userData.append("role", "1");
+    userData.append("role", role);
 
     return api
       .post("/user/register", userData)

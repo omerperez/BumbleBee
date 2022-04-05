@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import {
   topbarMenuItems,
   topbarMenuItemsForDealer,
+  topbarMenuItemsForAdmin,
 } from "../Navigation/menuItems";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
@@ -12,6 +13,9 @@ export default function PageTitle({ page }) {
   let menu = topbarMenuItems;
   if (currentUser.role === 2) {
     menu = topbarMenuItemsForDealer;
+  }
+  if (currentUser.role === 3) {
+    menu = topbarMenuItemsForAdmin;
   }
 
   return (

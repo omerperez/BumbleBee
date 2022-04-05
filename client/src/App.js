@@ -13,7 +13,7 @@ import PrivateRoute from './Routes/PrivateRoute';
 import ForgotPassword from './components/authComponents/ForgotPassword';
 import UpdateProfile from './components/authComponents/UpdateProfile';
 import PublicRoute from "./Routes/PublicRoute";
-import DealerLogin from './components/authComponents/DealerLogin';
+import DealerSignUp from "./components/authComponents/DealerSignUp";
 import DHL from './components/Pages/DHL';
 import CreateCarPage from './components/Pages/CreateCarPage';
 import ManageUserPage from './components/Pages/ManageUserPage';
@@ -220,7 +220,7 @@ function App() {
             path="/dealer-login"
             element={
               <PublicRoute>
-                <DealerLogin />
+                <DealerSignUp />
               </PublicRoute>
             }
           />

@@ -34,10 +34,10 @@ const downloadFile = (filePath) =>{
               website with the rest of the required things
             </p>
           </div>
-          <div className="d-flex justify-content-center mt-5">
+          <div className="d-flex justify-content-center mt-4">
             <iframe
               width="850"
-              height="330"
+              height="310"
               src="https://www.youtube.com/embed/vV0mj43AI3E"
               title="YouTube video player"
               frameborder="0"
@@ -75,6 +75,17 @@ const downloadFile = (filePath) =>{
                 downloadFile("תצהיר יבוא אישי - ידני 22.4.21.pdf.pdf")
               }
             />
+          </div>
+          <div className="d-flex justify-content-center">
+            <h4 className="mr-5">Or you can fill the form in </h4>
+            <a
+              href={
+                "https://www.gov.il/he/departments/topics/customs_israel_tax_authority/govil-landing-page"
+              }
+              target="_blank"
+            >
+              <h4>Gov IL site</h4>
+            </a>
           </div>
         </div>
       </div>

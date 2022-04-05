@@ -29,7 +29,13 @@ export default function UserCard() {
         <div className="padding-usercard">
           <div className="mr-15 f-right">
             <Chip
-              label={currentUser.role === 2 ? "Dealer" : "Client"}
+              label={
+                currentUser.role === 2
+                  ? "Dealer"
+                  : currentUser.role == 3
+                  ? "Admin"
+                  : "Client"
+              }
               className={currentUser.role === 2 ? "dealer-tag" : "client-tag"}
             />
           </div>
@@ -60,9 +66,9 @@ export default function UserCard() {
           >
             <Button
               className={
-                currentUser.role !== 2
-                  ? "edit-profile-btn-dealer"
-                  : "edit-profile-btn"
+                currentUser.role !== 1
+                  ? "edit-profile-btn"
+                  : "edit-profile-btn-dealer"
               }
             >
               Edit Profile

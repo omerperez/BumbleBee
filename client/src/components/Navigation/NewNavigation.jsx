@@ -10,7 +10,11 @@ import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Alert from "@mui/material/Alert";
-import { clientMenuItems, managerMenuItems } from "./menuItems";
+import {
+  clientMenuItems,
+  managerMenuItems,
+  dealerMenuItems,
+} from "./menuItems";
 import { useAuth } from "../../contexts/AuthContext";
 import MuiDrawer from "@mui/material/Drawer";
 import UserProfile from "./UserProfile";
@@ -55,8 +59,12 @@ export default function NewNavigation({ children }) {
   const matches = useMediaQuery("(min-height:570px)");
 
   let menuItems = clientMenuItems;
-  if (currentUser.role === 2) {
+  if (currentUser.role === 3) {
     menuItems = managerMenuItems;
+  }
+
+  if(currentUser.role === 2){
+    menuItems = dealerMenuItems;
   }
 
   const handleDrawerOpen = () => {
@@ -173,25 +181,6 @@ export default function NewNavigation({ children }) {
               </div>
             </Link>
           ))}
-          <ListItem
-            onClick={handleLogout}
-            button
-            key={"Log Out"}
-            style={defaultNavigationTextStyle}
-          >
-            {open ? (
-              <ListItemText primary={"Log Out"} className="ml-10 menu-items" />
-            ) : null}
-            <div className="d-flex justify-content-center">
-              <ListItemIcon>
-                <img
-                  alt="nav_img"
-                  src="/Navigation/white-logout.png"
-                  className={open ? "ml-10 nav-image" : "nav-image"}
-                />
-              </ListItemIcon>
-            </div>
-          </ListItem>
           {error ? (
             <Alert className="border-2-black m-3" severity="error">
               <h5>{error}</h5>
@@ -216,3 +205,26 @@ export default function NewNavigation({ children }) {
     </Box>
   );
 }
+
+
+ {
+   /* <ListItem
+            onClick={handleLogout}
+            button
+            key={"Log Out"}
+            style={defaultNavigationTextStyle}
+          >
+            {open ? (
+              <ListItemText primary={"Log Out"} className="ml-10 menu-items" />
+            ) : null}
+            <div className="d-flex justify-content-center">
+              <ListItemIcon>
+                <img
+                  alt="nav_img"
+                  src="/Navigation/white-logout.png"
+                  className={open ? "ml-10 nav-image" : "nav-image"}
+                />
+              </ListItemIcon>
+            </div>
+          </ListItem> */
+ }

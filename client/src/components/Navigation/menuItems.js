@@ -34,6 +34,17 @@ const topbarMenuItemsForDealer = [
   },
 ];
 
+const topbarMenuItemsForAdmin = [
+  {
+    path: "/my-profile",
+    image: "profile",
+  },
+  {
+    path: "/create-car",
+    image: "plus",
+  },
+];
+
 
 const managerMenuItems = [
   {
@@ -43,15 +54,24 @@ const managerMenuItems = [
     isDisabled: false,
   },
   {
-    title: "About Us",
-    path: "/about-us",
-    image: "about.png",
-    isDisabled: false,
-  },
-  {
     title: "Mange Users",
     path: "/our-users",
     image: "members.png",
+    isDisabled: false,
+  },
+  {
+    title: "Dashboard Statistics",
+    path: "/manager-dashboard",
+    image: "user.png",
+    isDisabled: false,
+  },
+];
+
+const dealerMenuItems = [
+  {
+    title: "Home Page",
+    path: "/homepage",
+    image: "home.png",
     isDisabled: false,
   },
   {
@@ -67,21 +87,9 @@ const managerMenuItems = [
     isDisabled: false,
   },
   {
-    title: "Gov IL",
-    image: "israel.png",
-    path: "/govil",
-    isDisabled: false,
-  },
-  {
-    title: "DHL Label form",
-    image: "dhl.png",
-    path: "/dhl-label",
-    isDisabled: false,
-  },
-  {
-    title: "Customs Broker",
-    image: "broker.png",
-    path: "/customs-broker",
+    title: "Order Status",
+    path: "/order-status",
+    image: "user.png",
     isDisabled: false,
   },
 ];
@@ -120,6 +128,8 @@ export {
   clientMenuItems,
   topbarMenuItems,
   topbarMenuItemsForDealer,
+  dealerMenuItems,
+  topbarMenuItemsForAdmin,
 };
 
     
