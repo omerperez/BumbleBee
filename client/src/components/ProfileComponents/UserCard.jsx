@@ -67,8 +67,8 @@ export default function UserCard() {
             <Button
               className={
                 currentUser.role !== 1
-                  ? "edit-profile-btn"
-                  : "edit-profile-btn-dealer"
+                  ? "edit-profile-btn-dealer"
+                  : "edit-profile-btn"
               }
             >
               Edit Profile

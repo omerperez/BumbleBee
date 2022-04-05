@@ -62,7 +62,7 @@ const managerMenuItems = [
   {
     title: "Dashboard Statistics",
     path: "/manager-dashboard",
-    image: "user.png",
+    image: "graph.png",
     isDisabled: false,
   },
 ];
@@ -89,7 +89,7 @@ const dealerMenuItems = [
   {
     title: "Order Status",
     path: "/order-status",
-    image: "user.png",
+    image: "mail.png",
     isDisabled: false,
   },
 ];
@@ -98,12 +98,14 @@ const clientMenuItems = [
   {
     title: "Home Page",
     path: "/homepage",
+    image: "home.png",
     isDisabled: false,
     role: "1",
   },
   {
     title: "About Us",
     path: "/about-us",
+    image: "about.png",
     isDisabled: false,
     role: "1",
   },
@@ -111,6 +113,7 @@ const clientMenuItems = [
     title: "DHL Label form",
     image: dhlImage,
     path: "/dhl-label",
+    image: "dhl.png",
     isDisabled: false,
     role: "1",
   },
@@ -118,6 +121,15 @@ const clientMenuItems = [
     title: "Customs Broker",
     image: costomImage,
     path: "/customs-broker",
+    image: "broker.png",
+    isDisabled: false,
+    role: "1",
+  },
+  {
+    title: "My Favorite",
+    image: costomImage,
+    path: "/my-favorite",
+    image: "fav.png",
     isDisabled: false,
     role: "1",
   },

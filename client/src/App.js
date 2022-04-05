@@ -24,6 +24,8 @@ import EditCarForm from './components/CarComponents/EditCarForm';
 import { maxWidthCardApp, minHeightContainerApp } from "./styles/UseStylesMui";
 import MyCars from './components/Pages/MyCars';
 import EditProfile from './components/Pages/EditProfile';
+import ManagerDashboard from './components/Pages/ManagerDashboard';
+import OrderStatus from "./components/Pages/OrderStatus";
 
 function App() {
 
@@ -77,6 +79,16 @@ function App() {
               <>
                 <PrivateRoute>
                   <MyCars />
+                </PrivateRoute>
+              </>
+            }
+          />
+          <Route
+            path="order-status"
+            element={
+              <>
+                <PrivateRoute>
+                  <OrderStatus />
                 </PrivateRoute>
               </>
             }
@@ -150,6 +162,14 @@ function App() {
             element={
               <PrivateRoute>
                 <ManageUserPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="manager-dashboard"
+            element={
+              <PrivateRoute>
+                <ManagerDashboard />
               </PrivateRoute>
             }
           />

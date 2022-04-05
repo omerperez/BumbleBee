@@ -4,6 +4,7 @@ import "./Navigation.modules.css";
 import { useAuth } from '../../contexts/AuthContext';
 import { error403 } from "../images/projectImages";
 import {userProfileStyles} from "../../styles/UseStylesMui";
+import Chip from "@mui/material/Chip";
 
 export default function UserProfile() {
   const classes = userProfileStyles();
@@ -19,6 +20,19 @@ export default function UserProfile() {
           />
           <Typography variant="h6" component={"h2"} className={classes.name}>
             {currentUser.firstName + " " + currentUser.lastName}
+            <div className="d-flex justify-content-center">
+              <Chip
+                size="small"
+                label={
+                  currentUser.role === 2
+                    ? "Dealer"
+                    : currentUser.role == 3
+                    ? "Admin"
+                    : "Client"
+                }
+                className={currentUser.role === 2 ? "dealer-tag" : "client-tag"}
+              />
+            </div>
           </Typography>
         </div>
       </div>
