@@ -10,7 +10,7 @@ export default function CarImageGallery({ id, car }) {
   const [dealer, setDealer] = useState(car.dealer);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_SERVER_API}/user/my-user/` + car.dealer)
+    fetch(`${process.env.REACT_APP_SERVER_API}/user/my-user/${car.dealer}`)
       .then((response) => response.json())
       .then((data) => {
         setDealer(data);
@@ -20,14 +20,16 @@ export default function CarImageGallery({ id, car }) {
   return (
     <>
       <div className="d-flex">
-        <ImageList
-          className="border-3-black flex-basis-17"
-          gap={0}
-          sx={{ height: 400 }}
-          cols={1}
-        >
-          <CarImagesCarousel images={[...car.images, car.mainImage]} />
-        </ImageList>
+        <div className="mw-350">
+          <ImageList
+            className="border-3-black flex-basis-17"
+            gap={0}
+            sx={{ height: 550 }}
+            cols={1}
+          >
+            <CarImagesCarousel images={[...car.images, car.mainImage]} />
+          </ImageList>
+        </div>
         <div className="flex-basis-50">
           <img
             alt="main_image"
@@ -39,7 +41,7 @@ export default function CarImageGallery({ id, car }) {
                 : image403
             }
             width={"100%"}
-            height={400}
+            height={550}
             className="border-3-black no-border-left"
             onError={error403}
           />

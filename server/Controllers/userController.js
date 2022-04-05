@@ -21,7 +21,7 @@ const getUserById = (request, respons) => {
   const userId = request.params.id;
   userSchema.findById(userId).then((results) => {
     try {
-      respons.json();
+      respons.json(results);
       console.log("OK");
     } catch {
       console.log("Error");

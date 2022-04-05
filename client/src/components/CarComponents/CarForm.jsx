@@ -31,6 +31,7 @@ export default function CarForm() {
   const [model, setModel] = useState("");
   const [secondStatus, setSecondStatus] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [carMain, setCarMain] = useState(null);
 
   useEffect(() => {
      fetch(process.env.REACT_APP_GOVIL_CARS_API + company.hebrew)
@@ -80,6 +81,15 @@ export default function CarForm() {
        }
   }
 
+  const ImageHandler = (e) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setCarMain(reader.result);
+      }
+    };
+    reader.readAsDataURL(e.target.files[0]);
+  };
     return (
       <div>
         {error ? (
@@ -494,10 +504,17 @@ export default function CarForm() {
           <div className="d-flex mt-4">
             <label htmlFor={"main"}>
               <img
+                style={{ borderRadius: "15px" }}
                 alt="main_image"
                 className="cur-pointer"
-                width={200}
-                src={values.main ? uploadMainSucces : uploadMainEmpty}
+                width={values.main ? 400 : 200}
+                height={values.main ? 300 : null}
+                src={
+                  values.main
+                    ? carMain
+                    : // uploadMainSucces
+                      uploadMainEmpty
+                }
               />
             </label>
             <input
@@ -507,7 +524,10 @@ export default function CarForm() {
               name="main"
               aria-required="true"
               className="display-none"
-              onChange={(e) => carChange(e)}
+              onChange={(e) => {
+                carChange(e);
+                ImageHandler(e);
+              }}
             />
             <label htmlFor={"image"}>
               <img

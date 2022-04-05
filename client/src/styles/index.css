@@ -667,3 +667,7 @@
 .m-6{
   margin: 6px !important;
 }
+
+.mw-350{
+  max-width: 350px;
+}
