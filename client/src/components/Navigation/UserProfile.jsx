@@ -30,7 +30,7 @@ export default function UserProfile() {
                     ? "Admin"
                     : "Client"
                 }
-                className={currentUser.role === 2 ? "dealer-tag" : "client-tag"}
+                className="client-tag"
               />
             </div>
           </Typography>
