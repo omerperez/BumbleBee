@@ -22,6 +22,8 @@ const carSchema = new Schema({
   firstRegistration: Date,
   colour: String,
   iteriorDesign: String,
+  dateOfCreate: Date,
+  saleStatus: Boolean,
   dealer: { type: Schema.Types.ObjectId, ref: "users" },
 });
 

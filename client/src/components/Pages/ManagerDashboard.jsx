@@ -3,10 +3,14 @@ import PageTitle from "../Layout/PageTitle";
 import { CircularProgress } from "@mui/material";
 import AccessDenied from "../authComponents/AccessDenied";
 import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+
 export default function ManagerDashboard() {
     
-    const {currentUser} = useAuth();
+  const { currentUser } = useAuth();
+  const navigate = useNavigate();
     
+  
     // if (loading) {
     //   return (
     //     <div
@@ -18,14 +22,10 @@ export default function ManagerDashboard() {
     //   );
     // }
 
-    if (currentUser && currentUser.role !== 3) {
-      return (
-        <>
-          <PageTitle page={"Access Denied"} />
-          <AccessDenied />
-        </>
-      );
-    }
+    // if (currentUser && currentUser.role !== 3) {
+    //      return navigate("/access-denied");
+    // }
+    
     return (
     <>
       <PageTitle page={"Manager Dashboard"} />

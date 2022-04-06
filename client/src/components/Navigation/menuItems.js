@@ -60,6 +60,13 @@ const managerMenuItems = [
     isDisabled: false,
   },
   {
+    title: "My Profile",
+    image: costomImage,
+    path: "/my-profile",
+    image: "profile.png",
+    isDisabled: false,
+  },
+  {
     title: "Dashboard Statistics",
     path: "/manager-dashboard",
     image: "graph.png",
@@ -84,6 +91,13 @@ const dealerMenuItems = [
     title: "Add New Car",
     path: "/create-car",
     image: "car.png",
+    isDisabled: false,
+  },
+  {
+    title: "My Profile",
+    image: costomImage,
+    path: "/my-profile",
+    image: "profile.png",
     isDisabled: false,
   },
   {
@@ -124,6 +138,13 @@ const clientMenuItems = [
     image: "broker.png",
     isDisabled: false,
     role: "1",
+  },
+  {
+    title: "My Profile",
+    image: costomImage,
+    path: "/my-profile",
+    image: "profile.png",
+    isDisabled: false,
   },
   {
     title: "My Favorite",

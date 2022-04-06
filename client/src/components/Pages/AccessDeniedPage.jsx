@@ -25,9 +25,9 @@ export default function AccessDeniedPage({showPrivateRoute}) {
   }
 
   return (
-    <PrivateRoute>
+    <>
       <PageTitle page={"Access Denied"} />
       <AccessDenied />
-    </PrivateRoute>
+    </>
   );
 }

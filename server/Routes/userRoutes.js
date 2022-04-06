@@ -20,8 +20,11 @@ router.put(
   userController.editUserAndImage
 );
 
+router.put("/add-to-favorite/:id", userController.addCarToFavorite);
+
 router.put("/edit-password/:id", userController.editPassword);
 
 router.delete("/delete/:id", userController.deleteUser);
+
 
 module.exports = router;

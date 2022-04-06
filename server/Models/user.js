@@ -18,6 +18,7 @@ const userSchema = new Schema({
   openingTime: String,
   closingTime: String,
   activityDays: String,
+  dateOfCreate: Date,
   cars: [{ type: Schema.Types.ObjectId, ref: "cars" }],
 });
 

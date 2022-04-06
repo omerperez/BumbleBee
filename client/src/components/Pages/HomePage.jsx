@@ -4,9 +4,12 @@ import FilterCars from "../CarComponents/FilterCars";
 import PageTitle from "../Layout/PageTitle";
 import useFetch from "../../utils/useFetch";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function HomePage() {
 
+  const { currentUser } = useAuth();
+  
   const { data: cars, setData : setCars, loading } = useFetch(
     `${process.env.REACT_APP_SERVER_API}/car`
   );
@@ -48,6 +51,13 @@ export default function HomePage() {
                 engine={car.engine}
                 km={car.km}
                 price={car.price}
+                userRole={currentUser.role}
+                status={
+                  JSON.stringify(currentUser.cars).indexOf(car._id) !== -1
+                    ? true
+                    : false
+                }
+                userId={currentUser._id}
               />
             );
           })}

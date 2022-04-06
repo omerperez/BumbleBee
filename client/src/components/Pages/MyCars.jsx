@@ -79,7 +79,7 @@ export default function MyCars() {
                 engine={car.engine}
                 km={car.km}
                 price={car.price}
-                currentPage="1"
+                currentPage="myCars"
               />
             );
           })}

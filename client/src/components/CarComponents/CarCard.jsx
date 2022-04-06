@@ -5,21 +5,76 @@ import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import { error403 } from "../images/projectImages";
 import DeleteCarDialog from "../DialogComponents/DeleteCarDialog";
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarIcon from "@mui/icons-material/Star";
+import { useAuth } from "../../contexts/AuthContext";
+import { Button } from "@mui/material";
+// import { Button } from "react-bootstrap";
+export default function CarCard({ _id, image, company, model, price, currentPage, userRole, status, userId }) {
 
-export default function CarCard({ _id, image, company, model, price, currentPage }) {
+  const {addCarToFavorite} = useAuth();
+  const [newStatus, setNewStatus] = useState(
+    currentPage === "myFavorite" ? true : status ? status : false
+  );
+  const AddCarToFavorite = async () => {
+    const res = await addCarToFavorite(userId, _id);
+    if(res == "OK"){
+      setNewStatus(!newStatus);
+      if(currentPage === "myFavorite"){
+        window.location.reload(true);
+      }
+    }
+  }
 
   return (
     <div className="car-card-div " style={{ maxWidth: "300px" }}>
       <Card className="car-card-width box-shadow-none">
-        <Link to={`/car-profile/${_id}`}>
-          <CardMedia
-            className="cur-pointer br-10"
-            component="img"
-            height="140"
-            image={image}
-            onError={error403}
-          />
-        </Link>
+        {userRole && userRole === 1 ? (
+          <div className="pos-rel">
+            <img
+              src={image}
+              className="cur-pointer br-10"
+              height="175"
+              width="300"
+              onError={error403}
+            />
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                bottom: 0,
+                left: 0,
+                right: 0,
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              <Button
+                style={{ background: "none", border: "none" }}
+                onClick={AddCarToFavorite}
+              >
+                {newStatus ? (
+                  <StarIcon fontSize="large" style={{ color: "#e6af5c" }} />
+                ) : (
+                  <StarBorderIcon
+                    fontSize="large"
+                    style={{ color: "#e6af5c" }}
+                  />
+                )}
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <Link to={`/car-profile/${_id}`} width={300} className="pos-rel">
+            <img
+              src={image}
+              className="cur-pointer br-10"
+              height="175"
+              width="300"
+              onError={error403}
+            />
+          </Link>
+        )}
         <Typography
           className="mt-2 text-center font-sans"
           gutterBottom
@@ -44,7 +99,7 @@ export default function CarCard({ _id, image, company, model, price, currentPage
             </Link>
           </div>
         </Typography>
-        {currentPage && currentPage == 1 ? (
+        {currentPage && currentPage === "myCars" ? (
           <div className="text-center">
             <DeleteCarDialog id={_id} name={company + " " + model} />
           </div>

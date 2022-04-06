@@ -26,6 +26,7 @@ import MyCars from './components/Pages/MyCars';
 import EditProfile from './components/Pages/EditProfile';
 import ManagerDashboard from './components/Pages/ManagerDashboard';
 import OrderStatus from "./components/Pages/OrderStatus";
+import AccessDenied from "./components/Pages/AccessDeniedPage";
 
 function App() {
 
@@ -86,11 +87,9 @@ function App() {
           <Route
             path="order-status"
             element={
-              <>
                 <PrivateRoute>
                   <OrderStatus />
                 </PrivateRoute>
-              </>
             }
           />
           <Route
@@ -138,6 +137,14 @@ function App() {
             element={
               <PrivateRoute>
                 <GovIL />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="access-denied"
+            element={
+              <PrivateRoute>
+                <AccessDenied />
               </PrivateRoute>
             }
           />

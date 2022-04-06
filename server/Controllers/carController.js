@@ -39,6 +39,24 @@ const getMyCars = (req, res) => {
   });     
 };
 
+const getFavoriteCars = async (req, res) => {
+  const userId = req.params.id;
+
+  const currentUser = await userSchema.findById(userId);
+
+  console.log(req.params.id);
+  carSchema.find().then((results) => {
+    try {
+      res.json(
+        results.filter((car) => currentUser.cars.includes(car._id))
+      );
+      console.log("OK");
+    } catch {
+      console.log("Error");
+    }
+  });
+};
+
 const getCarByCompany = (request, respons) => {
   carSchema.find({ company: req.params.company }).then((results) => {
     try {
@@ -77,6 +95,8 @@ async function createCar(req, res) {
     colour: carFromJason.colour,
     condition: carFromJason.condition,
     iteriorDesign: carFromJason.interiorDesign,
+    dateOfCreate: Date,
+    saleStatus: Boolean,
     dealer: req.body.dealer,
   });
 
@@ -142,4 +162,5 @@ module.exports = {
   getCarById,
   getMyCars,
   getAllCars,
+  getFavoriteCars,
 };

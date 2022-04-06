@@ -1,9 +1,9 @@
 const userSchema = require("../Models/user");
+const carSchema = require("../Models/car");
 const { loginValidation, registerValidation } = require("../Validation");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
-const { request } = require("express");
 const router = require("express").Router();
 
 const getAllUsers = (req, res) => {
@@ -42,7 +42,9 @@ const register = async (request, response) => {
       message: "Email already exists.",
     });
   }
-  const mobileExist = await userSchema.findOne({ phoneNumber: request.body.mobile });
+  const mobileExist = await userSchema.findOne({
+    phoneNumber: request.body.mobile,
+  });
   if (mobileExist) {
     return response.status(400).json({
       message: "Mobile number already exists.",
@@ -79,7 +81,7 @@ const login = async (request, response) => {
     });
   }
   const user = await userSchema.findOne({ email: request.body.email });
-  
+
   if (!user) {
     return response.status(400).json({
       message: "Email or password is wrong",
@@ -87,9 +89,9 @@ const login = async (request, response) => {
   }
   const validPass = await bcrypt.compare(request.body.password, user.password);
   if (!validPass) {
-   return response.status(400).json({
-     message: "Email or password is wrong",
-   });
+    return response.status(400).json({
+      message: "Email or password is wrong",
+    });
   }
   const token = jwt.sign(
     {
@@ -109,7 +111,10 @@ const editPassword = async (request, response) => {
   const userId = { _id: request.params.id };
 
   const user = await userSchema.findOne({ email: request.body.email });
-  const validPass = await bcrypt.compare(request.body.oldPassword, user.password);
+  const validPass = await bcrypt.compare(
+    request.body.oldPassword,
+    user.password
+  );
   if (!validPass) {
     return response.status(400).json({
       message: "Password is wrong, please try again",
@@ -123,7 +128,7 @@ const editPassword = async (request, response) => {
     _id: userId,
     password: hashedPassword,
   });
-  
+
   try {
     const editUser = await userSchema.findOneAndUpdate(userId, editPassword, {
       new: true,
@@ -134,7 +139,6 @@ const editPassword = async (request, response) => {
     console.log("filed");
     response.status(400).json("Something happened, please try again");
   }
-  
 };
 
 const editUser = async (request, response) => {
@@ -181,7 +185,7 @@ const editUserAndImage = async (request, response) => {
     phoneNumber: userFromJason.phoneNumber,
     image: request.file.originalname,
   });
-  
+
   try {
     const editUser = await userSchema.findOneAndUpdate(userId, updateUser, {
       new: true,
@@ -203,6 +207,32 @@ const editUserAndImage = async (request, response) => {
   }
 };
 
+const addCarToFavorite = async (req, res) => {
+  const carId = req.body.carId;
+  const userId = req.body._id;
+
+  try {
+    const currentUser = await userSchema.findById(userId);
+    const filter = { _id: currentUser._id };
+    const carList = await currentUser.cars;
+    if(carList.includes(carId)){
+      carList.pull(carId);
+    } else{
+      carList.push(carId);
+    }
+    
+    const update = new userSchema({
+      _id: currentUser._id,
+      cars: carList,
+    });
+    const updatedUser = await userSchema.findOneAndUpdate(filter, update, { new: true });
+    res.send({ updatedUser });
+  } catch (err) {
+    console.log("filed");
+    res.status(400).json("Something happened, please try again");
+  }
+};
+
 const deleteUser = (req, res) => {
   console.log(req.params.id);
   const userId = req.params.id;
@@ -220,4 +250,5 @@ module.exports = {
   login,
   editPassword,
   editUserAndImage,
+  addCarToFavorite,
 };

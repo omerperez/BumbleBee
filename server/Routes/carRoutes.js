@@ -10,6 +10,8 @@ router.get("/show/:id", carController.getCarById);
 
 router.get("/mycars/:id", carController.getMyCars);
 
+router.get("/my-favorite/:id", carController.getFavoriteCars);
+
 router.get("/", carController.getAllCars);
 
 router.put("/edit/:id", carController.updateCar);

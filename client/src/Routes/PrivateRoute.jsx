@@ -10,14 +10,18 @@ import Paper from "@mui/material/Paper";
 import { darkTheme, whiteTheme } from '../theme/theme';
 import NewNavigation from "../components/Navigation/NewNavigation";
 
-export default function PrivateRoute({ children }) {
+export default function PrivateRoute({ children, showSideBar }) {
 
     const { currentUser, mode } = useAuth();
     const classes = usePrivateRouteStyles();
 
     return currentUser ? (
       <ThemeProvider theme={mode ? whiteTheme : darkTheme}>
-        <NewNavigation>{children}</NewNavigation>
+        {showSideBar && showSideBar === false ? (
+          { children }
+        ) : (
+          <NewNavigation>{children}</NewNavigation>
+        )}
       </ThemeProvider>
     ) : (
       <Navigate to="/login" />

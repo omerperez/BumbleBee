@@ -179,6 +179,24 @@ export default function AuthProvider({ children }) {
       });
   }
 
+    async function addCarToFavorite(userId, carId) {
+      const addToFav = {
+        _id: userId,
+        carId: carId,
+      };
+      return api
+        .put(`/user/add-to-favorite/${userId}`, addToFav)
+        .then(function (response) {
+          console.log(response);
+          return "OK";
+        })
+        .catch(function (error) {
+          console.log(error);
+          return error.response.data.message;
+        });
+    }
+
+
   async function editCar(id, km, price, colour) {
     const updateCar = {
       _id: id,
@@ -233,6 +251,7 @@ export default function AuthProvider({ children }) {
     editUserPropertiesWithoutImage,
     editPassword,
     loading,
+    addCarToFavorite,
   };
 
   return (
