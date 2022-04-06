@@ -9,7 +9,13 @@ import { useAuth } from "../../contexts/AuthContext";
 export default function HomePage() {
 
   const { currentUser } = useAuth();
-  
+  const [user, setUser] = useState();
+  useEffect(() => {
+    fetch(
+      `${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`
+    ).then((res) => res.json()
+    .then((data) => setUser(data)));
+  }, [])
   const { data: cars, setData : setCars, loading } = useFetch(
     `${process.env.REACT_APP_SERVER_API}/car`
   );
@@ -51,13 +57,14 @@ export default function HomePage() {
                 engine={car.engine}
                 km={car.km}
                 price={car.price}
-                userRole={currentUser.role}
+                user={user}
+                // userRole={currentUser.role}
                 status={
-                  JSON.stringify(currentUser.cars).indexOf(car._id) !== -1
+                  JSON.stringify(user.cars).indexOf(car._id) !== -1
                     ? true
                     : false
                 }
-                userId={currentUser._id}
+                // userId={currentUser._id}
               />
             );
           })}

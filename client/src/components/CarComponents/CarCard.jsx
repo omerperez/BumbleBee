@@ -7,17 +7,17 @@ import { error403 } from "../images/projectImages";
 import DeleteCarDialog from "../DialogComponents/DeleteCarDialog";
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from "@mui/icons-material/Star";
-import { useAuth } from "../../contexts/AuthContext";
 import { Button } from "@mui/material";
+import { useAuth } from "../../contexts/AuthContext";
 // import { Button } from "react-bootstrap";
-export default function CarCard({ _id, image, company, model, price, currentPage, userRole, status, userId }) {
+export default function CarCard({ _id, image, company, model, price, currentPage, user }) {
 
   const {addCarToFavorite} = useAuth();
   const [newStatus, setNewStatus] = useState(
-    currentPage === "myFavorite" ? true : status ? status : false
+    currentPage === "myFavorite" ? true : JSON.stringify(user.cars).indexOf(_id) !== -1 ? true : false
   );
   const AddCarToFavorite = async () => {
-    const res = await addCarToFavorite(userId, _id);
+    const res = await addCarToFavorite(user._id, _id);
     if(res == "OK"){
       setNewStatus(!newStatus);
       if(currentPage === "myFavorite"){
@@ -29,7 +29,7 @@ export default function CarCard({ _id, image, company, model, price, currentPage
   return (
     <div className="car-card-div " style={{ maxWidth: "300px" }}>
       <Card className="car-card-width box-shadow-none">
-        {userRole && userRole === 1 ? (
+        {user && user.role === 1 ? (
           <div className="pos-rel">
             <img
               src={image}

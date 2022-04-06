@@ -80,6 +80,7 @@ export default function MyCars() {
                 km={car.km}
                 price={car.price}
                 currentPage="myCars"
+                user={currentUser}
               />
             );
           })}

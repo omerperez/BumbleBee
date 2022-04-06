@@ -13,6 +13,7 @@ export default function CarProfilePage() {
   const [loading, setLoading ] = useState(true);
   const [isEdit, setIsEdit] = useState(false);
   const { currentUser } = useAuth();
+  const [user, setUser] = useState();
 
   useEffect(() => {
     const index = window.location.toString().lastIndexOf("/") + 1;
@@ -23,6 +24,9 @@ export default function CarProfilePage() {
         setLoading(false);
         setCar(data)
       });  
+          fetch(
+            `${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`
+          ).then((res) => res.json().then((data) => setUser(data)));
   },[isEdit]);
 
   if (loading) {
@@ -62,8 +66,17 @@ export default function CarProfilePage() {
   return (
     <>
       <PageTitle page={car.companyEnglish + " " + car.model} />
-      <CarImageGallery id={car.dealer} car={car} />
-      {isEdit ? <EditCarForm  car={car} saveChanges={saveChanges}/> : getEditButton()}
+      <CarImageGallery
+        id={car.dealer}
+        car={car}
+        user={user}
+        status={JSON.stringify(user.cars).indexOf(car.id)}
+      />
+      {isEdit ? (
+        <EditCarForm car={car} saveChanges={saveChanges} />
+      ) : (
+        getEditButton()
+      )}
     </>
   );
 }

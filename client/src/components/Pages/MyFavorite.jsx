@@ -74,13 +74,14 @@ export default function MyFavorite() {
                 km={car.km}
                 price={car.price}
                 currentPage="myFavorite"
-                userRole={currentUser.role}
-                status={
-                  JSON.stringify(currentUser.cars).indexOf(car._id) !== -1
-                    ? true
-                    : false
-                }
-                userId={currentUser._id}
+                user={currentUser}
+                // userRole={currentUser.role}
+                // status={
+                //   JSON.stringify(currentUser.cars).indexOf(car._id) !== -1
+                //     ? true
+                //     : false
+                // }
+                // userId={currentUser._id}
               />
             );
           })}
