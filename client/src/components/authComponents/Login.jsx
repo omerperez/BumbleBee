@@ -3,6 +3,7 @@ import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
+import SelectAccountTypeDialog from "../DialogComponents/SelectAccountTypeDialog";
 
 export default function Login() {
   const emailRef = useRef();
@@ -76,10 +77,11 @@ export default function Login() {
               </Button>
             </Form>
             <div className="w-100 text-center mt-3">
-              Need an account?{" "}
+              <SelectAccountTypeDialog />
+              {/* Need an account?{" "}
               <Link to="/signup" className="cancel-underline ">
                 Sign Up
-              </Link>
+              </Link> */}
             </div>
           </Card.Body>
         </Card>

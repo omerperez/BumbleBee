@@ -35,8 +35,11 @@
   display: inline-block;
 }
 
+.br-122{
+  border-radius: 50px !important;
+}
 .ml-10{
-  margin-left: 10px;
+  margin-left: 10px !important;
 }
 .header-title-space {
   margin: 8px 0 12px 0 !important;
@@ -44,6 +47,11 @@
 
 .ml-8{
   margin-left: 8px !important;
+}
+
+input{
+  border: none;
+  border-bottom: solid 1px #8f8f8f;
 }
 
 .page-title-font {
@@ -75,7 +83,7 @@
 }
 
 .yellow-divider {
-   background-color: #e2a021;
+   background-color: #42ADFF;
 }
 
 .m-18 {
@@ -120,20 +128,20 @@
 }
 
 .yellow-btn {
-  background: #FCB13F;
+  background: #42ADFF;
   border: none;
   height: 45px;
 }
 
 .yellow-btn:hover {
-  background: #e6af5c;
+  background: #42ADFF;
   border: none;
   height: 45px;
 }
 
 
 .yellow-btn:disabled {
-  background: #e6af5c;
+  background: #42ADFF;
   border: none;
   height: 45px;
 }
@@ -508,7 +516,7 @@
 
 .creat-car-btn {
  text-transform: capitalize !important;
- background: #e6af5c !important;
+ background: #42ADFF !important;
  color: #363636 !important;
  width: 200px;
  height: 50px;
@@ -517,8 +525,9 @@
 
 .filter-car-btn {
  text-transform: capitalize !important;
- background: #e6af5c !important;
- color: #363636 !important;
+ background: #5db8fd !important;
+ color: #292929 !important;
+ /* border: solid 2px #363636 !important; */
  height: 40px;
  margin-left: 10px !important;
  box-shadow: none !important;
@@ -531,7 +540,7 @@
 
 .edit-profile-btn {
  text-transform: capitalize !important;
- background: #e6af5c !important;
+ background: #42ADFF !important;
  color: #363636 !important;
  height: 45px;
  border-radius: 30px !important;
@@ -595,6 +604,9 @@
   margin-right: 2% !important;
 }
 
+.ml-m10 {
+  margin-left: -10px;
+}
 .obj-fit{
   object-fit: contain;
 }
@@ -634,8 +646,8 @@
 }
 
 .client-tag{
-  background: #e2a021 !important;
-  opacity: 0.6 !important;
+  background: #42ADFF !important;
+  opacity: 0.9 !important;
   color: black !important;
 }
 

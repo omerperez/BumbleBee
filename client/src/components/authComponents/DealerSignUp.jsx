@@ -3,15 +3,20 @@ import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
 import { checkRegisterFields } from "./userFunctions";
 import {
   israelFlag,
   emptyProfileImage,
   profileSuccess,
 } from "../images/projectImages";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+import MultipleSelectChip from "./MultipleSelectChip";
+import AdapterDateFns from "@mui/lab/AdapterDateFns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DesktopTimePicker from "@mui/lab/DesktopTimePicker";
+
 
 export default function DealerSignUp() {
   const firstNameRef = useRef();
@@ -25,6 +30,10 @@ export default function DealerSignUp() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [profileImage, setProfileImage] = useState();
+  const [mobile, setMobiel] = useState("");
+  const [hours, setHours] = useState(
+    new Date("2018-01-01T00:00:00.000Z")
+  );
 
   const navigate = useNavigate();
 
@@ -51,7 +60,7 @@ export default function DealerSignUp() {
         firstNameRef.current.value,
         lastNameRef.current.value,
         emailRef.current.value,
-        mobileRef.current.value,
+        mobile,
         passwordRef.current.value,
         file,
         "1"
@@ -121,7 +130,7 @@ export default function DealerSignUp() {
                       className="img-wrop-src"
                       htmlFor="file"
                       src={
-                        file && profileImage ? profileImage : emptyProfileImage
+                        file && profileImage ? profileImage : "/seller-user.png"
                       }
                     />
                   </div>
@@ -154,42 +163,13 @@ export default function DealerSignUp() {
               required
             />
           </Form.Group>
-          <Form.Group id="mobile" className="mb-2">
-            <div className="row">
-              <div className="col">
-                <TextField
-                  disabled
-                  id="input-with-icon-textfield"
-                  label="Country"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <img
-                          alt="israel_flag"
-                          src={israelFlag}
-                          width={25}
-                          className="border-circle mr-10"
-                        />
-                        +972
-                      </InputAdornment>
-                    ),
-                  }}
-                  variant="standard"
-                />
-              </div>
-              <div className="col-9">
-                <TextField
-                  id="standard-email-input"
-                  label="Mobile"
-                  inputRef={mobileRef}
-                  type="tel"
-                  pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
-                  variant="standard"
-                  fullWidth
-                  required
-                />
-              </div>
-            </div>
+          <Form.Group id="mobile" className="mb-2 mt-4">
+            <PhoneInput
+              defaultCountry="IL"
+              placeholder="Mobile"
+              value={mobile}
+              onChange={setMobiel}
+            />
           </Form.Group>
           <Form.Group id="password" className="mb-2">
             <TextField
@@ -214,6 +194,36 @@ export default function DealerSignUp() {
               fullWidth
               required
             />
+          </Form.Group>
+          <Form.Group id="days" className="mt-4 mb-1 row">
+            <div className="col-3">
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DesktopTimePicker
+                  label="Start"
+                  value={hours}
+                  onChange={(newValue) => {
+                    setHours(newValue);
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+            </div>
+            <div className="col-3">
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DesktopTimePicker 
+                  label="Start"
+                  value={hours}
+                  onChange={(newValue) => {
+                    setHours(newValue);
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
+                  
+                />
+              </LocalizationProvider>
+            </div>
+            <div className="col-6" style={{ maxWidth: 300}}>
+              <MultipleSelectChip />
+            </div>
           </Form.Group>
           <Button
             disabled={loading}

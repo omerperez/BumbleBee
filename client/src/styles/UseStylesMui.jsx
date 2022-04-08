@@ -40,7 +40,7 @@ const carFormStyles = makeStyles(() => ({
     borderColor: "#363636",
     borderRadius: 5,
     color: "#363636",
-    background: "#FCB13F",
+    background: "#42ADFF",
   },
   noFile: {
     display: "flex",
@@ -51,7 +51,7 @@ const carFormStyles = makeStyles(() => ({
     margin: 10,
     borderStyle: "solid",
     borderWidth: 2,
-    borderColor: "#FCB13F",
+    borderColor: "#42ADFF",
     borderRadius: 5,
     color: "#363636",
     background: "#F5F5F5",
@@ -67,7 +67,7 @@ const carFormStyles = makeStyles(() => ({
     borderColor: "#363636",
     borderRadius: 5,
     color: "#363636",
-    background: "#FCB13F",
+    background: "#42ADFF",
   },
   noMainFile: {
     display: "flex",
@@ -81,7 +81,7 @@ const carFormStyles = makeStyles(() => ({
     borderColor: "#90EE90",
     borderRadius: 5,
     color: "#363636",
-    background: "#F5F5F5",
+    background: "#42ADFF",
   },
 }));
 
@@ -169,10 +169,10 @@ const defaultNavigationTextStyle = {
 };
 
 const navCurrentPageStyle = {
-  background: "#E2A025",
+  background: "#42ADFF",
   color: "#363636",
-  borderLeft: "solid 10px #BA8600",
-  minHeight: '50px',
+  borderLeft: "solid 10px #179aff",
+  minHeight: "50px",
 };
 
 /* Table */
@@ -255,12 +255,12 @@ const useTableStyles = makeStyles(() => ({
     // display: "flex",
     // height: "80%",
     borderRight: "1px solid #CDCDCD",
-    color: "#212121",
+    color: "#42ADFF",
   },
   divWrapperOfHeaderAction: {
     // display: "flex",
     // height: "80%",
-    color: "#212121",
+    color: "#42ADFF",
   },
   sortLabel: {
     fontWeight: 700,

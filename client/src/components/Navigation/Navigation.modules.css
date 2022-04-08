@@ -15,13 +15,13 @@
     letter-spacing: 3px;
     color: #363636 !important;
     text-align: center !important;
-    background-color: #e2a021;
+    background-color: #42ADFF;
 }
 .profileImage {
     height: 75px;
     width: 75px; 
     border-radius: 50%; 
-    border: 3px solid #e2a021 ;
+    border: 3px solid #42ADFF ;
 }
 
 @media only screen and (min-height: 400px){
@@ -65,7 +65,7 @@
 }
 
 .color-yellow{
-    color: #e2a021 !important;
+    color: #42ADFF !important;
 }
 
 .h-3{

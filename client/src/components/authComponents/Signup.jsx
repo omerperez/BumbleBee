@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
@@ -23,6 +23,7 @@ export default function Signup() {
   const [file, setFile] = useState();
   const { signup } = useAuth();
   const [error, setError] = useState("");
+  const [role, setRole] = useState(1);
   const [checkbox1, setCheckbox1] = useState(false);
   const [checkbox2, setCheckbox2] = useState(false);
   const [checkbox3, setCheckbox3] = useState(false);
@@ -30,7 +31,6 @@ export default function Signup() {
   const [profileImage, setProfileImage] = useState();
 
   const navigate = useNavigate();
-
   const ImageHandler = (e) => {
     const reader = new FileReader();
     reader.onload = () =>{
@@ -60,7 +60,7 @@ export default function Signup() {
           mobileRef.current.value,
           passwordRef.current.value,
           file,
-          "2"
+          "1"
         )
       ) {
         return setError("Please add image profile");
@@ -86,6 +86,7 @@ export default function Signup() {
       }
     setLoading(false);
   }
+
   return (
     <Card className="no-border">
       <div>
@@ -127,7 +128,8 @@ export default function Signup() {
                       className="img-wrop-src"
                       htmlFor="file"
                       src={
-                        file && profileImage ? profileImage : emptyProfileImage
+                        file && profileImage ? profileImage : "/regular-user.png"
+                        // emptyProfileImage
                       }
                     />
                   </div>
@@ -254,7 +256,8 @@ export default function Signup() {
       <div className="w-100 text-center mb-2">
         Need a dealer account?
         <Link to="/dealer-login" className="cancel-underline">
-          {" "} Click here
+          {" "}
+          Click here
         </Link>
       </div>
       <div className="w-100 text-center">
