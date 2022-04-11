@@ -84,17 +84,16 @@ export default function AuthProvider({ children }) {
       });
   }
 
-  async function signup(firstName, lastName, email, mobile, password, image, role) {
+  async function signup(user, dealer) {
+    var main = user.image;
     const now = Date.now();
     const userData = new FormData();
-    userData.append("firstName", firstName);
-    userData.append("lastName", lastName);
-    userData.append("email", email);
-    userData.append("mobile", `+972${mobile}`);
-    userData.append("password", password);
-    userData.append("image", image, now + image.name);
-    userData.append("role", role);
+    userData.append("user", JSON.stringify(user));
+    userData.append("dealer", JSON.stringify(dealer));
+    userData.append("image", main[0], now + main[0].name);
+    // userData.append("image", image, now + image.name);
 
+    console.log(user);
     return api
       .post("/user/register", userData)
       .then(function (response) {
@@ -151,7 +150,6 @@ export default function AuthProvider({ children }) {
     formData.append("netPrice", carObj.price * 0.7);
     formData.append("dealer", currentUser._id.toString());
     formData.append("car", JSON.stringify(carObj));
-
     return api
       .post("/car/create", formData, {
         headers: {
@@ -179,24 +177,23 @@ export default function AuthProvider({ children }) {
       });
   }
 
-    async function addCarToFavorite(userId, carId) {
-      const addToFav = {
-        _id: userId,
-        carId: carId,
-      };
-      return api
-        .put(`/user/add-to-favorite/${userId}`, addToFav)
-        .then(function (response) {
-          console.log(response);
-          return "OK";
-        })
-        .catch(function (error) {
-          console.log(error);
-          return error.response.data.message;
-        });
-    }
-
-
+  async function addCarToFavorite(userId, carId) {
+    const addToFav = {
+      _id: userId,
+      carId: carId,
+    };
+    return api
+      .put(`/user/add-to-favorite/${userId}`, addToFav)
+      .then(function (response) {
+        console.log(response);
+        return "OK";
+      })
+      .catch(function (error) {
+        console.log(error);
+        return error.response.data.message;
+      });
+  }
+  
   async function editCar(id, km, price, colour) {
     const updateCar = {
       _id: id,

@@ -30,20 +30,23 @@ const getUserById = (request, respons) => {
 };
 
 const register = async (request, response) => {
-  const { error } = registerValidation(request.body);
+  const userFromJson = JSON.parse(request.body.user);
+  const dealerPropertiesJson = JSON.parse(request.body.dealer);
+
+  const { error } = registerValidation(userFromJson);
   if (error) {
     return response.status(400).json({
       message: error.details[0].message,
     });
   }
-  const emailExist = await userSchema.findOne({ email: request.body.email });
+  const emailExist = await userSchema.findOne({ email: userFromJson.email });
   if (emailExist) {
     return response.status(400).json({
       message: "Email already exists.",
     });
   }
   const mobileExist = await userSchema.findOne({
-    phoneNumber: request.body.mobile,
+    phoneNumber: userFromJson.mobile,
   });
   if (mobileExist) {
     return response.status(400).json({
@@ -51,16 +54,31 @@ const register = async (request, response) => {
     });
   }
   const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(request.body.password, salt);
+  const hashedPassword = await bcrypt.hash(userFromJson.password, salt);
+  let start = null;
+  let end = null;
+  if (dealerPropertiesJson != null) {
+    start = new Date(dealerPropertiesJson.openingTime);
+    end = new Date(dealerPropertiesJson.closingTime);
+  }
   const newUser = {
     _id: new mongoose.Types.ObjectId(),
-    firstName: request.body.firstName,
-    lastName: request.body.lastName,
-    email: request.body.email,
-    phoneNumber: request.body.mobile,
+    firstName: userFromJson.firstName,
+    lastName: userFromJson.lastName,
+    email: userFromJson.email,
+    phoneNumber: userFromJson.mobile,
     password: hashedPassword,
     image: request.file.originalname,
-    role: request.body.role,
+    country: dealerPropertiesJson?.country ?? null,
+    city: dealerPropertiesJson?.city ?? null,
+    street: dealerPropertiesJson?.street ?? null,
+    openingTime: start ? `${start.getHours()}:${start.getMinutes()}` : null,
+    closingTime: end ? `${end.getHours()}:${end.getMinutes()}` : null,
+    activityDays: dealerPropertiesJson?.activityDays?? null,
+    rating: 0,
+    ratingCount: 0,
+    dateOfCreate: Date.now(),
+    role: userFromJson.role,
     cars: [],
   };
   try {
@@ -81,7 +99,6 @@ const login = async (request, response) => {
     });
   }
   const user = await userSchema.findOne({ email: request.body.email });
-
   if (!user) {
     return response.status(400).json({
       message: "Email or password is wrong",
@@ -106,8 +123,6 @@ const login = async (request, response) => {
 };
 
 const editPassword = async (request, response) => {
-  console.log(request.body.email);
-  console.log(request.body.oldPassword);
   const userId = { _id: request.params.id };
 
   const user = await userSchema.findOne({ email: request.body.email });
@@ -143,14 +158,7 @@ const editPassword = async (request, response) => {
 
 const editUser = async (request, response) => {
   const userId = { _id: request.body._id };
-  let updateUser = new userSchema({
-    _id: request.body._id,
-    firstName: request.body.firstName,
-    lastName: request.body.lastName,
-    email: request.body.email,
-    phoneNumber: request.body.phoneNumber,
-  });
-
+  let updateUser = request.body;
   try {
     const editUser = await userSchema.findOneAndUpdate(userId, updateUser, {
       new: true,
@@ -164,7 +172,6 @@ const editUser = async (request, response) => {
       },
       process.env.ACCESS_TOKEN_SECRET
     );
-    console.log(editUser);
     response.send({ token, editUser });
   } catch (err) {
     console.log("filed");
@@ -173,19 +180,10 @@ const editUser = async (request, response) => {
 };
 
 const editUserAndImage = async (request, response) => {
-  console.log(request.params.id);
-  const userId = { _id: request.params.id };
-  const userFromJason = JSON.parse(request.body.user);
-  console.log(userFromJason);
-  let updateUser = new userSchema({
-    _id: userId,
-    firstName: userFromJason.firstName,
-    lastName: userFromJason.lastName,
-    email: userFromJason.email,
-    phoneNumber: userFromJason.phoneNumber,
-    image: request.file.originalname,
-  });
 
+  const userId = { _id: request.params.id };
+  let updateUser = JSON.parse(request.body.user);
+  updateUser.image = request.file.originalname;
   try {
     const editUser = await userSchema.findOneAndUpdate(userId, updateUser, {
       new: true,
@@ -199,7 +197,6 @@ const editUserAndImage = async (request, response) => {
       },
       process.env.ACCESS_TOKEN_SECRET
     );
-    console.log(editUser);
     response.send({ token, editUser });
   } catch (err) {
     console.log("filed");
@@ -210,7 +207,6 @@ const editUserAndImage = async (request, response) => {
 const addCarToFavorite = async (req, res) => {
   const carId = req.body.carId;
   const userId = req.body._id;
-
   try {
     const currentUser = await userSchema.findById(userId);
     const filter = { _id: currentUser._id };

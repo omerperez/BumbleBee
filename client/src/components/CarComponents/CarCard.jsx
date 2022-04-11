@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import { error403 } from "../images/projectImages";
@@ -9,7 +8,7 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from "@mui/icons-material/Star";
 import { Button } from "@mui/material";
 import { useAuth } from "../../contexts/AuthContext";
-// import { Button } from "react-bootstrap";
+
 export default function CarCard({ _id, image, company, model, price, currentPage, user }) {
 
   const {addCarToFavorite} = useAuth();

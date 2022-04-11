@@ -6,12 +6,7 @@ import Button from "@mui/material/Button";
 import { Link } from 'react-router-dom';
 import Chip from "@mui/material/Chip";
 
-export default function UserCard() {
-  const { currentUser } = useAuth();
-
-  const handleClickEdit = () =>{
-    console.log("omer")
-  }
+export default function UserCard({ currentUser }) {
   
   return (
     <div className="d-flex justify-content-center">
@@ -58,12 +53,7 @@ export default function UserCard() {
           </div>
         </div>
         <div className="d-flex justify-content-center mb-4 mt-4">
-          <Link
-            to={"edit"}
-            className="link-in-btn"
-            variant="contained"
-            onClick={handleClickEdit}
-          >
+          <Link to={"edit"} className="link-in-btn" variant="contained">
             <Button
               className={
                 currentUser.role !== 1

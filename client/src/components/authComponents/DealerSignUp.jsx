@@ -1,84 +1,56 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
+import useForm from "../../utils/useForm";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
-import { checkRegisterFields } from "./userFunctions";
-import {
-  israelFlag,
-  emptyProfileImage,
-  profileSuccess,
-} from "../images/projectImages";
-import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+import { checkRegisterFields, ImageHandler } from "./userFunctions";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import MultipleSelectChip from "./MultipleSelectChip";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import DesktopTimePicker from "@mui/lab/DesktopTimePicker";
-
+import TimePicker from "@mui/lab/TimePicker";
 
 export default function DealerSignUp() {
-  const firstNameRef = useRef();
-  const lastNameRef = useRef();
-  const emailRef = useRef();
-  const mobileRef = useRef();
-  const passwordRef = useRef();
-  const passwordConfirmRef = useRef();
-  const [file, setFile] = useState();
+
   const { signup } = useAuth();
+  const navigate = useNavigate();
+  const [values, carChange] = useForm();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [profileImage, setProfileImage] = useState();
   const [mobile, setMobiel] = useState("");
-  const [hours, setHours] = useState(
+  const [endHour, setEndHour] = useState(new Date("2018-01-01T00:00:00.000Z"));
+  const [startHour, setStartHour] = useState(
     new Date("2018-01-01T00:00:00.000Z")
   );
+  const [dayState, setDayState] = useState([]);
 
-  const navigate = useNavigate();
-
-  const ImageHandler = (e) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setProfileImage(reader.result);
-      }
-    };
-    reader.readAsDataURL(e.target.files[0]);
-  };
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+  async function handleSubmit() {
+    values.mobile = mobile;
+    values.role = "2";
+    if (values.password != values.confirmPassword) {
       return setError("Password do not match");
     }
-    if (passwordRef.current.value.length < 6) {
+    if(values.password.length < 6){
       return setError("Password must be at least 6 characters long");
     }
-    if (
-      checkRegisterFields(
-        firstNameRef.current.value,
-        lastNameRef.current.value,
-        emailRef.current.value,
-        mobile,
-        passwordRef.current.value,
-        file,
-        "1"
-      )
-    ) {
-      return setError("Please add image profile");
+    let checkResFields = checkRegisterFields(
+      values,
+    );
+    if (checkResFields) {
+      return setError("Please fill all fields");
     }
     try {
       setError("");
+      const dealer = {
+        openingTime: startHour,
+        closingTime: endHour,
+        activityDays: dayState.toString().replaceAll("/[/]", ""),
+      };
       setLoading(true);
-      const results = await signup(
-        firstNameRef.current.value,
-        lastNameRef.current.value,
-        emailRef.current.value,
-        mobileRef.current.value,
-        passwordRef.current.value,
-        file
-      );
+      const results = await signup(values, dealer);
       if (results !== "Success") {
         setError(results);
       } else {
@@ -89,6 +61,7 @@ export default function DealerSignUp() {
     }
     setLoading(false);
   }
+
   return (
     <Card className="no-border">
       <div>
@@ -100,26 +73,30 @@ export default function DealerSignUp() {
         <h4 className="mb-2">Dealer Sign Up</h4>
         <Form onSubmit={handleSubmit}>
           <div className="d-flex justify-content-center mb-1"></div>
-          <Form.Group id="first-name">
+          <Form.Group id="dealer-form">
             <div className="row">
               <div className="col-7">
                 <TextField
                   className="form-control mb-3"
                   id="first-name-user"
                   label="First Name"
-                  inputRef={firstNameRef}
                   type="text"
                   variant="standard"
+                  name="firstName"
+                  onChange={(e) => carChange(e)}
                   required
+                  disabled={loading}
                 />
                 <TextField
                   className="form-control"
+                  name="lastName"
+                  onChange={(e) => carChange(e)}
                   id="last-name-user"
                   label="Last Name"
-                  inputRef={lastNameRef}
                   type="text"
                   variant="standard"
                   required
+                  disabled={loading}
                 />
               </div>
               <div className="col d-flex justify-content-center">
@@ -130,7 +107,9 @@ export default function DealerSignUp() {
                       className="img-wrop-src"
                       htmlFor="file"
                       src={
-                        file && profileImage ? profileImage : "/seller-user.png"
+                        values.image && profileImage
+                          ? profileImage
+                          : "/seller-user.png"
                       }
                     />
                   </div>
@@ -141,11 +120,10 @@ export default function DealerSignUp() {
                     name="image"
                     className="display-none"
                     onChange={(event) => {
-                      const userFile = event.target.files[0];
-                      setFile(userFile);
-                      ImageHandler(event);
-                      console.log(userFile);
+                      carChange(event);
+                      ImageHandler(event, setProfileImage);
                     }}
+                    disabled={loading}
                   />
                 </label>
               </div>
@@ -155,12 +133,14 @@ export default function DealerSignUp() {
             <TextField
               id="standard-email-input"
               label="Email"
-              inputRef={emailRef}
+              name="email"
+              onChange={(e) => carChange(e)}
               type="email"
               autoComplete="new-password"
               variant="standard"
               fullWidth
               required
+              disabled={loading}
             />
           </Form.Group>
           <Form.Group id="mobile" className="mb-2 mt-4">
@@ -176,11 +156,13 @@ export default function DealerSignUp() {
               id="standard-password-input"
               label="Password"
               type="password"
-              inputRef={passwordRef}
+              name="password"
+              onChange={(e) => carChange(e)}
               variant="standard"
               autoComplete="new-password"
               fullWidth
               required
+              disabled={loading}
             />
           </Form.Group>
           <Form.Group id="password" className="mb-1">
@@ -188,63 +170,63 @@ export default function DealerSignUp() {
               id="standard-password-confirm-input"
               label="Password Confirmation"
               type="password"
-              inputRef={passwordConfirmRef}
+              name="confirmPassword"
+              onChange={(e) => carChange(e)}
               variant="standard"
               autoComplete="new-password"
               fullWidth
               required
+              disabled={loading}
             />
           </Form.Group>
-          <Form.Group id="days" className="mt-4 mb-1 row">
-            <div className="col-3">
+          <Form.Group id="days" className="mt-4 time-grid">
+            <div className="mr-10">
               <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DesktopTimePicker
+                <TimePicker
                   label="Start"
-                  value={hours}
-                  onChange={(newValue) => {
-                    setHours(newValue);
-                  }}
+                  value={startHour}
+                  onChange={setStartHour}
                   renderInput={(params) => <TextField {...params} />}
+                  disabled={loading}
                 />
               </LocalizationProvider>
             </div>
-            <div className="col-3">
+            <div className="mr-10">
               <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DesktopTimePicker 
-                  label="Start"
-                  value={hours}
-                  onChange={(newValue) => {
-                    setHours(newValue);
-                  }}
+                <TimePicker
+                  label="End"
+                  value={endHour}
+                  onChange={setEndHour}
                   renderInput={(params) => <TextField {...params} />}
-                  
+                  disabled={loading}
                 />
               </LocalizationProvider>
             </div>
-            <div className="col-6" style={{ maxWidth: 300}}>
-              <MultipleSelectChip />
-            </div>
+            <MultipleSelectChip
+              setDayState={setDayState}
+              dayState={dayState}
+              status={loading}
+            />
           </Form.Group>
           <Button
             disabled={loading}
-            className="w-100 h-75 mt-5 yellow-btn"
+            className="w-100 h-75 mt-4 yellow-btn"
             type="submit"
           >
             Sign Up
           </Button>
         </Form>
       </Card.Body>
-      <div className="w-100 text-center mb-2">
-        Need a regular account?
-        <Link to="/signup" className="cancel-underline">
-          {" "}
-          Click here
-        </Link>
-      </div>
-      <div className="w-100 text-center">
+      <div className="w-100 text-center mb-1 mr-2">
         Already have an account?
         <Link to="/login" className="cancel-underline">
           Log In
+        </Link>
+      </div>
+      <div className="w-100 text-center mr-2">
+        Need a regular account?
+        <Link to="/signup" className="cancel-underline">
+          Click here
         </Link>
       </div>
     </Card>

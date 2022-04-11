@@ -264,6 +264,11 @@ input{
   grid-auto-rows: auto;
 }
 
+.time-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(33%, 1fr));
+  grid-auto-rows: auto;
+}
 .filters-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));

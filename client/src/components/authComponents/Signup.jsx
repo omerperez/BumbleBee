@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
+import useForm from "../../utils/useForm";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,29 +9,30 @@ import { checkRegisterFields } from "./userFunctions";
 import {
   israelFlag,
   emptyProfileImage,
-  profileSuccess,
 } from "../images/projectImages";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
 export default function Signup() {
-  const firstNameRef = useRef();
-  const lastNameRef = useRef();
-  const emailRef = useRef();
-  const mobileRef = useRef();
-  const passwordRef = useRef();
-  const passwordConfirmRef = useRef();
-  const [file, setFile] = useState();
+  
+  const navigate = useNavigate();
+  const [values, carChange] = useForm();
+  // const firstNameRef = useRef();
+  // const lastNameRef = useRef();
+  // const emailRef = useRef();
+  // const mobileRef = useRef();
+  // const passwordRef = useRef();
+  // const passwordConfirmRef = useRef();
+  // const [file, setFile] = useState();
   const { signup } = useAuth();
   const [error, setError] = useState("");
-  const [role, setRole] = useState(1);
+  // const [role, setRole] = useState(1);
   const [checkbox1, setCheckbox1] = useState(false);
   const [checkbox2, setCheckbox2] = useState(false);
   const [checkbox3, setCheckbox3] = useState(false);
   const [loading, setLoading] = useState(false);
   const [profileImage, setProfileImage] = useState();
 
-  const navigate = useNavigate();
   const ImageHandler = (e) => {
     const reader = new FileReader();
     reader.onload = () =>{
@@ -46,35 +48,22 @@ export default function Signup() {
     if (!checkbox1 || !checkbox2 || !checkbox3) {
       return setError("Please confirm all checkboxes");
     }
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+    if (values.password !== values.confirmPassword) {
       return setError("Password do not match");
     }
-    if (passwordRef.current.value.length < 6){
+    if (values.password.length < 6) {
       return setError("Password must be at least 6 characters long");
     }
-      if (
-        checkRegisterFields(
-          firstNameRef.current.value,
-          lastNameRef.current.value,
-          emailRef.current.value,
-          mobileRef.current.value,
-          passwordRef.current.value,
-          file,
-          "1"
-        )
-      ) {
+      if (checkRegisterFields(values)) {
         return setError("Please add image profile");
       }
+      values.mobile = `+972${values.mobile}`;
+      values.role = "1";
       try {
         setError("");
         setLoading(true);
         const results = await signup(
-          firstNameRef.current.value,
-          lastNameRef.current.value,
-          emailRef.current.value,
-          mobileRef.current.value,
-          passwordRef.current.value,
-          file
+          values, null
         );
         if (results !== "Success"){
           setError(results);
@@ -104,20 +93,22 @@ export default function Signup() {
                 <TextField
                   className="form-control mb-3"
                   id="first-name-user"
+                  name="firstName"
                   label="First Name"
-                  inputRef={firstNameRef}
                   type="text"
                   variant="standard"
                   required
+                  onChange={(e) => carChange(e)}
                 />
                 <TextField
                   className="form-control"
                   id="last-name-user"
+                  name="lastName"
                   label="Last Name"
-                  inputRef={lastNameRef}
                   type="text"
                   variant="standard"
                   required
+                  onChange={(e) => carChange(e)}
                 />
               </div>
               <div className="col d-flex justify-content-center">
@@ -128,8 +119,9 @@ export default function Signup() {
                       className="img-wrop-src"
                       htmlFor="file"
                       src={
-                        file && profileImage ? profileImage : "/regular-user.png"
-                        // emptyProfileImage
+                        values.image && profileImage
+                          ? profileImage
+                          : "/regular-user.png"
                       }
                     />
                   </div>
@@ -140,10 +132,8 @@ export default function Signup() {
                     name="image"
                     className="display-none"
                     onChange={(event) => {
-                      const userFile = event.target.files[0];
-                      setFile(userFile);
+                      carChange(event);
                       ImageHandler(event);
-                      console.log(userFile);
                     }}
                   />
                 </label>
@@ -154,12 +144,13 @@ export default function Signup() {
             <TextField
               id="standard-email-input"
               label="Email"
-              inputRef={emailRef}
+              name="email"
               type="email"
               autoComplete="new-password"
               variant="standard"
               fullWidth
               required
+              onChange={(e) => carChange(e)}
             />
           </Form.Group>
           <Form.Group id="mobile" className="mb-2">
@@ -189,12 +180,13 @@ export default function Signup() {
                 <TextField
                   id="standard-email-input"
                   label="Mobile"
-                  inputRef={mobileRef}
+                  name="mobile"
                   type="tel"
                   pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
                   variant="standard"
                   fullWidth
                   required
+                  onChange={(e) => carChange(e)}
                 />
               </div>
             </div>
@@ -204,23 +196,25 @@ export default function Signup() {
               id="standard-password-input"
               label="Password"
               type="password"
-              inputRef={passwordRef}
+              name="password"
               variant="standard"
               autoComplete="new-password"
               fullWidth
               required
+              onChange={(e) => carChange(e)}
             />
           </Form.Group>
           <Form.Group id="password" className="mb-1">
             <TextField
               id="standard-password-confirm-input"
               label="Password Confirmation"
+              name="confirmPassword"
               type="password"
-              inputRef={passwordConfirmRef}
               variant="standard"
               autoComplete="new-password"
               fullWidth
               required
+              onChange={(e) => carChange(e)}
             />
           </Form.Group>
           <Form.Group id="cb1">

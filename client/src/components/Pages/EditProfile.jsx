@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PageTitle from "../Layout/PageTitle";
 import { useAuth } from "../../contexts/AuthContext";
 import { Form, Alert } from "react-bootstrap";
@@ -10,17 +10,14 @@ import { Button } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export default function EditProfile() {
-  
+  const { currentUser } = useAuth();
+  const { editUserProperties, editUserPropertiesWithoutImage } = useAuth();
   const navigate = useNavigate();
-  const {
-    currentUser,
-    editUserProperties,
-    editUserPropertiesWithoutImage,
-  } = useAuth();
 
   const [values, carChange] = useForm();
+  const [user, setUser] = useState(null);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [profileImage, setProfileImage] = useState(null);
   
   const ImageHandler = (e) => {
@@ -32,40 +29,42 @@ export default function EditProfile() {
     };
     reader.readAsDataURL(e.target.files[0]);
   };
+  
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setUser(data);
+        setLoading(false);
+      });
+  }, []);
 
-  const editUser = {
-    _id: currentUser._id,
-    firstName: currentUser.firstName,
-    lastName: currentUser.lastName,
-    email: currentUser.email,
-    phoneNumber: currentUser.phoneNumber,
-  };
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center mt-15">
+        <CircularProgress size={200} />
+      </div>
+    );
+  }
 
-  function handleSubmit(e) {
+  function handleSubmit() {
     try {
+      values._id = currentUser._id;
       setError("");
       setLoading(true);
-      if (values.fName && values.fName !== "") {
-        editUser.firstName = values.fName;
+      if(currentUser.role === 1){
+        values.mobile = `+972${values.mobile}`;
       }
-      if (values.lName && values.lName !== "") {
-        editUser.lastName = values.lName;
-      }
-      if (values.email && values.email !== "") {
-        editUser.email = values.email;
-      }
-      if (values.mobile && values.mobile !== "") {
-        editUser.phoneNumber = `+972${values.mobile}`;
-      }
+      console.log(values);
       if (profileImage != null){
-        const res = editUserProperties(editUser, values);
+        const res = editUserProperties(values, values);
         if (res == typeof("")) {
           setError(res);
         } else {
           return navigate("/my-profile");
         }
       } else {
-        const results = editUserPropertiesWithoutImage(editUser);
+        const results = editUserPropertiesWithoutImage(values);
         if (results == typeof "" ) {
           setError(results);
         } else {
@@ -76,16 +75,6 @@ export default function EditProfile() {
       setError("Failed to sign in");
     }
     setLoading(false);
-  }
-
-  if(loading){
-    return (
-      <div
-        className="d-flex justify-content-center mt-15" 
-      >
-        <CircularProgress size={200} />
-      </div>
-    );
   }
 
   return (
@@ -105,7 +94,7 @@ export default function EditProfile() {
               src={
                 profileImage
                   ? profileImage
-                  : process.env.REACT_APP_S3 + currentUser.image
+                  : process.env.REACT_APP_S3 + user.image
               }
               alt="profile image"
             />
@@ -145,9 +134,9 @@ export default function EditProfile() {
             <Form.Group className="mr-10">
               <Form.Label>First Name</Form.Label>
               <Form.Control
-                name="fName"
+                name="firstName"
                 type="text"
-                value={values.fName ? values.fName : currentUser.firstName}
+                value={values.firstName ? values.firstName : user.firstName}
                 onChange={(e) => {
                   carChange(e);
                 }}
@@ -156,9 +145,9 @@ export default function EditProfile() {
             <Form.Group>
               <Form.Label>Last Name</Form.Label>
               <Form.Control
-                name="lName"
+                name="lastName"
                 type="text"
-                value={values.lName ? values.lName : currentUser.lastName}
+                value={values.lastName ? values.lastName : user.lastName}
                 onChange={(e) => {
                   carChange(e);
                 }}
@@ -170,7 +159,7 @@ export default function EditProfile() {
             <Form.Control
               name="email"
               type="email"
-              value={values.email ? values.email : currentUser.email}
+              value={values.email ? values.email : user.email}
               onChange={(e) => {
                 carChange(e);
               }}
@@ -192,9 +181,7 @@ export default function EditProfile() {
                   name="mobile"
                   type="phone"
                   value={
-                    values.mobile
-                      ? values.mobile
-                      : currentUser.phoneNumber.substr(4)
+                    values.mobile ? values.mobile : user.phoneNumber.substr(4)
                   }
                   onChange={(e) => {
                     carChange(e);
