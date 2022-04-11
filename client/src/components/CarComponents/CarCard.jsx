@@ -33,7 +33,6 @@ export default function CarCard({ _id, image, company, model, price, currentPage
             <img
               src={image}
               className="cur-pointer br-10"
-              height="165"
               width="100%"
               onError={error403}
             />
@@ -68,8 +67,7 @@ export default function CarCard({ _id, image, company, model, price, currentPage
             <img
               src={image}
               className="cur-pointer br-10"
-              height="175"
-              width="300"
+              width="100%"
               onError={error403}
             />
           </Link>

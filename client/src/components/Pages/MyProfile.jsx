@@ -13,6 +13,7 @@ export default function MyProfile() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     fetch(`${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`)
       .then((response) => response.json())
       .then((data) => {
@@ -28,7 +29,7 @@ export default function MyProfile() {
       </div>
     );
   }
-
+  
   return (
     <>
       <PageTitle />

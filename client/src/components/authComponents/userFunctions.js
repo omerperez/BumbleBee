@@ -20,3 +20,12 @@ export function ImageHandler(e, setState){
   };
   reader.readAsDataURL(e.target.files[0]);
 };
+
+export function InitDefauleUserProperties(values, user) {
+  values._id = user._id;
+  values.rating = user.rating ?? 0;
+  values.ratingCount = user.ratingCount ?? 0;
+  values.street = user.street ?? "Yeziat Eurpa";
+  values.city = user.city ?? "Herzliya";
+  values.country = user.country ?? "Israel";
+}

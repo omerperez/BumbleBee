@@ -6,6 +6,7 @@ import TextField from "@mui/material/TextField";
 import SelectAccountTypeDialog from "../DialogComponents/SelectAccountTypeDialog";
 
 export default function Login() {
+
   const emailRef = useRef();
   const passwordRef = useRef();
   const { login } = useAuth();
@@ -78,10 +79,6 @@ export default function Login() {
             </Form>
             <div className="w-100 text-center mt-3">
               <SelectAccountTypeDialog />
-              {/* Need an account?{" "}
-              <Link to="/signup" className="cancel-underline ">
-                Sign Up
-              </Link> */}
             </div>
           </Card.Body>
         </Card>

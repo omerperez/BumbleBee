@@ -8,28 +8,22 @@ import EditIcon from '@mui/icons-material/Edit';
 import ChangePasswordDialog from "../DialogComponents/ChangePasswordDialog";
 import { Button } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
+import {
+  ImageHandler,
+  InitDefauleUserProperties,
+} from "../authComponents/userFunctions";
 
 export default function EditProfile() {
+
   const { currentUser } = useAuth();
   const { editUserProperties, editUserPropertiesWithoutImage } = useAuth();
   const navigate = useNavigate();
-
   const [values, carChange] = useForm();
   const [user, setUser] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [profileImage, setProfileImage] = useState(null);
-  
-  const ImageHandler = (e) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setProfileImage(reader.result);
-      }
-    };
-    reader.readAsDataURL(e.target.files[0]);
-  };
-  
+
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`)
       .then((response) => response.json())
@@ -39,42 +33,41 @@ export default function EditProfile() {
       });
   }, []);
 
-  if (loading) {
-    return (
-      <div className="d-flex justify-content-center mt-15">
-        <CircularProgress size={200} />
-      </div>
-    );
-  }
-
-  function handleSubmit() {
+  async function handleSubmit() {
+    InitDefauleUserProperties(values, user);
+    setError("");
+    setLoading(true);
+    if (user.role === 1) {
+      values.mobile = `+972${values.mobile}`;
+    }
     try {
-      values._id = currentUser._id;
-      setError("");
-      setLoading(true);
-      if(currentUser.role === 1){
-        values.mobile = `+972${values.mobile}`;
-      }
-      console.log(values);
       if (profileImage != null){
-        const res = editUserProperties(values, values);
-        if (res == typeof("")) {
-          setError(res);
+        const res = await editUserProperties(values, values);
+        if (res._id === user._id) {
+          navigate("/my-profile");
         } else {
-          return navigate("/my-profile");
+          setError(res);
         }
       } else {
-        const results = editUserPropertiesWithoutImage(values);
-        if (results == typeof "" ) {
-          setError(results);
-        } else {
+        const results = await editUserPropertiesWithoutImage(values);
+        if (results._id === user._id) {
           navigate("/my-profile");
+        } else {
+          setError(results);
         }
       }
     } catch (err) {
       setError("Failed to sign in");
     }
     setLoading(false);
+  }
+   
+  if (loading) {
+    return (
+      <div className="d-flex justify-content-center mt-15">
+        <CircularProgress size={200} />
+      </div>
+    );
   }
 
   return (
@@ -125,7 +118,7 @@ export default function EditProfile() {
                 className="display-none"
                 onChange={(e) => {
                   carChange(e);
-                  ImageHandler(e);
+                  ImageHandler(e, setProfileImage);
                 }}
               />
             </label>

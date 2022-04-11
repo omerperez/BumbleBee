@@ -6,6 +6,7 @@ const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 const router = require("express").Router();
 
+/* GET */
 const getAllUsers = (req, res) => {
   userSchema.find().then((results) => {
     try {
@@ -29,6 +30,7 @@ const getUserById = (request, respons) => {
   });
 };
 
+/* POST */
 const register = async (request, response) => {
   const userFromJson = JSON.parse(request.body.user);
   const dealerPropertiesJson = JSON.parse(request.body.dealer);
