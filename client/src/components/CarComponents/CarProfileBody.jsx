@@ -1,7 +1,15 @@
 import React from "react";
 import './table.css'
+import { useAuth } from "../../contexts/AuthContext";
+import { Button } from "react-bootstrap";
 
 export default function CarProfileBody({car}) {
+
+  // const {createNewNotification, currentUser } = useAuth();
+
+  // const handlerSubmit = async () => {
+  //   const response = await createNewNotification(car.delaer, car._id, currentUser._id);
+  // }
 
     return (
       <div className="font-24">
@@ -95,6 +103,7 @@ export default function CarProfileBody({car}) {
               </tbody>
             </table>
           </div>
+          {/* <Button onClick={handleSubmit} /> */}
         </div>
       </div>
     );

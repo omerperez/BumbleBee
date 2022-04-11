@@ -15,7 +15,6 @@ const getAllNotification = (req, res) => {
   });
 };
 
-
 const getNotificationsByUserId = (req, res) => {
     const userId = req.params.id;
     notificationSchema.find().then((results) => {

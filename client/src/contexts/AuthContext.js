@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect, createContext } from "react";
-import { auth } from "../AuthFirebase/firebase";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
@@ -7,19 +6,78 @@ import { useNavigate } from "react-router-dom";
 const api = axios.create({ baseURL: process.env.REACT_APP_SERVER_API });
 const AuthContext = createContext();
 const cookies = new Cookies();
-
 export function useAuth() {
   return useContext(AuthContext);
 }
-
 export default function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [mode, setMode] = useState(true);
   const navigate = useNavigate();
 
-  function changeMode(userMode) {
-    setMode(!userMode);
+  /**** User Functions ****/
+
+  /* USER - POST */
+  async function login(email, password) {
+    const user = {
+      email: email,
+      password: password,
+    };
+    return api
+      .post("/user/login", user)
+      .then(function (response) {
+        // cookies.remove("auth-token");
+        cookies.set("auth-token", response.data.token);
+        if (cookies.get("connectUser")) {
+          cookies.remove("connectUser");
+        }
+        cookies.set("connectUser", response.data.user);
+        // setFlag(!flag)
+        setCurrentUser(response.data.user);
+        navigate("/homepage");
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response.data.message;
+      });
+  }
+
+  async function signup(user, dealer) {
+    var main = user.image;
+    const now = Date.now();
+    const userData = new FormData();
+    userData.append("user", JSON.stringify(user));
+    userData.append("dealer", JSON.stringify(dealer));
+    userData.append("image", main[0], now + main[0].name);
+
+    return api
+      .post("/user/register", userData)
+      .then(function (response) {
+        return "Success";
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response.data.message;
+      });
+  }
+
+  /* USER - EDIT */
+  async function editPassword(oldPassword, newPassword) {
+    const user = {
+      email: currentUser.email,
+      oldPassword: oldPassword,
+      newPassword: newPassword,
+    };
+    return api
+      .put(`/user/edit-password/${currentUser._id}`, user)
+      .then(function (response) {
+        console.log(response);
+        return "Success";
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response.data.message;
+      });
   }
 
   async function editUserPropertiesWithoutImage(user) {
@@ -66,75 +124,16 @@ export default function AuthProvider({ children }) {
       });
   }
 
-  async function editPassword(oldPassword, newPassword) {
-    const user = {
-      email: currentUser.email,
-      oldPassword: oldPassword,
-      newPassword: newPassword,
-    };
-    return api
-      .put(`/user/edit-password/${currentUser._id}`, user)
-      .then(function (response) {
-        console.log(response);
-        return "Success";
-      })
-      .catch((err) => {
-        console.log(err);
-        return err.response.data.message;
-      });
-  }
-
-  async function signup(user, dealer) {
-    var main = user.image;
-    const now = Date.now();
-    const userData = new FormData();
-    userData.append("user", JSON.stringify(user));
-    userData.append("dealer", JSON.stringify(dealer));
-    userData.append("image", main[0], now + main[0].name);
-    // userData.append("image", image, now + image.name);
-
-    console.log(user);
-    return api
-      .post("/user/register", userData)
-      .then(function (response) {
-        return "Success";
-      })
-      .catch((err) => {
-        console.log(err);
-        return err.response.data.message;
-      });
-  }
-
-  async function login(email, password) {
-    const user = {
-      email: email,
-      password: password,
-    };
-    return api
-      .post("/user/login", user)
-      .then(function (response) {
-        // cookies.remove("auth-token");
-        cookies.set("auth-token", response.data.token);
-        if (cookies.get("connectUser")){
-          cookies.remove("connectUser");
-        }
-        cookies.set("connectUser", response.data.user);
-        // setFlag(!flag)
-        setCurrentUser(response.data.user);
-        navigate("/homepage");
-      })
-      .catch((err) => {
-        console.log(err);
-        return err.response.data.message;
-      });
-  }
-
+  /* USER - OTHERS */
   function logout() {
     setCurrentUser(null);
     cookies.remove("auth-token");
     cookies.remove("connectUser");
   }
 
+  /**** Car Functions ****/
+
+  /* CAR - POST */
   async function createNewCar(carObj) {
     const formData = new FormData();
     var files = carObj.image;
@@ -165,35 +164,8 @@ export default function AuthProvider({ children }) {
         return error.response.data.message;
       });
   }
-
-  async function deleteCar(id) {
-    api
-      .delete(`/car/delete/${id}`)
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }
-
-  async function addCarToFavorite(userId, carId) {
-    const addToFav = {
-      _id: userId,
-      carId: carId,
-    };
-    return api
-      .put(`/user/add-to-favorite/${userId}`, addToFav)
-      .then(function (response) {
-        console.log(response);
-        return "OK";
-      })
-      .catch(function (error) {
-        console.log(error);
-        return error.response.data.message;
-      });
-  }
   
+  /* CAR - EDIT */
   async function editCar(id, km, price, colour) {
     const updateCar = {
       _id: id,
@@ -213,6 +185,44 @@ export default function AuthProvider({ children }) {
         return error.response.data.message;
       });
   }
+
+  async function addCarToFavorite(userId, carId) {
+    const addToFav = {
+      _id: userId,
+      carId: carId,
+    };
+    return api
+      .put(`/user/add-to-favorite/${userId}`, addToFav)
+      .then(function (response) {
+        console.log(response);
+        return "OK";
+      })
+      .catch(function (error) {
+        console.log(error);
+        return error.response.data.message;
+      });
+  }
+
+  /* CAR - DELET */
+  async function deleteCar(id) {
+    api
+      .delete(`/car/delete/${id}`)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  /* Notification - Functions */
+  // async function createNewNotification(dealerId, carId, clientId){
+
+  // }
+
+
+
+
 
   useEffect(() => {
     if (
@@ -239,7 +249,6 @@ export default function AuthProvider({ children }) {
     login,
     mode,
     createNewCar,
-    changeMode,
     signup,
     logout,
     deleteCar,
@@ -258,8 +267,33 @@ export default function AuthProvider({ children }) {
   );
 }
 
-/*
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+// import { auth } from "../AuthFirebase/firebase";
+
+  function changeMode(userMode) {
+    setMode(!userMode);
+  }
     // resetPassword,
     // updatePassword,
     // updateEmail,
