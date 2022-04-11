@@ -27,8 +27,27 @@ const getNotificationsByUserId = (req, res) => {
   });
 }
 
+/* POST */
+async function createNotification(req, res) {
+  const newNotification = {
+    _id: new mongoose.Types.ObjectId(),
+    
+    car: { type: Schema.Types.ObjectId, ref: "cars" },
+  client: { type: Schema.Types.ObjectId, ref: "users" },
+  dealer: { type: Schema.Types.ObjectId, ref: "users" },
+  carLicenseFile : String,
+  firstStep: Boolean,
+  secondStep: Boolean, 
+  ThirdStep: Boolean,
+  dateOfCreated: Date,
+  dateOfResponse: Date, 
+  showCarStatuse: Boolean
+  }
+}
+
 /* EXPORTS */
 module.exports = {
  getAllNotification,
- getNotificationsByUserId
+ getNotificationsByUserId,
+ createNotification
 };

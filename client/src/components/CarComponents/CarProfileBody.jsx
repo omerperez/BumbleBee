@@ -1,6 +1,6 @@
 import React from "react";
 import './table.css'
-import { Button } from "react-bootstrap";
+import { Button } from "@mui/material";
 import { useAuth } from "../../contexts/AuthContext";
 import SendIcon from '@mui/icons-material/Send';
 

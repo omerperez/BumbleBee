@@ -8,7 +8,6 @@ router.get("/", notificationController.getAllNotification);
 
 router.get("/notification-user/:id", notificationController.getNotificationsByUserId);
 
-/* Linoy & Tamir */
-// router.post("/create", notificationController.)
+router.post("/create", notificationController.createNotification)
 
 module.exports = router;

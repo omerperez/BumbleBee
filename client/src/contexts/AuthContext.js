@@ -215,10 +215,13 @@ export default function AuthProvider({ children }) {
       });
   }
 
-  /* Notification - Functions */
-  // async function createNewNotification(dealerId, carId, clientId){
+  /**** Notifications Functions ****/
 
-  // }
+  /* NOTIFICATION - POST */
+
+  async function createNewNotification(dealerId, carId, clientId){
+
+  }
 
 
 
