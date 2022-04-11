@@ -219,8 +219,10 @@ export default function AuthProvider({ children }) {
 
   /* NOTIFICATION - POST */
 
-  async function createNewNotification(dealerId, carId, clientId){
-
+  async function createNewNotification(notificationObj){
+    const now = Date.now();
+    const formData = new FormData();
+    
   }
 
 

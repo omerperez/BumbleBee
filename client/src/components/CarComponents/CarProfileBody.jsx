@@ -111,7 +111,7 @@ export default function CarProfileBody({car}) {
                   onClick={() => handlerSubmit}
                 >
                   Send <SendIcon className="m-2" />
-                  {"request for " + car.companyEnglish }
+                  {"request for " + car.companyEnglish + " " + car.model }
                 </Button>
               </div>
         </div>

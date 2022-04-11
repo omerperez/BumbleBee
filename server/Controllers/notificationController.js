@@ -29,20 +29,22 @@ const getNotificationsByUserId = (req, res) => {
 
 /* POST */
 async function createNotification(req, res) {
-  const newNotification = {
+  const notificationFromJason = JSON.parse(req.body.notification);
+  const createNewNotification = new notificationSchema({
     _id: new mongoose.Types.ObjectId(),
-    
-    car: { type: Schema.Types.ObjectId, ref: "cars" },
-  client: { type: Schema.Types.ObjectId, ref: "users" },
-  dealer: { type: Schema.Types.ObjectId, ref: "users" },
-  carLicenseFile : String,
-  firstStep: Boolean,
-  secondStep: Boolean, 
-  ThirdStep: Boolean,
-  dateOfCreated: Date,
-  dateOfResponse: Date, 
-  showCarStatuse: Boolean
-  }
+    car: req.body.car,
+    client: req.body.client,
+    dealer: req.body.dealer,
+    carLicenseFile : String,
+    firstStep: true,
+    secondStep: false, 
+    ThirdStep: false,
+    dateOfCreated: Date.now(),
+    dateOfResponse: Date, 
+    showCarStatuse: false
+  })
+
+  const newNotification = await notificationSchema.create(createNewNotification);
 }
 
 /* EXPORTS */
