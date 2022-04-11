@@ -1,15 +1,16 @@
 import React from "react";
 import './table.css'
-import { useAuth } from "../../contexts/AuthContext";
 import { Button } from "react-bootstrap";
+import { useAuth } from "../../contexts/AuthContext";
+import SendIcon from '@mui/icons-material/Send';
 
 export default function CarProfileBody({car}) {
 
-  // const {createNewNotification, currentUser } = useAuth();
+  const { createNewNotification, currentUser } = useAuth();
 
-  // const handlerSubmit = async () => {
-  //   const response = await createNewNotification(car.delaer, car._id, currentUser._id);
-  // }
+  const handlerSubmit = async () => {
+    const response = await createNewNotification(car.dealer, car._id, currentUser._id);
+  }
 
     return (
       <div className="font-24">
@@ -103,7 +104,16 @@ export default function CarProfileBody({car}) {
               </tbody>
             </table>
           </div>
-          {/* <Button onClick={handleSubmit} /> */}
+          <div className="mt-4 d-flex justify-content-center nowrap">
+                <Button
+                  color="success"
+                  variant="contained"
+                  onClick={() => handlerSubmit}
+                >
+                  Send <SendIcon className="m-2" />
+                  {"request for " + car.companyEnglish }
+                </Button>
+              </div>
         </div>
       </div>
     );
