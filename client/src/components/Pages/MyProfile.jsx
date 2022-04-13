@@ -5,6 +5,8 @@ import UserCard from "../ProfileComponents/UserCard";
 import UserFilesCard from "../ProfileComponents/UserFilesCard";
 import CircularProgress from "@mui/material/CircularProgress";
 import DealerOtherPropertiesCard from "../ProfileComponents/DealerOtherPropertiesCard";
+import ProfileSide from "../ProfileComponents/ProfileSide";
+import { Card } from "@mui/material";
 
 export default function MyProfile() {
 
@@ -33,13 +35,20 @@ export default function MyProfile() {
   return (
     <>
       <PageTitle />
-      <div className="justify-content-center">
-        <div className="row mt-5">
-          <div className="col-5 mt-3">
-            <UserCard currentUser={user} />
+      <div
+        className="d-flex justify-content-centermt-5"
+        style={{ padding: "5%" }}
+      >
+        <Card
+          className="row mb-2"
+          sx={{ boxShadow: "none" }}
+        >
+          {/* <div className="row mt-5"> */}
+          <div className="col-3 mt-5 mb-5 offset-1">
+            <ProfileSide currentUser={user} />
           </div>
           {user.role !== 1 ? (
-            <div className="col-7 mt-3">
+            <div className="col ml-25 mt-5 mb-5 col-sm-7">
               <DealerOtherPropertiesCard />
             </div>
           ) : (
@@ -52,7 +61,8 @@ export default function MyProfile() {
               </div>
             </div>
           )}
-        </div>
+        </Card>
+        {/* </div> */}
       </div>
     </>
   );
