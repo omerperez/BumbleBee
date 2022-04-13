@@ -10,6 +10,7 @@ export default function HomePage() {
 
   const { currentUser } = useAuth();
   const [user, setUser] = useState();
+ 
   useEffect(() => {
     fetch(
       `${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`
@@ -19,7 +20,7 @@ export default function HomePage() {
   const { data: cars, setData : setCars, loading } = useFetch(
     `${process.env.REACT_APP_SERVER_API}/car`
   );
-  
+ 
   if(loading) {
     return (
       <div className="mt-15 d-flex justify-content-center">

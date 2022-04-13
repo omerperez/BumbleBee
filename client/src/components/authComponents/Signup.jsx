@@ -27,6 +27,7 @@ export default function Signup() {
   const { signup } = useAuth();
   const [error, setError] = useState("");
   // const [role, setRole] = useState(1);
+  const [eden, setEden] = useState("");
   const [checkbox1, setCheckbox1] = useState(false);
   const [checkbox2, setCheckbox2] = useState(false);
   const [checkbox3, setCheckbox3] = useState(false);
@@ -108,7 +109,7 @@ export default function Signup() {
                   type="text"
                   variant="standard"
                   required
-                  onChange={(e) => carChange(e)}
+                  onChange={(e) => {carChange(e)}}
                 />
               </div>
               <div className="col d-flex justify-content-center">
