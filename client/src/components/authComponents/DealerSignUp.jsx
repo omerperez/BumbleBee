@@ -54,7 +54,7 @@ export default function DealerSignUp() {
       if (results !== "Success") {
         setError(results);
       } else {
-        navigate("/homepage");
+        return navigate("/homepage");
       }
     } catch (err) {
       setError(err);

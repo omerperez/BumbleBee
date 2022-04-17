@@ -7,23 +7,27 @@ import CircularProgress from "@mui/material/CircularProgress";
 import OtherPropertiesCard from "../ProfileComponents/OtherPropertiesCard";
 import ProfileSide from "../ProfileComponents/ProfileSide";
 import { Card } from "@mui/material";
-import useForm from "../../utils/useForm";
+import MyProfile from "./MyProfile";
 
-export default function MyProfile() {
+export default function UserProfile() {
 
   const { currentUser } = useAuth();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [values, carChange] = useForm();
 
   useEffect(() => {
     setLoading(true);
-    fetch(`${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setUser(data);
-        setLoading(false);
-      });
+    const index = window.location.toString().lastIndexOf("/");
+    let id = window.location.toString().substring(index + 1);
+    if(id === "my-profile"){
+      id = currentUser._id;
+    }
+    fetch(`${process.env.REACT_APP_SERVER_API}/user/my-user/${id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setUser(data);
+          setLoading(false);
+        });
   }, []);
 
   if (loading) {
@@ -32,6 +36,10 @@ export default function MyProfile() {
         <CircularProgress size={200} />
       </div>
     );
+  }
+  
+  if(currentUser._id === user._id){
+    return <MyProfile />
   }
   
   return (

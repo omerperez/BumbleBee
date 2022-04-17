@@ -63,6 +63,37 @@ const register = async (request, response) => {
     start = new Date(dealerPropertiesJson.openingTime);
     end = new Date(dealerPropertiesJson.closingTime);
   }
+  const activityDaysTime = [
+    {
+      start: start ? start.toLocaleString("en-US") : null,
+      end: end ? end.toLocaleString("en-US") : null,
+    },
+    {
+      start: start ? start.toLocaleString("en-US") : null,
+      end: end ? end.toLocaleString("en-US") : null,
+    },
+    {
+      start: start ? start.toLocaleString("en-US") : null,
+      end: end ? end.toLocaleString("en-US") : null,
+    },
+    {
+      start: start ? start.toLocaleString("en-US") : null,
+      end: end ? end.toLocaleString("en-US") : null,
+    },
+    {
+      start: start ? start.toLocaleString("en-US") : null,
+      end: end ? end.toLocaleString("en-US") : null,
+    },
+    {
+      start: start ? start.toLocaleString("en-US") : null,
+      end: end ? end.toLocaleString("en-US") : null,
+    },
+    {
+      start: start ? start.toLocaleString("en-US") : null,
+      end: end ? end.toLocaleString("en-US") : null,
+    },
+  ];
+  
   const newUser = {
     _id: new mongoose.Types.ObjectId(),
     firstName: userFromJson.firstName,
@@ -74,9 +105,8 @@ const register = async (request, response) => {
     country: dealerPropertiesJson?.country ?? null,
     city: dealerPropertiesJson?.city ?? null,
     street: dealerPropertiesJson?.street ?? null,
-    openingTime: start ? `${start.getHours()}:${start.getMinutes()}` : null,
-    closingTime: end ? `${end.getHours()}:${end.getMinutes()}` : null,
-    activityDays: dealerPropertiesJson?.activityDays?? null,
+    activityDaysTime: activityDaysTime,
+    activityDays: dealerPropertiesJson?.activityDays ?? null,
     rating: 0,
     ratingCount: 0,
     dateOfCreate: Date.now(),
