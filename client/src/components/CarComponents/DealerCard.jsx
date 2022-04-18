@@ -3,19 +3,22 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import StarIcon from "@mui/icons-material/Star";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import PhoneInTalkIcon from "@mui/icons-material/PhoneInTalk";
 import { Button } from "@mui/material";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import { error403 } from "../images/projectImages";
 import { sendWhatsAppToDealer } from "./carFunctions";
+import { error403 } from "../images/projectImages";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function DealerCard({ dealer }) {
 
   const mobile = dealer.phoneNumber ? dealer.phoneNumber : "+972522520484";
-  
+  const {currentUser} = useAuth();
+
   return (
     <div className="border-radius-2">
       <Card className="grid-container d-flex" style={{ minHeight: 400 }}>
@@ -46,6 +49,9 @@ export default function DealerCard({ dealer }) {
                 <PhoneInTalkIcon className="mr-5" />
                 {mobile}
               </div>
+              <Button>
+                <Link to={currentUser._id === dealer._id ? '/my-profile' : `/profile/${dealer._id}`}>My Link</Link>
+              </Button>
               <div className="mt-4 d-flex justify-content-center nowrap">
                 <Button
                   color="success"

@@ -3,6 +3,8 @@ import PageTitle from "../Layout/PageTitle";
 import { useAuth } from "../../contexts/AuthContext";
 import { Form, Alert } from "react-bootstrap";
 import useForm  from "../../utils/useForm";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 import { useNavigate } from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
 import ChangePasswordDialog from "../DialogComponents/ChangePasswordDialog";
@@ -13,12 +15,13 @@ import {
   InitDefauleUserProperties,
 } from "../authComponents/userFunctions";
 
-export default function EditProfile() {
+export default function EditProfile({ setOpen, mobileNumber }) {
 
   const { currentUser } = useAuth();
   const { editUserProperties, editUserPropertiesWithoutImage } = useAuth();
   const navigate = useNavigate();
   const [values, carChange] = useForm();
+  const [mobile, setMobile] = useState(mobileNumber);
   const [user, setUser] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
@@ -39,19 +42,25 @@ export default function EditProfile() {
     setLoading(true);
     if (user.role === 1) {
       values.mobile = `+972${values.mobile}`;
+    }else{
+      values.mobile = mobile;
     }
     try {
       if (profileImage != null){
         const res = await editUserProperties(values, values);
         if (res._id === user._id) {
-          navigate("/my-profile");
+          setOpen(false);
+          window.location.reload();
+          // navigate("/my-profile");
         } else {
           setError(res);
         }
       } else {
         const results = await editUserPropertiesWithoutImage(values);
         if (results._id === user._id) {
-          navigate("/my-profile");
+          setOpen(false);
+          window.location.reload();
+          // navigate("/my-profile");
         } else {
           setError(results);
         }
@@ -72,10 +81,11 @@ export default function EditProfile() {
 
   return (
     <>
-      <PageTitle />
-      <div className="mt-5 d-flex justify-content-center">
+      {/* <PageTitle /> */}
+      {/* mt-5  */}
+      <div className="d-flex justify-content-center">
         <Form onSubmit={handleSubmit}>
-          <div className="mt-5 mw-550">
+          <div className="mw-550">
             <h3>Edit Profile</h3>
             {error && <Alert variant="danger">{error}</Alert>}
           </div>
@@ -158,31 +168,42 @@ export default function EditProfile() {
               }}
             />
           </Form.Group>
-          <Form.Group className="mt-3">
-            <Form.Label>Mobile</Form.Label>
-            <div className="row">
-              <div className="col-3">
-                <Form.Control
-                  type="text"
-                  className="text-center ls-2"
-                  readOnly
-                  placeholder={"+972"}
-                />
+          {user.role !== 1 ? (
+            <Form.Group id="mobile" className="mb-2 mt-4">
+              <PhoneInput
+                defaultCountry="IL"
+                placeholder="Mobile"
+                value={mobile}
+                onChange={setMobile}
+              />
+            </Form.Group>
+          ) : (
+            <Form.Group className="mt-3">
+              <Form.Label>Mobile</Form.Label>
+              <div className="row">
+                <div className="col-3">
+                  <Form.Control
+                    type="text"
+                    className="text-center ls-2"
+                    readOnly
+                    placeholder={"+972"}
+                  />
+                </div>
+                <div className="col-9">
+                  <Form.Control
+                    name="mobile"
+                    type="phone"
+                    value={
+                      values.mobile ? values.mobile : user.phoneNumber.substr(4)
+                    }
+                    onChange={(e) => {
+                      carChange(e);
+                    }}
+                  />
+                </div>
               </div>
-              <div className="col-9">
-                <Form.Control
-                  name="mobile"
-                  type="phone"
-                  value={
-                    values.mobile ? values.mobile : user.phoneNumber.substr(4)
-                  }
-                  onChange={(e) => {
-                    carChange(e);
-                  }}
-                />
-              </div>
-            </div>
-          </Form.Group>
+            </Form.Group>
+          )}
           <Form.Group className="mt-3">
             <Form.Label>Password</Form.Label>
             <Form.Control
@@ -194,7 +215,7 @@ export default function EditProfile() {
           <Form.Group className="row mt-3 mb-3 mw-550">
             <div className="col mr-10px">
               <Button
-                onClick={() => navigate("/my-profile")}
+                onClick={() => setOpen(false)}
                 disabled={loading}
                 className="cancel-back w-100 no-border color-white capital-letter ls-2"
               >
@@ -211,7 +232,6 @@ export default function EditProfile() {
               </Button>
             </div>
           </Form.Group>
-          <ChangePasswordDialog />
         </Form>
       </div>
     </>

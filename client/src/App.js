@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import HomePage from './components/Pages/HomePage';
 import AboutUs from './components/Pages/AboutUs';
 import MyProfile from './components/Pages/MyProfile';
+import UserProfile from "./components/Pages/UserProfile";
 import MyFavorite from './components/Pages/MyFavorite';
 import GovIL from './components/Pages/GovIL';
 import Customs from './components/Pages/Customs';
@@ -87,9 +88,9 @@ function App() {
           <Route
             path="order-status"
             element={
-                <PrivateRoute>
-                  <OrderStatus />
-                </PrivateRoute>
+              <PrivateRoute>
+                <OrderStatus />
+              </PrivateRoute>
             }
           />
           <Route
@@ -105,6 +106,14 @@ function App() {
             element={
               <PrivateRoute>
                 <AboutUs />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="profile/:id"
+            element={
+              <PrivateRoute>
+                <UserProfile />
               </PrivateRoute>
             }
           />
