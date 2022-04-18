@@ -3,6 +3,7 @@ import AlertTitle from "@mui/material/AlertTitle";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import { Link } from "react-router-dom";
+import SecondRequestDialog from "./SecondRequestDialog";
 
 export default function AlertLayout({ fullName, mobile, carId }) {
   return (
@@ -16,11 +17,16 @@ export default function AlertLayout({ fullName, mobile, carId }) {
           client mobile: {mobile}
         </span>
         <br />
-        <Link to={`/car-profile/${carId}`}>
-          <span className="f-19 opc-8" style={{ letterSpacing: 1.5 }}>
-            Go to car profile
-          </span>
-        </Link>
+        <div className="d-flex justify-content-center row">
+          <Link className="col" to={`/car-profile/${carId}`}>
+            <span className="f-19 opc-8" style={{ letterSpacing: 1.5 }}>
+              Go to car profile
+            </span>
+          </Link>
+          <div className="col">
+            <SecondRequestDialog />
+          </div>
+        </div>
       </Alert>
     </Stack>
   );
