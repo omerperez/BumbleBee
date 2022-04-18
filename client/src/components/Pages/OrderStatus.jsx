@@ -4,6 +4,7 @@ import { CircularProgress } from "@mui/material";
 import AccessDenied from "../authComponents/AccessDenied";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import AlertLayout from "../AlertsComponents/AlertLayout";
 
 export default function OrderStatus() {
    const { currentUser } = useAuth();
@@ -31,6 +32,31 @@ export default function OrderStatus() {
   return (
     <>
       <PageTitle page={"Order Status"} />
+      <AlertLayout
+        fullName={"Omer Perez"}
+        mobile={"+972-52-252-0484"}
+        carId={"6237838cf4784fc6a46f817e"}
+      />
+      <AlertLayout
+        fullName={"Omer Perez"}
+        mobile={"+972-52-252-0484"}
+        carId={"6237838cf4784fc6a46f817e"}
+      />
+      <AlertLayout
+        fullName={"Omer Perez"}
+        mobile={"+972-52-252-0484"}
+        carId={"6237838cf4784fc6a46f817e"}
+      />
+      <AlertLayout
+        fullName={"Omer Perez"}
+        mobile={"+972-52-252-0484"}
+        carId={"6237838cf4784fc6a46f817e"}
+      />
+      <AlertLayout
+        fullName={"Omer Perez"}
+        mobile={"+972-52-252-0484"}
+        carId={"6237838cf4784fc6a46f817e"}
+      />
     </>
   );
 }
