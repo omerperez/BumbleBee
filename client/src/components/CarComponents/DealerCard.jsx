@@ -13,7 +13,7 @@ import { sendWhatsAppToDealer } from "./carFunctions";
 import { error403 } from "../images/projectImages";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import FirstRequestDialog from "../DialogComponents/FirstRequestDialog";
+import FirstRequestDialog from "../AlertsComponents/FirstRequestDialog";
 
 export default function DealerCard({ dealer, role }) {
 
