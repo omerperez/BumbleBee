@@ -111,6 +111,8 @@ const register = async (request, response) => {
     ratingCount: 0,
     dateOfCreate: Date.now(),
     role: userFromJson.role,
+    dateOfBuyCar: null,
+    isSendReq: false,
     cars: [],
   };
   try {

@@ -4,13 +4,31 @@ import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import { Link } from "react-router-dom";
 import SecondRequestDialog from "./SecondRequestDialog";
+import SendDhlAndGovIlDialog from "./SendDhlAndGovIlDialog";
 
-export default function AlertLayout({ fullName, mobile, carId }) {
+export default function AlertLayout({ fullName, mobile, carId, step }) {
   return (
     <Stack sx={{ width: "100%" }} spacing={2} className="mt-2">
-      <Alert variant="outlined" severity="info">
+      <Alert
+        variant="outlined"
+        severity={
+          step === 1
+            ? "warning"
+            : step === 2
+            ? "info"
+            : step === 3
+            ? "error"
+            : "success"
+        }
+      >
         <AlertTitle>
-          New Request From
+          {step === 1
+            ? "New Request From"
+            : step === 2
+            ? "Wait for response from"
+            : step === 3
+            ? "Wait for docs for delivey to"
+            : "End of process with"}
           <b>{" " + fullName} </b>
         </AlertTitle>
         <span className="f-19 opc-8" style={{ letterSpacing: 1.5 }}>
@@ -25,6 +43,9 @@ export default function AlertLayout({ fullName, mobile, carId }) {
           </Link>
           <div className="col">
             <SecondRequestDialog />
+          </div>
+          <div className="col">
+            <SendDhlAndGovIlDialog />
           </div>
         </div>
       </Alert>

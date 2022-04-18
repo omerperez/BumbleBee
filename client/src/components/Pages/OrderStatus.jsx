@@ -36,26 +36,31 @@ export default function OrderStatus() {
         fullName={"Omer Perez"}
         mobile={"+972-52-252-0484"}
         carId={"6237838cf4784fc6a46f817e"}
+        step={1}
       />
       <AlertLayout
         fullName={"Omer Perez"}
         mobile={"+972-52-252-0484"}
         carId={"6237838cf4784fc6a46f817e"}
+        step={2}
       />
       <AlertLayout
         fullName={"Omer Perez"}
         mobile={"+972-52-252-0484"}
         carId={"6237838cf4784fc6a46f817e"}
+        step={3}
       />
       <AlertLayout
         fullName={"Omer Perez"}
         mobile={"+972-52-252-0484"}
         carId={"6237838cf4784fc6a46f817e"}
+        step={4}
       />
       <AlertLayout
         fullName={"Omer Perez"}
         mobile={"+972-52-252-0484"}
         carId={"6237838cf4784fc6a46f817e"}
+        step={1}
       />
     </>
   );

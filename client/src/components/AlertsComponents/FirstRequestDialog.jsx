@@ -6,7 +6,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-export default function FirstRequestDialog() {
+export default function FirstRequestDialog(car) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -19,28 +19,29 @@ export default function FirstRequestDialog() {
 
   return (
     <div>
-        <Button
-          color="success"
-          variant="contained"
-          onClick={handleClickOpen}
-        >
-          Send Request 
-        </Button>
+      <Button
+        className="capital-letter bg-col-blue"
+        variant="contained"
+        onClick={handleClickOpen}
+      >
+        Request for Docs
+      </Button>
       <Dialog
+        fullWidth
         open={open}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          Request for buying car
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">Send Request</DialogTitle>
         <DialogContent>
           <DialogContentText
             id="alert-dialog-description"
-            className="text-center"
           >
-            Are You sure that you want to send request for this car ?
+            <span className="f-19 text-center color-black" style={{ letterSpacing: 1.3 }}>
+              Are you sure that you want to send request of purchase
+              confirmation for this car ?
+            </span>
           </DialogContentText>
         </DialogContent>
         <DialogActions>

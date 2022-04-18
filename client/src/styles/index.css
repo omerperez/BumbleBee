@@ -472,8 +472,13 @@ input{
   border: solid 2px #DC143C;
 }
 .color-yellow{
- color: #e2a021;
+ color: #e2a021 !important;
 }
+
+.bg-col-yellow{
+  background: #e2a021 !important;
+}
+
 .color-red{
  color: #DC143C;
 }
@@ -717,3 +722,11 @@ input{
 .mw-350{
   max-width: 350px;
 }
+
+.bg-col-green{
+  background-color: #36b46f !important;
+}
+.bg-col-blue {
+  background-color: #1096fd !important;
+}
+

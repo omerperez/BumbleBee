@@ -19,6 +19,8 @@ const userSchema = new Schema({
   // closingTime: [{ day: String, time: String }],
   activityDays: String,
   dateOfCreate: Date,
+  dateOfBuyCar: Date,
+  isSendReq: Boolean,
   cars: [{ type: Schema.Types.ObjectId, ref: "cars" }],
 });
 

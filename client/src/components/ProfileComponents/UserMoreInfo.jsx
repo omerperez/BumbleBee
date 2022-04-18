@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import TabPanel from '@mui/lab/TabPanel';
 import UserFilesCard from "./UserFilesCard";
 import TabPanelText from "./TabPanelText";
+import AlertLayout from "../AlertsComponents/AlertLayout";
 
 export default function UserMoreInfo({ currentUser, isUserPtofile }) {
   const [value, setValue] = useState("1");
@@ -57,7 +58,11 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
         </TabPanel>
         {currentUser.role === 1 && isUserPtofile ? (
           <TabPanel value="2" style={{ padding: 5, marginTop: 20 }}>
-            <UserFilesCard />
+            <AlertLayout
+              fullName={"Omer Perez"}
+              mobile={"+972-52-252-0484"}
+              carId={"6237838cf4784fc6a46f817e"}
+            />
           </TabPanel>
         ) : null}
         {currentUser.role == 2 ? (
