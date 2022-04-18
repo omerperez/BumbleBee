@@ -13,8 +13,9 @@ import { sendWhatsAppToDealer } from "./carFunctions";
 import { error403 } from "../images/projectImages";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import FirstRequestDialog from "../DialogComponents/FirstRequestDialog";
 
-export default function DealerCard({ dealer }) {
+export default function DealerCard({ dealer, role }) {
 
   const mobile = dealer.phoneNumber ? dealer.phoneNumber : "+972522520484";
   const {currentUser} = useAuth();
@@ -62,6 +63,10 @@ export default function DealerCard({ dealer }) {
                   {"to " + dealer.firstName + " " + dealer.lastName}
                 </Button>
               </div>
+              {role==1 ? 
+              <div className="mt-4 d-flex justify-content-center nowrap">
+                <FirstRequestDialog />
+              </div> : null}
             </div>
           </CardContent>
         </Box>
