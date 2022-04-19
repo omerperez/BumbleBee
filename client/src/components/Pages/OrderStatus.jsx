@@ -21,6 +21,21 @@ export default function OrderStatus() {
   //   );
   // }
 
+  const alert = {
+    userId: "62373983d3d01059e218a3b2",
+    carId: "6237838cf4784fc6a46f817e",
+    step: 1,
+    dateOfCreated: "20.01.2022",
+    lastUpdateDate: "20.01.2022",
+  };
+
+   const alert1 = {
+     userId: "62373983d3d01059e218a3b2",
+     carId: "6237838cf4784fc6a46f817e",
+     step: 2,
+     dateOfCreated: "20.01.2022",
+     lastUpdateDate: "20.01.2022",
+   };
   if (currentUser && currentUser.role !== 2) {
     return (
       <>
@@ -32,36 +47,13 @@ export default function OrderStatus() {
   return (
     <>
       <PageTitle page={"Order Status"} />
-      <AlertLayout
-        fullName={"Omer Perez"}
-        mobile={"+972-52-252-0484"}
-        carId={"6237838cf4784fc6a46f817e"}
-        step={1}
-      />
-      <AlertLayout
-        fullName={"Omer Perez"}
-        mobile={"+972-52-252-0484"}
-        carId={"6237838cf4784fc6a46f817e"}
-        step={2}
-      />
-      <AlertLayout
-        fullName={"Omer Perez"}
-        mobile={"+972-52-252-0484"}
-        carId={"6237838cf4784fc6a46f817e"}
-        step={3}
-      />
-      <AlertLayout
-        fullName={"Omer Perez"}
-        mobile={"+972-52-252-0484"}
-        carId={"6237838cf4784fc6a46f817e"}
-        step={4}
-      />
-      <AlertLayout
-        fullName={"Omer Perez"}
-        mobile={"+972-52-252-0484"}
-        carId={"6237838cf4784fc6a46f817e"}
-        step={1}
-      />
+      <div className="days-grid">
+        <AlertLayout alert={alert} />
+        <AlertLayout alert={alert1} />
+        <AlertLayout alert={alert} />
+        <AlertLayout alert={alert} />
+        <AlertLayout alert={alert} />
+      </div>
     </>
   );
 }

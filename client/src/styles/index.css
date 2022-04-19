@@ -634,8 +634,8 @@ input{
 }
 
 .jc-end{
-  margin-left: auto;
-  margin-right: 5%;
+  margin-left: auto !important;
+  margin-right: 5% !important;
 }
 
 .mlr-10{

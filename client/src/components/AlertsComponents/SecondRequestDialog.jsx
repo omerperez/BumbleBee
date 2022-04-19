@@ -36,108 +36,78 @@ export default function SecondRequestDialog() {
 
   return (
     <div>
-        <Button
-          color="success"
-          variant="contained"
-          onClick={handleClickOpen}
-        >
-          Apply
-        </Button>
+      <Button
+        color="success"
+        style={{ letterSpacing: 2 }}
+        className="capital-letter"
+        variant="contained"
+        onClick={handleClickOpen}
+      >
+        Apply
+      </Button>
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          Return request information to the client
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">Attach Licenses Files</DialogTitle>
         <DialogContent>
           <DialogContentText
             id="alert-dialog-description"
-            className="text-center"
+            className="text-center mt-2"
           >
-              <FormControl
-            fullWidth
-            className="mt-3"
-            disabled={CheckDisableStatus(values)}
-          >
-            <TextField
-              label="km"
-              name="km"
-              type="number"
-              value={values.km && values.km > -1 ? values.km : ""}
-              onChange={(e) => {
-                carChange(e);
-                if (e.target.value < 0) {
-                  setError(
-                    error.includes("Please Enter Positive Number ")
-                      ? error
-                      : "Please Enter Positive Number " + error
-                  );
-                } else {
-                  setError("");
+            <label htmlFor={"image"}>
+              <img
+                alt="other_images"
+                className="cur-pointer ml-25"
+                width={"60%"}
+                src={
+                  values.image && values.image.length
+                    ? uploadMultipleSucces
+                    : "/files/licenses.svg"
                 }
-              }}
-              required
+              />
+            </label>
+            <input
+              id="image"
+              type="file"
+              name="image"
+              multiple
+              aria-required="true"
+              className="display-none"
+              onChange={(e) => carChange(e)}
             />
-          </FormControl>
-          <label htmlFor={"image"}>
-            <img
-              alt="other_images"
-              className="cur-pointer ml-25"
-              width={200}
-              src={
-                values.image && values.image.length
-                  ? uploadMultipleSucces
-                  : uploadMultipleEmpty
-              }
-            />
-          </label>
-          <input
-            id="image"
-            type="file"
-            // accept="image/png, image/jpeg"
-            name="image"
-            multiple
-            aria-required="true"
-            className="display-none"
-            onChange={(e) => carChange(e)}
-          />
-          <div style={{ marginLeft: "auto" }}>
-            {loading ? (
-              <LoadingButton
-                className="creat-car-btn"
-                size="large"
-                color="secondary"
-                loading={loading}
-                loadingPosition="start"
-                startIcon={<SaveIcon />}
-                variant="contained"
-              >
-                Creating...
-              </LoadingButton>
-            ) : (
-              <Button
-                className={
-                  checkCarsFields(values)
-                    ? "creat-car-btn"
-                    : "creat-car-btn-dis"
+            <FormControl
+              fullWidth
+              className="mt-3"
+              disabled={CheckDisableStatus(values)}
+            >
+              <TextField
+                rows={3}
+                label="Comment"
+                name="comment"
+                type="text"
+                value={
+                  values.comment && values.comment > -1 ? values.comment : ""
                 }
-                variant="contained"
-                disabled={!checkCarsFields(values)}
-                onClick={handleClickSubmit}
-                startIcon={<SaveIcon />}
-              >
-                Create
-              </Button>
-            )}
-            </div>
+                onChange={(e) => {
+                  carChange(e);
+                }}
+              />
+            </FormControl>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose} autoFocus color="success">
+          <Button onClick={handleClose} className="capital-letter f-18">
+            Cancel
+          </Button>
+          <Button
+            onClick={handleClose}
+            autoFocus
+            color="success"
+            className="capital-letter f-18"
+          >
             Send Confirmation
           </Button>
         </DialogActions>
