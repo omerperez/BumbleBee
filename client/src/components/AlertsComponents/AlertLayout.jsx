@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import AlertTitle from "@mui/material/AlertTitle";
-import Alert from "@mui/material/Alert";
-import Stack from "@mui/material/Stack";
 import { Link } from "react-router-dom";
-import CancelRequestDialog from "./CancelRequestDialog";
-import SecondRequestDialog from "./SecondRequestDialog";
-import SendDhlAndGovIlDialog from "./SendDhlAndGovIlDialog";
 import FilesTabStatus from "./FilesTabStatus";
 import CircularProgress from "@mui/material/CircularProgress";
 import Avatar from "@mui/material/Avatar";
@@ -15,32 +9,45 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Button, Divider } from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import IconButton from "@mui/material/IconButton";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { sendWhatsAppToDealer } from "../CarComponents/carFunctions";
+import axios from "axios";
+import { iconToShow, alertTitle } from "./AlertFunction";
 
-export default function AlertLayout({ alert }) {
+export default function AlertLayout({ alert, isDealer }) {
   
   const [user, setUser] = useState(null);
+  const [dealer, setDealer] = useState(null);
   const [car, setCar] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_SERVER_API}/user/my-user/${alert.userId}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setUser(data);
-        setLoading(false);
-      });
 
-      fetch(`${process.env.REACT_APP_SERVER_API}/car/show/${alert.carId}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setCar(data);
-        });  
-    
+  const fetchData = () => {
+    const userApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${alert.client}`;
+    const dealerApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${alert.dealer}`;
+    const carApi = `${process.env.REACT_APP_SERVER_API}/car/show/${alert.car}`;
+
+    const getUser = axios.get(userApi);
+    const getDealer = axios.get(dealerApi);
+    const getCar = axios.get(carApi);
+
+    axios.all([getUser, getDealer, getCar]).then(
+      axios.spread((...allData) => {
+        const allUserData = allData[0].data;
+        const allDealerData = allData[1].data;
+        const allCarData = allData[2].data;
+
+        setUser(allUserData);
+        setDealer(allDealerData);
+        setCar(allCarData);
+        setLoading(false);
+      })
+    );
+  }
+
+  useEffect(() => {
+    fetchData();
   }, []);
+  
 
   if(loading){
     return (
@@ -51,7 +58,11 @@ export default function AlertLayout({ alert }) {
   }
 
   return (
-    <Accordion className="mt-4 mb-2 m-4" style={{ border: "solid 1px green" }}>
+    <Accordion
+      className={`mt-4 mb-2 m-4 alert-bg-${
+        alert.isCancelRequest ? 0 : alert.step
+      } alert-border-${alert.isCancelRequest ? 0 : alert.step}`}
+    >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
@@ -59,49 +70,38 @@ export default function AlertLayout({ alert }) {
       >
         <Typography sx={{ width: "70%", flexShrink: 0 }}>
           <div className="row">
-            <div className="col-3 col-sm-2 m-auto">
-              <Avatar
+            <div className="col-3 col-sm-2 m-auto d-flex justify-content-center">
+              <img
                 alt="Remy Sharp"
-                src={process.env.REACT_APP_S3 + user.image}
-                sx={{ width: 75, height: 75 }}
+                src={process.env.REACT_APP_S3 + `${isDealer ? user.image : dealer.image}`}
+                style={{ minWidth: 75, minHeight: 75, maxWidth: 120, maxHeight: 120, borderRadius: '50%' }}
               />
             </div>
             <div className="col f-19 mt-2">
-              {alert.step === 1
-                ? " New Request - "
-                : alert.step === 2
-                ? "Wait for response from"
-                : alert.step === 3
-                ? "Wait for docs for delivey to"
-                : "End of process with"}
-              <b>{" " + user.firstName + " " + user.lastName} </b>
+              {alertTitle(alert.step, isDealer, dealer, user)}
               <br />
               <span className="opc-8" style={{ fontSize: 15 }}>
                 {alert.lastUpdateDate}
+                {alert.isCancelRequest ? (
+                  <b style={{ color: "red" }}>{" - Cancel"}</b>
+                ) : null}
+                {alert.step == 4 ? (
+                  <b style={{ color: "green" }}>{" - Done"}</b>
+                ) : null}
               </span>
             </div>
           </div>
         </Typography>
         <Typography
-          sx={{ width: "30%", textAlign: "end" }}
-          className="f-18 opc-8 m-2"
+          sx={{
+            width: "30%",
+            textAlign: "end",
+            display: "flex",
+            justifyContent: "end",
+          }}
+          className="f-18 opc-8 m-auto"
         >
-          {alert.step == 1 ? (
-            <div className="m-2 row">
-              <div className="col">
-                <CancelRequestDialog />
-              </div>
-              <div className="col">
-                <SecondRequestDialog />
-              </div>
-            </div>
-          ) : alert.step == 2 ? (
-            <div></div>
-          ) : alert.step == 3 ? (
-            <div></div>
-          ) : (
-            <div></div>
-          )}
+          {iconToShow(alert.step, alert.isCancelRequest, isDealer)}
         </Typography>
       </AccordionSummary>
       <Divider />
@@ -168,18 +168,41 @@ export default function AlertLayout({ alert }) {
         <div className="mb-2">
           <FilesTabStatus
             step={`${alert.step}`}
-            payment={"Omer"}
-            licenses={[
-              "Application_for_personal_import_brokerage_license.pdf",
-              "Application_for_personal_import_brokerage_license.pdf",
-              "Application_for_personal_import_brokerage_license.pdf",
-              "Application_for_personal_import_brokerage_license.pdf",
-            ]}
-            govil={"Omer"}
-            dhl={"Omer"}
+            payment={alert.paymentFiles}
+            licenses={alert.carLicenseFile}
+            govil={alert.govIlFile}
+            dhl={alert.dhlFile}
+            shipping={alert.containerFiles}
           />
         </div>
       </AccordionDetails>
     </Accordion>
   );
 }
+
+/*
+const alert3 = {
+    car: "6237838cf4784fc6a46f817e",
+    client: "62373983d3d01059e218a3b2",
+    dealer: "62373983d3d01059e218a3b2",
+    isCancelRequest: false,
+    lastUpdateDate: "20.01.2022",
+    dateOfCreated: "20.01.2022",
+    step: 4,
+    dealerComment:
+      "Hi, here are the car licenses. If something is missing you will contact us.",
+          paymentFiles: ["/files/dhl.svg", "/files/gov.svg"],
+    carLicenseFile: ["/files/dhl.svg", "/files/gov.svg"],
+    govIlFile: ["/files/dhl.svg", "/files/gov.svg"],
+    dhlFile: ["/files/dhl.svg", "/files/gov.svg"],
+    govIlRef: "asoindiniu1239871829jnaklnsad",
+    dhlRef: "asoindiniu1239871829jnaklnsad",
+    containerNumber: "ASP - 1953F3 MO",
+    containerFiles: ["/files/dhl.svg", "/files/gov.svg"],
+    dateOfDealerResponse: "28.01.2022",
+    dateOfAttachFiles: "30.01.2022",
+    dateOfContainerNumber: "02.02.2022",
+  };
+
+
+*/

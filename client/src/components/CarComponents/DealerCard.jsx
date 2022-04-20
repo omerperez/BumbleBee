@@ -76,7 +76,6 @@ export default function DealerCard({ dealer, role, car }) {
           onClick={() => sendWhatsAppToDealer(mobile, dealer.firstName)}
         >
           Contact <WhatsAppIcon className="m-2" />
-          {/* {"to " + dealer.firstName + " " + dealer.lastName} */}
         </Button>
         <Button variant="contained" className="m-2">
           <Link

@@ -15,9 +15,11 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
         setFlag(false);
       } else if (value == "2" && licenses != null) {
         setFlag(false);
-      } else if (value == "3" && govil != null && dhl != null) {
+      } else if (value == "3" && govil != null) {
         setFlag(false);
-      } else if (value == "4" && shipping != null) {
+      } else if (value == "4" && dhl != null) {
+        setFlag(false);
+      } else if (value == "5" && shipping != null) {
         setFlag(false);
       } else {
         setFlag(true);
@@ -35,22 +37,21 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
     height: "100%",
   };
 
-  const isFiles = (files) => {
-      if(files !== null ){
-          setFlag(false);
-      }else{
-          setFlag(true)
-      }
-  }
   return (
     <Box sx={flag ? greyBg : regular}>
       <TabContext value={value} sx={{ background: "#D3D3D3" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <TabList onChange={handleChange} aria-label="lab API tabs example">
+          <TabList
+            onChange={handleChange}
+            aria-label="lab API tabs example"
+            variant="scrollable"
+            scrollButtons="auto"
+          >
             <Tab className="capital-letter" label="Payment" value="1" />
             <Tab className="capital-letter" label="Licenses" value="2" />
-            <Tab className="capital-letter" label={"GovIL & DHL"} value="3" />
-            <Tab className="capital-letter" label="Shipping" value="4" />
+            <Tab className="capital-letter" label={"Gov IL"} value="3" />
+            <Tab className="capital-letter" label={"DHL"} value="4" />
+            <Tab className="capital-letter" label="Container" value="5" />
           </TabList>
         </Box>
         <TabPanel value="1">
@@ -67,7 +68,15 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
         </TabPanel>
         <TabPanel value="2">
           {licenses ? (
-            <img className=" cur-pointer" src="/files/licenses.svg" width={"100%"} onClick={() => downloadFiles(licenses)} />
+            <div className="d-flex justify-content-center">
+              <img
+                className=" cur-pointer"
+                src="/files/licenses.svg"
+                width={"100%"}
+                style={{ maxWidth: 400 }}
+                onClick={() => downloadFiles(licenses)}
+              />
+            </div>
           ) : (
             <div
               className="d-flex justify-content-center"
@@ -78,15 +87,13 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
           )}
         </TabPanel>
         <TabPanel value="3">
-          {govil && dhl ? (
-            <div className="d-flex justify-content-center cur-pointer">
-              <div>
-                <img src="/files/dhl.svg" width={"100%"} />
-              </div>
-              <div>
-                <img src="/files/gov.svg" width={"100%"} />
-              </div>
-            </div>
+          {govil ? (
+            <img
+              className=" cur-pointer"
+              src="/files/gov.svg"
+              width={"100%"}
+              onClick={() => downloadFiles(govil)}
+            />
           ) : (
             <div
               className="d-flex justify-content-center"
@@ -97,8 +104,30 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
           )}
         </TabPanel>
         <TabPanel value="4">
+          {dhl ? (
+            <img
+              className=" cur-pointer"
+              src="/files/dhl.svg"
+              width={"100%"}
+              onClick={() => downloadFiles(dhl)}
+            />
+          ) : (
+            <div
+              className="d-flex justify-content-center"
+              style={{ padding: "25% 0" }}
+            >
+              <h3>Files Not Available</h3>
+            </div>
+          )}
+        </TabPanel>
+        <TabPanel value="5">
           {shipping ? (
-            "Shipping"
+            <img
+              className=" cur-pointer"
+              src="/files/shipping.svg"
+              width={"100%"}
+              onClick={() => downloadFiles(shipping)}
+            />
           ) : (
             <div
               className="d-flex justify-content-center"

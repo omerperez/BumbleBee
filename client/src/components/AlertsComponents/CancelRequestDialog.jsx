@@ -21,8 +21,10 @@ export default function CancelRequestDialog() {
   return (
     <div>
       <Button
-        className="capital-letter"
-        color="error"
+        className="capital-letter border-2-black"
+        style={{
+          background: "rgba(125, 125, 125, 0.856)",
+        }}
         variant="contained"
         onClick={handleClickOpen}
       >
