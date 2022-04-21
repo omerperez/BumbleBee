@@ -11,7 +11,7 @@ afterAll(done => {
 
 describe('First testing', () => {
     test('post get', async () => {
-        response = await request(app).get('/')
+        response = await request(app).get('/user')
         expect(response.statusCode).toEqual(200)
     })
 })
