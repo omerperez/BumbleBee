@@ -1,24 +1,9 @@
 import React from "react";
 import PageTitle from "../Layout/PageTitle";
-import fileDownload from "js-file-download";
-import axios from "axios";
+import { downloadFile } from "../../utils/functions";
 
 export default function GovIL() {
-
-const downloadFile = (filePath) =>{
-  axios
-    .get(`/files/${filePath}`, {
-      responseType: "blob",
-    })
-    .then((res) => {
-      let filename = filePath.replace(/^.*[\\\/]/, "");
-      let fileExtension;
-      fileExtension = filePath.split(".");
-      fileExtension = fileExtension[fileExtension.length - 1];
-      fileDownload(res.data, `${filename}.${fileExtension}`);
-    });
-}
-
+  
   return (
     <>
       <PageTitle page={"Gov IL"} />

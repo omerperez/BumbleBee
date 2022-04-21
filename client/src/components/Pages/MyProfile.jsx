@@ -6,8 +6,9 @@ import UserFilesCard from "../ProfileComponents/UserFilesCard";
 import CircularProgress from "@mui/material/CircularProgress";
 import OtherPropertiesCard from "../ProfileComponents/OtherPropertiesCard";
 import ProfileSide from "../ProfileComponents/ProfileSide";
-import { Card } from "@mui/material";
+import { Card, Divider } from "@mui/material";
 import useForm from "../../utils/useForm";
+import RequestSteps from "../AlertsComponents/RequestSteps";
 
 export default function MyProfile() {
 
@@ -43,11 +44,19 @@ export default function MyProfile() {
       >
         <div className="col-3 mt-5 mb-5 offset-1">
           <ProfileSide currentUser={user} />
+          {user.role === 1 ? (
+            <>
+              <div className="mt-4">
+                <h3 style={{ fontWeight: 200 }}> Request Steps </h3>
+              </div>
+            </>
+          ) : null}
         </div>
-        <div className="col ml-25 mt-5 mb-5 col-sm-7">
+        <div className="col-9 ml-25 mt-5 mb-5 col-sm-7">
           <OtherPropertiesCard currentUser={user} />
         </div>
       </div>
+      <div className="d-flex justify-content-center">{user.role === 1 ? <RequestSteps /> : null}</div>
     </>
   );
 }

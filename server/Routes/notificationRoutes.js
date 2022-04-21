@@ -8,7 +8,19 @@ router.get("/", notificationController.getAllNotification);
 
 router.get("/notification-user/:id", notificationController.getNotificationsByUserId);
 
-/* Linoy & Tamir */
-// router.post("/create", notificationController.)
+router.post(
+  "/create",
+  upload.fields([
+    { name: "files", maxCount: 1000 },
+    { name: "mainFile", maxCount: 1 },
+  ]),
+  notificationController.createAlert
+);
 
-module.exports = router;
+router.put(
+  "/update",
+  upload.fields([{name: "files", maxCount: 1000}, {name: "mainFile", maxCount: 1}]),
+  notificationController.comfirmPaymentAlert
+);
+
+(module.exports = router);

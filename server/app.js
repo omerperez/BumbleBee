@@ -23,3 +23,5 @@ app.use("/car", car);
 app.use("/notification", notification);
 
 app.listen(process.env.PORT);
+
+module.exports = app

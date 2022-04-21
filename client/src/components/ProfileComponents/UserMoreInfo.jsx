@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import TabPanel from '@mui/lab/TabPanel';
 import UserFilesCard from "./UserFilesCard";
 import TabPanelText from "./TabPanelText";
+import AlertLayout from "../AlertsComponents/AlertLayout";
+import RequestSteps from "../AlertsComponents/RequestSteps";
 
 export default function UserMoreInfo({ currentUser, isUserPtofile }) {
   const [value, setValue] = useState("1");
@@ -15,6 +17,14 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
   
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  const alert = {
+    userId: "62373983d3d01059e218a3b2",
+    carId: "6237838cf4784fc6a46f817e",
+    step: 1,
+    dateOfCreated: "20.01.2022",
+    lastUpdateDate: "20.01.2022",
   };
 
   return (
@@ -32,8 +42,8 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
               label="More Inforamtion"
               value="1"
             />
-            {currentUser.role === 1 && isUserPtofile ? (
-              <Tab label="Files Status" className="capital-letter" value="2" />
+            {currentUser.role == 1 && isUserPtofile ? (
+              <Tab label="Request Status" className="capital-letter" value="2" />
             ) : null}
           </TabList>
         </Box>
@@ -54,12 +64,24 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
             value={currentUser.email}
             isEditOption={isUserPtofile}
           />
+          <TabPanelText
+            title={"Registration Date"}
+            value={
+              currentUser.dateOfCreate
+                ? date.getDate().toString().padStart(2, "0") +
+                  "." +
+                  (date.getMonth() + 1).toString().padStart(2, "0") +
+                  "." +
+                  date.getFullYear()
+                : "12.03.2022"
+            }
+          />
         </TabPanel>
-        {currentUser.role === 1 && isUserPtofile ? (
-          <TabPanel value="2" style={{ padding: 5, marginTop: 20 }}>
-            <UserFilesCard />
-          </TabPanel>
-        ) : null}
+        {/* {currentUser.role === 1 && isUserPtofile ? ( */}
+        <TabPanel value="2" style={{ padding: 5, marginTop: 20 }}>
+          <AlertLayout alert={alert} />
+        </TabPanel>
+        {/* ) : null} */}
         {currentUser.role == 2 ? (
           <>
             <TabPanelText
@@ -73,18 +95,6 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
             />
           </>
         ) : null}
-        <TabPanelText
-          title={"Registration Date"}
-          value={
-            currentUser.dateOfCreate
-              ? date.getDate().toString().padStart(2, "0") +
-                "." +
-                (date.getMonth() + 1).toString().padStart(2, "0") +
-                "." +
-                date.getFullYear()
-              : "12.03.2022"
-          }
-        />
       </TabContext>
     </Box>
   );
