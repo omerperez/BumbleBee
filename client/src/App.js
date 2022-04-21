@@ -28,6 +28,7 @@ import EditProfile from './components/Pages/EditProfile';
 import ManagerDashboard from './components/Pages/ManagerDashboard';
 import OrderStatus from "./components/Pages/OrderStatus";
 import AccessDenied from "./components/Pages/AccessDeniedPage";
+import Stats from './components/adminComponents/statistics'
 
 function App() {
 
@@ -258,6 +259,14 @@ function App() {
               <PublicRoute>
                 <DealerSignUp />
               </PublicRoute>
+            }
+          />
+          <Route
+            path="stats"
+            element={
+              <PrivateRoute>
+                <Stats />
+              </PrivateRoute>
             }
           />
           <Route

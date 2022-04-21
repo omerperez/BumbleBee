@@ -1,28 +1,56 @@
 var _ = require('lodash');
 const axios = require('axios');
-// set url as constant
-const URL = 'https://data.gov.il/api/3/action/datastore_search?resource_id=03adc637-b6fe-402b-9937-7c3d3afc9140&limit=1000'
+const dotenv = require('dotenv');
+dotenv.config();
+
 
 axios
-  .get(URL)
+  .get(process.env.GOVIL_CARS_API)
   .then(response => {
-    console.log(response.data.result.records);
-    cars = response.data.result.records;
-   c = cars.filter((car) => car.shnat_yitzur >= 2020);
-   console.log(c);
-    console.log(_.countBy(c,'shnat_yitzur'));
+    console.time('one');
 
-    
+    console.log(response.data.result.records.length);
+    cars = response.data.result.records.filter((car) => car.shnat_yitzur == 2021);
+
+    console.log(_.countBy(cars,'tozeret_nm'));
+
+    console.timeEnd('one');
   })
   .catch(error => {
     console.log(error);
   });
 
-  // fetch(process.env.REACT_APP_GOVIL_CARS_API + company.hebrew)
-  // .then((response) => response.json())
-  // .then((data) =>
-  //   setDataFromApi(
-  //     data.result.records.filter((car) => car.shnat_yitzur >= 2020)
-  //   )
-  // );
+
+  // axios
+  // .get(process.env.GOVIL_CARS_API)
+  // .then(response => {
+  //   console.time('two');
+
+  //   cars = response.data.result.records.filter((car) => car.shnat_yitzur >= 2020);
+  //   console.log(_.countBy(cars,'shnat_yitzur'));
+
+  //   console.timeEnd('two');
+  // })
+  // .catch(error => {
+  //   console.log(error);
+  // });
+
+
+
+  // axios
+  // .get(process.env.GOVIL_CARS_API)
+  // .then(response => {
+  //   console.time('three');
+
+  //   cars = response.data.result.records.filter((car) => car.shnat_yitzur >= 2020&&car.tozeret_nm=='לנד רובר');
+  //   console.log(_.countBy(cars,'degem_nm'));
+
+  //   console.timeEnd('three');
+  // })
+  // .catch(error => {
+  //   console.log(error);
+  // });
+
+
+
 

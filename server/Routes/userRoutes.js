@@ -26,5 +26,9 @@ router.put("/edit-password/:id", userController.editPassword);
 
 router.delete("/delete/:id", userController.deleteUser);
 
+router.get("/dashboard", userController.adminDashboard);
+
+router.get("/dashboard/:year", userController.adminDashboard);
+
 
 module.exports = router;
