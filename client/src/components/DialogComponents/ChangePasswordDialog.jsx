@@ -48,15 +48,10 @@ export default function ChangePasswordDialog() {
       <div className="w-100 text-center mb-3">
         <Button
           onClick={handleClickOpen}
-          style={{ border: "none " }}
-          className={"edit-profile-btn-dealer"}
+          className={"edit-profile-btn-dealer no-border"}
         >
           Change Password
         </Button>
-        {/* <span className="mr-5">Do you want to change your password?</span>
-        <span className="cur-pointer color-primary" onClick={handleClickOpen}>
-          Click here
-        </span> */}
       </div>
       <Dialog
         open={open}

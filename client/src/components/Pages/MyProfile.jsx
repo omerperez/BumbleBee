@@ -39,15 +39,14 @@ export default function MyProfile() {
     <>
       <PageTitle />
       <div
-        className="d-flex justify-content-centermt-5"
-        style={{ padding: "1%" }}
+        className="d-flex justify-content-centermt-5 pad-1"
       >
         <div className="col-3 mt-5 mb-5 offset-1">
           <ProfileSide currentUser={user} />
           {user.role === 1 ? (
             <>
               <div className="mt-4">
-                <h3 style={{ fontWeight: 200 }}> Request Steps </h3>
+                <h3 className="fw-100"> Request Steps </h3>
               </div>
             </>
           ) : null}
@@ -56,7 +55,9 @@ export default function MyProfile() {
           <OtherPropertiesCard currentUser={user} />
         </div>
       </div>
-      <div className="d-flex justify-content-center">{user.role === 1 ? <RequestSteps /> : null}</div>
+      <div className="d-flex justify-content-center">
+        {user.role === 1 ? <RequestSteps /> : null}
+      </div>
     </>
   );
 }

@@ -15,11 +15,32 @@ const getAllNotification = (req, res) => {
   });
 };
 
+
+const getNotificationsByClientId = (req, res) => {
+
+  const userId = req.params.id;
+
+  notificationSchema.find().then((results) => {
+    try {
+      res.json(results.filter((notification) => notification.client == userId));
+      console.log("OK");
+    } catch {
+      console.log("Error");
+    }
+  });
+};
+
+
 const getNotificationsByUserId = (req, res) => {
+  console.log(req.params.id);
     const userId = req.params.id;
     notificationSchema.find().then((results) => {
     try {
-      res.json(results.filter((notification) => notification.client == userId));
+      res.json(
+        results.filter(
+          (notification) => notification.dealer == userId
+        )
+      );
       console.log("OK");
     } catch {
       console.log("Error");
@@ -30,13 +51,14 @@ const getNotificationsByUserId = (req, res) => {
 /* POST */
 async function createAlert(req, res) {
   const alertFromJason = JSON.parse(req.body.alert);
-  const createAlert = new carSchema({
+  const createAlert = new notificationSchema({
     _id: new mongoose.Types.ObjectId(),
     car: alertFromJason.car,
     dealer: alertFromJason.dealer,
     client: alertFromJason.client,
     isCancelRequest: false,
     dateOfCreated: Date.now(),
+    lastUpdateDate: Date.now(),
     step: 1,
     paymentFiles: req.body.paymentFiles ?? null,
     carLicenseFile: [],
@@ -51,7 +73,7 @@ async function createAlert(req, res) {
     dateOfContainerNumber: null,
   });
 
-  let updateUser = await userSchema.findById(createAlert.dealer);
+  let updateUser = await userSchema.findById(createAlert.client);
   if (updateUser.role !== 1) {
     return res.status(400).json({
       message: "Access blocked - you are not an administrator user",
@@ -65,21 +87,27 @@ async function createAlert(req, res) {
   });
 
   await userSchema.findOneAndUpdate(filter, update, { new: true });
-  return res.send(newAlert._id);
+  console.log("Success");
+  return res.send("Success");
 }
 
 /* PUT */
-const comfirmPaymentAlert = async (req, res) => {
-  
-  const alertFromJason = JSON.parse(req.body.alert);
-  const alertId = { _id: req.body._id };
-  const alert = await carSchema.findById(alertId);
+const editAlert = async (req, res) => {
 
-  if (alert.dealer.valueOf() != alertFromJason.dealer) {
+  const alertFromJason = JSON.parse(req.body.alert);
+  const alertId = { _id: req.params.id };
+  const alert = await notificationSchema.findById(alertId);
+
+  if (
+    (alertFromJason.dealer &&
+      alert.dealer.valueOf() != alertFromJason.dealer) ||
+    (alertFromJason.client && alert.client.valueOf() != alertFromJason.client)
+  ) {
     return res.status(400).json({
-      message: "Access blocked - you are not owner on this car",
+      message: "Access blocked - you are not owner on this request",
     });
   }
+
 
   if (alertFromJason.isCancelRequest && alertFromJason.isCancelRequest == true){
       let updateUser = await userSchema.findById(createAlert.dealer);
@@ -90,6 +118,29 @@ const comfirmPaymentAlert = async (req, res) => {
       });
 
       await userSchema.findOneAndUpdate(filter, update, { new: true });
+  } else if (alertFromJason.step == 2) {
+    alertFromJason.carLicenseFile = req.body.carLicenseFile;
+    alertFromJason.dateOfDealerResponse = Date.now();
+    alertFromJason.lastUpdateDate = Date.now();
+  }
+  else if (alertFromJason.step == 3){
+    alertFromJason.govIlFile = req.body.govIlFile;
+    alertFromJason.dhlFile = req.body.dhlFile;
+    alertFromJason.dateOfAttachFiles = Date.now();
+    alertFromJason.lastUpdateDate = Date.now(); 
+  } else {
+
+    alertFromJason.containerFiles = req.body.containerFiles;
+    alertFromJason.lastUpdateDate = Date.now();
+
+    let carSell = await carSchema.findById(alertFromJason.car);
+    const filter = { _id: alertFromJason.car };
+    const update = new carSchema({
+      _id: carSell._id,
+      isSell: true,
+    });
+
+    await carSchema.findOneAndUpdate(filter, update, { new: true });
   }
   
   notificationSchema
@@ -103,5 +154,6 @@ module.exports = {
   getAllNotification,
   getNotificationsByUserId,
   createAlert,
-  comfirmPaymentAlert,
+  editAlert,
+  getNotificationsByClientId,
 };

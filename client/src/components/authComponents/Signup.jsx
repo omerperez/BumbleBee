@@ -17,17 +17,8 @@ export default function Signup() {
   
   const navigate = useNavigate();
   const [values, carChange] = useForm();
-  // const firstNameRef = useRef();
-  // const lastNameRef = useRef();
-  // const emailRef = useRef();
-  // const mobileRef = useRef();
-  // const passwordRef = useRef();
-  // const passwordConfirmRef = useRef();
-  // const [file, setFile] = useState();
   const { signup } = useAuth();
   const [error, setError] = useState("");
-  // const [role, setRole] = useState(1);
-  const [eden, setEden] = useState("");
   const [checkbox1, setCheckbox1] = useState(false);
   const [checkbox2, setCheckbox2] = useState(false);
   const [checkbox3, setCheckbox3] = useState(false);

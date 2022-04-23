@@ -45,10 +45,7 @@ export default function UserProfile() {
   return (
     <>
       <PageTitle />
-      <div
-        className="d-flex justify-content-centermt-5"
-        style={{ padding: "1%" }}
-      >
+      <div className="d-flex justify-content-centermt-5 pad-1">
         <div className="col-3 mt-5 mb-5 offset-1">
           <ProfileSide currentUser={user} />
         </div>

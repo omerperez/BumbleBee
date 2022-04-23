@@ -4,10 +4,86 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import CancelRequestDialog from "./CancelRequestDialog";
 import SecondRequestDialog from "./SecondRequestDialog";
 import SendDhlAndGovIlDialog from "./SendDhlAndGovIlDialog";
+import axios from "axios";
+import ShippingRequestDialog from "./ShippingRequestDialog";
+
+const api = axios.create({ baseURL: process.env.REACT_APP_SERVER_API });
+
+async function createAlert(alert) {
+
+  var files = alert.payment;
+  const now = Date.now();
+  const data = new FormData();
+
+ for (let i = 0; i < files.length; i++) {
+   const rnd = Math.floor(Math.random() * 1000000) + 1000;
+   data.append(`payment`, files[i], now + rnd + files[i].name);
+   data.append(`paymentFiles`, now + rnd + files[i].name);
+ }
+
+  data.append("alert", JSON.stringify(alert));
+
+  return api
+    .post("/notification/create", data)
+    .then(function (response) {
+      return "Success";    
+    })
+    .catch((err) => {
+      console.log(err);
+      return err.response.data.message;
+    });
+}
+
+async function editAlertFunction(alert) {
+
+  const now = Date.now();
+  const data = new FormData();
+
+  if (alert.step == 2) {
+    var files = alert.license;
+
+    for (let i = 0; i < files.length; i++) {
+      const rnd = Math.floor(Math.random() * 1000000) + 1000;
+      data.append(`license`, files[i], now + rnd + files[i].name);
+      data.append(`carLicenseFile`, now + rnd + files[i].name);
+    }
+  } else if (alert.step == 3) {
+    let dhlFiles = alert.dhl;
+    let govFiles = alert.govIl;
+    for (let i = 0; i < dhlFiles.length; i++) {
+      const rnd = Math.floor(Math.random() * 1000000) + 1000;
+      data.append(`dhl`, dhlFiles[i], now + rnd + dhlFiles[i].name);
+      data.append(`dhlFile`, now + rnd + dhlFiles[i].name);
+    }
+
+    for (let i = 0; i < govFiles.length; i++) {
+      const rnd = Math.floor(Math.random() * 1000000) + 1000;
+      data.append(`govil`, govFiles[i], now + rnd + govFiles[i].name);
+      data.append(`govIlFile`, now + rnd + govFiles[i].name);
+    }
+  } else {
+    let shipping = alert.shipping;
+    for (let i = 0; i < shipping.length; i++) {
+      const rnd = Math.floor(Math.random() * 1000000) + 1000;
+      data.append(`shipping`, shipping[i], now + rnd + shipping[i].name);
+      data.append(`containerFiles`, now + rnd + shipping[i].name);
+    }
+  }
+  data.append("alert", JSON.stringify(alert));
+  return api
+    .put(`/notification/update/${alert._id}`, data)
+    .then(function (response) {
+      return "Success";
+    })
+    .catch((err) => {
+      console.log(err);
+      return err.response.data.message;
+    });
+}
 
 const alertTitle = (step, isDealer, dealer, user) => {
   if (step == 1) {
-    if (!isDealer) {
+    if (isDealer) {
       return (
         <>
           <div className="f-19">
@@ -38,7 +114,7 @@ const alertTitle = (step, isDealer, dealer, user) => {
     }
   }
   if (step == 2) {
-    if (!isDealer) {
+    if (isDealer) {
       return (
         <>
           <div>
@@ -64,14 +140,14 @@ const alertTitle = (step, isDealer, dealer, user) => {
             payment and attach the licenses!
             <br />
             Please fill Gov IL {"&"} DHL forms and send them back to the{" "}
-            {dealer.firstName + " " + dealer.lastName}.
+            {dealer.firstName + " " + dealer.lastName}
           </span>
         </>
       );
     }
   }
   if (step == 3) {
-    if (!isDealer) {
+    if (isDealer) {
       return (
         <>
           <div>
@@ -103,7 +179,7 @@ const alertTitle = (step, isDealer, dealer, user) => {
     }
   }
   if (step == 4) {
-    if (!isDealer) {
+    if (isDealer) {
       return (
         <>
           <div>
@@ -124,91 +200,84 @@ const alertTitle = (step, isDealer, dealer, user) => {
             <b>{dealer.firstName + " " + dealer.lastName} </b> has attached
             shipping docs and details.
             <br />
-            <span className="f-15" style={{ letterSpacing: 1.5 }}>
-              Renew!
-            </span>
+            <span className="f-15 ls-1">Renew!</span>
           </span>
         </>
       );
     }
   }
 };
-const iconToShow = (step, isCancelRequest, isDealer) => {
+
+const iconToShow = (step, isCancelRequest, isDealer, alert) => {
   if (isCancelRequest) {
     return <CancelIcon color="error" className="m-2" sx={{ fontSize: 50 }} />;
   }
-  if (step == 1) {
-      if(isDealer){
-        return (
-          <div className="m-2 row d-flex">
-            <div className="col">
-              <CancelRequestDialog />
-            </div>
-            <div className="col">
-              <SecondRequestDialog />
-            </div>
-          </div>
-        );
-      } else {
-          return (
-            <AccessTimeFilledIcon
-              style={{ color: "#42ADFF" }}
-              className="m-2"
-              sx={{
-                fontSize: 50,
-              }}
-            />
-          );
-      }
-  }
-  if (step == 2) {
+  else if (step == 1) {
     if (isDealer) {
       return (
-        <AccessTimeFilledIcon
-          className="m-2"
-          sx={{
-            fontSize: 50,
-            color: "#febb3ee0",
-          }}
-        />
+        <div className="m-2 row d-flex">
+          <div className="col">
+            <CancelRequestDialog />
+          </div>
+          <div className="col">
+            <SecondRequestDialog alert={alert} />
+          </div>
+        </div>
       );
     } else {
       return (
         <AccessTimeFilledIcon
-          className="m-2"
+          className="m-2 req-color-step-one"
           sx={{
             fontSize: 50,
-            color: "#febb3ee0",
           }}
         />
       );
     }
-  }
-  if (step == 3) {
-      if(isDealer){
-          return (
-            <div className="m-2">
-              <SecondRequestDialog />
-            </div>
-          );
-      } else {
-          return (
-            <AccessTimeFilledIcon
-              color="warning"
-              className="m-2"
-              sx={{
-                fontSize: 50,
-                color: "#7200707e",
-              }}
-            />
-          );
-      }
-  }
-  if (step == 4) {
+  } else if (step == 2) {
+    if (isDealer) {
+      return (
+        <AccessTimeFilledIcon
+          className="m-2 req-color-step-two"
+          sx={{ fontSize: 50 }}
+        />
+      );
+    } else {
+      return (
+        <SendDhlAndGovIlDialog
+          alert={alert}
+          className="m-2 req-color-step-two"
+          sx={{ fontSize: 50 }}
+        />
+      );
+    }
+  } else if (step == 3) {
+    if (isDealer) {
+      return (
+        <div className="m-2">
+          <ShippingRequestDialog alert={alert} />
+        </div>
+      );
+    } else {
+      return (
+        <AccessTimeFilledIcon
+          color="warning"
+          className="m-2"
+          sx={{
+            fontSize: 50,
+            color: "#7200707e",
+          }}
+        />
+      );
+    }
+  } else if (step == 4) {
     return (
-      <CheckCircleIcon className="m-2" sx={{ fontSize: 50, color: "#3cb371" }} />
+      <CheckCircleIcon
+        className="m-2"
+        sx={{ fontSize: 50, color: "#3cb371" }}
+      />
     );
   }
 };
 
-export { iconToShow, alertTitle };
+export { iconToShow, alertTitle, createAlert, editAlertFunction };

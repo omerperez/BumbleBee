@@ -56,12 +56,16 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
         </Box>
         <TabPanel value="1">
           {payment ? (
-            <img src="/files/payment.svg" width={"100%"} />
+            <div className="d-flex justify-content-center">
+              <img
+                className="cur-pointer mw-400"
+                src="/files/payment.svg"
+                width={"100%"}
+                onClick={() => downloadFiles(payment, process.env.REACT_APP_S3)}
+              />
+            </div>
           ) : (
-            <div
-              className="d-flex justify-content-center"
-              style={{ padding: "25% 0" }}
-            >
+            <div className="d-flex justify-content-center p-25-0">
               <h3>Files Not Available</h3>
             </div>
           )}
@@ -70,52 +74,48 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
           {licenses ? (
             <div className="d-flex justify-content-center">
               <img
-                className=" cur-pointer"
+                className=" cur-pointer mw-400"
                 src="/files/licenses.svg"
                 width={"100%"}
-                style={{ maxWidth: 400 }}
-                onClick={() => downloadFiles(licenses)}
+                onClick={() =>
+                  downloadFiles(licenses, process.env.REACT_APP_S3)
+                }
               />
             </div>
           ) : (
-            <div
-              className="d-flex justify-content-center"
-              style={{ padding: "25% 0" }}
-            >
+            <div className="d-flex justify-content-center p-25-0">
               <h3>Files Not Available</h3>
             </div>
           )}
         </TabPanel>
         <TabPanel value="3">
           {govil ? (
-            <img
-              className=" cur-pointer"
-              src="/files/gov.svg"
-              width={"100%"}
-              onClick={() => downloadFiles(govil)}
-            />
+            <div className="d-flex justify-content-center">
+              <img
+                className="cur-pointer mw-400"
+                src="/files/gov.svg"
+                width={"100%"}
+                onClick={() => downloadFiles(govil, process.env.REACT_APP_S3)}
+              />
+            </div>
           ) : (
-            <div
-              className="d-flex justify-content-center"
-              style={{ padding: "25% 0" }}
-            >
+            <div className="d-flex justify-content-center p-25-0">
               <h3>Files Not Available</h3>
             </div>
           )}
         </TabPanel>
         <TabPanel value="4">
           {dhl ? (
-            <img
-              className=" cur-pointer"
-              src="/files/dhl.svg"
-              width={"100%"}
-              onClick={() => downloadFiles(dhl)}
-            />
+            <div className="d-flex justify-content-center">
+              <img
+                className=" cur-pointer mw-400"
+                src="/files/dhl.svg"
+                width={"100%"}
+                onClick={() => downloadFiles(dhl, process.env.REACT_APP_S3)}
+              />
+            </div>
           ) : (
-            <div
-              className="d-flex justify-content-center"
-              style={{ padding: "25% 0" }}
-            >
+            <div className="d-flex justify-content-center p-25-0">
               <h3>Files Not Available</h3>
             </div>
           )}
@@ -123,16 +123,13 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
         <TabPanel value="5">
           {shipping ? (
             <img
-              className=" cur-pointer"
+              className=" cur-pointer mw-400"
               src="/files/shipping.svg"
               width={"100%"}
-              onClick={() => downloadFiles(shipping)}
+              onClick={() => downloadFiles(shipping, process.env.REACT_APP_S3)}
             />
           ) : (
-            <div
-              className="d-flex justify-content-center"
-              style={{ padding: "25% 0" }}
-            >
+            <div className="d-flex justify-content-center p-25-0">
               <h3>Files Not Available</h3>
             </div>
           )}
