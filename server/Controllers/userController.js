@@ -5,6 +5,10 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 const router = require("express").Router();
+const _ = require('lodash');
+const axios = require('axios');
+const dotenv = require('dotenv');
+dotenv.config();
 
 /* GET */
 const getAllUsers = (req, res) => {
@@ -271,6 +275,21 @@ const deleteUser = (req, res) => {
   });
 };
 
+const adminDashboard = async  (req,res) => {
+  const year = req.params.year;
+  const model = req.params.model;
+
+  const govResponse = await axios.get(process.env.GOVIL_CARS_API)
+  const data = govResponse.data.result.records;
+
+  const modelsByYear =  _.countBy(data.filter((car) => car.shnat_yitzur == year),'tozeret_nm');
+  const countByYears = _.countBy(data.filter((car) => car.shnat_yitzur >= 2020),'shnat_yitzur');
+  const specificModelGraph = _.countBy(data.filter((car) => car.shnat_yitzur == year&&car.tozeret_nm.includes(model)),'degem_nm');
+
+  const dataResults = {modelsByYear,countByYears,specificModelGraph};
+  await res.send(dataResults);
+}
+
 module.exports = {
   editUser,
   deleteUser,
@@ -281,4 +300,5 @@ module.exports = {
   editPassword,
   editUserAndImage,
   addCarToFavorite,
+  adminDashboard,
 };

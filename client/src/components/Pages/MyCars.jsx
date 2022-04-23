@@ -13,6 +13,10 @@ export default function MyCars() {
   const [access, setAccess] = useState("");
   const { currentUser } = useAuth();
 
+
+  const[da,setDa] = useState(null);
+
+
   useEffect(() => {
      const index = window.location.toString().lastIndexOf("/") + 1;
      const id = window.location.toString().substring(index);
@@ -23,7 +27,17 @@ export default function MyCars() {
           setLoading(false);
           setCars(data)
         });  
+
+        fetch(`${process.env.REACT_APP_SERVER_API}/user/dashboard/2021`)
+        .then((response) => response.json())
+        .then((data) => {
+           setDa(data.d)
+         });  
+
+    console.log("dlsadk");
   }, []);
+  console.log(da);
+
 
 
   if (access != currentUser._id || currentUser.role === 1){
