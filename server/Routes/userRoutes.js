@@ -28,7 +28,7 @@ router.delete("/delete/:id", userController.deleteUser);
 
 router.get("/dashboard", userController.adminDashboard);
 
-router.get("/dashboard/:year", userController.adminDashboard);
+router.get("/dashboard/:year/:model", userController.adminDashboard);
 
 
 module.exports = router;

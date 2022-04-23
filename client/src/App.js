@@ -28,7 +28,7 @@ import EditProfile from './components/Pages/EditProfile';
 import ManagerDashboard from './components/Pages/ManagerDashboard';
 import OrderStatus from "./components/Pages/OrderStatus";
 import AccessDenied from "./components/Pages/AccessDeniedPage";
-import Stats from './components/adminComponents/statistics'
+import Stats from './components/adminComponents/Stats'
 
 function App() {
 
@@ -262,7 +262,7 @@ function App() {
             }
           />
           <Route
-            path="stats"
+            path="/Stats"
             element={
               <PrivateRoute>
                 <Stats />

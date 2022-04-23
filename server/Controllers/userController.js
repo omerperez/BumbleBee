@@ -277,25 +277,16 @@ const deleteUser = (req, res) => {
 
 const adminDashboard = async  (req,res) => {
   const year = req.params.year;
+  const model = req.params.model;
 
   const govResponse = await axios.get(process.env.GOVIL_CARS_API)
   const data = govResponse.data.result.records;
 
-  const modelsByYear =  _.countBy(data.filter((car) => car.shnat_yitzur == year),'tozeret_nm')
+  const modelsByYear =  _.countBy(data.filter((car) => car.shnat_yitzur == year),'tozeret_nm');
   const countByYears = _.countBy(data.filter((car) => car.shnat_yitzur >= 2020),'shnat_yitzur');
-  const d=[];
+  const specificModelGraph = _.countBy(data.filter((car) => car.shnat_yitzur == year&&car.tozeret_nm.includes(model)),'degem_nm');
 
-  for(const prop in countByYears){
-    d.push({
-      year: prop,
-      count: countByYears[prop]
-    })
-  }
-console.log(d);
-
-  const specificModelGraph = _.countBy(data.filter((car) => car.shnat_yitzur >= 2020&&car.tozeret_nm=='לנד רובר'),'degem_nm');
-
-  const dataResults = {modelsByYear,d,specificModelGraph};
+  const dataResults = {modelsByYear,countByYears,specificModelGraph};
   await res.send(dataResults);
 }
 
