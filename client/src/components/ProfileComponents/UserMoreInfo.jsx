@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -12,6 +12,7 @@ import RequestSteps from "../AlertsComponents/RequestSteps";
 
 export default function UserMoreInfo({ currentUser, isUserPtofile }) {
   const [value, setValue] = useState("1");
+  const [alert, setAlert] = useState();
   const date = new Date(currentUser.dateOfCreate ?? null);
   date.setHours(0,0,0,0);
   
@@ -19,13 +20,15 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
     setValue(newValue);
   };
 
-  const alert = {
-    userId: "62373983d3d01059e218a3b2",
-    carId: "6237838cf4784fc6a46f817e",
-    step: 1,
-    dateOfCreated: "20.01.2022",
-    lastUpdateDate: "20.01.2022",
-  };
+  useEffect(() => {
+    fetch(
+      `${process.env.REACT_APP_SERVER_API}/notification/client/${currentUser._id}`
+    ).then((res) =>
+      res.json().then((data) => {
+        setAlert(data[0]);
+      })
+    );
+  }, []);
 
   return (
     <Box sx={{ width: "100%", typography: "body1" }}>
@@ -79,7 +82,7 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
         </TabPanel>
         {/* {currentUser.role === 1 && isUserPtofile ? ( */}
         <TabPanel value="2" style={{ padding: 5, marginTop: 20 }}>
-          <AlertLayout alert={alert} />
+          <AlertLayout alert={alert} isDealer={false} />
         </TabPanel>
         {/* ) : null} */}
         {currentUser.role == 2 ? (

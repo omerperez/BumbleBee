@@ -6,6 +6,7 @@ import EditCarForm from "../CarComponents/EditCarForm";
 import { editCarIcon } from "../images/projectImages";
 import { useAuth } from "../../contexts/AuthContext";
 import CircularProgress from "@mui/material/CircularProgress";
+import axios from "axios";
 
 export default function CarProfilePage() {
 
@@ -15,19 +16,46 @@ export default function CarProfilePage() {
   const { currentUser } = useAuth();
   const [user, setUser] = useState();
 
-  useEffect(() => {
+  const fetchData = () => {
+    
     const index = window.location.toString().lastIndexOf("/") + 1;
     const id = window.location.toString().substring(index);
-    fetch(`${process.env.REACT_APP_SERVER_API}/car/show/${id}`)
-      .then((response) => response.json())
-      .then((data) => {
+    
+    const userApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`;
+    const carApi = `${process.env.REACT_APP_SERVER_API}/car/show/${id}`;
+
+    const getUser = axios.get(userApi);
+    const getCar = axios.get(carApi);
+
+    axios.all([getUser, getCar]).then(
+      axios.spread((...allData) => {
+        const allUserData = allData[0].data;
+        const allCarData = allData[1].data;
+
+        setUser(allUserData);
+        setCar(allCarData);
         setLoading(false);
-        setCar(data)
-      });  
-          fetch(
-            `${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`
-          ).then((res) => res.json().then((data) => setUser(data)));
-  },[isEdit]);
+      })
+    );
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [isEdit]);
+
+  // useEffect(() => {
+  //   const index = window.location.toString().lastIndexOf("/") + 1;
+  //   const id = window.location.toString().substring(index);
+  //   fetch(`${process.env.REACT_APP_SERVER_API}/car/show/${id}`)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setLoading(false);
+  //       setCar(data)
+  //     });  
+  //         fetch(
+  //           `${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`
+  //         ).then((res) => res.json().then((data) => setUser(data)));
+  // },[isEdit]);
 
   if (loading) {
     return (

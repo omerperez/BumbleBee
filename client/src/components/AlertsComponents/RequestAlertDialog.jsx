@@ -9,8 +9,8 @@ import { Button, FormControl } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { editAlertFunction } from "./AlertFunction";
 
-export default function SecondRequestDialog({ alert }) {
-
+export default function ShippingRequestDialog({ alert }) {
+  
   const [open, setOpen] = useState(false);
   const [files, setFiles] = useState();
   const [comment, setComment] = useState("");
@@ -24,14 +24,16 @@ export default function SecondRequestDialog({ alert }) {
   };
 
   const handleClickSubmit = () => {
-    const editAlert = {
+    
+    const currentAlert = {
       _id: alert._id,
       dealer: alert.dealer,
-      license: files,
-      step: 2,
+      car: alert.car,
+      shipping: files,
+      step: 4,
     };
 
-    const res = editAlertFunction(editAlert);
+    const res = editAlertFunction(currentAlert);
     if (res != "Success") {
       return console.log("Filed");
     } else {
@@ -42,7 +44,6 @@ export default function SecondRequestDialog({ alert }) {
   return (
     <div>
       <Button
-        // color="success"
         style={{
           letterSpacing: 2,
           background: "#42ADFF",
@@ -65,22 +66,34 @@ export default function SecondRequestDialog({ alert }) {
             id="alert-dialog-description"
             className="text-center mt-2"
           >
-            <label htmlFor={"license"}>
+            <label htmlFor={"shipping"}>
               <img
-                alt="license_other"
+                alt="shipping"
                 className="cur-pointer ml-25"
                 width={"60%"}
                 src={
                   files && files.length > 0
                     ? uploadMultipleSucces
-                    : "/files/licenses.svg"
+                    : "/files/shipping.svg"
                 }
               />
             </label>
             <input
-              id="license"
+              id={
+                alert.step == 1
+                  ? "license"
+                  : alert.step == 2
+                  ? "gov"
+                  : "shipping"
+              }
               type="file"
-              name="license"
+              name={
+                alert.step == 1
+                  ? "license"
+                  : alert.step == 2
+                  ? "gov"
+                  : "shipping"
+              }
               multiple
               aria-required="true"
               className="display-none"

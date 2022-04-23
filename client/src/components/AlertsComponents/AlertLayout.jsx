@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import FilesTabStatus from "./FilesTabStatus";
 import CircularProgress from "@mui/material/CircularProgress";
-import Avatar from "@mui/material/Avatar";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -20,8 +19,8 @@ export default function AlertLayout({ alert, isDealer }) {
   const [car, setCar] = useState(null);
   const [loading, setLoading] = useState(true);
 
-
   const fetchData = () => {
+    
     const userApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${alert.client}`;
     const dealerApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${alert.dealer}`;
     const carApi = `${process.env.REACT_APP_SERVER_API}/car/show/${alert.car}`;
@@ -35,7 +34,6 @@ export default function AlertLayout({ alert, isDealer }) {
         const allUserData = allData[0].data;
         const allDealerData = allData[1].data;
         const allCarData = allData[2].data;
-
         setUser(allUserData);
         setDealer(allDealerData);
         setCar(allCarData);
@@ -101,7 +99,7 @@ export default function AlertLayout({ alert, isDealer }) {
           }}
           className="f-18 opc-8 m-auto"
         >
-          {iconToShow(alert.step, alert.isCancelRequest, isDealer)}
+          {iconToShow(alert.step, alert.isCancelRequest, isDealer, alert)}
         </Typography>
       </AccordionSummary>
       <Divider />
@@ -179,30 +177,3 @@ export default function AlertLayout({ alert, isDealer }) {
     </Accordion>
   );
 }
-
-/*
-const alert3 = {
-    car: "6237838cf4784fc6a46f817e",
-    client: "62373983d3d01059e218a3b2",
-    dealer: "62373983d3d01059e218a3b2",
-    isCancelRequest: false,
-    lastUpdateDate: "20.01.2022",
-    dateOfCreated: "20.01.2022",
-    step: 4,
-    dealerComment:
-      "Hi, here are the car licenses. If something is missing you will contact us.",
-          paymentFiles: ["/files/dhl.svg", "/files/gov.svg"],
-    carLicenseFile: ["/files/dhl.svg", "/files/gov.svg"],
-    govIlFile: ["/files/dhl.svg", "/files/gov.svg"],
-    dhlFile: ["/files/dhl.svg", "/files/gov.svg"],
-    govIlRef: "asoindiniu1239871829jnaklnsad",
-    dhlRef: "asoindiniu1239871829jnaklnsad",
-    containerNumber: "ASP - 1953F3 MO",
-    containerFiles: ["/files/dhl.svg", "/files/gov.svg"],
-    dateOfDealerResponse: "28.01.2022",
-    dateOfAttachFiles: "30.01.2022",
-    dateOfContainerNumber: "02.02.2022",
-  };
-
-
-*/

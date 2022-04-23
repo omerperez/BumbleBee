@@ -56,7 +56,15 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
         </Box>
         <TabPanel value="1">
           {payment ? (
-            <img src="/files/payment.svg" width={"100%"} />
+            <div className="d-flex justify-content-center">
+              <img
+                className="cur-pointer"
+                src="/files/payment.svg"
+                width={"100%"}
+                style={{ maxWidth: 400 }}
+                onClick={() => downloadFiles(payment, process.env.REACT_APP_S3)}
+              />
+            </div>
           ) : (
             <div
               className="d-flex justify-content-center"
@@ -74,7 +82,9 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
                 src="/files/licenses.svg"
                 width={"100%"}
                 style={{ maxWidth: 400 }}
-                onClick={() => downloadFiles(licenses)}
+                onClick={() =>
+                  downloadFiles(licenses, process.env.REACT_APP_S3)
+                }
               />
             </div>
           ) : (
@@ -89,10 +99,10 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
         <TabPanel value="3">
           {govil ? (
             <img
-              className=" cur-pointer"
+              className="cur-pointer"
               src="/files/gov.svg"
               width={"100%"}
-              onClick={() => downloadFiles(govil)}
+              onClick={() => downloadFiles(govil, process.env.REACT_APP_S3)}
             />
           ) : (
             <div
@@ -109,7 +119,7 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
               className=" cur-pointer"
               src="/files/dhl.svg"
               width={"100%"}
-              onClick={() => downloadFiles(dhl)}
+              onClick={() => downloadFiles(dhl, process.env.REACT_APP_S3)}
             />
           ) : (
             <div
@@ -126,7 +136,7 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
               className=" cur-pointer"
               src="/files/shipping.svg"
               width={"100%"}
-              onClick={() => downloadFiles(shipping)}
+              onClick={() => downloadFiles(shipping, process.env.REACT_APP_S3)}
             />
           ) : (
             <div

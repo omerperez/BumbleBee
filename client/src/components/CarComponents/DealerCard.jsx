@@ -18,7 +18,7 @@ import FirstRequestDialog from "../AlertsComponents/FirstRequestDialog";
 export default function DealerCard({ dealer, role, car }) {
 
   const mobile = dealer.phoneNumber ? dealer.phoneNumber : "+972522520484";
-  const {currentUser} = useAuth();
+  const { currentUser } = useAuth();
 
   return (
     <div className="mr-10 p-3" style={{ border: "solid 1px black" }}>
