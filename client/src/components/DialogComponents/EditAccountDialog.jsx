@@ -22,8 +22,7 @@ export default function EditAccountDialog({ mobileNumber }) {
       <div className="w-100 text-center mb-3">
         <Button
           onClick={handleClickOpen}
-          style={{ border: "none " }}
-          className={"edit-profile-btn-dealer"}
+          className={"edit-profile-btn-dealer no-border"}
         >
           Edit Profile
         </Button>
@@ -50,11 +49,10 @@ export default function EditAccountDialog({ mobileNumber }) {
         >
           <DialogTitle
             id="alert-dialog-title"
-            style={{ marginLeft: "540px" }}
             onClick={handleClose}
             className="cur-pointer"
           >
-            <h4 style={{ color: "#DC143C" }}>X</h4>
+            <h4 className="color-red">X</h4>
           </DialogTitle>
           <DialogContent>
             <EditProfile setOpen={setOpen} mobileNumber={mobileNumber} />

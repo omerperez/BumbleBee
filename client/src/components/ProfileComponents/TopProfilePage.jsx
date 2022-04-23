@@ -11,14 +11,7 @@ export default function TopProfilePage({fullName, image}) {
   return (
     <div className={classes.root}>
       <div className={classes.container}>
-        <img
-          src={image}
-          className="border-circle border3-black"
-          style={{
-            height: 150,
-            width: 150,
-          }}
-        />
+        <img src={image} className="border-circle border3-black h-150 w-150" />
         <Typography variant="h3" className={classes.name}>
           {fullName}
         </Typography>

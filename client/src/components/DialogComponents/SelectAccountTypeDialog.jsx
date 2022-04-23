@@ -47,7 +47,6 @@ export default function SelectAccountTypeDialog() {
         >
           <DialogTitle
             id="alert-dialog-title"
-            style={{ marginLeft: "540px" }}
             onClick={handleClose}
             className="cur-pointer"
           >
@@ -60,12 +59,6 @@ export default function SelectAccountTypeDialog() {
                   <img
                     src="/regular-user.png"
                     width={170}
-                    style={{
-                      borderRadius: "50%",
-                      //   border: "solid 2px black",
-                      backgroundSize: "cover",
-                      padding: 3,
-                    }}
                   />
                   <div className="mt-3 font-24 link-dark">
                     <b>Client</b>
@@ -77,12 +70,6 @@ export default function SelectAccountTypeDialog() {
                   <img
                     src="/seller-user.png"
                     width={170}
-                    style={{
-                      borderRadius: "50%",
-                      //   border: "solid 2px black",
-                      backgroundSize: "cover",
-                      padding: 3,
-                    }}
                   />
                   <div className="mt-3 font-24 link-dark">
                     <b>Dealer</b>

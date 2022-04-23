@@ -500,9 +500,8 @@ export default function CarForm() {
         <div className="d-flex mt-4">
           <label htmlFor={"main"}>
             <img
-              style={{ borderRadius: "15px" }}
               alt="main_image"
-              className="cur-pointer"
+              className="cur-pointer br-15"
               width={values.main ? 400 : 200}
               height={values.main ? 300 : null}
               src={
@@ -547,7 +546,7 @@ export default function CarForm() {
             className="display-none"
             onChange={(e) => carChange(e)}
           />
-          <div style={{ marginLeft: "auto" }}>
+          <div className="m-auto">
             {loading ? (
               <LoadingButton
                 className="creat-car-btn"

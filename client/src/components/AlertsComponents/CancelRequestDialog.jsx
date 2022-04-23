@@ -21,10 +21,7 @@ export default function CancelRequestDialog() {
   return (
     <div>
       <Button
-        className="capital-letter border-2-black"
-        style={{
-          background: "rgba(125, 125, 125, 0.856)",
-        }}
+        className="capital-letter border-2-black background-cancel"
         variant="contained"
         onClick={handleClickOpen}
       >
@@ -40,10 +37,7 @@ export default function CancelRequestDialog() {
         <DialogTitle id="alert-dialog-title">Send Request</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            <span
-              className="f-19 text-center color-black"
-              style={{ letterSpacing: 1.2 }}
-            >
+            <span className="f-19 text-center color-black ls-less1">
               Are you sure that you want to cancel the request of purchase this
               car ?
             </span>

@@ -36,26 +36,26 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <TabList
             onChange={handleChange}
+            className="ls-1"
             aria-label="lab API tabs example"
-            style={{ letterSpacing: "1.5px" }}
           >
             <Tab
-              style={{ padding: "0" }}
-              className="capital-letter"
+              className="capital-letter pad-0"
               label="More Inforamtion"
               value="1"
             />
             {currentUser.role == 1 && isUserPtofile ? (
-              <Tab label="Request Status" className="capital-letter" value="2" />
+              <Tab
+                label="Request Status"
+                className="capital-letter"
+                value="2"
+              />
             ) : null}
           </TabList>
         </Box>
-        <TabPanel value="1" style={{ padding: 0 }}>
-          <div
-            className="mt-4 opacity-50"
-            style={{ fontSize: 15, fontWeight: 600, letterSpacing: 1 }}
-          >
-            Contact Information
+        <TabPanel value="1" className="pad-0">
+          <div className="mt-4 opacity-50 f-15 ls-less1">
+            <b>Contact Information</b>
           </div>
           <TabPanelText
             title={"Phone"}
@@ -80,11 +80,9 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
             }
           />
         </TabPanel>
-        {/* {currentUser.role === 1 && isUserPtofile ? ( */}
         <TabPanel value="2" style={{ padding: 5, marginTop: 20 }}>
           <AlertLayout alert={alert} isDealer={false} />
         </TabPanel>
-        {/* ) : null} */}
         {currentUser.role == 2 ? (
           <>
             <TabPanelText

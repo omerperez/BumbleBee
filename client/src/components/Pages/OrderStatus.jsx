@@ -22,10 +22,7 @@ export default function OrderStatus() {
    
   if (loading) {
     return (
-      <div
-        style={{ marginTop: "15%" }}
-        className="d-flex justify-content-center"
-      >
+      <div className="d-flex justify-content-center mt-15">
         <CircularProgress size={200} />
       </div>
     );

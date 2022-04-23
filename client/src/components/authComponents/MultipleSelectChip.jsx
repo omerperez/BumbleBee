@@ -28,8 +28,8 @@ export default function MultipleSelectChip({ dayState, setDayState, status }) {
     <FormControl sx={{ width: "100%", maxWidth: 220 }} value={dayState}>
       <InputLabel id="demo-multiple-chip-label">Activity Days</InputLabel>
       <Select
-        style={{ maxWidth: 220 }}
         variant="standard"
+        className="mw-220"
         labelId="demo-multiple-chip-label"
         id="demo-multiple-chip"
         multiple

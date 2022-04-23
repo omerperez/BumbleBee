@@ -49,11 +49,7 @@ export default function SendDhlAndGovIlDialog({ alert }) {
   return (
     <div>
       <Button
-        style={{
-          letterSpacing: 2,
-          background: "#42ADFF",
-        }}
-        className="capital-letter border-2-black m-2"
+        className="capital-letter border-2-black m-2 app-background ls-2"
         variant="contained"
         onClick={handleClickOpen}
       >

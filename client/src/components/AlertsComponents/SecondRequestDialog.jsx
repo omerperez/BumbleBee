@@ -42,12 +42,7 @@ export default function SecondRequestDialog({ alert }) {
   return (
     <div>
       <Button
-        // color="success"
-        style={{
-          letterSpacing: 2,
-          background: "#42ADFF",
-        }}
-        className="capital-letter border-2-black"
+        className="capital-letter border-2-black ls-2 app-background"
         variant="contained"
         onClick={handleClickOpen}
       >

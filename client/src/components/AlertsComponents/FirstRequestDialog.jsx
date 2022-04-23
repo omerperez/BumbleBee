@@ -58,19 +58,15 @@ export default function FirstRequestDialog({car}) {
         <DialogTitle id="alert-dialog-title">Send Request</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            <span
-              className="f-19 text-center color-black"
-              style={{ letterSpacing: 1.3 }}
-            >
+            <span className="f-19 text-center color-black ls-less1">
               Are you sure that you want to send request of purchase
               confirmation for this car ?
             </span>
             <div className="d-flex justify-content-center">
               <label htmlFor={"payment"}>
                 <img
-                style={{ maxWidth: 300 }}
                   alt="payment_files"
-                  className="cur-pointer mt-4"
+                  className="cur-pointer mt-4 mw-300"
                   src={"/files/payment.svg"}
                 />
               </label>

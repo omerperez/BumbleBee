@@ -45,11 +45,7 @@ export default function ShippingRequestDialog({ alert }) {
   return (
     <div>
       <Button
-        style={{
-          letterSpacing: 2,
-          background: "#42ADFF",
-        }}
-        className="capital-letter border-2-black"
+        className="capital-letter border-2-black app-background ls-2"
         variant="contained"
         onClick={handleClickOpen}
       >

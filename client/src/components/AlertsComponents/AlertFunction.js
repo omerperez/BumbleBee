@@ -200,9 +200,7 @@ const alertTitle = (step, isDealer, dealer, user) => {
             <b>{dealer.firstName + " " + dealer.lastName} </b> has attached
             shipping docs and details.
             <br />
-            <span className="f-15" style={{ letterSpacing: 1.5 }}>
-              Renew!
-            </span>
+            <span className="f-15 ls-1">Renew!</span>
           </span>
         </>
       );
@@ -229,8 +227,7 @@ const iconToShow = (step, isCancelRequest, isDealer, alert) => {
     } else {
       return (
         <AccessTimeFilledIcon
-          style={{ color: "#42ADFF" }}
-          className="m-2"
+          className="m-2 req-color-step-one"
           sx={{
             fontSize: 50,
           }}
@@ -241,22 +238,16 @@ const iconToShow = (step, isCancelRequest, isDealer, alert) => {
     if (isDealer) {
       return (
         <AccessTimeFilledIcon
-          className="m-2"
-          sx={{
-            fontSize: 50,
-            color: "#febb3ee0",
-          }}
+          className="m-2 req-color-step-two"
+          sx={{ fontSize: 50 }}
         />
       );
     } else {
       return (
         <SendDhlAndGovIlDialog
           alert={alert}
-          className="m-2"
-          sx={{
-            fontSize: 50,
-            color: "#febb3ee0",
-          }}
+          className="m-2 req-color-step-two"
+          sx={{ fontSize: 50 }}
         />
       );
     }

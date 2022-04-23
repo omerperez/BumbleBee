@@ -71,20 +71,23 @@ export default function AlertLayout({ alert, isDealer }) {
             <div className="col-3 col-sm-2 m-auto d-flex justify-content-center">
               <img
                 alt="Remy Sharp"
-                src={process.env.REACT_APP_S3 + `${isDealer ? user.image : dealer.image}`}
-                style={{ minWidth: 75, minHeight: 75, maxWidth: 120, maxHeight: 120, borderRadius: '50%' }}
+                src={
+                  process.env.REACT_APP_S3 +
+                  `${isDealer ? user.image : dealer.image}`
+                }
+                className="alert-avatar"
               />
             </div>
             <div className="col f-19 mt-2">
               {alertTitle(alert.step, isDealer, dealer, user)}
               <br />
-              <span className="opc-8" style={{ fontSize: 15 }}>
+              <span className="opc-8 f-15">
                 {alert.lastUpdateDate}
                 {alert.isCancelRequest ? (
-                  <b style={{ color: "red" }}>{" - Cancel"}</b>
+                  <b className="color-red">{" - Cancel"}</b>
                 ) : null}
                 {alert.step == 4 ? (
-                  <b style={{ color: "green" }}>{" - Done"}</b>
+                  <b className="color-green">{" - Done"}</b>
                 ) : null}
               </span>
             </div>
@@ -107,7 +110,7 @@ export default function AlertLayout({ alert, isDealer }) {
         <div className="mb-2">
           <Link to={`/car-profile/${car._id}`}>
             <img
-              style={{ border: "solid 1px #363636 " }}
+              className="border-2-black"
               src={process.env.REACT_APP_S3 + car.mainImage}
               width={"95%"}
             />
@@ -116,22 +119,22 @@ export default function AlertLayout({ alert, isDealer }) {
             <div>
               <div className="mt-1">
                 <b>Company: </b>
-                <span style={{ letterSpacing: 1.3 }}>{car.companyEnglish}</span>
+                <span className="ls-1">{car.companyEnglish}</span>
               </div>
               <div className="mt-1">
                 <b>Model: </b>
-                <span style={{ letterSpacing: 1.3 }}>{car.model}</span>
+                <span className="ls-1">{car.model}</span>
               </div>
               <div className="mt-1">
                 <b>Year: </b>
-                <span style={{ letterSpacing: 1.3 }}>{car.year}</span>
+                <span className="ls-1">{car.year}</span>
               </div>
               <div className="mt-1">
                 <b>Price: </b>
-                <span style={{ letterSpacing: 1 }}>{car.price}$</span>
+                <span>{car.price}$</span>
               </div>
             </div>
-            <div style={{ width: "90%" }}>
+            <div className="w-90">
               <div>
                 <Button
                   className="capital-letter mt-3"

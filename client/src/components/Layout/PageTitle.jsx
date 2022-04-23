@@ -20,14 +20,7 @@ export default function PageTitle({ page }) {
 
   return (
     <>
-      <div
-        style={{
-          position: "absolute",
-          right: 0,
-          marginRight: 40,
-          marginTop: 5,
-        }}
-      >
+      <div className="icons-title-pos">
         {menu.map((item, key) => {
           return (
             <Link key={key} to={item.path} className="link-in-btn">
