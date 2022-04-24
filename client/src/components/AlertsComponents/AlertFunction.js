@@ -61,7 +61,7 @@ async function editAlertFunction(alert) {
       data.append(`govil`, govFiles[i], now + rnd + govFiles[i].name);
       data.append(`govIlFile`, now + rnd + govFiles[i].name);
     }
-  } else {
+  } else  if (alert.step == 4) {
     let shipping = alert.shipping;
     for (let i = 0; i < shipping.length; i++) {
       const rnd = Math.floor(Math.random() * 1000000) + 1000;
@@ -69,6 +69,7 @@ async function editAlertFunction(alert) {
       data.append(`containerFiles`, now + rnd + shipping[i].name);
     }
   }
+  
   data.append("alert", JSON.stringify(alert));
   return api
     .put(`/notification/update/${alert._id}`, data)
@@ -217,7 +218,7 @@ const iconToShow = (step, isCancelRequest, isDealer, alert) => {
       return (
         <div className="m-2 row d-flex">
           <div className="col">
-            <CancelRequestDialog />
+            <CancelRequestDialog alert={alert} />
           </div>
           <div className="col">
             <SecondRequestDialog alert={alert} />

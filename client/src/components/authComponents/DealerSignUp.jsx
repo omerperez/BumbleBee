@@ -28,33 +28,31 @@ export default function DealerSignUp() {
   const [dayState, setDayState] = useState([]);
 
   async function handleSubmit() {
-    values.mobile = mobile;
-    values.role = "2";
+ 
     if (values.password != values.confirmPassword) {
       return setError("Password do not match");
     }
     if(values.password.length < 6){
       return setError("Password must be at least 6 characters long");
     }
-    let checkResFields = checkRegisterFields(
-      values,
-    );
-    if (checkResFields) {
+    values.mobile = mobile;
+    if (checkRegisterFields(values)) {
       return setError("Please fill all fields");
     }
+    values.role = "2";
+    const dealer = {
+      openingTime: startHour,
+      closingTime: endHour,
+      activityDays: dayState.toString().replaceAll("/[/]", ""),
+    };
     try {
       setError("");
-      const dealer = {
-        openingTime: startHour,
-        closingTime: endHour,
-        activityDays: dayState.toString().replaceAll("/[/]", ""),
-      };
       setLoading(true);
-      const results = await signup(values, dealer);
+     const results = await signup(values, dealer);
       if (results !== "Success") {
         setError(results);
       } else {
-        return navigate("/homepage");
+        navigate("/homepage");
       }
     } catch (err) {
       setError(err);

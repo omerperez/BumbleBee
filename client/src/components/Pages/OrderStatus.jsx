@@ -58,7 +58,7 @@ export default function OrderStatus() {
                   />
                 </div>
               );
-            })};
+            })}
       </div>
     </>
   );

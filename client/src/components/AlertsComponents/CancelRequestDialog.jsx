@@ -5,8 +5,9 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { editAlertFunction } from "./AlertFunction";
 
-export default function CancelRequestDialog() {
+export default function CancelRequestDialog({alert}) {
 
   const [open, setOpen] = useState(false);
 
@@ -17,6 +18,22 @@ export default function CancelRequestDialog() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleCancelRequest = () => {
+     const editAlert = {
+       _id: alert._id,
+       client: alert.client,
+       isCancelRequest: true,
+       step: 5,
+     };
+
+     const res = editAlertFunction(editAlert);
+     if (res != "Success") {
+       return console.log("Filed");
+     } else {
+       return setOpen(false);
+     }
+  }
 
   return (
     <div>
@@ -48,7 +65,7 @@ export default function CancelRequestDialog() {
             Back
           </Button>
           <Button
-            onClick={handleClose}
+            onClick={handleCancelRequest}
             autoFocus
             color="error"
             className=" capital-letter f-18"
