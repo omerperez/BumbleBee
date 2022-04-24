@@ -18,7 +18,7 @@ export default function Stats() {
 
 const[dataVal, setDataVal] = useState();
 const[year,setYear] = useState(2010);
-const [model, setModel] = useState(carsProperties.makes[0]);
+const [model, setModel] = useState(carsProperties.makes[0].english);
 const[loading,setLoading] = useState(true);
 
 useEffect(() => {
@@ -57,7 +57,7 @@ useEffect(() => {
            >
              {carsProperties.makes.map((make, key) => {
                return (
-                 <MenuItem key={make.id} value={make.english}>
+                 <MenuItem key={make.id} value={make}>
                    {make.english}
                  </MenuItem>
                );
