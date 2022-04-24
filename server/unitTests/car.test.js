@@ -1,11 +1,13 @@
-const app = require('../app')
+const app = require('../server')
 const request = require('supertest')
+const mongoose = require('mongoose')
 
 beforeAll(done => {
     done()
 })
 
 afterAll(done => {
+    mongoose.connection.close()
     done()
 })
 
