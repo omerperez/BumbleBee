@@ -76,14 +76,14 @@ async function createAlert(req, res) {
   let updateUser = await userSchema.findById(createAlert.client);
   if (updateUser.role !== 1) {
     return res.status(400).json({
-      message: "Access blocked - you are not an administrator user",
+      message: "Access blocked - you are not an client user",
     });
   }
   const newAlert = await notificationSchema.create(createAlert);
   const filter = { _id: updateUser._id };
   const update = new userSchema({
     _id: updateUser._id,
-    isSendReq: updateUser.isSendReq,
+    isSendReq: true,
   });
 
   await userSchema.findOneAndUpdate(filter, update, { new: true });
@@ -108,7 +108,6 @@ const editAlert = async (req, res) => {
     });
   }
 
-
   if (alertFromJason.isCancelRequest && alertFromJason.isCancelRequest == true){
       let updateUser = await userSchema.findById(createAlert.dealer);
       const filter = { _id: updateUser._id };
@@ -116,8 +115,9 @@ const editAlert = async (req, res) => {
         _id: updateUser._id,
         isSendReq: false,
       });
-
+      
       await userSchema.findOneAndUpdate(filter, update, { new: true });
+
   } else if (alertFromJason.step == 2) {
     alertFromJason.carLicenseFile = req.body.carLicenseFile;
     alertFromJason.dateOfDealerResponse = Date.now();

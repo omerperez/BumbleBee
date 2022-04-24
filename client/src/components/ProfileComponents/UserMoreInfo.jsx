@@ -25,7 +25,7 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
       `${process.env.REACT_APP_SERVER_API}/notification/client/${currentUser._id}`
     ).then((res) =>
       res.json().then((data) => {
-        setAlert(data[0]);
+        setAlert(data[data.length -1]);
       })
     );
   }, []);
