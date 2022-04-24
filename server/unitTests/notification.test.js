@@ -1,3 +1,6 @@
+const app = require('../app')
+const request = require('supertest')
+
 beforeAll(done => {
     done()
 })

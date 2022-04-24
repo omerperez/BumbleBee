@@ -1,6 +1,5 @@
 const app = require('../app')
 const request = require('supertest')
-const { response } = require('../app')
 const userEmail = 'osdn@adnf.com'
 const userPassword = '123123'
 
