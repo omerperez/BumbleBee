@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -10,8 +10,8 @@ import axios from "axios";
 
 const api = axios.create({ baseURL: process.env.REACT_APP_SERVER_API });
 
-export default function DeleteDialog({id, name, email, role}) {
-  const [open, setOpen] = React.useState(false);
+export default function DeleteDialog({ id, name, email, role, disabled }) {
+  const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -21,23 +21,23 @@ export default function DeleteDialog({id, name, email, role}) {
     setOpen(false);
   };
 
-    const deleteUser = () => {
-      api
-        .delete(`/user/delete/${id}`)
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-        setOpen(false);
-        window.location.reload(true);
-    };
+  const deleteUser = () => {
+    api
+      .delete(`/user/delete/${id}`)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    setOpen(false);
+    window.location.reload(true);
+  };
 
   return (
     <div>
-      <Button onClick={handleClickOpen}>
-        <DeleteIcon color="error" />
+      <Button onClick={handleClickOpen} disabled={disabled}>
+        <DeleteIcon color={disabled ? "" : "error"}/>
       </Button>
       <Dialog
         open={open}

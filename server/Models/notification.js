@@ -9,6 +9,7 @@ const notificationSchema = new Schema({
   lastUpdateDate: Date,
   dateOfCreated: Date,
   step: Number,
+  markAsRead: Boolean,
   paymentFiles: [String],
   carLicenseFile: [String],
   govIlFile: [String],

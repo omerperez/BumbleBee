@@ -6,6 +6,7 @@ const carSchema = new Schema({
   companyHebrew: String,
   model: String,
   year: String,
+  category: String,
   numberOfVehicleOwners: String,
   engine: String,
   km: Number,

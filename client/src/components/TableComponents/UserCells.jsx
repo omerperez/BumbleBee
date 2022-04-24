@@ -2,9 +2,10 @@ import React from "react";
 import TableCell from "@mui/material/TableCell";
 import { useTableStyles } from "../../styles/UseStylesMui";
 import TableRow from "@mui/material/TableRow";
-import { Grid } from "@mui/material";
 import axios from "axios";
 import DeleteDialog from "../DialogComponents/DeleteDialog";
+import {Link} from "react-router-dom";
+import { Button } from "@mui/material";
 
 const useStyles = useTableStyles;
 const api = axios.create({ baseURL: process.env.REACT_APP_SERVER_API });
@@ -15,9 +16,11 @@ export default function TableCells({ item }) {
   return (
     <TableRow className={classes.submit}>
       <TableCell className={classes.tableCell} align="left">
-        <Grid container direction="row" alignItems="center">
-          <Grid item>{item._id}</Grid>
-        </Grid>
+        <Link to={`/profile/${item._id}`} className="cancel-underline ml-10">
+          <Button className="capital-letter bg-col-blue" variant="contained">
+            User Profile
+          </Button>
+        </Link>
       </TableCell>
       <TableCell
         key={item._id + item.firstName}
@@ -48,7 +51,7 @@ export default function TableCells({ item }) {
         className={classes.tableCell}
         align="left"
       >
-        {item.role == "1" ? "Client" : "Manager"}
+        {item.role == 1 ? "Client" : item.role == 2 ? "Dealer" : "Manager"}
       </TableCell>
       <TableCell
         key={item._id + "-cs"}
@@ -59,7 +62,8 @@ export default function TableCells({ item }) {
           id={item._id}
           name={item.firstName + " " + item.lastName}
           email={item.email}
-          role={item.role == 1 ? "Client" : "Manager"}
+          role={item.role == 1 ? "Client" : item.role == 2 ? "Dealer" : "Manager"}
+          disabled={item.role == 3 ? true : false}
         />
       </TableCell>
     </TableRow>

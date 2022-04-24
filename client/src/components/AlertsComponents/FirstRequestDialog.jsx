@@ -7,10 +7,11 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import {createAlert} from "./AlertFunction";
 import { useAuth } from '../../contexts/AuthContext';
+import { Alert } from "react-bootstrap";
 
-export default function FirstRequestDialog({car}) {
-
+export default function FirstRequestDialog({ car, showReq }) {
   const [open, setOpen] = useState(false);
+  const [error, setError] = useState('');
   const [files, setFiles] = useState(false);
   const { currentUser } = useAuth();
 
@@ -22,7 +23,8 @@ export default function FirstRequestDialog({car}) {
     setOpen(false);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    setError('');
     const alert = {
       client: currentUser._id,
       dealer: car.dealer,
@@ -30,19 +32,23 @@ export default function FirstRequestDialog({car}) {
       payment: files,
     };
 
-    const res = createAlert(alert); 
-    if(res != "Success"){
-      return console.log("Filed")
+    const res = await createAlert(alert);
+    if (res.data != "Success") {
+      console.log("Filed");
+      setError(res.data);
     } else {
-      return setOpen(false);
+      setOpen(false);
+      return window.location.reload();
     }
-
-  }
+  };
 
   return (
     <div>
       <Button
-        className="capital-letter bg-col-blue"
+        disabled={showReq}
+        className={
+          showReq ? "capital-letter color-black" : "capital-letter bg-col-blue"
+        }
         variant="contained"
         onClick={handleClickOpen}
       >
@@ -57,6 +63,10 @@ export default function FirstRequestDialog({car}) {
       >
         <DialogTitle id="alert-dialog-title">Send Request</DialogTitle>
         <DialogContent>
+          <div>
+            <h1 className="text-left mb-1 bumble-title">BumbleBee</h1>
+            {error && <Alert variant="danger">{error}</Alert>}
+          </div>
           <DialogContentText id="alert-dialog-description">
             <span className="f-19 text-center color-black ls-less1">
               Are you sure that you want to send request of purchase
@@ -67,7 +77,7 @@ export default function FirstRequestDialog({car}) {
                 <img
                   alt="payment_files"
                   className="cur-pointer mt-4 mw-300"
-                  src={"/files/payment.svg"}
+                  src={files ? "/files/check-icon.png" : "/files/payment.svg"}
                 />
               </label>
               <input

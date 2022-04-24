@@ -52,7 +52,8 @@ export default function AuthProvider({ children }) {
 
     return api
       .post("/user/register", userData)
-      .then(function (response) {
+      .then((response) => {
+        console.log(response); //savedUser
         return "Success";
       })
       .catch((err) => {

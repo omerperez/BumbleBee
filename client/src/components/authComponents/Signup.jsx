@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import useForm from "../../utils/useForm";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
@@ -8,16 +8,15 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { checkRegisterFields } from "./userFunctions";
 import {
   israelFlag,
-  emptyProfileImage,
 } from "../images/projectImages";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
 export default function Signup() {
   
+  const { signup } = useAuth();
   const navigate = useNavigate();
   const [values, carChange] = useForm();
-  const { signup } = useAuth();
   const [error, setError] = useState("");
   const [checkbox1, setCheckbox1] = useState(false);
   const [checkbox2, setCheckbox2] = useState(false);
@@ -46,9 +45,9 @@ export default function Signup() {
     if (values.password.length < 6) {
       return setError("Password must be at least 6 characters long");
     }
-      if (checkRegisterFields(values)) {
-        return setError("Please add image profile");
-      }
+    if (checkRegisterFields(values)) {
+      return setError("Please add image profile");
+    }
       values.mobile = `+972${values.mobile}`;
       values.role = "1";
       try {
@@ -60,7 +59,7 @@ export default function Signup() {
         if (results !== "Success"){
           setError(results);
         }else{
-          navigate("/homepage");
+          navigate("/login");
         }
       } catch(err) {
         setError(err);

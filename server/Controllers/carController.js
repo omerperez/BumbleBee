@@ -72,12 +72,17 @@ const getCarByCompany = (request, respons) => {
 async function createCar(req, res) {
 
   const carFromJason = JSON.parse(req.body.car);
+
+  const companyNameFormat =
+    carFromJason.company.english.charAt(0).toUpperCase() +
+    carFromJason.company.english.slice(1);
   const createNewCar = new carSchema({
     _id: new mongoose.Types.ObjectId(),
-    companyEnglish: carFromJason.company.english,
+    companyEnglish: companyNameFormat,
     companyHebrew: carFromJason.company.hebrew,
     model: carFromJason.model,
     year: carFromJason.year,
+    category: carFromJason.category,
     numberOfVehicleOwners: carFromJason.numberOfVehicleOwners,
     engine: carFromJason.engine,
     km: carFromJason.km,
@@ -91,17 +96,17 @@ async function createCar(req, res) {
     doorCount: carFromJason.doorCount,
     gearbox: carFromJason.gearbox,
     emissionClass: "Euro6",
-    firstRegistration: Date(carFromJason.firstRegistrationDate),
+    firstRegistration: new Date(carFromJason.firstRegistrationDate),
     colour: carFromJason.colour,
     condition: carFromJason.condition,
     iteriorDesign: carFromJason.interiorDesign,
-    dateOfCreate: Date,
-    saleStatus: Boolean,
+    dateOfCreate: Date.now(),
+    saleStatus: false,
     dealer: req.body.dealer,
   });
 
   let updateDealer = await userSchema.findById(req.body.dealer);
-  if(updateDealer.role !== 2){
+  if (updateDealer.role !== 2) {
     return res.status(400).json({
       message: "Access blocked - you are not an administrator user",
     });
@@ -112,10 +117,10 @@ async function createCar(req, res) {
   const carList = await updateDealer.cars;
   carList.push(newCar._id);
   const update = new userSchema({
-    _id : updateDealer._id,
-    cars : carList,
+    _id: updateDealer._id,
+    cars: carList,
   });
-  await userSchema.findOneAndUpdate(filter, update, { new : true });
+  await userSchema.findOneAndUpdate(filter, update, { new: true });
   return res.send(newCar._id);
 }
 

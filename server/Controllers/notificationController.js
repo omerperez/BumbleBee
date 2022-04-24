@@ -60,6 +60,7 @@ async function createAlert(req, res) {
     dateOfCreated: Date.now(),
     lastUpdateDate: Date.now(),
     step: 1,
+    markAsRead: false,
     paymentFiles: req.body.paymentFiles ?? null,
     carLicenseFile: [],
     govIlFile: [],
@@ -140,9 +141,10 @@ const editAlert = async (req, res) => {
       isSell: true,
     });
 
-    await carSchema.findOneAndUpdate(filter, update, { new: true });
+    await carSchema.findOneAndUpdate(filter, update, { new: true });          
   }
   
+  alertFromJason.markAsRead = false;
   notificationSchema
       .findOneAndUpdate(alertId, alertFromJason, { new: true })
       .then((updateAlert) => res.json(updateAlert))

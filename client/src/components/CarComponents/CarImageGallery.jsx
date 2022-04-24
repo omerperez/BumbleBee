@@ -70,7 +70,12 @@ export default function CarImageGallery({ id, car, user }) {
           </div>
         </div>
         <div className="flex-basis-33 page-space">
-          <DealerCard dealer={dealer} role={user.role} car={car} />
+          <DealerCard
+            dealer={dealer}
+            role={user.role}
+            showReq={user.isSendReq}
+            car={car}
+          />
         </div>
       </div>
     </>

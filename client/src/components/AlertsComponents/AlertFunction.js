@@ -25,8 +25,8 @@ async function createAlert(alert) {
 
   return api
     .post("/notification/create", data)
-    .then(function (response) {
-      return "Success";    
+    .then((response) => {
+      return response;    
     })
     .catch((err) => {
       console.log(err);

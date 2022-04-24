@@ -28,4 +28,5 @@ export function InitDefauleUserProperties(values, user) {
   values.street = user.street ?? "Yeziat Eurpa";
   values.city = user.city ?? "Herzliya";
   values.country = user.country ?? "Israel";
+  values.activityDaysTime = user.activityDaysTime ?? null;
 }

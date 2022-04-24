@@ -10,7 +10,7 @@ const topbarMenuItems = [
   //   image: "notification_on",
   // },
   {
-    path: "/",
+    path: "/my-profile",
     image: "notification",
   },
 ];
@@ -29,7 +29,7 @@ const topbarMenuItemsForDealer = [
   //   image: "notification_on",
   // },
   {
-    path: "/",
+    path: "/order-status",
     image: "notification",
   },
 ];

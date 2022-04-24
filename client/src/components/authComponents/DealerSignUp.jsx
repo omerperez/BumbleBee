@@ -27,9 +27,9 @@ export default function DealerSignUp() {
   );
   const [dayState, setDayState] = useState([]);
 
-  async function handleSubmit() {
- 
-    if (values.password != values.confirmPassword) {
+  async function handleSubmit(e) {
+     e.preventDefault();
+    if (values.password !== values.confirmPassword) {
       return setError("Password do not match");
     }
     if(values.password.length < 6){
@@ -39,20 +39,20 @@ export default function DealerSignUp() {
     if (checkRegisterFields(values)) {
       return setError("Please fill all fields");
     }
-    values.role = "2";
     const dealer = {
       openingTime: startHour,
       closingTime: endHour,
       activityDays: dayState.toString().replaceAll("/[/]", ""),
     };
+    values.role = "2";
     try {
       setError("");
       setLoading(true);
-     const results = await signup(values, dealer);
+      const results = await signup(values, dealer);
       if (results !== "Success") {
         setError(results);
       } else {
-        navigate("/homepage");
+        navigate("/login");
       }
     } catch (err) {
       setError(err);

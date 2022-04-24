@@ -38,6 +38,10 @@ export default function CarProfileBody({car}) {
                   <th>Mileage</th>
                   <td>{car.km + " km"}</td>
                 </tr>
+                <tr>
+                  <th>Category</th>
+                  <td>{car.category}</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -50,7 +54,12 @@ export default function CarProfileBody({car}) {
                 </tr>
                 <tr>
                   <th>Price (Net)</th>
-                  <td>{car.price + "$ (" + car.netPrice + "$)"}</td>
+                  <td>
+                    {`${car.price}$ (${
+                      car.netPrice ??
+                      (car.price * 0.7).toString().substring(0, 8)
+                    }$)`}
+                  </td>
                 </tr>
                 <tr>
                   <th>Fuel Consumption</th>
@@ -64,16 +73,16 @@ export default function CarProfileBody({car}) {
                   <th>Door Count</th>
                   <td>{car.doorCount}</td>
                 </tr>
+                <tr>
+                  <th>Gearbox</th>
+                  <td>{car.gearbox}</td>
+                </tr>
               </tbody>
             </table>
           </div>
           <div className="col">
             <table>
               <tbody>
-                <tr>
-                  <th>Gearbox</th>
-                  <td>{car.gearbox}</td>
-                </tr>
                 <tr>
                   <th>Emission Class</th>
                   <td>{car.emissionClass}</td>
@@ -103,7 +112,6 @@ export default function CarProfileBody({car}) {
               </tbody>
             </table>
           </div>
-          {/* <Button onClick={handleSubmit} /> */}
         </div>
       </div>
     );

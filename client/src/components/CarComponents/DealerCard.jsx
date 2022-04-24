@@ -15,8 +15,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import FirstRequestDialog from "../AlertsComponents/FirstRequestDialog";
 
-export default function DealerCard({ dealer, role, car }) {
-
+export default function DealerCard({ dealer, role, car, showReq }) {
   const mobile = dealer.phoneNumber ? dealer.phoneNumber : "+972522520484";
   const { currentUser } = useAuth();
 
@@ -64,7 +63,7 @@ export default function DealerCard({ dealer, role, car }) {
       <div className="time-grid mt-3">
         {role == 1 ? (
           <div className="m-2">
-            <FirstRequestDialog car={car} />
+            <FirstRequestDialog car={car} showReq={showReq} />
           </div>
         ) : null}
         <Button

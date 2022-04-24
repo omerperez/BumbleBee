@@ -69,6 +69,12 @@ export default function CarForm() {
          setError("Minimum 3 Other files");
        }else{
          try {
+           const changeDateFormat = values.firstRegistrationDate.replaceAll(
+             "-",
+             "/"
+           );
+           values.firstRegistrationDate = changeDateFormat;
+           values.netPrice = values.price * 0.7;
            setLoading(true);
            const status = await createNewCar(values);
            if (status !== "Success") {
@@ -111,7 +117,7 @@ export default function CarForm() {
             >
               {carsProperties.makes.map((make) => (
                 <MenuItem key={make.id} value={make}>
-                  {make.english}
+                  {make.english} 
                 </MenuItem>
               ))}
             </Select>
@@ -255,7 +261,7 @@ export default function CarForm() {
       </div>
       <div className="row mt-4">
         <h5>Performance Specs</h5>
-        <div className="col-3 mt-3">
+        <div className="col-2 mt-3">
           <FormControl fullWidth disabled={CheckDisableStatus(values)}>
             <InputLabel>Condition</InputLabel>
             <Select
@@ -269,6 +275,26 @@ export default function CarForm() {
                 return (
                   <MenuItem key={cond.id} value={cond}>
                     {cond}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+        </div>
+        <div className="col-2 mt-3">
+          <FormControl fullWidth disabled={CheckDisableStatus(values)}>
+            <InputLabel>Category</InputLabel>
+            <Select
+              label="category"
+              name="category"
+              value={values.category ? values.category : ""}
+              onChange={(e) => carChange(e)}
+              required
+            >
+              {carsProperties.CategoriesTypes.map((category, key) => {
+                return (
+                  <MenuItem key={category.id} value={category}>
+                    {category}
                   </MenuItem>
                 );
               })}
@@ -387,7 +413,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col-2 mt-3">
+        <div className="col-1 mt-3">
           <FormControl fullWidth disabled={CheckDisableStatus(values)}>
             <InputLabel>Color</InputLabel>
             <Select
@@ -402,10 +428,10 @@ export default function CarForm() {
                   <MenuItem key={color.id} value={color}>
                     <div className="row">
                       <div className="col-8">{color}</div>
-                      <div
+                      {/* <div
                         className="col-1 d-flex bumble-img-log"
                         style={{ background: color }}
-                      ></div>
+                      ></div> */}
                     </div>
                   </MenuItem>
                 );

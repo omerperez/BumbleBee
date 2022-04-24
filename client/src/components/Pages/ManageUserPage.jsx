@@ -7,8 +7,8 @@ import UserCells from "../TableComponents/UserCells";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-const smallLabel = {  minHeight: '50px !important', width: "15%", marginTop: "21px" };
-const medWidth = { minHeight: "50px", width: "20%" };
+const smallLabel = {  minHeight: '50px !important', width: "12%", marginTop: "21px" };
+const medWidth = { minHeight: "50px", width: "15%" };
 const noBorder = { minHeight: "50px", width: "17%", border: 'none !important' };
 
 export default function ManageUserPage() {

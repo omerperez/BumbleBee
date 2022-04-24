@@ -39,7 +39,7 @@ export default function HomePage() {
       <div className="pr-1">
         <FilterCars carsState={cars} carsSetState={setCars} />
         <div className="cars-grid">
-          {cars.map((car) => {
+          {cars.filter((car) => car.isSell != true).map((car) => {
             return (
               <CarCard
                 key={car._id}

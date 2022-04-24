@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import PageTitle from "../Layout/PageTitle";
 import { useAuth } from "../../contexts/AuthContext";
-import UserCard from "../ProfileComponents/UserCard";
-import UserFilesCard from "../ProfileComponents/UserFilesCard";
 import CircularProgress from "@mui/material/CircularProgress";
 import OtherPropertiesCard from "../ProfileComponents/OtherPropertiesCard";
 import ProfileSide from "../ProfileComponents/ProfileSide";
-import { Card, Divider } from "@mui/material";
-import useForm from "../../utils/useForm";
+import axios from "axios";
 import RequestSteps from "../AlertsComponents/RequestSteps";
 
 export default function MyProfile() {
@@ -15,16 +12,40 @@ export default function MyProfile() {
   const { currentUser } = useAuth();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [values, carChange] = useForm();
+  const [alert, setAlert] = useState(null);
+
+  // useEffect(() => {
+  //   setLoading(true);
+  //   fetch(`${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       setUser(data);
+  //       setLoading(false);
+  //     });
+  // }, []);
+
+  const fetchData = () => {
+    const currentUserApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`;
+    const notificationApi = `${process.env.REACT_APP_SERVER_API}/notification/client/${currentUser._id}`;
+
+    const getUser = axios.get(currentUserApi);
+    const getNotification = axios.get(notificationApi);
+
+    axios.all([getUser, getNotification]).then(
+      axios.spread((...allData) => {
+        const userData = allData[0].data;
+        const notificationData = allData[1].data;
+        setUser(userData);
+        setAlert(
+          notificationData.length > 0 ? notificationData[notificationData.length - 1] : null
+        );
+        setLoading(false);
+      })
+    );
+  };
 
   useEffect(() => {
-    setLoading(true);
-    fetch(`${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setUser(data);
-        setLoading(false);
-      });
+    fetchData();
   }, []);
 
   if (loading) {
@@ -38,9 +59,7 @@ export default function MyProfile() {
   return (
     <>
       <PageTitle />
-      <div
-        className="d-flex justify-content-centermt-5 pad-1"
-      >
+      <div className="d-flex justify-content-centermt-5 pad-1">
         <div className="col-3 mt-5 mb-5 offset-1">
           <ProfileSide currentUser={user} />
           {user.role === 1 ? (
@@ -56,7 +75,7 @@ export default function MyProfile() {
         </div>
       </div>
       <div className="d-flex justify-content-center">
-        {user.role === 1 ? <RequestSteps /> : null}
+        {user.role === 1 ? <RequestSteps step={alert ? alert.step : 1} /> : null}
       </div>
     </>
   );

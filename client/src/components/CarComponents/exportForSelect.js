@@ -57,6 +57,11 @@ const carsProperties = {
     "Yellow",
     "Purple",
   ],
+  CategoriesTypes: [
+    "Sport",
+    "Crossover",
+    "Family",
+  ],
   InteriorDesign: [
     "Alcantara",
     "Leather",
