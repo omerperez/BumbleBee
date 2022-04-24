@@ -1,5 +1,5 @@
 import './components/Navigation/Navigation.modules.css';
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes  } from "react-router-dom";
 import HomePage from './components/Pages/HomePage';
 import AboutUs from './components/Pages/AboutUs';
 import MyProfile from './components/Pages/MyProfile';
@@ -28,7 +28,6 @@ import EditProfile from './components/Pages/EditProfile';
 import ManagerDashboard from './components/Pages/ManagerDashboard';
 import OrderStatus from "./components/Pages/OrderStatus";
 import AccessDenied from "./components/Pages/AccessDeniedPage";
-import Stats from './components/adminComponents/Stats'
 
 function App() {
 
@@ -56,7 +55,6 @@ function App() {
   });
 
   return (
-    // <Container>
     <BrowserRouter>
       <AuthProvider>
         <Routes>
@@ -262,14 +260,6 @@ function App() {
             }
           />
           <Route
-            path="/Stats"
-            element={
-              <PrivateRoute>
-                <Stats />
-              </PrivateRoute>
-            }
-          />
-          <Route
             path="/forgot-password"
             element={
               <PublicRoute>
@@ -280,7 +270,6 @@ function App() {
         </Routes>
       </AuthProvider>
     </BrowserRouter>
-    // </Container>
   );
 }
 

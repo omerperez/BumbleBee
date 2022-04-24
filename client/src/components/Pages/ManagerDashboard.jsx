@@ -1,15 +1,25 @@
 import React from "react";
 import PageTitle from "../Layout/PageTitle";
-import { CircularProgress } from "@mui/material";
 import AccessDenied from "../authComponents/AccessDenied";
 import { useAuth } from "../../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import Stats from "../adminComponents/Stats";
 
 export default function ManagerDashboard() {
   
-    return (
+  const { currentUser } = useAuth();
+  if(currentUser.role !== 3){
+     return (
+       <>
+         <PageTitle page={"Access Denied"} />
+         <AccessDenied />
+       </>
+     );
+  }
+  
+  return (
     <>
       <PageTitle page={"Manager Dashboard"} />
+      <Stats />
     </>
   );
 }
