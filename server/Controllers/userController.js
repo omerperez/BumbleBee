@@ -36,6 +36,7 @@ const getUserById = (request, respons) => {
 
 /* POST */
 const register = async (request, response) => {
+  console.log(request.body.user)
   const userFromJson = JSON.parse(request.body.user);
   const dealerPropertiesJson = JSON.parse(request.body.dealer);
 
