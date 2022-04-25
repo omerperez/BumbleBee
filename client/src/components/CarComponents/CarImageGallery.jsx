@@ -58,28 +58,12 @@ export default function CarImageGallery({ id, car, user }) {
               className="border-3-black no-border-left"
               onError={error403}
             />
-            <div
-              style={{
-                position: "absolute",
-                top: 0,
-                bottom: 0,
-                left: "85%",
-                right: 0,
-                width: "100%",
-                height: "100%",
-              }}
-            >
-              <Button
-                style={{ background: "none", border: "none" }}
-                onClick={AddCarToFavorite}
-              >
+            <div className="start-pos">
+              <Button className="no-border no-bg" onClick={AddCarToFavorite}>
                 {newStatus ? (
-                  <StarIcon fontSize="large" style={{ color: "#e6af5c" }} />
+                  <StarIcon fontSize="large" className="yel-col-stars" />
                 ) : (
-                  <StarBorderIcon
-                    fontSize="large"
-                    style={{ color: "#e6af5c" }}
-                  />
+                  <StarBorderIcon fontSize="large" className="yel-col-stars" />
                 )}
               </Button>
             </div>

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -12,6 +12,7 @@ import RequestSteps from "../AlertsComponents/RequestSteps";
 
 export default function UserMoreInfo({ currentUser, isUserPtofile }) {
   const [value, setValue] = useState("1");
+  const [alert, setAlert] = useState();
   const date = new Date(currentUser.dateOfCreate ?? null);
   date.setHours(0,0,0,0);
   
@@ -19,13 +20,15 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
     setValue(newValue);
   };
 
-  const alert = {
-    userId: "62373983d3d01059e218a3b2",
-    carId: "6237838cf4784fc6a46f817e",
-    step: 1,
-    dateOfCreated: "20.01.2022",
-    lastUpdateDate: "20.01.2022",
-  };
+  useEffect(() => {
+    fetch(
+      `${process.env.REACT_APP_SERVER_API}/notification/client/${currentUser._id}`
+    ).then((res) =>
+      res.json().then((data) => {
+        setAlert(data[data.length -1]);
+      })
+    );
+  }, []);
 
   return (
     <Box sx={{ width: "100%", typography: "body1" }}>
@@ -33,26 +36,26 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <TabList
             onChange={handleChange}
+            className="ls-1"
             aria-label="lab API tabs example"
-            style={{ letterSpacing: "1.5px" }}
           >
             <Tab
-              style={{ padding: "0" }}
-              className="capital-letter"
+              className="capital-letter pad-0"
               label="More Inforamtion"
               value="1"
             />
             {currentUser.role == 1 && isUserPtofile ? (
-              <Tab label="Request Status" className="capital-letter" value="2" />
+              <Tab
+                label="Request Status"
+                className="capital-letter"
+                value="2"
+              />
             ) : null}
           </TabList>
         </Box>
-        <TabPanel value="1" style={{ padding: 0 }}>
-          <div
-            className="mt-4 opacity-50"
-            style={{ fontSize: 15, fontWeight: 600, letterSpacing: 1 }}
-          >
-            Contact Information
+        <TabPanel value="1" className="pad-0">
+          <div className="mt-4 opacity-50 f-15 ls-less1">
+            <b>Contact Information</b>
           </div>
           <TabPanelText
             title={"Phone"}
@@ -77,11 +80,9 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
             }
           />
         </TabPanel>
-        {/* {currentUser.role === 1 && isUserPtofile ? ( */}
         <TabPanel value="2" style={{ padding: 5, marginTop: 20 }}>
-          <AlertLayout alert={alert} />
+          <AlertLayout alert={alert} isDealer={false} />
         </TabPanel>
-        {/* ) : null} */}
         {currentUser.role == 2 ? (
           <>
             <TabPanelText

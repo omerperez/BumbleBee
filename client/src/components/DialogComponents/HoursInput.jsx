@@ -39,7 +39,7 @@ export default function HoursInput({
   return (
     <Form.Group id="days" className="mt-4 input-time-grid">
       <div className="ml-5 text-start">
-        <span className="f-15" style={{ letterSpacing: 1.5 }}>
+        <span className="f-15 ls-1">
           {title}
         </span>
       </div>
@@ -50,7 +50,6 @@ export default function HoursInput({
             <Switch
               defaultChecked={check}
               color={"secondary"}
-              //   style={check ? null : { color: "red" }}
             />
           }
           label={check ? "Open" : "Closed"}
@@ -68,7 +67,7 @@ export default function HoursInput({
           </LocalizationProvider>
         ) : null}
       </div>
-      <div style={{ margin: "auto", letterSpacing: 1.5 }}>
+      <div className="m-auto ls-1">
         {check ? <b>TO</b> : null}
       </div>
       <div>

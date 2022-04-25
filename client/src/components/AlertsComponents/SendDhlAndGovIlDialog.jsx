@@ -9,20 +9,17 @@ import {
   uploadMultipleEmpty,
 } from "../images/projectImages";
 import useForm from "../../utils/useForm";
-import { Button, FormControl } from "@mui/material";
+import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import {
-  checkCarsFields,
-  CheckDisableStatus,
-} from "../CarComponents/carFunctions";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SaveIcon from "@mui/icons-material/Save";
+import { editAlertFunction } from "./AlertFunction";
 
-export default function SendDhlAndGovIlDialog() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [values, carChange] = useForm();
+export default function SendDhlAndGovIlDialog({ alert }) {
+  
   const [open, setOpen] = useState(false);
+  const [dhl, setDhl] = useState();
+  const [gov, setGov] = useState();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -33,12 +30,29 @@ export default function SendDhlAndGovIlDialog() {
   };
 
   const handleClickSubmit = () => {
-    setOpen(false);
+    const editAlert = {
+      _id: alert._id,
+      dealer: alert.dealer,
+      dhl: dhl,
+      govIl: gov,
+      step: 3,
+    };
+
+    const res = editAlertFunction(editAlert);
+    if (res != "Success") {
+      return console.log("Filed");
+    } else {
+      return setOpen(false);
+    }
   };
 
   return (
     <div>
-      <Button color="success" variant="contained" onClick={handleClickOpen}>
+      <Button
+        className="capital-letter border-2-black m-2 app-background ls-2"
+        variant="contained"
+        onClick={handleClickOpen}
+      >
         Apply
       </Button>
       <Dialog
@@ -55,88 +69,61 @@ export default function SendDhlAndGovIlDialog() {
             id="alert-dialog-description"
             className="text-center"
           >
-            <FormControl
-              fullWidth
-              className="mt-3"
-              disabled={CheckDisableStatus(values)}
-            >
-              <TextField
-                label="km"
-                name="km"
-                type="number"
-                value={values.km && values.km > -1 ? values.km : ""}
-                onChange={(e) => {
-                  carChange(e);
-                  if (e.target.value < 0) {
-                    setError(
-                      error.includes("Please Enter Positive Number ")
-                        ? error
-                        : "Please Enter Positive Number " + error
-                    );
-                  } else {
-                    setError("");
-                  }
-                }}
-                required
-              />
-            </FormControl>
-            <label htmlFor={"image"}>
-              <img
-                alt="other_images"
-                className="cur-pointer ml-25"
-                width={200}
-                src={
-                  values.image && values.image.length
-                    ? uploadMultipleSucces
-                    : uploadMultipleEmpty
-                }
-              />
-            </label>
-            <input
-              id="image"
-              type="file"
-              // accept="image/png, image/jpeg"
-              name="image"
-              multiple
-              aria-required="true"
-              className="display-none"
-              onChange={(e) => carChange(e)}
-            />
-            <div style={{ marginLeft: "auto" }}>
-              {loading ? (
-                <LoadingButton
-                  className="creat-car-btn"
-                  size="large"
-                  color="secondary"
-                  loading={loading}
-                  loadingPosition="start"
-                  startIcon={<SaveIcon />}
-                  variant="contained"
-                >
-                  Creating...
-                </LoadingButton>
-              ) : (
-                <Button
-                  className={
-                    checkCarsFields(values)
-                      ? "creat-car-btn"
-                      : "creat-car-btn-dis"
-                  }
-                  variant="contained"
-                  disabled={!checkCarsFields(values)}
-                  onClick={handleClickSubmit}
-                  startIcon={<SaveIcon />}
-                >
-                  Create
-                </Button>
-              )}
+            <div className="d-flex justify-content-center row">
+              <div className="col">
+                <label htmlFor={"gov"}>
+                  <img
+                    alt="other_gov"
+                    className="cur-pointer ml-25"
+                    width={200}
+                    src={
+                      gov && gov.length > 0
+                        ? uploadMultipleSucces
+                        : "/files/gov.svg"
+                    }
+                  />
+                </label>
+                <input
+                  id="gov"
+                  type="file"
+                  name="gov"
+                  multiple
+                  aria-required="true"
+                  className="display-none"
+                  onChange={(e) => setGov(e.target.files)}
+                />
+              </div>
+
+              <div className="col">
+                <label htmlFor={"dhl"}>
+                  <img
+                    alt="other_dhl"
+                    className="cur-pointer ml-25"
+                    width={200}
+                    src={
+                      dhl && dhl.length > 0
+                        ? uploadMultipleSucces
+                        : "/files/dhl.svg"
+                    }
+                  />
+                </label>
+                <input
+                  id="dhl"
+                  type="file"
+                  name="dhl"
+                  multiple
+                  aria-required="true"
+                  className="display-none"
+                  onChange={(e) => setDhl(e.target.files)}
+                />
+              </div>
             </div>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose} autoFocus color="success">
-            Send Confirmation
+          <Button onClick={handleClickSubmit} autoFocus color="success">
+            Send Docs
           </Button>
         </DialogActions>
       </Dialog>

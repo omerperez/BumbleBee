@@ -9,8 +9,10 @@ import { Button, FormControl } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { editAlertFunction } from "./AlertFunction";
 
-export default function SecondRequestDialog({ alert }) {
+export default function ShippingRequestDialog({ alert }) {
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
   const [files, setFiles] = useState();
   const [comment, setComment] = useState("");
@@ -27,8 +29,9 @@ export default function SecondRequestDialog({ alert }) {
     const editAlert = {
       _id: alert._id,
       dealer: alert.dealer,
-      license: files,
-      step: 2,
+      car: alert.car,
+      shipping: files,
+      step: 4,
     };
 
     const res = editAlertFunction(editAlert);
@@ -42,7 +45,7 @@ export default function SecondRequestDialog({ alert }) {
   return (
     <div>
       <Button
-        className="capital-letter border-2-black ls-2 app-background"
+        className="capital-letter border-2-black app-background ls-2"
         variant="contained"
         onClick={handleClickOpen}
       >
@@ -60,28 +63,32 @@ export default function SecondRequestDialog({ alert }) {
             id="alert-dialog-description"
             className="text-center mt-2"
           >
-            <label htmlFor={"license"}>
+            <label htmlFor={"shipping"}>
               <img
-                alt="license_other"
+                alt="shipping"
                 className="cur-pointer ml-25"
                 width={"60%"}
                 src={
                   files && files.length > 0
                     ? uploadMultipleSucces
-                    : "/files/licenses.svg"
+                    : "/files/shipping.svg"
                 }
               />
             </label>
             <input
-              id="license"
+              id="shipping"
               type="file"
-              name="license"
+              name="shipping"
               multiple
               aria-required="true"
               className="display-none"
               onChange={(e) => setFiles(e.target.files)}
             />
-            <FormControl fullWidth className="mt-3">
+            <FormControl
+              fullWidth
+              className="mt-3"
+              // disabled={CheckDisableStatus(values)}
+            >
               <TextField
                 rows={3}
                 label="Comment"

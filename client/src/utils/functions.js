@@ -1,13 +1,13 @@
 import axios from "axios";
 import fileDownload from "js-file-download";
 
-const downloadFiles = (filePath) => {
-  filePath.forEach((file) => downloadFile(file));
+const downloadFiles = (filePath, folder) => {
+  filePath.forEach((file) => downloadFile(file, folder));
 };
 
-const downloadFile = (filePath) => {
+const downloadFile = (filePath, folder) => {
   axios
-    .get(`/files/${filePath}`, {
+    .get(`${folder + filePath}`, {
       responseType: "blob",
     })
     .then((res) => {

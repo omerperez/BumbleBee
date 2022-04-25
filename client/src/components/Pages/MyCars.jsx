@@ -12,7 +12,7 @@ export default function MyCars() {
   const [loading, setLoading] = useState(true);
   const [access, setAccess] = useState("");
   const { currentUser } = useAuth();
-
+  
   useEffect(() => {
      const index = window.location.toString().lastIndexOf("/") + 1;
      const id = window.location.toString().substring(index);
@@ -24,7 +24,6 @@ export default function MyCars() {
           setCars(data)
         });  
   }, []);
-
 
   if (access != currentUser._id || currentUser.role === 1){
       return (

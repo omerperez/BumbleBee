@@ -1,5 +1,5 @@
 import './components/Navigation/Navigation.modules.css';
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes  } from "react-router-dom";
 import HomePage from './components/Pages/HomePage';
 import AboutUs from './components/Pages/AboutUs';
 import MyProfile from './components/Pages/MyProfile';
@@ -55,7 +55,6 @@ function App() {
   });
 
   return (
-    // <Container>
     <BrowserRouter>
       <AuthProvider>
         <Routes>
@@ -271,7 +270,6 @@ function App() {
         </Routes>
       </AuthProvider>
     </BrowserRouter>
-    // </Container>
   );
 }
 

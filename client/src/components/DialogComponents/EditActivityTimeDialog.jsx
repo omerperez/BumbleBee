@@ -112,8 +112,7 @@ export default function EditActivityTimeDialog({ activityDays }) {
       <div className="w-100 text-center mb-3">
         <Button
           onClick={handleClickOpen}
-          style={{ border: "none " }}
-          className={"edit-profile-btn-dealer"}
+          className={"edit-profile-btn-dealer no-border"}
         >
           Edit Availability
         </Button>
@@ -144,7 +143,7 @@ export default function EditActivityTimeDialog({ activityDays }) {
             onClick={handleClose}
             className="d-flex justify-content-end cur-pointer"
           >
-            <h4 style={{ color: "#DC143C" }}>X</h4>
+            <h4 className="color-red">X</h4>
           </DialogTitle>
           <DialogContent>
             <h5 className="mb-5">Set Standard Hours</h5>
@@ -226,8 +225,8 @@ export default function EditActivityTimeDialog({ activityDays }) {
                 <Button
                   onClick={() => {
                     // setOpen(false)
-                    handleSubmit()
-                }}
+                    handleSubmit();
+                  }}
                   className="green-back no-border w-100 color-white capital-letter ls-2"
                 >
                   Apply

@@ -6,21 +6,27 @@ const { upload } = require("../s3");
 
 router.get("/", notificationController.getAllNotification);
 
-router.get("/notification-user/:id", notificationController.getNotificationsByUserId);
+router.get("/client/:id", notificationController.getNotificationsByClientId);
+
+router.get("/user/:id", notificationController.getNotificationsByUserId);
 
 router.post(
   "/create",
   upload.fields([
-    { name: "files", maxCount: 1000 },
-    { name: "mainFile", maxCount: 1 },
+    { name: "payment", maxCount: 1000 },
   ]),
   notificationController.createAlert
 );
 
 router.put(
-  "/update",
-  upload.fields([{name: "files", maxCount: 1000}, {name: "mainFile", maxCount: 1}]),
-  notificationController.comfirmPaymentAlert
+  "/update/:id",
+  upload.fields([
+    { name: "govil", maxCount: 1000 },
+    { name: "dhl", maxCount: 1000 },
+    { name: "license", maxCount: 1000 },
+    { name: "shipping", maxCount: 1000 },
+  ]),
+  notificationController.editAlert
 );
 
 (module.exports = router);

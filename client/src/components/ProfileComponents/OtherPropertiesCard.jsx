@@ -22,7 +22,7 @@ export default function OtherPropertiesCard({ currentUser }) {
     <Card sx={{ boxShadow: "none" }}>
       <div className="row">
         <div className="col">
-          <h2 className="opc-8" style={{ letterSpacing: 2 }}>
+          <h2 className="opc-8 ls-2" >
             {currentUser.firstName + " " + currentUser.lastName}
           </h2>
           <b
