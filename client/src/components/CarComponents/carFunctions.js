@@ -21,7 +21,6 @@ export function CheckDisableStatus(values) {
   return !(
     values.company &&
     values.model &&
-    values.type &&
     values.year &&
     values.engine &&
     values.firstRegistrationDate

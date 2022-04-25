@@ -12,7 +12,6 @@ const carSchema = new Schema({
   km: Number,
   price: Number,
   netPrice: Number,
-  dateForImages: Date,
   images: [String],
   mainImage: String,
   fuelConsumption: String,
@@ -22,10 +21,11 @@ const carSchema = new Schema({
   emissionClass: String,
   firstRegistration: Date,
   colour: String,
-  iteriorDesign: String,
+  interiorDesign: String,
   dateOfCreate: Date,
   saleStatus: Boolean,
   isSell: Boolean,
+  clicksCount: Number,
   dealer: { type: Schema.Types.ObjectId, ref: "users" },
 });
 

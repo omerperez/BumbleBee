@@ -107,7 +107,11 @@ export default function CarProfileBody({car}) {
                 </tr>
                 <tr>
                   <th>Interior Design</th>
-                  <td>{car.iteriorDesign}</td>
+                  <td>{car.interiorDesign}</td>
+                </tr>
+                <tr>
+                  <th>Views</th>
+                  <td>{car.clicksCount}</td>
                 </tr>
               </tbody>
             </table>

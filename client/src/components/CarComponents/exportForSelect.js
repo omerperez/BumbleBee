@@ -59,8 +59,14 @@ const carsProperties = {
   ],
   CategoriesTypes: [
     "Sport",
+    "Sedan",
+    "Coupe",
+    "Station",
+    "Hatchback",
+    "Convertible",
+    "SUV",
     "Crossover",
-    "Family",
+    "Electric",
   ],
   InteriorDesign: [
     "Alcantara",

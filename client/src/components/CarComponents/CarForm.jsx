@@ -117,7 +117,7 @@ export default function CarForm() {
             >
               {carsProperties.makes.map((make) => (
                 <MenuItem key={make.id} value={make}>
-                  {make.english} 
+                  {make.english}
                 </MenuItem>
               ))}
             </Select>
@@ -146,28 +146,6 @@ export default function CarForm() {
           </FormControl>
         </div>
         <div className="col">
-          <FormControl disabled={secondStatus} fullWidth className="mt-3">
-            <InputLabel>Body Type</InputLabel>
-            <Select
-              label="type"
-              name="type"
-              value={values.type ? values.type : ""}
-              onChange={(e) => carChange(e)}
-              required
-            >
-              {Array.from(new Set(dataFromSecApi.map((obj) => obj.type))).map(
-                (type, key) => {
-                  return (
-                    <MenuItem key={type.id} value={type}>
-                      {type}
-                    </MenuItem>
-                  );
-                }
-              )}
-            </Select>
-          </FormControl>
-        </div>
-        <div className="col">
           <FormControl fullWidth disabled={secondStatus} className="mt-3">
             <InputLabel>Year</InputLabel>
             <Select
@@ -187,6 +165,30 @@ export default function CarForm() {
                 return (
                   <MenuItem key={shnat_yitzur.id} value={shnat_yitzur}>
                     {shnat_yitzur}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+        </div>
+        <div className="col">
+          <FormControl
+            fullWidth
+            disabled={CheckDisableStatus(values)}
+            className="mt-3"
+          >
+            <InputLabel>Category</InputLabel>
+            <Select
+              label="category"
+              name="category"
+              value={values.category ? values.category : ""}
+              onChange={(e) => carChange(e)}
+              required
+            >
+              {carsProperties.CategoriesTypes.map((category, key) => {
+                return (
+                  <MenuItem key={category.id} value={category}>
+                    {category}
                   </MenuItem>
                 );
               })}
@@ -261,7 +263,7 @@ export default function CarForm() {
       </div>
       <div className="row mt-4">
         <h5>Performance Specs</h5>
-        <div className="col-2 mt-3">
+        <div className="col-3 mt-3">
           <FormControl fullWidth disabled={CheckDisableStatus(values)}>
             <InputLabel>Condition</InputLabel>
             <Select
@@ -275,26 +277,6 @@ export default function CarForm() {
                 return (
                   <MenuItem key={cond.id} value={cond}>
                     {cond}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-        </div>
-        <div className="col-2 mt-3">
-          <FormControl fullWidth disabled={CheckDisableStatus(values)}>
-            <InputLabel>Category</InputLabel>
-            <Select
-              label="category"
-              name="category"
-              value={values.category ? values.category : ""}
-              onChange={(e) => carChange(e)}
-              required
-            >
-              {carsProperties.CategoriesTypes.map((category, key) => {
-                return (
-                  <MenuItem key={category.id} value={category}>
-                    {category}
                   </MenuItem>
                 );
               })}
@@ -413,7 +395,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col-1 mt-3">
+        <div className="col-2 mt-3">
           <FormControl fullWidth disabled={CheckDisableStatus(values)}>
             <InputLabel>Color</InputLabel>
             <Select

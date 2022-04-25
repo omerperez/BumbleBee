@@ -11,7 +11,7 @@ import { useAuth } from "../../contexts/AuthContext";
 
 export default function CarCard({ _id, image, company, model, price, currentPage, user }) {
 
-  const {addCarToFavorite} = useAuth();
+  const {addCarToFavorite, getCarById} = useAuth();
   const [newStatus, setNewStatus] = useState(
     currentPage === "myFavorite" ? true : JSON.stringify(user.cars).indexOf(_id) !== -1 ? true : false
   );
@@ -72,12 +72,14 @@ export default function CarCard({ _id, image, company, model, price, currentPage
           <br />
           {price + "$"}
           <div className="text-center">
-            <Link
+            <Button onClick={() => getCarById(_id)}>
+              {/* <Link
               to={`/car-profile/${_id}`}
               className="cancel-underline f-14 capital-letter info-text-color"
-            >
+            > */}
               click for more info
-            </Link>
+              {/* </Link> */}
+            </Button>
           </div>
         </Typography>
         {currentPage && currentPage === "myCars" ? (

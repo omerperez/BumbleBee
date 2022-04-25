@@ -167,6 +167,21 @@ export default function AuthProvider({ children }) {
   }
   
   /* CAR - EDIT */
+  async function getCarById(id) {
+    const updateCar = {
+      _id: id,
+    };
+    return api
+      .put(`/car/view-count/${id}`, updateCar)
+      .then((response) => {
+        return navigate("/car-profile/" + id);
+      })
+      .catch(function (error) {
+        console.log(error);
+        return error.response.data.message;
+      });
+  }
+
   async function editCar(id, km, price, colour) {
     const updateCar = {
       _id: id,
@@ -221,10 +236,6 @@ export default function AuthProvider({ children }) {
 
   // }
 
-
-
-
-
   useEffect(() => {
     if (
       JSON.stringify(cookies.get("connectUser")) !==
@@ -259,6 +270,7 @@ export default function AuthProvider({ children }) {
     editPassword,
     loading,
     addCarToFavorite,
+    getCarById,
   };
 
   return (
