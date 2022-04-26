@@ -6,7 +6,7 @@ import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import { FormControl } from "@mui/material";
 import { carsProperties } from '../CarComponents/exportForSelect';
-import CircularProgress from "@mui/material/CircularProgress";
+import Loading from "../Layout/Loading";
 import {
   getCountByYears,
   getModelByYears,
@@ -31,11 +31,7 @@ useEffect(() => {
  } , [year,model]);
  
  if(loading){
-   return (
-     <div className="d-flex justify-content-center mt-15">
-       <CircularProgress size={80} />
-     </div>
-   );
+   return <Loading />;
  }
 
  const countByYears = getCountByYears(dataVal.countByYears);

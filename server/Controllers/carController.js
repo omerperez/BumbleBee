@@ -14,32 +14,16 @@ const getAllCars = (req, res) => {
   });
 };
 
-const addClick = async (req, res) => {
-  const carId = req.body._id;
-  const updateClicks = new carSchema({
-    _id: req.body._id,
-    clicksCount: 1,
-  });
-  try {
-    const carToShow = await carSchema
-      .findOneAndUpdate(carId, updateClicks, { new: true })
-      .then((updateCar) => console.log(updateCar))
-      .catch((err) => console.log(err));
-    res.json(carToShow);
-    console.log("OK");
-  } catch {
-    console.log("Error");
-  }
-};
-
 const getCarById = async (req, res) => {
   const carId = req.params.id;
-  const car = await carSchema.findById(carId);
+  let car = await carSchema.findById(carId);
   try {
+    car.clicksCount = car.clicksCount + 1;
+    await car.save();
     res.json(car);
     console.log("OK");
-  } catch {
-    console.log("Error");
+  } catch(err) {
+    console.log(err);
   }
 };
 
@@ -48,10 +32,10 @@ const getMyCars = (req, res) => {
   console.log(req.params.id);
   carSchema.find().then((results) => {
     try {
-      res.json(results.filter(car => car.dealer == userId));
+      res.json(results.filter((car) => car.dealer == userId));
       console.log("OK");
-    } catch {
-      console.log("Error");
+    } catch (err) {
+      console.log(err);
     }
   });     
 };
@@ -480,6 +464,5 @@ module.exports = {
   getMyCars,
   getAllCars,
   getFavoriteCars,
-  addClick,
   script
 };

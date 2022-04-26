@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
 import ChangePasswordDialog from "../DialogComponents/ChangePasswordDialog";
 import { Button } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
+import Loading from "../Layout/Loading";
 import {
   ImageHandler,
   InitDefauleUserProperties,
@@ -72,11 +72,7 @@ export default function EditProfile({ setOpen, mobileNumber }) {
   }
    
   if (loading) {
-    return (
-      <div className="d-flex justify-content-center mt-15">
-        <CircularProgress size={200} />
-      </div>
-    );
+    return <Loading />;
   }
 
   return (

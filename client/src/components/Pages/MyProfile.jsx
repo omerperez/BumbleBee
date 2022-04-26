@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PageTitle from "../Layout/PageTitle";
 import { useAuth } from "../../contexts/AuthContext";
-import CircularProgress from "@mui/material/CircularProgress";
+import Loading from "../Layout/Loading";
 import OtherPropertiesCard from "../ProfileComponents/OtherPropertiesCard";
 import ProfileSide from "../ProfileComponents/ProfileSide";
 import axios from "axios";
@@ -13,16 +13,6 @@ export default function MyProfile() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [alert, setAlert] = useState(null);
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   fetch(`${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setUser(data);
-  //       setLoading(false);
-  //     });
-  // }, []);
 
   const fetchData = () => {
     const currentUserApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`;
@@ -49,11 +39,7 @@ export default function MyProfile() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="mt-15 d-flex justify-content-center">
-        <CircularProgress size={200} />
-      </div>
-    );
+    return <Loading />;
   }
   
   return (

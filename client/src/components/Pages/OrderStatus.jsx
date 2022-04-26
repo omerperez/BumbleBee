@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PageTitle from "../Layout/PageTitle";
-import { CircularProgress } from "@mui/material";
+import Loading from "../Layout/Loading";
 import AccessDenied from "../authComponents/AccessDenied";
 import { useAuth } from "../../contexts/AuthContext";
 import AlertLayout from "../AlertsComponents/AlertLayout";
@@ -21,11 +21,7 @@ export default function OrderStatus() {
 
    
   if (loading) {
-    return (
-      <div className="d-flex justify-content-center mt-15">
-        <CircularProgress size={200} />
-      </div>
-    );
+    return <Loading />;
   }
   
   if (currentUser && currentUser.role !== 2) {

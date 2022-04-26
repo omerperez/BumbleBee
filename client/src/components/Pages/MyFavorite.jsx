@@ -4,7 +4,7 @@ import PageTitle from "../Layout/PageTitle";
 import { useAuth } from "../../contexts/AuthContext";
 import { Alert } from "@mui/material";
 import AccessDenied from "../authComponents/AccessDenied";
-import CircularProgress from "@mui/material/CircularProgress";
+import Loading from "../Layout/Loading";
 import FilterCars from "../CarComponents/FilterCars";
 
 export default function MyFavorite() {
@@ -31,11 +31,7 @@ export default function MyFavorite() {
   }
 
   if (loading) {
-    return (
-      <div className="d-flex justify-content-center mt-15">
-        <CircularProgress size={200} />
-      </div>
-    );
+    return <Loading />;
   }
 
   if (cars.length == 0)
