@@ -163,7 +163,6 @@ const login = async (request, response) => {
 
 const editPassword = async (request, response) => {
   const userId = { _id: request.params.id };
-
   const user = await userSchema.findOne({ email: request.body.email });
   const validPass = await bcrypt.compare(
     request.body.oldPassword,
@@ -174,17 +173,11 @@ const editPassword = async (request, response) => {
       message: "Password is wrong, please try again",
     });
   }
-
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(request.body.newPassword, salt);
-
-  let editPassword = new userSchema({
-    _id: userId,
-    password: hashedPassword,
-  });
-
+  user.password = hashedPassword;
   try {
-    const editUser = await userSchema.findOneAndUpdate(userId, editPassword, {
+    const editUser = await userSchema.findOneAndUpdate(userId, user, {
       new: true,
     });
     console.log("Success");
@@ -196,6 +189,7 @@ const editPassword = async (request, response) => {
 };
 
 const editUser = async (request, response) => {
+  console.log(request.body.activityDays);
   const userId = { _id: request.body._id };
   let updateUser = request.body;
   try {
@@ -219,7 +213,6 @@ const editUser = async (request, response) => {
 };
 
 const editUserAndImage = async (request, response) => {
-
   const userId = { _id: request.params.id };
   let updateUser = JSON.parse(request.body.user);
   updateUser.image = request.file.originalname;

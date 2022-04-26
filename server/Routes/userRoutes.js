@@ -4,7 +4,7 @@ const userController = require("../Controllers/userController");
 const router = express.Router();
 const { upload } = require("../s3");
 
-router.post("/register", upload.fields([{name:"image",maxCount:1}]), userController.register);
+router.post("/register", upload.single("image"), userController.register);
 
 router.post("/login", userController.login);
 

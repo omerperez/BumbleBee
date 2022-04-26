@@ -20,20 +20,23 @@ export default function HoursInput({
   setActivityDays,
 }) {
   const [check, setCheck] = useState(
-    JSON.stringify(activityDays).indexOf(title) !== -1
+    (activityDays).indexOf(title) != -1 
   );
-//   useEffect(() => {
-   
-//   }, [check]);
+  useEffect(() => {
+   if (check) {
+     setActivityDays([...activityDays, title]);
+     //  setActivityDays(activityDays + "," + title);
+   } else {
+     setActivityDays(activityDays.filter((day) => day.indexOf(title) == -1));
+     //  const days = activityDays.split(",").filter((day) => day !== title);
+     //  setActivityDays(days.toString());
+   }
+   console.log(check);
+   console.log(activityDays);
+  }, [check]);
 
   const changeActivityDays = (e) => {
     setCheck(e.target.checked);
-     if (check) {
-       setActivityDays(activityDays + "," + title);
-     } else {
-       const days = activityDays.split(",").filter((day) => day !== title);
-       setActivityDays(days.toString());
-     }
   };
 
   return (

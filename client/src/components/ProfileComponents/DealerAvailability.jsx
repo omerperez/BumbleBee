@@ -71,10 +71,12 @@ export default function DealerAvailability({ activityDays, activityDaysTime }) {
           )}
         </div>
       </div>
-      <EditActivityTimeDialog
-        activityDays={activityDays}
-        activityDaysTime={activityDaysTime}
-      />
+      <div className="mt-4">
+        <EditActivityTimeDialog
+          activityDays={activityDays}
+          activityDaysTime={activityDaysTime}
+        />
+      </div>
     </>
   );
 }

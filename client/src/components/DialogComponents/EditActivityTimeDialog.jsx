@@ -11,7 +11,7 @@ export default function EditActivityTimeDialog({ activityDays }) {
   const {currentUser, editUserPropertiesWithoutImage} = useAuth();
 
   const [open, setOpen] = useState(false);
-  const [dealerActivityDays, setDealerActivityDays] = useState(activityDays);
+  const [dealerActivityDays, setDealerActivityDays] = useState(activityDays.split(','));
   const [startHour1, setStartHour1] = useState(
     new Date("2018-01-01T00:00:00.000Z").getTime()
   );
@@ -90,17 +90,20 @@ export default function EditActivityTimeDialog({ activityDays }) {
         end: new Date(endHour7).toLocaleString("en-US").split(",")[1],
       },
     ];
+    const stringActivityDays = dealerActivityDays
+      .toString()
+      .replace("[", "")
+      .replace("]", "");
     const edit = {
       _id: currentUser._id,
       activityDaysTime: activityDaysTimeChange,
-      activityDays: activityDays
+      activityDays: stringActivityDays,
     };
-    console.log(edit);
      try {
         const results = await editUserPropertiesWithoutImage(edit);
         if (results._id === edit._id) {
-          // setOpen(false);
-          // window.location.reload();
+          setOpen(false);
+          window.location.reload();
         } else {
           console.log(results);
         }
@@ -157,7 +160,7 @@ export default function EditActivityTimeDialog({ activityDays }) {
               setActivityDays={setDealerActivityDays}
             />
             <HoursInput
-              title={"Monday"}
+              title={" Monday"}
               valueStart={startHour2}
               setValueStart={setStartHour2}
               valueEnd={endHour2}

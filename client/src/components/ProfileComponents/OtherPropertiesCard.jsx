@@ -13,6 +13,7 @@ import { sendWhatsAppToDealer } from "../CarComponents/carFunctions";
 import UserMoreInfo from "./UserMoreInfo";
 import EditAccountDialog from "../DialogComponents/EditAccountDialog";
 import ChangePasswordDialog from "../DialogComponents/ChangePasswordDialog";
+import RatingDealer from "./RatingDealer";
 
 export default function OtherPropertiesCard({ currentUser }) {
   
@@ -101,13 +102,8 @@ export default function OtherPropertiesCard({ currentUser }) {
               >
                 5
               </span>
-              {/* Need Component */}
               <span style={{ verticalAlign: "middle" }}>
-                <StarIcon style={{ verticalAlign: "baseline" }} />
-                <StarIcon style={{ verticalAlign: "baseline" }} />
-                <StarIcon style={{ verticalAlign: "baseline" }} />
-                <StarIcon style={{ verticalAlign: "baseline" }} />
-                <StarIcon style={{ verticalAlign: "baseline" }} />
+                <RatingDealer readOnly={true} ratingCount={5} />
               </span>
             </Typography>
           </div>
