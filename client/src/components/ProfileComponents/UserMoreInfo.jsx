@@ -25,7 +25,7 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
       `${process.env.REACT_APP_SERVER_API}/notification/client/${currentUser._id}`
     ).then((res) =>
       res.json().then((data) => {
-        setAlert(data[data.length -1]);
+        setAlert(data.length > 0 ? [data.length -1] : null);
       })
     );
   }, []);
@@ -80,8 +80,14 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
             }
           />
         </TabPanel>
-        <TabPanel value="2" style={{ padding: 5, marginTop: 20 }}>
-          <AlertLayout alert={alert} isDealer={false} />
+        <TabPanel value="2" className={alert ? "p-5 mt-20" : "dis-bg"}>
+          {alert ? (
+            <AlertLayout alert={alert} isDealer={false} />
+          ) : (
+            <div className="m-auto w-50 pad-10">
+              <h4 className="fw-100 ls-1">No Requests Available</h4>
+            </div>
+          )}
         </TabPanel>
         {currentUser.role == 2 ? (
           <>

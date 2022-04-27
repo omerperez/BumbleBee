@@ -61,7 +61,7 @@ export default function MyProfile() {
         </div>
       </div>
       <div className="d-flex justify-content-center">
-        {user.role === 1 ? <RequestSteps step={alert ? alert.step : 1} /> : null}
+        {user.role === 1 ? <RequestSteps step={alert ? alert.step : 0} /> : null}
       </div>
     </>
   );

@@ -10,9 +10,13 @@ router.post("/login", userController.login);
 
 router.get("/my-user/:id", userController.getUserById);
 
+router.get("/find-rating/:client/:dealer", userController.findCurrentRating);
+
 router.get("/", userController.getAllUsers);
 
 router.put("/edit/:id", userController.editUser);
+
+router.post("/rating", userController.rateDealer);
 
 router.put(
   "/edit-with-image/:id",

@@ -1,13 +1,14 @@
 const userSchema = require("../Models/user");
+const ratingSchema = require("../Models/rating");
 const carSchema = require("../Models/car");
 const { loginValidation, registerValidation } = require("../Validation");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 const router = require("express").Router();
-const _ = require('lodash');
-const axios = require('axios');
-const dotenv = require('dotenv');
+const _ = require("lodash");
+const axios = require("axios");
+const dotenv = require("dotenv");
 dotenv.config();
 
 /* GET */
@@ -36,10 +37,8 @@ const getUserById = (request, respons) => {
 
 /* POST */
 const register = async (request, response) => {
-  console.log(request.body.user)
   const userFromJson = JSON.parse(request.body.user);
   const dealerPropertiesJson = JSON.parse(request.body.dealer);
-
   const { error } = registerValidation(userFromJson);
   if (error) {
     return response.status(400).json({
@@ -98,7 +97,6 @@ const register = async (request, response) => {
       end: end ? end.toLocaleString("en-US") : null,
     },
   ];
-  
   const newUser = {
     _id: new mongoose.Types.ObjectId(),
     firstName: userFromJson.firstName,
@@ -113,11 +111,12 @@ const register = async (request, response) => {
     activityDaysTime: activityDaysTime,
     activityDays: dealerPropertiesJson?.activityDays ?? null,
     rating: 0,
-    ratingCount: 0,
+    // ratingCount: 0,
     dateOfCreate: Date.now(),
     role: userFromJson.role,
     dateOfBuyCar: null,
     isSendReq: false,
+    usersRate: [],
     cars: [],
   };
   try {
@@ -149,20 +148,11 @@ const login = async (request, response) => {
       message: "Email or password is wrong",
     });
   }
-  const token = jwt.sign(
-    {
-      _id: user._id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      role: user.role,
-    },
-    process.env.ACCESS_TOKEN_SECRET
-  );
+  const token = getToken(user);
   response.header("auth-token", token).send({ token, user });
 };
 
 const editPassword = async (request, response) => {
-  const userId = { _id: request.params.id };
   const user = await userSchema.findOne({ email: request.body.email });
   const validPass = await bcrypt.compare(
     request.body.oldPassword,
@@ -175,13 +165,11 @@ const editPassword = async (request, response) => {
   }
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(request.body.newPassword, salt);
-  user.password = hashedPassword;
   try {
-    const editUser = await userSchema.findOneAndUpdate(userId, user, {
-      new: true,
-    });
+    user.password = hashedPassword;
+    await user.save();
     console.log("Success");
-    response.send(editUser);
+    response.send(user);
   } catch (err) {
     console.log("filed");
     response.status(400).json("Something happened, please try again");
@@ -189,22 +177,14 @@ const editPassword = async (request, response) => {
 };
 
 const editUser = async (request, response) => {
-  console.log(request.body.activityDays);
   const userId = { _id: request.body._id };
   let updateUser = request.body;
+  console.log(updateUser);
   try {
     const editUser = await userSchema.findOneAndUpdate(userId, updateUser, {
       new: true,
     });
-    const token = jwt.sign(
-      {
-        _id: editUser._id,
-        firstName: editUser.firstName,
-        lastName: editUser.lastName,
-        role: editUser.role,
-      },
-      process.env.ACCESS_TOKEN_SECRET
-    );
+    const token = getToken(editUser);
     response.send({ token, editUser });
   } catch (err) {
     console.log("filed");
@@ -216,23 +196,66 @@ const editUserAndImage = async (request, response) => {
   const userId = { _id: request.params.id };
   let updateUser = JSON.parse(request.body.user);
   updateUser.image = request.file.originalname;
+  console.log(updateUser);
   try {
     const editUser = await userSchema.findOneAndUpdate(userId, updateUser, {
       new: true,
     });
-    const token = jwt.sign(
-      {
-        _id: editUser._id,
-        firstName: editUser.firstName,
-        lastName: editUser.lastName,
-        role: editUser.role,
-      },
-      process.env.ACCESS_TOKEN_SECRET
-    );
+    const token = getToken(editUser);
     response.send({ token, editUser });
   } catch (err) {
     console.log("filed");
     response.status(400).json("Something happened, please try again");
+  }
+};
+
+const findCurrentRating = (req, res) => {
+  const clientId = req.params.client;
+  const dealerId = req.params.dealer;
+  ratingSchema
+    .findOne({
+      client: clientId,
+      dealer: dealerId,
+    })
+    .then((results) => {
+      try {
+        res.json(results);
+        console.log("OK");
+      } catch {
+        console.log("Error");
+      }
+    });  
+}
+const rateDealer = async (req, res) => {
+  const clientId = req.body.client;
+  const dealerId = req.body.dealer;
+  const dealer = await userSchema.findById(dealerId);
+  let countOfRating = req.body.count;
+  let oldRating = await ratingSchema.findOne({
+    client: clientId,
+    dealer: dealerId,
+  });
+  try {
+    if (oldRating !== null) {
+      console.log("T");
+      countOfRating = countOfRating - oldRating.count;
+      oldRating.count = oldRating.count + countOfRating;
+      dealer.rating = dealer.rating + countOfRating;
+      await dealer.save() && oldRating.save();
+      res.send({ dealer });
+    } else {
+      const newRating = req.body;
+      newRating._id = new mongoose.Types.ObjectId();
+      await ratingSchema.create(newRating);
+      dealer.usersRate = dealer.usersRate.push(clientId);
+      dealer.rating = dealer.rating + countOfRating;
+      await dealer.save();
+      res.send({ dealer });    
+    }
+    console.log("OK");
+  } catch (err) {
+    console.log("filed");
+    res.status(400).json("Something happened, please try again");
   }
 };
 
@@ -241,20 +264,15 @@ const addCarToFavorite = async (req, res) => {
   const userId = req.body._id;
   try {
     const currentUser = await userSchema.findById(userId);
-    const filter = { _id: currentUser._id };
     const carList = await currentUser.cars;
-    if(carList.includes(carId)){
+    if (carList.includes(carId)) {
       carList.pull(carId);
-    } else{
+    } else {
       carList.push(carId);
     }
-    
-    const update = new userSchema({
-      _id: currentUser._id,
-      cars: carList,
-    });
-    const updatedUser = await userSchema.findOneAndUpdate(filter, update, { new: true });
-    res.send({ updatedUser });
+    currentUser.cars = carList;
+    await currentUser.save();
+    res.send({ currentUser });
   } catch (err) {
     console.log("filed");
     res.status(400).json("Something happened, please try again");
@@ -269,19 +287,41 @@ const deleteUser = (req, res) => {
   });
 };
 
-const adminDashboard = async  (req,res) => {
+const adminDashboard = async (req, res) => {
+  const govResponse = await axios.get(process.env.GOVIL_CARS_API);
+  const data = govResponse.data.result.records;
   const year = req.params.year;
   const model = req.params.model;
 
-  const govResponse = await axios.get(process.env.GOVIL_CARS_API)
-  const data = govResponse.data.result.records;
+  const modelsByYear = _.countBy(
+    data.filter((car) => car.shnat_yitzur == year),
+    "tozeret_nm"
+  );
+  const countByYears = _.countBy(
+    data.filter((car) => car.shnat_yitzur >= 2020),
+    "shnat_yitzur"
+  );
+  const specificModelGraph = _.countBy(
+    data.filter(
+      (car) => car.shnat_yitzur == year && car.tozeret_nm.includes(model)
+    ),
+    "degem_nm"
+  );
+  const dataResults = { modelsByYear, countByYears, specificModelGraph };
 
-  const modelsByYear =  _.countBy(data.filter((car) => car.shnat_yitzur == year),'tozeret_nm');
-  const countByYears = _.countBy(data.filter((car) => car.shnat_yitzur >= 2020),'shnat_yitzur');
-  const specificModelGraph = _.countBy(data.filter((car) => car.shnat_yitzur == year&&car.tozeret_nm.includes(model)),'degem_nm');
-
-  const dataResults = {modelsByYear,countByYears,specificModelGraph};
   await res.send(dataResults);
+};
+
+function getToken(user) {
+  return jwt.sign(
+    {
+      _id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      role: user.role,
+    },
+    process.env.ACCESS_TOKEN_SECRET
+  );
 }
 
 module.exports = {
@@ -295,4 +335,6 @@ module.exports = {
   editUserAndImage,
   addCarToFavorite,
   adminDashboard,
+  rateDealer,
+  findCurrentRating,
 };

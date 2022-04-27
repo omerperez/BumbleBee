@@ -28,7 +28,7 @@ export default function DealerCard({ dealer, role, car, showReq }) {
             {dealer.firstName + " " + dealer.lastName}
           </Typography>
           <div className="color-yellow">
-            <RatingDealer readOnly={true} ratingCount={5} />
+            <RatingDealer readOnly={true} ratingCount={dealer.rating && dealer.usersRate ? (dealer.rating/dealer.usersRate.length) : 5} />
           </div>
           <div className="mt-3">
             <div>

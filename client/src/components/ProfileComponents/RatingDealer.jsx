@@ -1,18 +1,16 @@
 import React, {useState} from 'react';
 import Rating from '@mui/material/Rating';
 
-export default function RatingDealer({readOnly, ratingCount}) {
-  const [value, setValue] = useState(readOnly ? ratingCount : 2);
-
+export default function RatingDealer({ readOnly, ratingCount, setRatingCount }) {
   return (
     <Rating
+      style={readOnly ? null : {fontSize: 60 }}
       name="simple-controlled"
-      value={readOnly ? ratingCount : value}
+      value={readOnly ? ratingCount : ratingCount}
       readOnly={readOnly}
       onChange={(event, newValue) => {
-        setValue(newValue);
+        setRatingCount(newValue);
       }}
     />
   );
-
 }

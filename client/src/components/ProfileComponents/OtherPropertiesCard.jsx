@@ -1,19 +1,17 @@
 import React, {useEffect, useState} from "react";
 import Card from "@mui/material/Card";
 import { useAuth } from "../../contexts/AuthContext";
-import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import StarIcon from "@mui/icons-material/Star";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { sendWhatsAppToDealer } from "../CarComponents/carFunctions";
-
 import UserMoreInfo from "./UserMoreInfo";
 import EditAccountDialog from "../DialogComponents/EditAccountDialog";
 import ChangePasswordDialog from "../DialogComponents/ChangePasswordDialog";
 import RatingDealer from "./RatingDealer";
+import DealerRatingDialog from "../DialogComponents/DealerRatingDialog";
 
 export default function OtherPropertiesCard({ currentUser }) {
   
@@ -100,36 +98,51 @@ export default function OtherPropertiesCard({ currentUser }) {
                   marginRight: 8,
                 }}
               >
-                5
+                {currentUser.rating && currentUser.usersRate
+                  ? currentUser.rating / currentUser.usersRate.length
+                  : 4}
               </span>
               <span style={{ verticalAlign: "middle" }}>
-                <RatingDealer readOnly={true} ratingCount={5} />
+                <RatingDealer
+                  readOnly={true}
+                  ratingCount={
+                    currentUser.rating && currentUser.usersRate
+                      ? currentUser.rating / currentUser.usersRate.length
+                      : 4
+                  }
+                />
               </span>
             </Typography>
           </div>
         </>
       ) : null}
-      <div className="mt-4">
-        <Button
-          style={{ letterSpacing: 1 }}
-          className="capital-letter"
-          variant="contained"
-          endIcon={<MailOutlineIcon />}
-        >
-          Send Email
-        </Button>
-        <Button
-          style={{ letterSpacing: 1 }}
-          className="ml-10 capital-letter"
-          variant="contained"
-          onClick={() =>
-            sendWhatsAppToDealer(currentUser.phoneNumber, currentUser.firstName)
-          }
-          endIcon={<WhatsAppIcon />}
-        >
-          Send Whatsapp
-        </Button>
-      </div>
+      {currentUser._id === myUser._id || currentUser.role !== 2 ? null : (
+        <div className="mt-4 d-flex">
+          <Button
+            className="capital-letter ls-less1"
+            variant="contained"
+            endIcon={<MailOutlineIcon />}
+          >
+            Send Email
+          </Button>
+          <Button
+            className="ml-10 capital-letter ls-less1"
+            variant="contained"
+            onClick={() =>
+              sendWhatsAppToDealer(
+                currentUser.phoneNumber,
+                currentUser.firstName
+              )
+            }
+            endIcon={<WhatsAppIcon />}
+          >
+            Send Whatsapp
+          </Button>
+          <div className="ml-10">
+            <DealerRatingDialog dealer={currentUser._id} client={myUser._id} />
+          </div>
+        </div>
+      )}
       <div className="mt-4">
         <UserMoreInfo
           currentUser={currentUser}

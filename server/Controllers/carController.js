@@ -464,5 +464,5 @@ module.exports = {
   getMyCars,
   getAllCars,
   getFavoriteCars,
-  script
+  script,
 };
