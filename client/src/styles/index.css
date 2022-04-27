@@ -261,6 +261,13 @@ input{
 .pad-10{
   padding: 10% !important;
 }
+
+.pad-purple-btn {
+  padding: 5% !important;
+  padding-left: 8% !important;
+  padding-right: 8% !important;
+}
+
 .p-15{
   padding: 15px !important;
 }
@@ -648,8 +655,7 @@ input{
 
 .edit-profile-btn-dealer {
  text-transform: capitalize !important;
- background: blue !important;
- opacity: 0.7;
+ background: #42ADFF !important;
  color: white !important;
  height: 45px;
  border-radius: 30px !important;
@@ -742,6 +748,9 @@ input{
   border-radius: 50% !important;
 }
 
+.mw-95{
+  min-width: 95px !important;
+}
 .h-150{
   height: 150px !important;
 }
@@ -915,4 +924,8 @@ input{
 
 .text-end{
   text-align: end !important;
+}
+
+.bg-purple{
+  background: #9C27B3 !important;
 }

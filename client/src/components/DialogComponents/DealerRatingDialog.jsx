@@ -16,7 +16,6 @@ export default function DealerRatingDialog({dealer, client}) {
   const [open, setOpen] = useState(false);
   const [rateCount, setRateCount] = useState();
 
-  // /find-rating/:client/:dealer
   useEffect(() => {
     fetch(
       `${process.env.REACT_APP_SERVER_API}/user/find-rating/${client}/${dealer}`

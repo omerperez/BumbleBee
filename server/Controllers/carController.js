@@ -187,7 +187,7 @@ const a = new carSchema({
   saleStatus: false,
   isSell: false,
   clicksCount: 0,
-  dealer: "62545e7155a3c69045bddbf7",
+  dealer: "6269a796ce8ed2c913d2616c",
 });
 
 const b = new carSchema({
@@ -221,7 +221,7 @@ const b = new carSchema({
   saleStatus: false,
   isSell: false,
   clicksCount: 0,
-  dealer: "62545e7155a3c69045bddbf7",
+  dealer: "6269b983ce8ed2c913d261ea",
 });
 
   const c = new carSchema({
@@ -255,7 +255,7 @@ const b = new carSchema({
     saleStatus: false,
     isSell: false,
     clicksCount: 0,
-    dealer: "62545e7155a3c69045bddbf7",
+    dealer: "6269a796ce8ed2c913d2616c",
   });
 
   const d = new carSchema({
@@ -289,7 +289,7 @@ const b = new carSchema({
     saleStatus: false,
     isSell: false,
     clicksCount: 0,
-    dealer: "62545e7155a3c69045bddbf7",
+    dealer: "6269baffce8ed2c913d26232",
   });
 
   const e = new carSchema({
@@ -323,7 +323,7 @@ const b = new carSchema({
     saleStatus: false,
     isSell: false,
     clicksCount: 0,
-    dealer: "62545e7155a3c69045bddbf7",
+    dealer: "6269b983ce8ed2c913d261ea",
   });
 
   const f = new carSchema({
@@ -356,7 +356,7 @@ const b = new carSchema({
     saleStatus: false,
     isSell: false,
     clicksCount: 0,
-    dealer: "62545e7155a3c69045bddbf7",
+    dealer: "6269b9f8ce8ed2c913d2621a",
   });
 
   const g = new carSchema({
@@ -390,7 +390,7 @@ const b = new carSchema({
     saleStatus: false,
     isSell: false,
     clicksCount: 0,
-    dealer: "62545e7155a3c69045bddbf7",
+    dealer: "6269b9f8ce8ed2c913d2621a",
   });
 
   const h = new carSchema({
@@ -424,7 +424,7 @@ const b = new carSchema({
     saleStatus: false,
     isSell: false,
     clicksCount: 0,
-    dealer: "62545e7155a3c69045bddbf7",
+    dealer: "6269ba7dce8ed2c913d26226",
   });
 
 return  cars = [a, b, c, d, e, f, g, h];

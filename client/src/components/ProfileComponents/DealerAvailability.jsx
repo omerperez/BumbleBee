@@ -2,6 +2,7 @@ import React from "react";
 import Divider from "@mui/material/Divider";
 import CloseIcon from "@mui/icons-material/Close";
 import EditActivityTimeDialog from "../DialogComponents/EditActivityTimeDialog";
+import { getTimeAvailabilityFormat } from "../../utils/functions";
 
 export default function DealerAvailability({ activityDays, activityDaysTime }) {
   return (
@@ -17,7 +18,7 @@ export default function DealerAvailability({ activityDays, activityDaysTime }) {
         <div>Sunday</div>
         <div className="text-end">
           {JSON.stringify(activityDays).indexOf("Sunday") !== -1 ? (
-            `${activityDaysTime[0].start} - ${activityDaysTime[0].end}`
+            getTimeAvailabilityFormat(activityDaysTime[0])
           ) : (
             <CloseIcon color="error" />
           )}
@@ -25,7 +26,7 @@ export default function DealerAvailability({ activityDays, activityDaysTime }) {
         <div>Monday</div>
         <div className="text-end">
           {JSON.stringify(activityDays).indexOf("Monday") !== -1 ? (
-            `${activityDaysTime[1].start} - ${activityDaysTime[1].end}`
+            getTimeAvailabilityFormat(activityDaysTime[1])
           ) : (
             <CloseIcon color="error" />
           )}
@@ -33,7 +34,7 @@ export default function DealerAvailability({ activityDays, activityDaysTime }) {
         <div>Tuesday</div>
         <div className="text-end">
           {JSON.stringify(activityDays).indexOf("Tuesday") !== -1 ? (
-            `${activityDaysTime[2].start} - ${activityDaysTime[2].end}`
+            getTimeAvailabilityFormat(activityDaysTime[2])
           ) : (
             <CloseIcon color="error" />
           )}
@@ -41,7 +42,7 @@ export default function DealerAvailability({ activityDays, activityDaysTime }) {
         <div>Wednesday</div>
         <div className="text-end">
           {JSON.stringify(activityDays).indexOf("Wednesday") !== -1 ? (
-            `${activityDaysTime[3].start} - ${activityDaysTime[3].end}`
+            getTimeAvailabilityFormat(activityDaysTime[3])
           ) : (
             <CloseIcon color="error" />
           )}
@@ -49,7 +50,7 @@ export default function DealerAvailability({ activityDays, activityDaysTime }) {
         <div>Thursday</div>
         <div className="text-end">
           {JSON.stringify(activityDays).indexOf("Thursday") !== -1 ? (
-            `${activityDaysTime[4].start} - ${activityDaysTime[4].end}`
+            getTimeAvailabilityFormat(activityDaysTime[4])
           ) : (
             <CloseIcon color="error" />
           )}
@@ -57,7 +58,7 @@ export default function DealerAvailability({ activityDays, activityDaysTime }) {
         <div>Friday</div>
         <div className="text-end">
           {JSON.stringify(activityDays).indexOf("Friday") !== -1 ? (
-            `${activityDaysTime[5].start} - ${activityDaysTime[5].end}`
+            getTimeAvailabilityFormat(activityDaysTime[5])
           ) : (
             <CloseIcon color="error" />
           )}
@@ -65,7 +66,7 @@ export default function DealerAvailability({ activityDays, activityDaysTime }) {
         <div>Saturday</div>
         <div className="text-end">
           {JSON.stringify(activityDays).indexOf("Saturday") !== -1 ? (
-            `${activityDaysTime[6].start} - ${activityDaysTime[6].end}`
+            getTimeAvailabilityFormat(activityDaysTime[6])
           ) : (
             <CloseIcon color="error" />
           )}

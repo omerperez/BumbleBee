@@ -7,10 +7,7 @@ import TextField from "@mui/material/TextField";
 import { checkRegisterFields, ImageHandler } from "./userFunctions";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
-import MultipleSelectChip from "./MultipleSelectChip";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import TimePicker from "@mui/lab/TimePicker";
+import EditActivityTimeDialog from "../DialogComponents/EditActivityTimeDialog";
 
 export default function DealerSignUp() {
 
@@ -21,11 +18,8 @@ export default function DealerSignUp() {
   const [loading, setLoading] = useState(false);
   const [profileImage, setProfileImage] = useState();
   const [mobile, setMobiel] = useState("");
-  const [endHour, setEndHour] = useState(new Date("2018-01-01T00:00:00.000Z"));
-  const [startHour, setStartHour] = useState(
-    new Date("2018-01-01T00:00:00.000Z")
-  );
-  const [dayState, setDayState] = useState([]);
+  const [activityDaysTime, setActivityDaysTime] = useState();
+  const [activityDays, setActivityDays] = useState();
 
   async function handleSubmit(e) {
      e.preventDefault();
@@ -40,9 +34,9 @@ export default function DealerSignUp() {
       return setError("Please fill all fields");
     }
     const dealer = {
-      openingTime: startHour,
-      closingTime: endHour,
-      activityDays: dayState.toString().replaceAll("/[/]", ""),
+      activityDays: activityDays,
+      activityDaysTime: activityDaysTime,
+      website: values.website
     };
     values.role = "2";
     try {
@@ -177,34 +171,29 @@ export default function DealerSignUp() {
               disabled={loading}
             />
           </Form.Group>
-          <Form.Group id="days" className="mt-4 time-grid">
-            <div className="mr-10">
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <TimePicker
-                  label="Start"
-                  value={startHour}
-                  onChange={setStartHour}
-                  renderInput={(params) => <TextField {...params} />}
-                  disabled={loading}
-                />
-              </LocalizationProvider>
+          <Form.Group id="website" className="mt-4 d-flex row">
+            <div className="col-8">
+              <TextField
+                id="standard-website-input"
+                label="Website URL"
+                type="url"
+                name="website"
+                onChange={(e) => carChange(e)}
+                variant="standard"
+                fullWidth
+                disabled={loading}
+              />
             </div>
-            <div className="mr-10">
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <TimePicker
-                  label="End"
-                  value={endHour}
-                  onChange={setEndHour}
-                  renderInput={(params) => <TextField {...params} />}
-                  disabled={loading}
-                />
-              </LocalizationProvider>
+            <div className="col">
+              <EditActivityTimeDialog
+                activityDays={
+                  " Monday,Tuesday,Wednesday,Thursday,Friday,Sunday,Saturday"
+                }
+                setActivityDays={setActivityDays}
+                setActivityDaysTime={setActivityDaysTime}
+                createAccount={true}
+              />
             </div>
-            <MultipleSelectChip
-              setDayState={setDayState}
-              dayState={dayState}
-              status={loading}
-            />
           </Form.Group>
           <Button
             disabled={loading}

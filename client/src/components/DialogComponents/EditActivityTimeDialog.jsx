@@ -6,51 +6,59 @@ import { Form, Button, Card, Alert } from "react-bootstrap";
 import HoursInput from "./HoursInput";
 import { useAuth } from "../../contexts/AuthContext";
 
-export default function EditActivityTimeDialog({ activityDays }) {
-  
-  const {currentUser, editUserPropertiesWithoutImage} = useAuth();
+export default function EditActivityTimeDialog({
+  activityDays,
+  setActivityDays,
+  setActivityDaysTime,
+  createAccount,
+}) {
+  const { currentUser, editUserPropertiesWithoutImage } = useAuth();
 
   const [open, setOpen] = useState(false);
-  const [dealerActivityDays, setDealerActivityDays] = useState(activityDays.split(','));
-  const [startHour1, setStartHour1] = useState(
-    new Date("2018-01-01T00:00:00.000Z").getTime()
+  const [dealerActivityDays, setDealerActivityDays] = useState(
+    activityDays.split(",")
   );
-  const [endHour1, setEndHour1] = useState(new Date("2018-01-01T00:00:00.000Z"));
+  const [startHour1, setStartHour1] = useState(
+    new Date("2018-01-01T06:30:00.000Z").getTime()
+  );
+  const [endHour1, setEndHour1] = useState(
+    new Date("2018-01-01T16:30:00.000Z")
+  );
   const [startHour2, setStartHour2] = useState(
-    new Date("2018-01-01T00:00:00.000Z").getTime()
+    new Date("2018-01-01T06:30:00.000Z").getTime()
   );
   const [endHour2, setEndHour2] = useState(
-    new Date("2018-01-01T00:00:00.000Z")
+    new Date("2018-01-01T16:30:00.000Z")
   );
   const [startHour3, setStartHour3] = useState(
-    new Date("2018-01-01T00:00:00.000Z").getTime()
+    new Date("2018-01-01T06:30:00.000Z").getTime()
   );
   const [endHour3, setEndHour3] = useState(
-    new Date("2018-01-01T00:00:00.000Z")
+    new Date("2018-01-01T16:30:00.000Z")
   );
   const [startHour4, setStartHour4] = useState(
-    new Date("2018-01-01T00:00:00.000Z").getTime()
+    new Date("2018-01-01T06:30:00.000Z").getTime()
   );
   const [endHour4, setEndHour4] = useState(
-    new Date("2018-01-01T00:00:00.000Z")
+    new Date("2018-01-01T16:30:00.000Z")
   );
   const [startHour5, setStartHour5] = useState(
-    new Date("2018-01-01T00:00:00.000Z").getTime()
+    new Date("2018-01-01T06:30:00.000Z").getTime()
   );
   const [endHour5, setEndHour5] = useState(
-    new Date("2018-01-01T00:00:00.000Z")
+    new Date("2018-01-01T16:30:00.000Z")
   );
   const [startHour6, setStartHour6] = useState(
-    new Date("2018-01-01T00:00:00.000Z").getTime()
+    new Date("2018-01-01T06:30:00.000Z").getTime()
   );
   const [endHour6, setEndHour6] = useState(
-    new Date("2018-01-01T00:00:00.000Z")
+    new Date("2018-01-01T16:30:00.000Z")
   );
   const [startHour7, setStartHour7] = useState(
-    new Date("2018-01-01T00:00:00.000Z").getTime()
+    new Date("2018-01-01T06:30:00.000Z").getTime()
   );
   const [endHour7, setEndHour7] = useState(
-    new Date("2018-01-01T00:00:00.000Z")
+    new Date("2018-01-01T16:30:00.000Z")
   );
   const handleClickOpen = () => {
     setOpen(true);
@@ -59,7 +67,7 @@ export default function EditActivityTimeDialog({ activityDays }) {
     setOpen(false);
   };
 
-  const handleSubmit = async () =>{
+  const handleSubmit = async () => {
     const activityDaysTimeChange = [
       {
         start: new Date(startHour1).toLocaleString("en-US").split(",")[1],
@@ -94,12 +102,18 @@ export default function EditActivityTimeDialog({ activityDays }) {
       .toString()
       .replace("[", "")
       .replace("]", "");
-    const edit = {
-      _id: currentUser._id,
-      activityDaysTime: activityDaysTimeChange,
-      activityDays: stringActivityDays,
-    };
-     try {
+    
+    if (createAccount && createAccount == true) {
+      setActivityDaysTime(activityDaysTimeChange);
+      setActivityDays(stringActivityDays);
+      setOpen(false);
+    } else {
+      const edit = {
+        _id: currentUser._id,
+        activityDaysTime: activityDaysTimeChange,
+        activityDays: stringActivityDays,
+      };
+      try {
         const results = await editUserPropertiesWithoutImage(edit);
         if (results._id === edit._id) {
           setOpen(false);
@@ -107,20 +121,28 @@ export default function EditActivityTimeDialog({ activityDays }) {
         } else {
           console.log(results);
         }
-      } catch (err) {
+      } catch (err) {}
     }
-  }
+  };
   return (
     <div>
-      <div className="w-100 text-center mb-3">
+      {createAccount && createAccount == true ? (
         <Button
           onClick={handleClickOpen}
-          className={"edit-profile-btn-dealer no-border"}
+          className={"bg-purple no-border pad-purple-btn"}
         >
-          Edit Availability
+          Add Availability
         </Button>
-      </div>
-
+      ) : (
+        <div className="w-100 text-center mb-3">
+          <Button
+            onClick={handleClickOpen}
+            className={"edit-profile-btn-dealer no-border"}
+          >
+            Edit Availability
+          </Button>
+        </div>
+      )}
       <Dialog
         sx={{
           "& .MuiDialog-paper": {
@@ -214,12 +236,12 @@ export default function EditActivityTimeDialog({ activityDays }) {
               setActivityDays={setDealerActivityDays}
             />
           </DialogContent>
-          <DialogActions className="d-flex justify-content-center">
+          <DialogActions className="d-flex justify-content-center mt-3">
             <div className="row">
               <div className="col mr-10px">
                 <Button
                   onClick={() => setOpen(false)}
-                  className="cancel-back w-100 no-border color-white capital-letter ls-2"
+                  className="cancel-back w-100 no-border mw-95 color-white capital-letter ls-2"
                 >
                   Cancel
                 </Button>
@@ -227,12 +249,15 @@ export default function EditActivityTimeDialog({ activityDays }) {
               <div className="col">
                 <Button
                   onClick={() => {
-                    // setOpen(false)
                     handleSubmit();
                   }}
-                  className="green-back no-border w-100 color-white capital-letter ls-2"
+                  className={
+                    createAccount && createAccount == true
+                      ? "bg-purple no-border w-100 mw-95 color-white capital-letter ls-2"
+                      : "green-back no-border w-100 mw-95 color-white capital-letter ls-2"
+                  }
                 >
-                  Apply
+                  Save
                 </Button>
               </div>
             </div>

@@ -13,7 +13,7 @@ const userSchema = new Schema({
   city: String,
   street: String,
   rating: Number,
-  // ratingCount: Number,
+  website: String,
   countRating: String,
   activityDays: String,
   dateOfCreate: Date,

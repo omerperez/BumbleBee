@@ -61,42 +61,7 @@ const register = async (request, response) => {
   }
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(userFromJson.password, salt);
-  let start = null;
-  let end = null;
-  if (dealerPropertiesJson != null) {
-    start = new Date(dealerPropertiesJson.openingTime);
-    end = new Date(dealerPropertiesJson.closingTime);
-  }
-  const activityDaysTime = [
-    {
-      start: start ? start.toLocaleString("en-US") : null,
-      end: end ? end.toLocaleString("en-US") : null,
-    },
-    {
-      start: start ? start.toLocaleString("en-US") : null,
-      end: end ? end.toLocaleString("en-US") : null,
-    },
-    {
-      start: start ? start.toLocaleString("en-US") : null,
-      end: end ? end.toLocaleString("en-US") : null,
-    },
-    {
-      start: start ? start.toLocaleString("en-US") : null,
-      end: end ? end.toLocaleString("en-US") : null,
-    },
-    {
-      start: start ? start.toLocaleString("en-US") : null,
-      end: end ? end.toLocaleString("en-US") : null,
-    },
-    {
-      start: start ? start.toLocaleString("en-US") : null,
-      end: end ? end.toLocaleString("en-US") : null,
-    },
-    {
-      start: start ? start.toLocaleString("en-US") : null,
-      end: end ? end.toLocaleString("en-US") : null,
-    },
-  ];
+  
   const newUser = {
     _id: new mongoose.Types.ObjectId(),
     firstName: userFromJson.firstName,
@@ -108,10 +73,10 @@ const register = async (request, response) => {
     country: dealerPropertiesJson?.country ?? null,
     city: dealerPropertiesJson?.city ?? null,
     street: dealerPropertiesJson?.street ?? null,
-    activityDaysTime: activityDaysTime,
+    activityDaysTime: dealerPropertiesJson?.activityDaysTime ?? null,
     activityDays: dealerPropertiesJson?.activityDays ?? null,
     rating: 0,
-    // ratingCount: 0,
+    website: dealerPropertiesJson?.website ?? null,
     dateOfCreate: Date.now(),
     role: userFromJson.role,
     dateOfBuyCar: null,
@@ -226,6 +191,7 @@ const findCurrentRating = (req, res) => {
       }
     });  
 }
+
 const rateDealer = async (req, res) => {
   const clientId = req.body.client;
   const dealerId = req.body.dealer;
@@ -235,21 +201,23 @@ const rateDealer = async (req, res) => {
     client: clientId,
     dealer: dealerId,
   });
+  let usersRatingDealer = dealer.usersRate;
   try {
     if (oldRating !== null) {
-      console.log("T");
       countOfRating = countOfRating - oldRating.count;
       oldRating.count = oldRating.count + countOfRating;
-      dealer.rating = dealer.rating + countOfRating;
+      dealer.rating =
+        dealer.rating != 0 ? dealer.rating + countOfRating : countOfRating;
       await dealer.save() && oldRating.save();
       res.send({ dealer });
     } else {
       const newRating = req.body;
       newRating._id = new mongoose.Types.ObjectId();
-      await ratingSchema.create(newRating);
-      dealer.usersRate = dealer.usersRate.push(clientId);
-      dealer.rating = dealer.rating + countOfRating;
-      await dealer.save();
+      usersRatingDealer.push(clientId);
+      dealer.usersRate = usersRatingDealer;
+      dealer.rating =
+        dealer.rating != 0 ? dealer.rating + countOfRating : countOfRating;
+      await ratingSchema.create(newRating) && dealer.save();
       res.send({ dealer });    
     }
     console.log("OK");

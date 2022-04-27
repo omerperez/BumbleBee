@@ -77,7 +77,7 @@ export default function OtherPropertiesCard({ currentUser }) {
                   letterSpacing: 0.5,
                 }}
               >
-                Yeziat Eutopa, Herzliya, Israel
+                Yeziat Europa, Herzliya, Israel
               </span>
             </Typography>
           </div>
@@ -86,7 +86,7 @@ export default function OtherPropertiesCard({ currentUser }) {
               style={{ fontSize: 14, fontWeight: 100, letterSpacing: 1 }}
               className="opc-8"
             >
-              Rating
+              {`Rating (${currentUser.usersRate.length} ratings)`}
             </span>
             <Typography variant="subtitle1" color={"#e2a021"}>
               <span
@@ -99,7 +99,7 @@ export default function OtherPropertiesCard({ currentUser }) {
                 }}
               >
                 {currentUser.rating && currentUser.usersRate
-                  ? currentUser.rating / currentUser.usersRate.length
+                  ? Math.round((currentUser.rating / currentUser.usersRate.length) * 100 ) / 100
                   : 4}
               </span>
               <span style={{ verticalAlign: "middle" }}>

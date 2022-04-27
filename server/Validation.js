@@ -10,6 +10,7 @@ const registerValidation = (data) => {
     mobile: Joi.string().min(9).required(),
     password: Joi.string().min(6).required(),
     confirmPassword: Joi.string().min(6).required(),
+    website: Joi.allow(),
     role: Joi.string().required(),
   });
   return schema.validate(checkData);
