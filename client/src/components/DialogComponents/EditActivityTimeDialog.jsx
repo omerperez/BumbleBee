@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import { DialogActions, DialogContent } from "@mui/material";
-import { Form, Button, Card, Alert } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import HoursInput from "./HoursInput";
 import { useAuth } from "../../contexts/AuthContext";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function EditActivityTimeDialog({
   activityDays,
@@ -13,6 +14,7 @@ export default function EditActivityTimeDialog({
   createAccount,
 }) {
   const { currentUser, editUserPropertiesWithoutImage } = useAuth();
+  const matches = useMediaQuery("(min-height:570px)");
 
   const [open, setOpen] = useState(false);
   const [dealerActivityDays, setDealerActivityDays] = useState(
@@ -102,7 +104,6 @@ export default function EditActivityTimeDialog({
       .toString()
       .replace("[", "")
       .replace("]", "");
-    
     if (createAccount && createAccount == true) {
       setActivityDaysTime(activityDaysTimeChange);
       setActivityDays(stringActivityDays);
@@ -148,7 +149,6 @@ export default function EditActivityTimeDialog({
           "& .MuiDialog-paper": {
             borderRadius: "25px",
             maxWidth: "1000px",
-            minWidth: '90%'
           },
         }}
         open={open}
@@ -171,7 +171,7 @@ export default function EditActivityTimeDialog({
             <h4 className="color-red">X</h4>
           </DialogTitle>
           <DialogContent>
-            <h5 className="mb-5">Set Standard Hours</h5>
+            <h5 className="mb-4">Set Standard Hours</h5>
             <HoursInput
               title={"Sunday"}
               valueStart={startHour1}

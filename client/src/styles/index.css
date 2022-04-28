@@ -125,6 +125,23 @@ input{
   background: 'none';
 }
 
+@media screen and (min-width: 450px) {
+  .icons-title-pos {
+    position: absolute !important;
+    right: 0px !important;
+    margin-right: 40px !important;
+    margin-top: 5px !important;
+  }
+}
+@media screen and (max-width: 450px) {
+  .icons-title-pos {
+    position: absolute !important;
+    right: 0px !important;
+    margin-right: 10px !important;
+    margin-top: 2px !important;
+  }
+}
+
 @media screen and (max-width: 550px) {
   .bumble-title {
     font-size: 45px;
@@ -156,6 +173,10 @@ input{
     grid-auto-rows: auto;
     max-width: 80%;
   }
+}
+
+.w-max{
+  width: 100% !important;
 }
 
 @media screen and (min-width: 1000px) {
@@ -976,12 +997,6 @@ input{
 
 .mb-auto{
   margin-bottom: auto !important;
-}
-.icons-title-pos{
-  position: absolute !important;
-  right: 0px !important;
-  margin-right: 40px !important;
-  margin-top: 5px !important;
 }
 
 .text-end{

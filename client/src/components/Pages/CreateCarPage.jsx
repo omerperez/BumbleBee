@@ -11,7 +11,7 @@ export default function CreateCarPage() {
 
   return currentUser && currentUser.role !== 1 ? (
     <div className="ml-8">
-      <PageTitle page={"Create New Car"} />
+      <PageTitle page={"New Car"} />
       <CarForm />
     </div>
   ) : (

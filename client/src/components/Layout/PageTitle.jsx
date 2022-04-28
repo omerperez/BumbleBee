@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import {
   topbarMenuItems,
   topbarMenuItemsForDealer,
@@ -10,6 +11,7 @@ import { useAuth } from "../../contexts/AuthContext";
 export default function PageTitle({ page }) {
   
   const { currentUser, logout } = useAuth();
+  const matches = useMediaQuery("(max-width:515px)");
   let menu = topbarMenuItems;
   if (currentUser.role === 2) {
     menu = topbarMenuItemsForDealer;
@@ -25,23 +27,23 @@ export default function PageTitle({ page }) {
           return (
             <Link key={key} to={item.path} className="link-in-btn">
               <img
-                className="m-6"
+                className={matches ? "m-1" : "m-6"}
                 src={`/topbar/${item.image}-topbar.png`}
-                width={25}
-                height={25}
+                width={matches ? 20 : 25}
+                height={matches ? 20 : 25}
               />
             </Link>
           );
         })}
         <img
           onClick={() => logout()}
-          className="m-6 cur-pointer"
+          className={matches ? "m-1" : "m-6 cur-pointer"}
           src={`/topbar/logout-topbar.png`}
-          width={25}
-          height={25}
+          width={matches ? 20 : 25}
+          height={matches ? 20 : 25}
         />
       </div>
-      <h2 className="page-title-font">{page} </h2>
+      <h2 className={matches ? "f-22" : "page-title-font"}>{page} </h2>
     </>
   );
 }

@@ -1,7 +1,6 @@
 import { makeStyles, withStyles, styled } from "@mui/styles";
 import TableCell from "@mui/material/TableCell";
-
-
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 /* Layout */
 const maxWidthCardApp = { maxWidth: 400 };
@@ -105,7 +104,7 @@ const closedMixin = (theme) => ({
   }),
   background: "#363636",
   overflowX: "hidden",
-  width: `calc(${theme.spacing(7)} + 1px)`,
+  width: `calc(${theme.spacing(9)} + 1px)`,
   [theme.breakpoints.up("sm")]: {
     width: `calc(${theme.spacing(9)} + 1px)`,
   },

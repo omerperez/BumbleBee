@@ -17,9 +17,7 @@ export default function HoursInput({
   activityDays,
   setActivityDays,
 }) {
-
   const matches = useMediaQuery("(max-width:1060px)");
-
   const [check, setCheck] = useState(
     (activityDays).indexOf(title) != -1 
   );
@@ -29,8 +27,6 @@ export default function HoursInput({
    } else {
      setActivityDays(activityDays.filter((day) => day.indexOf(title) == -1));
    }
-   console.log(check);
-   console.log(activityDays);
   }, [check]);
 
   const changeActivityDays = (e) => {
@@ -38,7 +34,14 @@ export default function HoursInput({
   };
 
   return (
-    <Form.Group id="days" className="grid-dialog mt-4 input-time-grid">
+    <Form.Group
+      id="days"
+      className={
+        matches
+          ? "grid-dialog mt-3 input-time-grid m-auto"
+          : "grid-dialog mt-4 input-time-grid"
+      }
+    >
       <div className="ml-5 text-start">
         <span className="f-15 ls-1">{title}</span>
       </div>
@@ -49,7 +52,7 @@ export default function HoursInput({
           label={check ? "Open" : "Closed"}
         />
       </div>
-      <div>
+      <div className={matches ? "m-1" : ""}>
         {check ? (
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <TimePicker
@@ -64,7 +67,7 @@ export default function HoursInput({
       {matches ? null : (
         <div className="m-auto ls-1">{check ? <b>TO</b> : null}</div>
       )}
-      <div>
+      <div className={matches ? "m-1" : "" }>
         {check ? (
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <TimePicker
