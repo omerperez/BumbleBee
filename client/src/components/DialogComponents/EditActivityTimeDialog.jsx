@@ -148,6 +148,7 @@ export default function EditActivityTimeDialog({
           "& .MuiDialog-paper": {
             borderRadius: "25px",
             maxWidth: "1000px",
+            minWidth: '90%'
           },
         }}
         open={open}
@@ -156,9 +157,8 @@ export default function EditActivityTimeDialog({
         aria-describedby="alert-dialog-description"
       >
         <div
+          className="responsive-hour-dialog"
           style={{
-            height: 800,
-            width: 1000,
             border: "none",
             borderRadius: "50px",
           }}
@@ -236,7 +236,7 @@ export default function EditActivityTimeDialog({
               setActivityDays={setDealerActivityDays}
             />
           </DialogContent>
-          <DialogActions className="d-flex justify-content-center mt-3">
+          <DialogActions className="d-flex justify-content-center mt-3 mb-3">
             <div className="row">
               <div className="col mr-10px">
                 <Button
