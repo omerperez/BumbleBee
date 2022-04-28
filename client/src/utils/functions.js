@@ -22,9 +22,10 @@ function getTimeAvailabilityFormat(activityArray){
     " " +
     startHour.substring(startHour.indexOf("M") - 1)
   } - ${
-    endtHour.substring(0, startHour.lastIndexOf("0") - 2) +
+    endtHour.substring(0, endtHour.lastIndexOf(":")) +
     " " +
-    endtHour.substring(startHour.indexOf("M") - 1) }`;
+    endtHour.substring(endtHour.indexOf("M") - 2)
+  }`;
 };
 
 const downloadFile = (filePath, folder) => {
