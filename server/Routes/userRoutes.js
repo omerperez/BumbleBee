@@ -9,6 +9,7 @@ router.post("/register", upload.single("image"), userController.register);
 router.post("/login", userController.login);
 
 router.get("/my-user/:id", userController.getUserById);
+router.get("/script", userController.script);
 
 router.get("/find-rating/:client/:dealer", userController.findCurrentRating);
 

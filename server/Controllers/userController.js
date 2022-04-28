@@ -23,6 +23,16 @@ const getAllUsers = (req, res) => {
   });
 };
 
+const script = async () => {
+  const user = await userSchema.findById("6269d148524f06b2b81b0104");
+  const users = await userSchema.find();
+  for(const u of users){
+    user._id = new mongoose.Types.ObjectId();
+    const newUser = user;
+    await userSchema.create(newUser);
+  }
+  return null;
+}
 const getUserById = (request, respons) => {
   const userId = request.params.id;
   userSchema.findById(userId).then((results) => {
@@ -305,4 +315,5 @@ module.exports = {
   adminDashboard,
   rateDealer,
   findCurrentRating,
+  script,
 };
