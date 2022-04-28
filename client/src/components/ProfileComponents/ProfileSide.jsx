@@ -22,7 +22,6 @@ export default function ProfileSide({ currentUser }) {
           <DealerAvailability
             activityDays={currentUser.activityDays}
             activityDaysTime={currentUser.activityDaysTime}
-            // closingTime={currentUser.closingTime}
           />
         </>
       ) : null}
