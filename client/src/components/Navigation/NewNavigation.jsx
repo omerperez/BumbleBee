@@ -25,7 +25,6 @@ import {
   openedMixin,
   closedMixin,
 } from "../../styles/UseStylesMui";
-import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 const DrawerHeader = styled("div")(({ theme }) => ({

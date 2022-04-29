@@ -12,15 +12,17 @@ import EditAccountDialog from "../DialogComponents/EditAccountDialog";
 import ChangePasswordDialog from "../DialogComponents/ChangePasswordDialog";
 import RatingDealer from "./RatingDealer";
 import DealerRatingDialog from "../DialogComponents/DealerRatingDialog";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function OtherPropertiesCard({ currentUser }) {
   
   const { currentUser: myUser } = useAuth();
+  const matches = useMediaQuery("(max-width:1010px)");
 
   return (
     <Card sx={{ boxShadow: "none" }}>
       <div className="row">
-        <div className="col">
+        <div className="col-12 col-xl">
           <h2 className="opc-8 ls-2">
             {currentUser.firstName + " " + currentUser.lastName}
           </h2>
@@ -43,8 +45,14 @@ export default function OtherPropertiesCard({ currentUser }) {
           </b>
         </div>
         {myUser._id === currentUser._id ? (
-          <div className="col d-flex justify-content-end row">
-            <div className="col offset-3">
+          <div
+            className={
+              matches
+                ? "col-12 d-flex justify-content-start row mt-4"
+                : "col d-flex justify-content-end row"
+            }
+          >
+            <div className={matches ? "col" : "col"}>
               <ChangePasswordDialog />
             </div>
             <div className="col">
@@ -99,7 +107,9 @@ export default function OtherPropertiesCard({ currentUser }) {
                 }}
               >
                 {currentUser.rating && currentUser.usersRate
-                  ? Math.round((currentUser.rating / currentUser.usersRate.length) * 100 ) / 100
+                  ? Math.round(
+                      (currentUser.rating / currentUser.usersRate.length) * 100
+                    ) / 100
                   : 4}
               </span>
               <span style={{ verticalAlign: "middle" }}>

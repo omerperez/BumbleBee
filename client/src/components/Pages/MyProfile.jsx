@@ -45,8 +45,8 @@ export default function MyProfile() {
   return (
     <>
       <PageTitle />
-      <div className="d-flex justify-content-centermt-5 pad-1">
-        <div className="col-3 mt-5 mb-5 offset-1">
+      <div className="d-flex mt-5 pad-1">
+        <div className="col-12 col-md-5 col-lg-3 mt-5 mb-5 offset-1">
           <ProfileSide currentUser={user} />
           {user.role === 1 ? (
             <>
@@ -56,12 +56,14 @@ export default function MyProfile() {
             </>
           ) : null}
         </div>
-        <div className="col-9 ml-25 mt-5 mb-5 col-sm-7">
+        <div className="col-12 col-md-7 col-lg-7 ml-25 mt-5 mb-5">
           <OtherPropertiesCard currentUser={user} />
         </div>
       </div>
       <div className="d-flex justify-content-center">
-        {user.role === 1 ? <RequestSteps step={alert ? alert.step : 0} /> : null}
+        {user.role === 1 ? (
+          <RequestSteps step={alert ? alert.step : 0} />
+        ) : null}
       </div>
     </>
   );
