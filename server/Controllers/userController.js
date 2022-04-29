@@ -327,6 +327,7 @@ const usersCategories = async (req,res) => {
     console.log("fail");
     res.status(400).json(err.message);
   };
+}
 function getToken(user) {
   return jwt.sign(
     {
