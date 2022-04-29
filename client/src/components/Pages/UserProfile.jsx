@@ -3,7 +3,7 @@ import PageTitle from "../Layout/PageTitle";
 import { useAuth } from "../../contexts/AuthContext";
 import UserCard from "../ProfileComponents/UserCard";
 import UserFilesCard from "../ProfileComponents/UserFilesCard";
-import CircularProgress from "@mui/material/CircularProgress";
+import Loading from "../Layout/Loading";
 import OtherPropertiesCard from "../ProfileComponents/OtherPropertiesCard";
 import ProfileSide from "../ProfileComponents/ProfileSide";
 import { Card } from "@mui/material";
@@ -31,11 +31,7 @@ export default function UserProfile() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="mt-15 d-flex justify-content-center">
-        <CircularProgress size={200} />
-      </div>
-    );
+    return <Loading />;
   }
   
   if(currentUser._id === user._id){

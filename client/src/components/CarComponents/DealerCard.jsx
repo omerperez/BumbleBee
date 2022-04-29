@@ -14,6 +14,7 @@ import { error403 } from "../images/projectImages";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import FirstRequestDialog from "../AlertsComponents/FirstRequestDialog";
+import RatingDealer from "../ProfileComponents/RatingDealer";
 
 export default function DealerCard({ dealer, role, car, showReq }) {
   const mobile = dealer.phoneNumber ? dealer.phoneNumber : "+972522520484";
@@ -27,11 +28,7 @@ export default function DealerCard({ dealer, role, car, showReq }) {
             {dealer.firstName + " " + dealer.lastName}
           </Typography>
           <div className="color-yellow">
-            <StarIcon />
-            <StarIcon />
-            <StarIcon />
-            <StarIcon />
-            <StarIcon />
+            <RatingDealer readOnly={true} ratingCount={dealer.rating && dealer.usersRate ? (dealer.rating/dealer.usersRate.length) : 5} />
           </div>
           <div className="mt-3">
             <div>

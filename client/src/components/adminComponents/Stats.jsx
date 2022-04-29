@@ -49,8 +49,8 @@ useEffect(() => {
       <CircularProgress size={80} />
     </div>
   ); 
-}
-  
+ }
+
  const countByYears = getCountByYears(dataVal.countByYears);
  const modelsByYear = getModelByYears(dataVal.modelsByYear);
  const carsPerYearAndModel = getSpecificModel(dataVal.specificModelGraph);

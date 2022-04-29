@@ -97,6 +97,8 @@ export default function AuthProvider({ children }) {
       });
   }
 
+  
+
   async function editUserProperties(user, userObj) {
     setLoading(true);
     const now = Date.now();
@@ -104,9 +106,9 @@ export default function AuthProvider({ children }) {
     var newProfileImage = userObj.image;
     userData.append("image", newProfileImage[0], now + newProfileImage[0].name);
     userData.append("user", JSON.stringify(user));
-
+    console.log(user);
     return api
-      .put(`/user/edit-with-image/${currentUser._id}`, userData, {
+      .put(`/user/edit-with-image/${user._id}`, userData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -165,22 +167,6 @@ export default function AuthProvider({ children }) {
         return error.response.data.message;
       });
   }
-  
-  /* CAR - EDIT */
-  async function getCarById(id) {
-    const updateCar = {
-      _id: id,
-    };
-    return api
-      .put(`/car/view-count/${id}`, updateCar)
-      .then((response) => {
-        return navigate("/car-profile/" + id);
-      })
-      .catch(function (error) {
-        console.log(error);
-        return error.response.data.message;
-      });
-  }
 
   async function editCar(id, km, price, colour) {
     const updateCar = {
@@ -231,11 +217,6 @@ export default function AuthProvider({ children }) {
       });
   }
 
-  /* Notification - Functions */
-  // async function createNewNotification(dealerId, carId, clientId){
-
-  // }
-
   useEffect(() => {
     if (
       JSON.stringify(cookies.get("connectUser")) !==
@@ -270,7 +251,6 @@ export default function AuthProvider({ children }) {
     editPassword,
     loading,
     addCarToFavorite,
-    getCarById,
   };
 
   return (

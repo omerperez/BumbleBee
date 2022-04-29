@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { styled ,useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
@@ -51,32 +51,29 @@ const Drawer = styled(MuiDrawer, {
 
 export default function NewNavigation({ children }) {
   const { currentUser, logout } = useAuth();
-  const theme = useTheme();
   const [open, setOpen] = useState(true);
   const [check, setCheck] = useState("/homepage");
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const matches = useMediaQuery("(min-height:570px)");
+  const max800 = useMediaQuery("(max-width:800px)");
+  const navigationWidth = useMediaQuery("(max-width:500px)");
 
   let menuItems = clientMenuItems;
   if (currentUser.role === 3) {
     menuItems = managerMenuItems;
   }
-
   if(currentUser.role === 2){
     menuItems = dealerMenuItems;
   }
-
   const handleDrawerOpen = () => {
     if(matches){
       setOpen(true);
     }
   };
-
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
   useEffect(() => {
     if(!matches){
       setOpen(false)
@@ -102,7 +99,16 @@ export default function NewNavigation({ children }) {
   }
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box
+      sx={
+        navigationWidth && open
+          ? { overflow: "hidden" }
+          : max800 && open && check.includes("create")
+          ? { overflow: "hidden" }
+          : { display: "flex" }
+      }
+      role={max800 ? "presentation" : null}
+    >
       <Drawer variant="permanent" open={open}>
         {matches ? (
           <>
@@ -205,26 +211,3 @@ export default function NewNavigation({ children }) {
     </Box>
   );
 }
-
-
- {
-   /* <ListItem
-            onClick={handleLogout}
-            button
-            key={"Log Out"}
-            style={defaultNavigationTextStyle}
-          >
-            {open ? (
-              <ListItemText primary={"Log Out"} className="ml-10 menu-items" />
-            ) : null}
-            <div className="d-flex justify-content-center">
-              <ListItemIcon>
-                <img
-                  alt="nav_img"
-                  src="/Navigation/white-logout.png"
-                  className={open ? "ml-10 nav-image" : "nav-image"}
-                />
-              </ListItemIcon>
-            </div>
-          </ListItem> */
- }

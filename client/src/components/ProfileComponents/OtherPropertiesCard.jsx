@@ -1,27 +1,28 @@
 import React, {useEffect, useState} from "react";
 import Card from "@mui/material/Card";
 import { useAuth } from "../../contexts/AuthContext";
-import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import StarIcon from "@mui/icons-material/Star";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { sendWhatsAppToDealer } from "../CarComponents/carFunctions";
-
 import UserMoreInfo from "./UserMoreInfo";
 import EditAccountDialog from "../DialogComponents/EditAccountDialog";
 import ChangePasswordDialog from "../DialogComponents/ChangePasswordDialog";
+import RatingDealer from "./RatingDealer";
+import DealerRatingDialog from "../DialogComponents/DealerRatingDialog";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function OtherPropertiesCard({ currentUser }) {
   
   const { currentUser: myUser } = useAuth();
+  const matches = useMediaQuery("(max-width:1010px)");
 
   return (
     <Card sx={{ boxShadow: "none" }}>
       <div className="row">
-        <div className="col">
+        <div className="col-12 col-xl">
           <h2 className="opc-8 ls-2">
             {currentUser.firstName + " " + currentUser.lastName}
           </h2>
@@ -44,8 +45,14 @@ export default function OtherPropertiesCard({ currentUser }) {
           </b>
         </div>
         {myUser._id === currentUser._id ? (
-          <div className="col d-flex justify-content-end row">
-            <div className="col offset-3">
+          <div
+            className={
+              matches
+                ? "col-12 d-flex justify-content-start row mt-4"
+                : "col d-flex justify-content-end row"
+            }
+          >
+            <div className={matches ? "col" : "col"}>
               <ChangePasswordDialog />
             </div>
             <div className="col">
@@ -78,7 +85,7 @@ export default function OtherPropertiesCard({ currentUser }) {
                   letterSpacing: 0.5,
                 }}
               >
-                Yeziat Eutopa, Herzliya, Israel
+                Yeziat Europa, Herzliya, Israel
               </span>
             </Typography>
           </div>
@@ -87,7 +94,7 @@ export default function OtherPropertiesCard({ currentUser }) {
               style={{ fontSize: 14, fontWeight: 100, letterSpacing: 1 }}
               className="opc-8"
             >
-              Rating
+              {`Rating (${currentUser.usersRate.length} ratings)`}
             </span>
             <Typography variant="subtitle1" color={"#e2a021"}>
               <span
@@ -99,41 +106,53 @@ export default function OtherPropertiesCard({ currentUser }) {
                   marginRight: 8,
                 }}
               >
-                5
+                {currentUser.rating && currentUser.usersRate
+                  ? Math.round(
+                      (currentUser.rating / currentUser.usersRate.length) * 100
+                    ) / 100
+                  : 4}
               </span>
-              {/* Need Component */}
               <span style={{ verticalAlign: "middle" }}>
-                <StarIcon style={{ verticalAlign: "baseline" }} />
-                <StarIcon style={{ verticalAlign: "baseline" }} />
-                <StarIcon style={{ verticalAlign: "baseline" }} />
-                <StarIcon style={{ verticalAlign: "baseline" }} />
-                <StarIcon style={{ verticalAlign: "baseline" }} />
+                <RatingDealer
+                  readOnly={true}
+                  ratingCount={
+                    currentUser.rating && currentUser.usersRate
+                      ? currentUser.rating / currentUser.usersRate.length
+                      : 4
+                  }
+                />
               </span>
             </Typography>
           </div>
         </>
       ) : null}
-      <div className="mt-4">
-        <Button
-          style={{ letterSpacing: 1 }}
-          className="capital-letter"
-          variant="contained"
-          endIcon={<MailOutlineIcon />}
-        >
-          Send Email
-        </Button>
-        <Button
-          style={{ letterSpacing: 1 }}
-          className="ml-10 capital-letter"
-          variant="contained"
-          onClick={() =>
-            sendWhatsAppToDealer(currentUser.phoneNumber, currentUser.firstName)
-          }
-          endIcon={<WhatsAppIcon />}
-        >
-          Send Whatsapp
-        </Button>
-      </div>
+      {currentUser._id === myUser._id || currentUser.role !== 2 ? null : (
+        <div className="mt-4 d-flex">
+          <Button
+            className="capital-letter ls-less1"
+            variant="contained"
+            endIcon={<MailOutlineIcon />}
+          >
+            Send Email
+          </Button>
+          <Button
+            className="ml-10 capital-letter ls-less1"
+            variant="contained"
+            onClick={() =>
+              sendWhatsAppToDealer(
+                currentUser.phoneNumber,
+                currentUser.firstName
+              )
+            }
+            endIcon={<WhatsAppIcon />}
+          >
+            Send Whatsapp
+          </Button>
+          <div className="ml-10">
+            <DealerRatingDialog dealer={currentUser._id} client={myUser._id} />
+          </div>
+        </div>
+      )}
       <div className="mt-4">
         <UserMoreInfo
           currentUser={currentUser}

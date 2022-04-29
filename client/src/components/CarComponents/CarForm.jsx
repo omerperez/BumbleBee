@@ -18,6 +18,7 @@ import {
   uploadMainSucces,
   uploadMainEmpty,
 } from "../images/projectImages";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function CarForm() {
   
@@ -32,6 +33,7 @@ export default function CarForm() {
   const [secondStatus, setSecondStatus] = useState(true);
   const [loading, setLoading] = useState(false);
   const [carMain, setCarMain] = useState(null);
+  const matches = useMediaQuery("(max-width:800px)");
 
   useEffect(() => {
      fetch(process.env.REACT_APP_GOVIL_CARS_API + company.hebrew)
@@ -105,7 +107,7 @@ export default function CarForm() {
       ) : null}
       <div className="row">
         <h5>General Information</h5>
-        <div className="col">
+        <div className="col-6 col-sm-3 col-lg-2">
           <FormControl fullWidth className="mt-3">
             <InputLabel>Manufacturer</InputLabel>
             <Select
@@ -123,7 +125,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col">
+        <div className="col-6 col-sm-3 col-lg-2">
           <FormControl fullWidth disabled={firstStatus} className="mt-3">
             <InputLabel>Model</InputLabel>
             <Select
@@ -145,7 +147,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col">
+        <div className="col-6 col-sm-3 col-lg-2">
           <FormControl fullWidth disabled={secondStatus} className="mt-3">
             <InputLabel>Year</InputLabel>
             <Select
@@ -171,7 +173,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col">
+        <div className="col-6 col-sm-3 col-lg-2">
           <FormControl
             fullWidth
             disabled={CheckDisableStatus(values)}
@@ -195,7 +197,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col">
+        <div className="col-6 col-sm-3 col-lg-2">
           <FormControl fullWidth disabled={secondStatus} className="mt-3">
             <InputLabel>Engine</InputLabel>
             <Select
@@ -221,7 +223,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col mt-3">
+        <div className="col-6 col-sm-3 col-lg-2 mt-3">
           <FormControl fullWidth>
             <TextField
               disabled={firstStatus}
@@ -263,7 +265,7 @@ export default function CarForm() {
       </div>
       <div className="row mt-4">
         <h5>Performance Specs</h5>
-        <div className="col-3 mt-3">
+        <div className="col-6 col-sm-3 col-xl-2 mt-3">
           <FormControl fullWidth disabled={CheckDisableStatus(values)}>
             <InputLabel>Condition</InputLabel>
             <Select
@@ -283,7 +285,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col-2 mt-3">
+        <div className="col-6 col-sm-3 col-xl-2 mt-3">
           <FormControl fullWidth disabled={CheckDisableStatus(values)}>
             <InputLabel>Fuel Type</InputLabel>
             <Select
@@ -313,7 +315,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col-2 mt-3">
+        <div className="col-6 col-sm-3 col-xl-2 mt-3">
           <FormControl fullWidth disabled={CheckDisableStatus(values)}>
             <InputLabel>Gearbox</InputLabel>
             <Select
@@ -333,7 +335,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col-1 mt-3">
+        <div className="col-6 col-sm-3 col-xl-2 mt-3">
           <FormControl fullWidth disabled={CheckDisableStatus(values)}>
             <InputLabel>Owners</InputLabel>
             <Select
@@ -355,7 +357,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col-1 mt-3">
+        <div className="col-6 col-sm-3 col-xl-1 mt-3">
           <FormControl fullWidth disabled={CheckDisableStatus(values)}>
             <InputLabel>Doors</InputLabel>
             <Select
@@ -375,7 +377,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col-1 mt-3">
+        <div className="col-6 col-sm-3 col-xl-1 mt-3">
           <FormControl fullWidth disabled={CheckDisableStatus(values)}>
             <InputLabel>Seats</InputLabel>
             <Select
@@ -395,7 +397,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col-2 mt-3">
+        <div className="col-6 col-sm-3 col-xl-2 mt-3">
           <FormControl fullWidth disabled={CheckDisableStatus(values)}>
             <InputLabel>Color</InputLabel>
             <Select
@@ -408,13 +410,7 @@ export default function CarForm() {
               {carsProperties.colorList.map((color, i) => {
                 return (
                   <MenuItem key={color.id} value={color}>
-                    <div className="row">
-                      <div className="col-8">{color}</div>
-                      {/* <div
-                        className="col-1 d-flex bumble-img-log"
-                        style={{ background: color }}
-                      ></div> */}
-                    </div>
+                    {color}
                   </MenuItem>
                 );
               })}
@@ -424,7 +420,7 @@ export default function CarForm() {
       </div>
       <div className="row mt-4">
         <h5>Others</h5>
-        <div className="col">
+        <div className="col-12 col-sm-4">
           <FormControl
             fullWidth
             className="mt-3"
@@ -451,7 +447,7 @@ export default function CarForm() {
             />
           </FormControl>
         </div>
-        <div className="col">
+        <div className="col-12 col-sm-4">
           <FormControl
             fullWidth
             className="mt-3"
@@ -475,7 +471,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col">
+        <div className="col-12 col-sm-4">
           <FormControl fullWidth className="mt-3">
             <TextField
               disabled={CheckDisableStatus(values)}
@@ -498,7 +494,7 @@ export default function CarForm() {
             />
           </FormControl>
         </div>
-        <div className="col">
+        <div className="col-12 col-sm-4">
           <Alert severity="info" className="mt-3">
             <AlertTitle>
               Net Price - {values.price ? values.price * 0.7 + " " : " "}$
@@ -512,12 +508,7 @@ export default function CarForm() {
               className="cur-pointer br-15"
               width={values.main ? 400 : 200}
               height={values.main ? 300 : null}
-              src={
-                values.main
-                  ? carMain
-                  : // uploadMainSucces
-                    uploadMainEmpty
-              }
+              src={values.main ? carMain : uploadMainEmpty}
             />
           </label>
           <input
@@ -554,7 +545,8 @@ export default function CarForm() {
             className="display-none"
             onChange={(e) => carChange(e)}
           />
-          <div className="m-auto">
+          {matches ? <br /> : null}
+          <div className={matches ? "m-auto" : "jc-end"}>
             {loading ? (
               <LoadingButton
                 className="creat-car-btn"

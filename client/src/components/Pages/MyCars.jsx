@@ -4,7 +4,7 @@ import PageTitle from "../Layout/PageTitle";
 import { useAuth } from "../../contexts/AuthContext";
 import { Alert } from "@mui/material";
 import AccessDenied from "../authComponents/AccessDenied";
-import CircularProgress from "@mui/material/CircularProgress";
+import Loading from "../Layout/Loading";
 import FilterCars from "../CarComponents/FilterCars";
 
 export default function MyCars() {
@@ -12,7 +12,7 @@ export default function MyCars() {
   const [loading, setLoading] = useState(true);
   const [access, setAccess] = useState("");
   const { currentUser } = useAuth();
-  
+
   useEffect(() => {
      const index = window.location.toString().lastIndexOf("/") + 1;
      const id = window.location.toString().substring(index);
@@ -35,11 +35,7 @@ export default function MyCars() {
   }
   
   if (loading) {
-    return (
-      <div className="d-flex justify-content-center mt-15">
-        <CircularProgress size={200} />
-      </div>
-    );
+    return <Loading />;
   }
 
   if (cars.length == 0) return (

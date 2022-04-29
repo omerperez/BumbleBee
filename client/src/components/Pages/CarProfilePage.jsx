@@ -5,8 +5,8 @@ import PageTitle from "../Layout/PageTitle";
 import EditCarForm from "../CarComponents/EditCarForm";
 import { editCarIcon } from "../images/projectImages";
 import { useAuth } from "../../contexts/AuthContext";
-import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
+import Loading from "../Layout/Loading";
 
 export default function CarProfilePage() {
 
@@ -58,11 +58,7 @@ export default function CarProfilePage() {
   // },[isEdit]);
 
   if (loading) {
-    return (
-      <div className="d-flex justify-content-center mt-15">
-        <CircularProgress size={200} />
-      </div>
-    );
+    return <Loading />;
   }
   
   if(car == null ) return 'Sorry We dont find your car...'

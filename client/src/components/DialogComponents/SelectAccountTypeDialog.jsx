@@ -25,7 +25,6 @@ export default function SelectAccountTypeDialog() {
           Sign Up
         </span>
       </div>
-
       <Dialog
         sx={{
           "& .MuiDialog-paper": {
@@ -37,14 +36,7 @@ export default function SelectAccountTypeDialog() {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <div
-          style={{
-            height: 320,
-            width: 600,
-            border: "none",
-            borderRadius: "50px",
-          }}
-        >
+        <div className="responsive-size-dialog no-border br-122">
           <DialogTitle
             id="alert-dialog-title"
             onClick={handleClose}
@@ -56,10 +48,7 @@ export default function SelectAccountTypeDialog() {
             <div className="d-flex justify-content-center row">
               <div className="col text-center">
                 <Link to="/signup" className="cancel-underline">
-                  <img
-                    src="/regular-user.png"
-                    width={170}
-                  />
+                  <img src="/regular-user.png" width={170} />
                   <div className="mt-3 font-24 link-dark">
                     <b>Client</b>
                   </div>
@@ -67,10 +56,7 @@ export default function SelectAccountTypeDialog() {
               </div>
               <div className="col text-center">
                 <Link to="/dealer-login" className="cancel-underline">
-                  <img
-                    src="/seller-user.png"
-                    width={170}
-                  />
+                  <img src="/seller-user.png" width={170} />
                   <div className="mt-3 font-24 link-dark">
                     <b>Dealer</b>
                   </div>

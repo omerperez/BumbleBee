@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import SelectAccountTypeDialog from "../DialogComponents/SelectAccountTypeDialog";
 
@@ -34,55 +34,51 @@ export default function Login() {
     setLoading(false);
   }
   return (
-    <div className="d-flex justify-content-center">
-      <div className="w-100 card-width-max">
-        <Card className="no-border">
-          <div className="mb-5">
-            <h1 className="text-left mb-4 bumble-title">BumbleBee</h1>
-            {error && <Alert variant="danger">{error}</Alert>}
-          </div>
-          <Card.Body>
-            <h5 className="mt-3 second-title mb-2">Welcome</h5>
-            <h4 className="mb-5">Login to your account</h4>
-            <Form onSubmit={handleSubmit}>
-              <Form.Group id="email" className="mb-4">
-                <TextField
-                  id="standard-email-input"
-                  label="Email"
-                  inputRef={emailRef}
-                  type="email"
-                  autoComplete="current-password"
-                  variant="standard"
-                  fullWidth
-                  required
-                />
-              </Form.Group>
-              <Form.Group id="password" className="mb-5">
-                <TextField
-                  id="standard-password-input"
-                  label="Password"
-                  type="password"
-                  inputRef={passwordRef}
-                  autoComplete="current-password"
-                  variant="standard"
-                  fullWidth
-                  required
-                />
-              </Form.Group>
-              <Button
-                disabled={loading}
-                className="w-100 mb-3 yellow-btn"
-                type="submit"
-              >
-                Login
-              </Button>
-            </Form>
-            <div className="w-100 text-center mt-3">
-              <SelectAccountTypeDialog />
-            </div>
-          </Card.Body>
-        </Card>
+    <Card className="no-border">
+      <div className="mb-5">
+        <h1 className="text-left bumble-title nowrap">BumbleBee</h1>
+        {error && <Alert variant="danger">{error}</Alert>}
       </div>
-    </div>
+      <Card.Body>
+        <h5 className="second-title mb-2">Welcome</h5>
+        <h4 className="mb-5">Login to your account</h4>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group id="email" className="mb-4">
+            <TextField
+              id="standard-email-input"
+              label="Email"
+              inputRef={emailRef}
+              type="email"
+              autoComplete="current-password"
+              variant="standard"
+              fullWidth
+              required
+            />
+          </Form.Group>
+          <Form.Group id="password" className="mb-5">
+            <TextField
+              id="standard-password-input"
+              label="Password"
+              type="password"
+              inputRef={passwordRef}
+              autoComplete="current-password"
+              variant="standard"
+              fullWidth
+              required
+            />
+          </Form.Group>
+          <Button
+            disabled={loading}
+            className="w-100 mb-3 yellow-btn"
+            type="submit"
+          >
+            Login
+          </Button>
+        </Form>
+        <div className="w-100 text-center mt-3">
+          <SelectAccountTypeDialog />
+        </div>
+      </Card.Body>
+    </Card>
   );
 }

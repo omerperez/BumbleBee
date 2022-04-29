@@ -1,17 +1,10 @@
 import React from "react";
 import './table.css'
-import { useAuth } from "../../contexts/AuthContext";
-import { Button } from "react-bootstrap";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 export default function CarProfileBody({car}) {
 
-  // const {createNewNotification, currentUser } = useAuth();
-
-  // const handlerSubmit = async () => {
-  //   const response = await createNewNotification(car.delaer, car._id, currentUser._id);
-  // }
-
-    return (
+  return (
       <div className="font-24">
         <div className="row">
           <div className="col">
@@ -110,7 +103,7 @@ export default function CarProfileBody({car}) {
                   <td>{car.interiorDesign}</td>
                 </tr>
                 <tr>
-                  <th>Views</th>
+                  <th>Views <VisibilityIcon className="ml-10" color="primary"/> </th>
                   <td>{car.clicksCount}</td>
                 </tr>
               </tbody>

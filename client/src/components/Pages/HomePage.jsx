@@ -3,7 +3,7 @@ import CarCard from "../CarComponents/CarCard";
 import FilterCars from "../CarComponents/FilterCars";
 import PageTitle from "../Layout/PageTitle";
 import useFetch from "../../utils/useFetch";
-import CircularProgress from "@mui/material/CircularProgress";
+import Loading from "../Layout/Loading";
 import { useAuth } from "../../contexts/AuthContext";
 
 export default function HomePage() {
@@ -22,11 +22,7 @@ export default function HomePage() {
   );
  
   if(loading) {
-    return (
-      <div className="mt-15 d-flex justify-content-center">
-        <CircularProgress size={200} />
-      </div>
-    );
+    return <Loading />;
   }
 
   if (cars == null) return "";

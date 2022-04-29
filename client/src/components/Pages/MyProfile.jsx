@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PageTitle from "../Layout/PageTitle";
 import { useAuth } from "../../contexts/AuthContext";
-import CircularProgress from "@mui/material/CircularProgress";
+import Loading from "../Layout/Loading";
 import OtherPropertiesCard from "../ProfileComponents/OtherPropertiesCard";
 import ProfileSide from "../ProfileComponents/ProfileSide";
 import axios from "axios";
@@ -13,16 +13,6 @@ export default function MyProfile() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [alert, setAlert] = useState(null);
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   fetch(`${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setUser(data);
-  //       setLoading(false);
-  //     });
-  // }, []);
 
   const fetchData = () => {
     const currentUserApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`;
@@ -49,18 +39,14 @@ export default function MyProfile() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="mt-15 d-flex justify-content-center">
-        <CircularProgress size={200} />
-      </div>
-    );
+    return <Loading />;
   }
   
   return (
     <>
       <PageTitle />
-      <div className="d-flex justify-content-centermt-5 pad-1">
-        <div className="col-3 mt-5 mb-5 offset-1">
+      <div className="d-flex mt-5 pad-1">
+        <div className="col-12 col-md-5 col-lg-3 mt-5 mb-5 offset-1">
           <ProfileSide currentUser={user} />
           {user.role === 1 ? (
             <>
@@ -70,12 +56,14 @@ export default function MyProfile() {
             </>
           ) : null}
         </div>
-        <div className="col-9 ml-25 mt-5 mb-5 col-sm-7">
+        <div className="col-12 col-md-7 col-lg-7 ml-25 mt-5 mb-5">
           <OtherPropertiesCard currentUser={user} />
         </div>
       </div>
       <div className="d-flex justify-content-center">
-        {user.role === 1 ? <RequestSteps step={alert ? alert.step : 1} /> : null}
+        {user.role === 1 ? (
+          <RequestSteps step={alert ? alert.step : 0} />
+        ) : null}
       </div>
     </>
   );

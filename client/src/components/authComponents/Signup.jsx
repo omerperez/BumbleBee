@@ -80,7 +80,7 @@ export default function Signup() {
           <div className="d-flex justify-content-center mb-1"></div>
           <Form.Group id="first-name">
             <div className="row">
-              <div className="col-7">
+              <div className="col">
                 <TextField
                   className="form-control mb-3"
                   id="first-name-user"

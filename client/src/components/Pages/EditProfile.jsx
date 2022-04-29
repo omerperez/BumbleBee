@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
 import ChangePasswordDialog from "../DialogComponents/ChangePasswordDialog";
 import { Button } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
+import Loading from "../Layout/Loading";
 import {
   ImageHandler,
   InitDefauleUserProperties,
@@ -19,9 +19,8 @@ export default function EditProfile({ setOpen, mobileNumber }) {
 
   const { currentUser } = useAuth();
   const { editUserProperties, editUserPropertiesWithoutImage } = useAuth();
-  const navigate = useNavigate();
   const [values, carChange] = useForm();
-  const [mobile, setMobile] = useState(mobileNumber);
+  const [mobile, setMobile] = useState();
   const [user, setUser] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
@@ -40,10 +39,11 @@ export default function EditProfile({ setOpen, mobileNumber }) {
     InitDefauleUserProperties(values, user);
     setError("");
     setLoading(true);
+    user._id = currentUser._id;
     if (user.role === 1) {
-      values.mobile = `+972${values.mobile}`;
-    }else{
-      values.mobile = mobile;
+      values.phoneNumber = mobile.includes("+972") ? mobile : `+972${mobile}`;
+    } else {
+      values.phoneNumber = mobile;
     }
     try {
       if (profileImage != null){
@@ -51,7 +51,6 @@ export default function EditProfile({ setOpen, mobileNumber }) {
         if (res._id === user._id) {
           setOpen(false);
           window.location.reload();
-          // navigate("/my-profile");
         } else {
           setError(res);
         }
@@ -60,7 +59,6 @@ export default function EditProfile({ setOpen, mobileNumber }) {
         if (results._id === user._id) {
           setOpen(false);
           window.location.reload();
-          // navigate("/my-profile");
         } else {
           setError(results);
         }
@@ -72,17 +70,11 @@ export default function EditProfile({ setOpen, mobileNumber }) {
   }
    
   if (loading) {
-    return (
-      <div className="d-flex justify-content-center mt-15">
-        <CircularProgress size={200} />
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
     <>
-      {/* <PageTitle /> */}
-      {/* mt-5  */}
       <div className="d-flex justify-content-center">
         <Form onSubmit={handleSubmit}>
           <div className="mw-550">
@@ -173,8 +165,10 @@ export default function EditProfile({ setOpen, mobileNumber }) {
               <PhoneInput
                 defaultCountry="IL"
                 placeholder="Mobile"
-                value={mobile}
-                onChange={setMobile}
+                value={values.phoneNumber}
+                onChange={(e) => {
+                  carChange(e);
+                }}
               />
             </Form.Group>
           ) : (
@@ -191,13 +185,16 @@ export default function EditProfile({ setOpen, mobileNumber }) {
                 </div>
                 <div className="col-9">
                   <Form.Control
-                    name="mobile"
+                    name="phoneNumber"
                     type="phone"
-                    value={
-                      values.mobile ? values.mobile : user.phoneNumber.substr(4)
+                    defaultValue={
+                      values.phoneNumber && values.phoneNumber.includes("+972")
+                        ? values.phoneNumber.split("+972")[1]
+                        : values.phoneNumber ?? user.phoneNumber.substr(4)
                     }
                     onChange={(e) => {
-                      carChange(e);
+                      setMobile(e.target.value);
+                      console.log(e.target.value);
                     }}
                   />
                 </div>

@@ -1,6 +1,6 @@
 import React ,{useState, useEffect} from "react";
 import PageTitle from "../Layout/PageTitle";
-import CircularProgress from "@mui/material/CircularProgress";
+import Loading from "../Layout/Loading";
 import SmartTable from "../TableComponents/SmartTable";
 import TableNoResults from "../TableComponents/TableNoResults";
 import UserCells from "../TableComponents/UserCells";
@@ -31,11 +31,7 @@ export default function ManageUserPage() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="d-flex justify-content-center mt-15">
-        <CircularProgress size={200} />
-      </div>
-    );
+    return <Loading />;
   }
 
   const headCells = [

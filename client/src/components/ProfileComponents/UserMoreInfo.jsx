@@ -3,32 +3,45 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
-import { Link } from "react-router-dom";
 import TabPanel from '@mui/lab/TabPanel';
-import UserFilesCard from "./UserFilesCard";
 import TabPanelText from "./TabPanelText";
 import AlertLayout from "../AlertsComponents/AlertLayout";
-import RequestSteps from "../AlertsComponents/RequestSteps";
+import {removeDuplicateCompany} from "../../utils/functions";
+import axios from "axios";
 
 export default function UserMoreInfo({ currentUser, isUserPtofile }) {
   const [value, setValue] = useState("1");
   const [alert, setAlert] = useState();
+  const [companies, setCompanies] = useState();
+
   const date = new Date(currentUser.dateOfCreate ?? null);
   date.setHours(0,0,0,0);
-  
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  useEffect(() => {
-    fetch(
-      `${process.env.REACT_APP_SERVER_API}/notification/client/${currentUser._id}`
-    ).then((res) =>
-      res.json().then((data) => {
-        setAlert(data[data.length -1]);
-      })
-    );
-  }, []);
+   const fetchData = () => {
+     const alertsApi = `${process.env.REACT_APP_SERVER_API}/notification/client/${currentUser._id}`;
+     const userCarsApi = `${process.env.REACT_APP_SERVER_API}/car/mycars/${currentUser._id}`;
+
+     const getAlerts = axios.get(alertsApi);
+     const getUserCars = axios.get(userCarsApi);
+
+     axios.all([getAlerts, getUserCars]).then(
+       axios.spread((...allData) => {
+         const allAlerts = allData[0].data;
+         const allCompanies = allData[1].data;
+
+         setAlert(allAlerts.length > 0 ? [allAlerts.length - 1] : null);
+         setCompanies(allCompanies);
+       })
+     );
+   };
+
+   useEffect(() => {
+     fetchData();
+   }, []);
 
   return (
     <Box sx={{ width: "100%", typography: "body1" }}>
@@ -80,18 +93,28 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
             }
           />
         </TabPanel>
-        <TabPanel value="2" style={{ padding: 5, marginTop: 20 }}>
-          <AlertLayout alert={alert} isDealer={false} />
+        <TabPanel value="2" className={alert ? "p-5 mt-20" : "dis-bg"}>
+          {alert ? (
+            <AlertLayout alert={alert} isDealer={false} />
+          ) : (
+            <div className="m-auto w-50 pad-10">
+              <h4 className="fw-100 ls-1">No Requests Available</h4>
+            </div>
+          )}
         </TabPanel>
         {currentUser.role == 2 ? (
           <>
             <TabPanelText
               title={"Manufacturer Types"}
-              value={"Audi, BMW, Nissan, Kia, Mini"}
+              value={
+                companies && companies.length > 0
+                  ? removeDuplicateCompany(companies) // removeDuplicateCompany(companies)
+                  : "No Manufacturer Yet"
+              }
             />
             <TabPanelText
-              title={"Website"}
-              value={"www.mobile.de.com"}
+              title={currentUser.website ? "Website" : "Website "}
+              value={currentUser.website ?? "No Website"}
               isEditOption={isUserPtofile}
             />
           </>

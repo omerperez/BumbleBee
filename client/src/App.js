@@ -30,30 +30,7 @@ import OrderStatus from "./components/Pages/OrderStatus";
 import AccessDenied from "./components/Pages/AccessDeniedPage";
 
 function App() {
-
-  const darkTheme = createTheme({
-    palette: {
-      type: "dark",
-      background: {
-        default: "#111821",
-        paper: "#111821",
-      },
-      text: {
-        primary: "#fff",
-        secondary: "#cccccc",
-      },
-    },
-  });
-  const whiteTheme = createTheme({
-    palette: {
-      type: "light",
-    },
-    text: {
-      primary: "black",
-      secondary: "black",
-    },
-  });
-
+  
   return (
     <BrowserRouter>
       <AuthProvider>

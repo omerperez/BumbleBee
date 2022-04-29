@@ -13,14 +13,14 @@ const userSchema = new Schema({
   city: String,
   street: String,
   rating: Number,
-  ratingCount: Number,
+  website: String,
   countRating: String,
-  activityDaysTime: [{ start: String, end: String }],
-  // closingTime: [{ day: String, time: String }],
   activityDays: String,
   dateOfCreate: Date,
   dateOfBuyCar: Date,
   isSendReq: Boolean,
+  activityDaysTime: [{ start: String, end: String }],
+  usersRate: [{ type: Schema.Types.ObjectId, ref: "users" }],
   cars: [{ type: Schema.Types.ObjectId, ref: "cars" }],
 });
 

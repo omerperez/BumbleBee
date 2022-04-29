@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import FilesTabStatus from "./FilesTabStatus";
-import CircularProgress from "@mui/material/CircularProgress";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -11,6 +10,7 @@ import { Button, Divider } from "@mui/material";
 import { sendWhatsAppToDealer } from "../CarComponents/carFunctions";
 import axios from "axios";
 import { iconToShow, alertTitle } from "./AlertFunction";
+import Loading from "../Layout/Loading";
 
 export default function AlertLayout({ alert, isDealer }) {
   
@@ -48,11 +48,7 @@ export default function AlertLayout({ alert, isDealer }) {
   
 
   if(loading){
-    return (
-      <div className="d-flex justify-content-center mt-15">
-        <CircularProgress size={80} />
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
