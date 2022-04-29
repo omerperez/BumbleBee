@@ -4,7 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import EditActivityTimeDialog from "../DialogComponents/EditActivityTimeDialog";
 import { getTimeAvailabilityFormat } from "../../utils/functions";
 
-export default function DealerAvailability({ activityDays, activityDaysTime }) {
+export default function DealerAvailability({ activityDays, activityDaysTime, isCanEdit }) {
   return (
     <>
       <div className="mt-3">
@@ -72,12 +72,14 @@ export default function DealerAvailability({ activityDays, activityDaysTime }) {
           )}
         </div>
       </div>
+      {isCanEdit ? 
       <div className="mt-4">
         <EditActivityTimeDialog
           activityDays={activityDays}
           activityDaysTime={activityDaysTime}
         />
-      </div>
+      </div> : null
+      }
     </>
   );
 }

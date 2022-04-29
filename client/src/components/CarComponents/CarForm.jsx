@@ -105,9 +105,9 @@ export default function CarForm() {
           <AlertTitle>{error}</AlertTitle>
         </Alert>
       ) : null}
-      <div className="row">
+      <div className="d-flex row">
         <h5>General Information</h5>
-        <div className="col-6 col-sm-3 col-lg-2">
+        <div className="col-12 col-sm-3 col-lg-2">
           <FormControl fullWidth className="mt-3">
             <InputLabel>Manufacturer</InputLabel>
             <Select
@@ -125,7 +125,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col-6 col-sm-3 col-lg-2">
+        <div className="col-12 col-sm-3 col-lg-2">
           <FormControl fullWidth disabled={firstStatus} className="mt-3">
             <InputLabel>Model</InputLabel>
             <Select
@@ -147,7 +147,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col-6 col-sm-3 col-lg-2">
+        <div className="col-12 col-sm-3 col-lg-2">
           <FormControl fullWidth disabled={secondStatus} className="mt-3">
             <InputLabel>Year</InputLabel>
             <Select
@@ -173,7 +173,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col-6 col-sm-3 col-lg-2">
+        <div className="col-12 col-sm-3 col-lg-2">
           <FormControl
             fullWidth
             disabled={CheckDisableStatus(values)}
@@ -197,7 +197,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col-6 col-sm-3 col-lg-2">
+        <div className="col-12 col-sm-3 col-lg-2">
           <FormControl fullWidth disabled={secondStatus} className="mt-3">
             <InputLabel>Engine</InputLabel>
             <Select
@@ -223,7 +223,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col-6 col-sm-3 col-lg-2 mt-3">
+        <div className="col-12 col-sm-3 col-lg-2 mt-3">
           <FormControl fullWidth>
             <TextField
               disabled={firstStatus}
@@ -265,7 +265,7 @@ export default function CarForm() {
       </div>
       <div className="row mt-4">
         <h5>Performance Specs</h5>
-        <div className="col-6 col-sm-3 col-xl-2 mt-3">
+        <div className="col-12 col-sm-3 col-xl-2 mt-3">
           <FormControl fullWidth disabled={CheckDisableStatus(values)}>
             <InputLabel>Condition</InputLabel>
             <Select
@@ -285,7 +285,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col-6 col-sm-3 col-xl-2 mt-3">
+        <div className="col-12 col-sm-3 col-xl-2 mt-3">
           <FormControl fullWidth disabled={CheckDisableStatus(values)}>
             <InputLabel>Fuel Type</InputLabel>
             <Select
@@ -315,7 +315,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col-6 col-sm-3 col-xl-2 mt-3">
+        <div className="col-12 col-sm-3 col-xl-2 mt-3">
           <FormControl fullWidth disabled={CheckDisableStatus(values)}>
             <InputLabel>Gearbox</InputLabel>
             <Select
@@ -335,7 +335,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col-6 col-sm-3 col-xl-2 mt-3">
+        <div className="col-12 col-sm-3 col-xl-2 mt-3">
           <FormControl fullWidth disabled={CheckDisableStatus(values)}>
             <InputLabel>Owners</InputLabel>
             <Select
@@ -357,7 +357,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col-6 col-sm-3 col-xl-1 mt-3">
+        <div className="col-12 col-sm-3 col-xl-1 mt-3">
           <FormControl fullWidth disabled={CheckDisableStatus(values)}>
             <InputLabel>Doors</InputLabel>
             <Select
@@ -377,7 +377,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col-6 col-sm-3 col-xl-1 mt-3">
+        <div className="col-12 col-sm-3 col-xl-1 mt-3">
           <FormControl fullWidth disabled={CheckDisableStatus(values)}>
             <InputLabel>Seats</InputLabel>
             <Select
@@ -397,7 +397,7 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col-6 col-sm-3 col-xl-2 mt-3">
+        <div className="col-12 col-sm-3 col-xl-2 mt-3">
           <FormControl fullWidth disabled={CheckDisableStatus(values)}>
             <InputLabel>Color</InputLabel>
             <Select

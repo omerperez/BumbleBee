@@ -6,6 +6,7 @@ import OtherPropertiesCard from "../ProfileComponents/OtherPropertiesCard";
 import ProfileSide from "../ProfileComponents/ProfileSide";
 import axios from "axios";
 import RequestSteps from "../AlertsComponents/RequestSteps";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function MyProfile() {
 
@@ -13,6 +14,7 @@ export default function MyProfile() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [alert, setAlert] = useState(null);
+  const matches = useMediaQuery("(max-width:770px)");
 
   const fetchData = () => {
     const currentUserApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`;
@@ -45,7 +47,7 @@ export default function MyProfile() {
   return (
     <>
       <PageTitle />
-      <div className="d-flex mt-5 pad-1">
+      <div className={matches ? "mt-5 pad-1" : "d-flex mt-5 pad-1"}>
         <div className="col-12 col-md-5 col-lg-3 mt-5 mb-5 offset-1">
           <ProfileSide currentUser={user} />
           {user.role === 1 ? (
