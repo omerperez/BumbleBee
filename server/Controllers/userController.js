@@ -8,6 +8,7 @@ const router = require("express").Router();
 const _ = require('lodash');
 const axios = require('axios');
 const dotenv = require('dotenv');
+const car = require("../Models/car");
 dotenv.config();
 
 /* GET */
@@ -276,7 +277,7 @@ const deleteUser = (req, res) => {
   });
 };
 
-const adminDashboard = async  (req,res) => {
+const adminDashboard = async (req,res) => {
   const year = req.params.year;
   const model = req.params.model;
 
@@ -289,6 +290,45 @@ const adminDashboard = async  (req,res) => {
 
   const dataResults = {modelsByYear,countByYears,specificModelGraph};
   await res.send(dataResults);
+};
+
+
+
+const categoriesPerUser = async (req,res) => {
+
+  const currentUser = await userSchema.findById(req.params.id);
+  const carList = currentUser.cars;
+  const carCategoriesList=[];
+    try{
+      for (const carId of carList) {
+        const car = await carSchema.findById(carId);      
+        carCategoriesList.push(car.category);  
+      }
+      res.send(_.countBy(carCategoriesList));  
+    }
+    catch (err) {
+      console.log("fail");
+      res.status(400).json(err.message);
+    }
+  };
+
+
+const usersCategories = async (req,res) => {
+  const users = await userSchema.find({role:1});
+  const carCategoryList=[];
+  try{
+    for (const user of users) {
+      const favoriteCars = user.cars;
+      for (const carId of favoriteCars) {
+        const car = await carSchema.findById(carId);
+        carCategoryList.push(car.category);
+      }
+    }
+     res.send(_.countBy(carCategoryList));  
+  }catch (err) {
+    console.log("fail");
+    res.status(400).json(err.message);
+  }
 }
 
 module.exports = {
@@ -302,4 +342,6 @@ module.exports = {
   editUserAndImage,
   addCarToFavorite,
   adminDashboard,
+  categoriesPerUser,
+  usersCategories
 };
