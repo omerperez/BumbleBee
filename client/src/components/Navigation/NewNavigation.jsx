@@ -25,6 +25,7 @@ import {
   openedMixin,
   closedMixin,
 } from "../../styles/UseStylesMui";
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -57,7 +58,7 @@ export default function NewNavigation({ children }) {
   const [error, setError] = useState("");
   const matches = useMediaQuery("(min-height:570px)");
   const max800 = useMediaQuery("(max-width:800px)");
-  const navigationWidth = useMediaQuery("(max-width:400px)");
+  const navigationWidth = useMediaQuery("(max-width:500px)");
 
   let menuItems = clientMenuItems;
   if (currentUser.role === 3) {
@@ -107,6 +108,7 @@ export default function NewNavigation({ children }) {
           ? { overflow: "hidden" }
           : { display: "flex" }
       }
+      role={max800 ? "presentation" : null}
     >
       <Drawer variant="permanent" open={open}>
         {matches ? (
