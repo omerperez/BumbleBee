@@ -125,8 +125,8 @@ export default function EditProfile({ setOpen, mobileNumber }) {
               />
             </label>
           </div>
-          <div className="mt-5 col-2-input">
-            <Form.Group className="mr-10">
+          <div className="mt-5 row">
+            <Form.Group className="col-12 col-md-6">
               <Form.Label>First Name</Form.Label>
               <Form.Control
                 name="firstName"
@@ -137,7 +137,7 @@ export default function EditProfile({ setOpen, mobileNumber }) {
                 }}
               />
             </Form.Group>
-            <Form.Group>
+            <Form.Group className="col-12 col-md-6">
               <Form.Label>Last Name</Form.Label>
               <Form.Control
                 name="lastName"

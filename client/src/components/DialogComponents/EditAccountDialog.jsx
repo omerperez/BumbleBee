@@ -41,8 +41,8 @@ export default function EditAccountDialog({ mobileNumber }) {
       >
         <div
           style={{
-            height: 800,
-            width: 600,
+            maxHeight: 800,
+            maxWidth: 600,
             border: "none",
             borderRadius: "50px",
           }}

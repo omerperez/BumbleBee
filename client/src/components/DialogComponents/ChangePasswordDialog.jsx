@@ -59,8 +59,8 @@ export default function ChangePasswordDialog() {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <div className="w-500">
-          <DialogTitle id="alert-dialog-title">Change Password</DialogTitle>
+        <div>
+          <DialogTitle id="alert-dialog-title" className="w-500">Change Password</DialogTitle>
           {error && <Alert variant="danger">{error}</Alert>}
           <DialogContent>
             <Form.Group className="mt-3">
