@@ -1,9 +1,5 @@
-import React from "react";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
+import React from "react"; 
 import Typography from "@mui/material/Typography";
-import StarIcon from "@mui/icons-material/Star";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import PhoneInTalkIcon from "@mui/icons-material/PhoneInTalk";
@@ -15,20 +11,48 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import FirstRequestDialog from "../AlertsComponents/FirstRequestDialog";
 import RatingDealer from "../ProfileComponents/RatingDealer";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function DealerCard({ dealer, role, car, showReq }) {
   const mobile = dealer.phoneNumber ? dealer.phoneNumber : "+972522520484";
   const { currentUser } = useAuth();
+  const matches1310 = useMediaQuery("(max-width:1310px)");
 
   return (
-    <div className="mr-10 p-3 border-1-black">
-      <div className="days-grid">
-        <div>
-          <Typography component="div" variant="h4">
-            {dealer.firstName + " " + dealer.lastName}
-          </Typography>
-          <div className="color-yellow">
-            <RatingDealer readOnly={true} ratingCount={dealer.rating && dealer.usersRate ? (dealer.rating/dealer.usersRate.length) : 5} />
+    <div className="p-3">
+      <div className="row">
+        <div className={matches1310 ? "col-12" : "col-12 col-md-7 col-xxl-7"}>
+          <div className="row">
+            <Typography
+              component="div"
+              className={matches1310 ? "col-8 nowrap" : "col"}
+              variant="h4"
+            >
+              {dealer.firstName + " " + dealer.lastName}
+            </Typography>
+            {matches1310 ? (
+              <div className="col-4 m-auto p-0">
+                <img
+                  src={process.env.REACT_APP_S3 + dealer.image}
+                  width={"100%"}
+                  className="border-circle border3-black"
+                  onError={error403}
+                />
+              </div>
+            ) : null}
+          </div>
+          <div
+            className="color-yellow"
+            style={matches1310 ? { marginTop: "-15%" } : null}
+          >
+            <RatingDealer
+              readOnly={true}
+              ratingCount={
+                dealer.rating && dealer.usersRate
+                  ? dealer.rating / dealer.usersRate.length
+                  : 5
+              }
+            />
           </div>
           <div className="mt-3">
             <div>
@@ -47,14 +71,16 @@ export default function DealerCard({ dealer, role, car, showReq }) {
             </div>
           </div>
         </div>
-        <div className="justify-content-center mb-auto mt-auto">
-          <img
-            src={process.env.REACT_APP_S3 + dealer.image}
-            width={170}
-            className="border-circle border3-black"
-            onError={error403}
-          />
-        </div>
+        {!matches1310 ? (
+          <div className="justify-content-center col-6 col-xl-5 m-auto">
+            <img
+              src={process.env.REACT_APP_S3 + dealer.image}
+              width={"100%"}
+              className="border-circle border3-black"
+              onError={error403}
+            />
+          </div>
+        ) : null}
       </div>
       <Divider className="mt-4" />
       <div className="time-grid mt-3">

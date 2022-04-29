@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
 import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
 import DealerCard from "./DealerCard";
-import { error403, noAvailable, image403 } from "../images/projectImages";
+import { error403, image403 } from "../images/projectImages";
 import CarImagesCarousel from "../DialogComponents/CarImagesCarousel";
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from "@mui/icons-material/Star";
 import { Button } from "@mui/material";
 import { useAuth } from "../../contexts/AuthContext";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import DealerPropertiesDialog from "../DialogComponents/DealerPropertiesDialog";
 
 export default function CarImageGallery({ id, car, user }) {
   const [dealer, setDealer] = useState(car.dealer);
   const [newStatus, setNewStatus] = useState(JSON.stringify(user.cars).indexOf(car._id) != -1 ? true : false);
   const {addCarToFavorite} = useAuth();
+  const matches770 = useMediaQuery("(max-width:770px)");
+  const matches1070 = useMediaQuery("(max-width:1070px)");
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_API}/user/my-user/${car.dealer}`)
@@ -31,18 +34,32 @@ export default function CarImageGallery({ id, car, user }) {
 
   return (
     <>
-      <div className="d-flex">
-        <div className="mw-350">
-          <ImageList
-            className="border-3-black flex-basis-17"
-            gap={0}
-            sx={{ height: 550 }}
-            cols={1}
+      <div className={matches770 ? "justify-content-center" : "row"}>
+        {matches770 ? null : (
+          <div
+            className={
+              matches1070 ? "col-2 col-md-3 p-0 pl-1" : "col-2 p-0 pl-1"
+            }
           >
-            <CarImagesCarousel images={[...car.images, car.mainImage]} />
-          </ImageList>
-        </div>
-        <div className="flex-basis-50">
+            <ImageList
+              className="border-3-black"
+              gap={0}
+              sx={{ height: 550, background: '#363636' }}
+              cols={1}
+            >
+              <CarImagesCarousel images={[...car.images, car.mainImage]} />
+            </ImageList>
+          </div>
+        )}
+        <div
+          className={
+            matches770
+              ? "mt-2"
+              : matches1070
+              ? "col-12 col-md-9 col-xl-6 p-0 pr-1"
+              : "col-12 col-lg-6 p-0 pr-1"
+          }
+        >
           <div className="position-relative">
             <img
               alt="main_image"
@@ -54,8 +71,12 @@ export default function CarImageGallery({ id, car, user }) {
                   : image403
               }
               width={"100%"}
-              height={550}
-              className="border-3-black no-border-left"
+              height={matches770 ? null : 550}
+              className={
+                matches770
+                  ? "border-bottom-0 border-3-black border-"
+                  : "border-3-black no-border-left"
+              }
               onError={error403}
             />
             <div className="start-pos">
@@ -69,14 +90,28 @@ export default function CarImageGallery({ id, car, user }) {
             </div>
           </div>
         </div>
-        <div className="flex-basis-33 page-space">
-          <DealerCard
+        {matches770 ? (
+          <div className="row cur-pointer">
+            <CarImagesCarousel images={[...car.images, car.mainImage]} />
+          </div>
+        ) : null}
+        {matches1070 ? (
+          <DealerPropertiesDialog
             dealer={dealer}
             role={user.role}
             showReq={user.isSendReq}
             car={car}
           />
-        </div>
+        ) : (
+          <div className="col-4">
+            <DealerCard
+              dealer={dealer}
+              role={user.role}
+              showReq={user.isSendReq}
+              car={car}
+            />
+          </div>
+        )}
       </div>
     </>
   );

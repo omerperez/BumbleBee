@@ -175,6 +175,22 @@ input{
   }
 }
 
+.row-auto{
+    grid-auto-rows: auto;
+}
+
+.minmax-20{
+    grid-template-columns: repeat(auto-fit, minmax(20%, 1fr));
+}
+
+.minmax-50 {
+  grid-template-columns: repeat(auto-fit, minmax(50%, 1fr));
+}
+
+.minmax-30 {
+  grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
+}
+
 .w-max{
   width: 100% !important;
 }

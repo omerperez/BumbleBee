@@ -7,6 +7,7 @@ import { editCarIcon } from "../images/projectImages";
 import { useAuth } from "../../contexts/AuthContext";
 import axios from "axios";
 import Loading from "../Layout/Loading";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function CarProfilePage() {
 
@@ -15,6 +16,7 @@ export default function CarProfilePage() {
   const [isEdit, setIsEdit] = useState(false);
   const { currentUser } = useAuth();
   const [user, setUser] = useState();
+  const matches675 = useMediaQuery("(max-width:675px)");
 
   const fetchData = () => {
     
@@ -43,20 +45,6 @@ export default function CarProfilePage() {
     fetchData();
   }, [isEdit]);
 
-  // useEffect(() => {
-  //   const index = window.location.toString().lastIndexOf("/") + 1;
-  //   const id = window.location.toString().substring(index);
-  //   fetch(`${process.env.REACT_APP_SERVER_API}/car/show/${id}`)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       setLoading(false);
-  //       setCar(data)
-  //     });  
-  //         fetch(
-  //           `${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`
-  //         ).then((res) => res.json().then((data) => setUser(data)));
-  // },[isEdit]);
-
   if (loading) {
     return <Loading />;
   }
@@ -65,8 +53,8 @@ export default function CarProfilePage() {
 
   function getEditButton(){
     return (
-      <div className="row">
-        <div className="col-11">
+      <div className={matches675 ? null : "row"}>
+        <div className={matches675 ? null : "col-11"}>
           <CarProfileBody car={car} />
         </div>
         {car.dealer == currentUser._id && currentUser.role === 2 ? (

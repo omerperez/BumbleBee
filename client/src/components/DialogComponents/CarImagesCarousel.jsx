@@ -5,9 +5,11 @@ import { Button, Carousel } from "react-bootstrap";
 import { error403, noAvailable } from "../images/projectImages";
 import ImageListItem from "@mui/material/ImageListItem";
 import CloseIcon from "@mui/icons-material/Close";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function CarImagesCarousel({ images }) {
   const [open, setOpen] = React.useState(false);
+  const matches770 = useMediaQuery("(max-width:770px)");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -22,17 +24,29 @@ export default function CarImagesCarousel({ images }) {
         {images && images.length > 0 ? (
           images.map((image, inx) => {
             return images.length - 1 !== inx ? (
-              <ImageListItem
-                key={image}
-                onClick={handleClickOpen}
-                className="cur-pointer"
-              >
+              !matches770 ? (
+                <ImageListItem
+                  key={image}
+                  onClick={handleClickOpen}
+                  className="cur-pointer"
+                >
+                  <img
+                    alt={"car gallery " + inx}
+                    src={process.env.REACT_APP_S3 + image}
+                    onError={error403}
+                  />
+                </ImageListItem>
+              ) : inx > 3 ? null : (
                 <img
+                  onClick={handleClickOpen}
+                  width={"25%"}
+                  height={"100%"}
+                  className="col border-2-black"
                   alt={"car gallery " + inx}
                   src={process.env.REACT_APP_S3 + image}
                   onError={error403}
                 />
-              </ImageListItem>
+              )
             ) : null;
           })
         ) : (
