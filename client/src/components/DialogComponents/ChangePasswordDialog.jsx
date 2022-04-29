@@ -45,7 +45,7 @@ export default function ChangePasswordDialog() {
 
   return (
     <div>
-      <div className="w-100 text-center mb-3">
+      <div className="w-100  mb-3">
         <Button
           onClick={handleClickOpen}
           className={"edit-profile-btn-dealer no-border"}

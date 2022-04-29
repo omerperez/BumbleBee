@@ -14,7 +14,8 @@ export default function MyProfile() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [alert, setAlert] = useState(null);
-  const matches = useMediaQuery("(max-width:770px)");
+  const matches = useMediaQuery("(max-width:1000px)");
+  const matches770 = useMediaQuery("(max-width:770px)");
 
   const fetchData = () => {
     const currentUserApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`;
@@ -47,18 +48,34 @@ export default function MyProfile() {
   return (
     <>
       <PageTitle />
-      <div className={matches ? "mt-5 pad-1" : "d-flex mt-5 pad-1"}>
-        <div className="col-12 col-md-5 col-lg-3 mt-5 mb-5 offset-1">
-          <ProfileSide currentUser={user} />
-          {user.role === 1 ? (
-            <>
-              <div className="mt-4">
-                <h3 className="fw-100"> Request Steps </h3>
-              </div>
-            </>
-          ) : null}
-        </div>
-        <div className="col-12 col-md-7 col-lg-7 ml-25 mt-5 mb-5">
+      <div className={matches ? "row  mt-2 pad-1" : "d-flex mt-2 pad-1"}>
+        {matches770 ? null : (
+          <div
+            className={
+              matches
+                ? "col-4"
+                : "col-12 col-lg-5 col-xl-4 col-xxl-3 mt-5 mb-5 offset-1"
+            }
+          >
+            <ProfileSide currentUser={user} />
+            {user.role === 1 ? (
+              <>
+                <div className="mt-4">
+                  <h3 className="fw-100"> Request Steps </h3>
+                </div>
+              </>
+            ) : null}
+          </div>
+        )}
+        <div
+          className={
+            matches
+              ? matches770
+                ? "col-12"
+                : "col-6"
+              : "col-12 col-lg-5 col-xl-6 col-xxl-7  ml-25 mt-5 mb-5"
+          }
+        >
           <OtherPropertiesCard currentUser={user} />
         </div>
       </div>

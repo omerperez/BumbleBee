@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import { DialogContent } from "@mui/material";
-import { Link } from "react-router-dom";
 import EditProfile from "../Pages/EditProfile";
-import { Button } from "react-bootstrap";
+import { Button } from "@mui/material";
+import DealerAvailability from "../ProfileComponents/DealerAvailability";
 
-export default function EditAccountDialog({ mobileNumber }) {
+export default function ShowActivityDays({ activityDays, activityDaysTime, isCanEdit }) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -19,15 +19,16 @@ export default function EditAccountDialog({ mobileNumber }) {
 
   return (
     <div>
-      <div className="w-100 mb-3">
+      <div className="w-100">
         <Button
-          onClick={handleClickOpen}
-          className={"edit-profile-btn-dealer no-border"}
+          onClick={() => setOpen(true)}
+          className="capital-letter ls-less1"
+          variant="contained"
+          // endIcon={<StarHalfIcon />}
         >
-          Edit Profile
+          Activity Days
         </Button>
       </div>
-
       <Dialog
         sx={{
           "& .MuiDialog-paper": {
@@ -50,12 +51,16 @@ export default function EditAccountDialog({ mobileNumber }) {
           <DialogTitle
             id="alert-dialog-title"
             onClick={handleClose}
-            className="cur-pointer"
+            className="cur-pointer w-500"
           >
             <h4 className="color-red">X</h4>
           </DialogTitle>
           <DialogContent>
-            <EditProfile setOpen={setOpen} mobileNumber={mobileNumber} />
+            <DealerAvailability
+              isCanEdit={isCanEdit}
+              activityDays={activityDays}
+              activityDaysTime={activityDaysTime}
+            />
           </DialogContent>
         </div>
       </Dialog>

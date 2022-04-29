@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import Card from "@mui/material/Card";
 import { useAuth } from "../../contexts/AuthContext";
 import Button from "@mui/material/Button";
@@ -13,49 +13,85 @@ import ChangePasswordDialog from "../DialogComponents/ChangePasswordDialog";
 import RatingDealer from "./RatingDealer";
 import DealerRatingDialog from "../DialogComponents/DealerRatingDialog";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import ShowActivityDays from "../DialogComponents/ShowActivityDays";
 
 export default function OtherPropertiesCard({ currentUser }) {
-  
+
   const { currentUser: myUser } = useAuth();
   const matches = useMediaQuery("(max-width:1010px)");
+  const matches770 = useMediaQuery("(max-width:770px)");
+  const matches550 = useMediaQuery("(max-width:770px)");
 
   return (
     <Card sx={{ boxShadow: "none" }}>
       <div className="row">
         <div className="col-12 col-xl">
-          <h2 className="opc-8 ls-2">
-            {currentUser.firstName + " " + currentUser.lastName}
-          </h2>
-          <b
+          {matches770 ? (
+            <div className="row d-flex mt-3">
+              <h2 className="col-8 col-sm-6 col-md-3 opc-8 ls-2 nowrap">
+                {currentUser.firstName + " " + currentUser.lastName}
+              </h2>
+              <div className="m-auto col-6 col-sm-4 offset-1 col-md-3 ">
+                <img
+                  className="border-circle border-2-black p-0"
+                  width={"100%"}
+                  src={process.env.REACT_APP_S3 + currentUser.image}
+                />
+              </div>
+            </div>
+          ) : (
+            <h2 className="opc-8 ls-2">
+              {currentUser.firstName + " " + currentUser.lastName}
+            </h2>
+          )}
+          <div
             style={
-              currentUser.role === 1
-                ? {
-                    color: "#3cb371",
-                    fontSize: 18,
-                    letterSpacing: 2,
-                  }
-                : { color: "#42ADFF", fontSize: 18, letterSpacing: 2 }
+              matches770
+                ? currentUser.role === 1
+                  ? {
+                      marginTop: "-10%",
+                    }
+                  : {
+                      marginTop: "-10%",
+                    }
+                : null
             }
           >
-            {currentUser.role === 2
-              ? "Dealer"
-              : currentUser.role == 3
-              ? "Admin"
-              : "Client"}
-          </b>
+            <b
+              style={
+                currentUser.role === 1
+                  ? {
+                      color: "#3cb371",
+                      fontSize: 18,
+                      letterSpacing: 2,
+                    }
+                  : {
+                      color: "#42ADFF",
+                      fontSize: 18,
+                      letterSpacing: 2,
+                    }
+              }
+            >
+              {currentUser.role === 2
+                ? "Dealer"
+                : currentUser.role == 3
+                ? "Admin"
+                : "Client"}
+            </b>
+          </div>
         </div>
         {myUser._id === currentUser._id ? (
           <div
             className={
               matches
                 ? "col-12 d-flex justify-content-start row mt-4"
-                : "col d-flex justify-content-end row"
+                : "col d-flex justify-content-start row mt-4"
             }
           >
-            <div className={matches ? "col" : "col"}>
+            <div className="col-12 col-xl">
               <ChangePasswordDialog />
             </div>
-            <div className="col">
+            <div className="col-12 col-xl">
               <EditAccountDialog mobileNumber={currentUser.phoneNumber} />
             </div>
           </div>
@@ -127,7 +163,11 @@ export default function OtherPropertiesCard({ currentUser }) {
         </>
       ) : null}
       {currentUser._id === myUser._id || currentUser.role !== 2 ? null : (
-        <div className="mt-4 d-flex">
+        <div
+          className={
+            matches550 ? "d-flex justify-content-center mt-4" : "mt-4 d-flex"
+          }
+        >
           <Button
             className="capital-letter ls-less1"
             variant="contained"
@@ -148,11 +188,39 @@ export default function OtherPropertiesCard({ currentUser }) {
           >
             Send Whatsapp
           </Button>
-          <div className="ml-10">
-            <DealerRatingDialog dealer={currentUser._id} client={myUser._id} />
-          </div>
+          {matches550 ? null : (
+            <div className="ml-10">
+              <DealerRatingDialog
+                dealer={currentUser._id}
+                client={myUser._id}
+              />
+            </div>
+          )}
+          {matches770 && !matches550 ? (
+            <div className="ml-10">
+              <ShowActivityDays
+                isCanEdit={myUser._id === currentUser._id}
+                activityDays={currentUser.activityDays}
+                activityDaysTime={currentUser.activityDaysTime}
+              />
+            </div>
+          ) : null}
         </div>
       )}
+      {matches550 ? (
+        <div className="mt-4 d-flex justify-content-center">
+          <div>
+            <DealerRatingDialog dealer={currentUser._id} client={myUser._id} />
+          </div>
+          <div className="ml-10">
+            <ShowActivityDays
+              isCanEdit={myUser._id === currentUser._id}
+              activityDays={currentUser.activityDays}
+              activityDaysTime={currentUser.activityDaysTime}
+            />
+          </div>
+        </div>
+      ) : null}
       <div className="mt-4">
         <UserMoreInfo
           currentUser={currentUser}

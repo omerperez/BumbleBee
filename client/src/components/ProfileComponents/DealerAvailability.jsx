@@ -9,7 +9,7 @@ export default function DealerAvailability({ activityDays, activityDaysTime, isC
     <>
       <div className="mt-3">
         <div className="opc-8 row">
-          <div className="col-3 col-sm-4 fw-100 ls-2 font-22">Availability</div>
+          <div className="col-8 col-sm-6 col-md-7 col-lg-6 fw-100 ls-2 font-22">Availability</div>
           <Divider className="col m-auto" />
         </div>
         <div className="d-flex justify-content-center"></div>

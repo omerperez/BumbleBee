@@ -9,6 +9,7 @@ export default function ProfileSide({ currentUser }) {
 
   const { currentUser: myUser } = useAuth();
   const matches = useMediaQuery("(max-width:770px)");
+  const matches1000 = useMediaQuery("(max-width:1000px)");
 
   return (
     <Card sx={{ boxShadow: "none" }}>
@@ -21,7 +22,7 @@ export default function ProfileSide({ currentUser }) {
       >
         <img
           width={"100%"}
-          height={445}
+          height={matches1000 ? "100%" : 445}
           className={matches ? "cover-back col-6" : "cover-back"}
           src={process.env.REACT_APP_S3 + currentUser.image}
           alt="Paella dish"
