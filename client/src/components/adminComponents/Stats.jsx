@@ -7,58 +7,72 @@ import MenuItem from "@mui/material/MenuItem";
 import InputLabel from "@mui/material/InputLabel";
 import { FormControl } from "@mui/material";
 import { carsProperties } from '../CarComponents/exportForSelect';
+import Loading from "../Layout/Loading";
+
 import CircularProgress from "@mui/material/CircularProgress";
+import { useAuth } from "../../contexts/AuthContext";
+import axios from "axios";
+
 import {
   getCountByYears,
   getModelByYears,
   getSpecificModel,
+  getCategoriesOfUser,
+  getCategoriesPerUser,
   yearsForSelect,
 } from "./StatisticsFunctions";
 
 export default function Stats() {
 
-const[dataVal,setDataVal] = useState(null);
+const[govildata,setGovildata] = useState(null);
 const[year,setYear] = useState(2015);
 const[model,setModel] = useState('BMW');
-const[categoriesPerUser,setCategoriesPerUser] = useState(null);
+const[categoriesPerUserData,setCategoriesPerUserData] = useState(null);
 const[loading,setLoading] = useState(true);
 
-const { currentUser } = useAuth();
+// const { currentUser } = useAuth();
+
+const fetchData = () => {
+    
+  //const govilDataApi = `${process.env.REACT_APP_SERVER_API}/user/dashboard/${year}/${model.hebrew}`;
+  const categoriesPerUserApi = `${process.env.REACT_APP_SERVER_API}/user/dashboard`;
+
+  //const getGovilData = axios.get(govilDataApi);
+  const getCategoriesPerUserApi = axios.get(categoriesPerUserApi);
+
+  axios.all([ getCategoriesPerUserApi]).then(
+    axios.spread((...allData) => {
+      //const allgovilData = allData[0].data;
+      const allCategoriesPerUserData = allData[0].data;
+      //setGovildata(allgovilData);
+      setCategoriesPerUserData(allCategoriesPerUserData);
+      setLoading(false);
+    })
+  );
+}
 
 useEffect(() => {
-       fetch(`${process.env.REACT_APP_SERVER_API}/user/dashboard/${year}/${model.hebrew}`)
-       .then((response) => response.json())
-       .then((data) => {
-          setDataVal(data)
-          setLoading(false)
-        });  
- } , [year,model]);
-
- useEffect(() => {
-  fetch(`${process.env.REACT_APP_SERVER_API}/user/dashboard/${currentUser}`)
-  .then((response) => response.json())
-  .then((data) => {
-    setCategoriesPerUser(data)
-    setLoading(false)
-   });  
-},[currentUser]);
+  fetchData();
+}, []);
  
- if(loading){
-  return (
-    <div className="d-flex justify-content-center mt-15">
-      <CircularProgress size={80} />
-    </div>
-  ); 
- }
+if (loading) {
+  return <Loading />;
+}
 
- const countByYears = getCountByYears(dataVal.countByYears);
- const modelsByYear = getModelByYears(dataVal.modelsByYear);
- const carsPerYearAndModel = getSpecificModel(dataVal.specificModelGraph);
+ console.log(categoriesPerUserData);
+
+//  const countByYears = getCountByYears(dataVal.countByYears);
+//  const modelsByYear = getModelByYears(dataVal.modelsByYear);
+//  const carsPerYearAndModel = getSpecificModel(dataVal.specificModelGraph);
+ const categoriesPerUser = getCategoriesPerUser(categoriesPerUserData);
+
+
+
 
  return (
     <> 
-     <div className="d-flex justify-content-start row mt-3">
-        <div className="col-3 mr-5">
+      <div className="d-flex justify-content-start row mt-3">
+         <div className="col-3 mr-5">
        <FormControl fullWidth>
             <InputLabel>Company</InputLabel>
             <Select
@@ -98,9 +112,29 @@ useEffect(() => {
             </Select>
           </FormControl>
           </div>
+          <div className="col-3">
+       <FormControl fullWidth>
+            <InputLabel>User</InputLabel>
+            <Select
+              label="user"
+              name="user"
+              value={user ? user : ""}
+              onChange={(e) => setUser(e.target.value)}
+              required
+            >
+              {yearsForSelect.map((SelectUser, key) => {
+                return (
+                  <MenuItem key={SelectUser.id} value={SelectUser}>
+                    {SelectUser}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+          </div>
           </div>
 
-          <div
+        {/* <div
        style={{
          width: "100%",
          maxWidth: 1000,
@@ -181,6 +215,28 @@ useEffect(() => {
                beginAtZero: true,
              },
           },
+        }}
+        />
+      </div>  */}
+     <div
+       style={{
+         width: "50%",
+         maxWidth: 1000,
+         height: "400px",
+         display: "inline-flex",
+       }}
+     >
+       <Pie
+         data={categoriesPerUser}
+         options={{
+           maintanAspectRatio: false,
+           plugins: {
+             title: {
+               display: true,
+               text: "Categories Per User",
+               fontSize: 80,
+             },
+           },
         }}
         />
      </div>
