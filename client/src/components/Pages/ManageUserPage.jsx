@@ -84,6 +84,14 @@ export default function ManageUserPage() {
       hasborder: true,
     },
     {
+      id: "statistics",
+      numeric: false,
+      disablePadding: true,
+      label: "Statistics",
+      style: noBorder,
+      hasborder: true,
+    },
+    {
       id: "actions",
       numeric: false,
       disablePadding: true,
