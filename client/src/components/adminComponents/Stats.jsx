@@ -231,12 +231,28 @@ if (loading) {
          options={{
            maintanAspectRatio: false,
            plugins: {
-             title: {
-               display: true,
-               text: "Categories Per User",
-               fontSize: 80,
-             },
-           },
+            tooltip:{
+                callbacks:{
+                    label:(context)=>{
+                        var sum=0;
+                        for (const data of context.dataset.data){
+                            sum=sum+data;
+                        }
+                        const pers = Math.floor((context.parsed*100)/sum);
+                        return (context.label+": "+pers +'%')
+
+                    },
+                    afterLabel: (context)=>{
+                        return("Number: "+context.parsed)
+                    }
+                }
+              },
+            title: {
+              display: true,
+              text: "Categories Per User",
+              fontSize: 80,
+            },
+         },
         }}
         />
      </div>
