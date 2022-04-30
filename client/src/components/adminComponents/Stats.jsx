@@ -10,21 +10,19 @@ import { carsProperties } from '../CarComponents/exportForSelect';
 import Loading from "../Layout/Loading";
 
 import CircularProgress from "@mui/material/CircularProgress";
-import { useAuth } from "../../contexts/AuthContext";
 import axios from "axios";
 
 import {
   getCountByYears,
   getModelByYears,
   getSpecificModel,
-  getCategoriesOfUser,
   getCategoriesPerUser,
   yearsForSelect,
 } from "./StatisticsFunctions";
 
 export default function Stats() {
 
-const[govildata,setGovildata] = useState(null);
+//const[govildata,setGovildata] = useState(null);
 const[year,setYear] = useState(2015);
 const[model,setModel] = useState('BMW');
 const[categoriesPerUserData,setCategoriesPerUserData] = useState(null);
@@ -106,26 +104,6 @@ if (loading) {
                 return (
                   <MenuItem key={SelectYear.id} value={SelectYear}>
                     {SelectYear}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-          </div>
-          <div className="col-3">
-       <FormControl fullWidth>
-            <InputLabel>User</InputLabel>
-            <Select
-              label="user"
-              name="user"
-              value={user ? user : ""}
-              onChange={(e) => setUser(e.target.value)}
-              required
-            >
-              {yearsForSelect.map((SelectUser, key) => {
-                return (
-                  <MenuItem key={SelectUser.id} value={SelectUser}>
-                    {SelectUser}
                   </MenuItem>
                 );
               })}
