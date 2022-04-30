@@ -290,6 +290,44 @@ const adminDashboard = async (req, res) => {
   await res.send(dataResults);
 };
 
+
+
+const categoriesPerUser = async (req,res) => {
+
+  const currentUser = await userSchema.findById(req.params.id);
+  const carList = currentUser.cars;
+  const carCategoriesList=[];
+    try{
+      for (const carId of carList) {
+        const car = await carSchema.findById(carId);      
+        carCategoriesList.push(car.category);  
+      }
+      res.send(_.countBy(carCategoriesList));  
+    }
+    catch (err) {
+      console.log("fail");
+      res.status(400).json(err.message);
+    }
+  };
+
+
+const usersCategories = async (req,res) => {
+  const users = await userSchema.find({role:1});
+  const carCategoryList=[];
+  try{
+    for (const user of users) {
+      const favoriteCars = user.cars;
+      for (const carId of favoriteCars) {
+        const car = await carSchema.findById(carId);
+        carCategoryList.push(car.category);
+      }
+    }
+     res.send(_.countBy(carCategoryList));  
+  }catch (err) {
+    console.log("fail");
+    res.status(400).json(err.message);
+  };
+}
 function getToken(user) {
   return jwt.sign(
     {
@@ -300,7 +338,7 @@ function getToken(user) {
     },
     process.env.ACCESS_TOKEN_SECRET
   );
-}
+};
 
 module.exports = {
   editUser,
@@ -313,6 +351,8 @@ module.exports = {
   editUserAndImage,
   addCarToFavorite,
   adminDashboard,
+  categoriesPerUser,
+  usersCategories,
   rateDealer,
   findCurrentRating,
   script,

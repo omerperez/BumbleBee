@@ -6,6 +6,7 @@ import axios from "axios";
 import DeleteDialog from "../DialogComponents/DeleteDialog";
 import {Link} from "react-router-dom";
 import { Button } from "@mui/material";
+import CategoriesPerUserDialog from "../DialogComponents/CategoriesPerUserDialog";
 
 const useStyles = useTableStyles;
 const api = axios.create({ baseURL: process.env.REACT_APP_SERVER_API });
@@ -52,6 +53,17 @@ export default function TableCells({ item }) {
         align="left"
       >
         {item.role == 1 ? "Client" : item.role == 2 ? "Dealer" : "Manager"}
+      </TableCell>
+      <TableCell
+        key={item._id + "stats"}
+        className={classes.tableCell}
+        align="left"
+      >
+        <CategoriesPerUserDialog
+          id={item._id}
+          name={item.firstName + " " + item.lastName}
+          disabled={item.role == 3 ? true : false}
+        />
       </TableCell>
       <TableCell
         key={item._id + "-cs"}
