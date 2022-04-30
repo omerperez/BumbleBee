@@ -218,7 +218,6 @@ if (loading) {
                         }
                         const pers = Math.floor((context.parsed*100)/sum);
                         return (context.label+": "+pers +'%')
-
                     },
                     afterLabel: (context)=>{
                         return("Number: "+context.parsed)
