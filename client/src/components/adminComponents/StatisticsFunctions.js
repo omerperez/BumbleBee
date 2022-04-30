@@ -47,7 +47,22 @@ function getSpecificModel(dataOfSpecificModel) {
   };
 }
 
-function getCategoriesOfUser(dataOfCategoriesPerUser){
+function getCategoriesOfUser(dataOfCategoriesOfUser){
+  return{
+    labels: Object.keys(dataOfCategoriesOfUser),
+    datasets: [
+      {
+        label: 'Categories Per User',
+        data: Object.values(dataOfCategoriesOfUser),
+        backgroundColor:bgColor,
+        borderColor: brColor,
+        hoverOffset: 4
+      },
+    ],
+  };
+ }
+
+ function getCategoriesPerUser(dataOfCategoriesPerUser){
   return{
     labels: Object.keys(dataOfCategoriesPerUser),
     datasets: [
@@ -62,7 +77,13 @@ function getCategoriesOfUser(dataOfCategoriesPerUser){
   };
  }
 
-export { getCountByYears, getModelByYears, getSpecificModel, getCategoriesOfUser, yearsForSelect };
+export {
+   getCountByYears,
+   getModelByYears,
+   getSpecificModel,
+   getCategoriesOfUser,
+   getCategoriesPerUser,
+   yearsForSelect };
 
 var bgColor = [
   "rgba(255, 99, 132, 0.2)",
