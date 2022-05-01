@@ -130,7 +130,7 @@ input{
     position: absolute !important;
     right: 0px !important;
     margin-right: 40px !important;
-    margin-top: 5px !important;
+    /* margin-top: 5px !important; */
   }
 }
 @media screen and (max-width: 450px) {
@@ -922,6 +922,10 @@ input{
 
 .m-6{
   margin: 6px !important;
+}
+
+.nav-space {
+  margin-right: 15% !important;
 }
 
 .mw-350{

@@ -24,4 +24,4 @@ app.use("/notification", notification);
 
 // app.listen(process.env.PORT);
 
-module.exports = app
+module.exports = app;

@@ -24,8 +24,12 @@ import {
   navCurrentPageStyle,
   openedMixin,
   closedMixin,
+  AppBar,
 } from "../../styles/UseStylesMui";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import Typography from "@mui/material/Typography";
+import Toolbar from "@mui/material/Toolbar";
+import Actions from "../Layout/Actions";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -49,7 +53,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function NewNavigation({ children }) {
+export default function NewNavigation({socket, children }) {
   const { currentUser, logout } = useAuth();
   const [open, setOpen] = useState(true);
   const [check, setCheck] = useState("/homepage");
@@ -109,6 +113,35 @@ export default function NewNavigation({ children }) {
       }
       role={max800 ? "presentation" : null}
     >
+      <AppBar
+        position="fixed"
+        open={open}
+        sx={{ background: "none", boxShadow: "none" }}
+      >
+        <Toolbar sx={{ background: "none", boxShadow: "none" }}>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{
+              marginRight: 5,
+              ...(open && { display: "none" }),
+            }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            variant="h6"
+            color={"black"}
+            noWrap
+            component="div"
+            style={{ marginLeft: "auto", marginRight: 10 }}
+          >
+            <Actions socket={socket} />
+          </Typography>
+        </Toolbar>
+      </AppBar>
       <Drawer variant="permanent" open={open}>
         {matches ? (
           <>
@@ -205,7 +238,7 @@ export default function NewNavigation({ children }) {
           </ListItem>
         ) : null}
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 2, p: 2 }}>
+      <Box component="main" sx={{ flexGrow: 2, p: 2, marginTop: "10px" }}>
         {children}
       </Box>
     </Box>

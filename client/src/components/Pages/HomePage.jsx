@@ -29,7 +29,7 @@ export default function HomePage() {
 
   return (
     <>
-      <div className="ml-8">
+      <div className="ml-8" style={{ maxWidth: '500px'}}>
         <PageTitle page={"Home Page"} />
       </div>
       <div className="pr-1">

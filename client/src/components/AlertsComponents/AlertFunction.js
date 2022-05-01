@@ -82,6 +82,22 @@ async function editAlertFunction(alert) {
     });
 }
 
+
+const notificationTitle = (name, step) => {
+  if (step == 1) {
+      return "New License Request From" + " " + name;
+      }
+  if (step == 2) {
+    return name + " " + "has confirmed your payment and attach the licenses!";
+  }
+  if (step == 3) {
+     return "Shipping Details Request From" + " " + name;
+  }
+  if (step == 4) {
+    return "Purchase process was completed successfully!";
+  }
+}
+
 const alertTitle = (step, isDealer, dealer, user) => {
   if (step == 1) {
     if (isDealer) {
@@ -281,4 +297,10 @@ const iconToShow = (step, isCancelRequest, isDealer, alert) => {
   }
 };
 
-export { iconToShow, alertTitle, createAlert, editAlertFunction };
+export {
+  iconToShow,
+  alertTitle,
+  createAlert,
+  editAlertFunction,
+  notificationTitle,
+};

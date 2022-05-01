@@ -1,6 +1,7 @@
 import { makeStyles, withStyles, styled } from "@mui/styles";
 import TableCell from "@mui/material/TableCell";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import MuiAppBar from "@mui/material/AppBar";
 
 /* Layout */
 const maxWidthCardApp = { maxWidth: 400 };
@@ -86,6 +87,24 @@ const carFormStyles = makeStyles(() => ({
 
 /* Navigation */
 const drawerWidth = 300;
+
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(["width", "margin"], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(["width", "margin"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -304,4 +323,5 @@ export {
   useTableStyles,
   openedMixin,
   closedMixin,
+  AppBar
 };
