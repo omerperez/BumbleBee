@@ -5,14 +5,6 @@ const topbarMenuItems = [
     path: "/my-profile",
     image: "profile",
   },
-  // {
-  //   path: "/",
-  //   image: "notification_on",
-  // },
-  {
-    path: "/my-profile",
-    image: "notification",
-  },
 ];
 
 const topbarMenuItemsForDealer = [
@@ -23,14 +15,6 @@ const topbarMenuItemsForDealer = [
   {
     path: "/create-car",
     image: "plus",
-  },
-  // {
-  //   path: "/",
-  //   image: "notification_on",
-  // },
-  {
-    path: "/order-status",
-    image: "notification",
   },
 ];
 
