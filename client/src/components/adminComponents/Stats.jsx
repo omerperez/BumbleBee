@@ -68,18 +68,18 @@ if (loading) {
 
 
  return (
-    <> 
-      <div className="d-flex justify-content-start row mt-3">
-         <div className="col-3 mr-5">
-       <FormControl fullWidth>
-            <InputLabel>Company</InputLabel>
-            <Select
-              label="company"
-              name="company"
-              value={model != null ? model.english : ""}
-              onChange={(e) => setModel(e.target.value)}
-              required
-            >
+   <>
+     <div className="d-flex justify-content-start row mt-4">
+       <div className="col-3 mr-5">
+         <FormControl fullWidth>
+           <InputLabel>Company</InputLabel>
+           <Select
+             label="company"
+             name="company"
+             value={model != null ? model.english : ""}
+             onChange={(e) => setModel(e.target.value)}
+             required
+           >
              {carsProperties.makes.map((make, key) => {
                return (
                  <MenuItem key={make.id} value={make}>
@@ -87,32 +87,32 @@ if (loading) {
                  </MenuItem>
                );
              })}
-            </Select>
-          </FormControl>
-          </div>
-          <div className="col-3">
-       <FormControl fullWidth>
-            <InputLabel>Year</InputLabel>
-            <Select
-              label="year"
-              name="year"
-              value={year ? year : ""}
-              onChange={(e) => setYear(e.target.value)}
-              required
-            >
-              {yearsForSelect.map((SelectYear, key) => {
-                return (
-                  <MenuItem key={SelectYear.id} value={SelectYear}>
-                    {SelectYear}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-          </div>
-          </div>
+           </Select>
+         </FormControl>
+       </div>
+       <div className="col-3">
+         <FormControl fullWidth>
+           <InputLabel>Year</InputLabel>
+           <Select
+             label="year"
+             name="year"
+             value={year ? year : ""}
+             onChange={(e) => setYear(e.target.value)}
+             required
+           >
+             {yearsForSelect.map((SelectYear, key) => {
+               return (
+                 <MenuItem key={SelectYear.id} value={SelectYear}>
+                   {SelectYear}
+                 </MenuItem>
+               );
+             })}
+           </Select>
+         </FormControl>
+       </div>
+     </div>
 
-        {/* <div
+     {/* <div
        style={{
          width: "100%",
          maxWidth: 1000,
@@ -196,42 +196,44 @@ if (loading) {
         }}
         />
       </div>  */}
-     <div
-       style={{
-         width: "50%",
-         maxWidth: 1000,
-         height: "400px",
-         display: "inline-flex",
-       }}
-     >
-       <Pie
-         data={categoriesPerUser}
-         options={{
-           maintanAspectRatio: false,
-           plugins: {
-            tooltip:{
-                callbacks:{
-                    label:(context)=>{
-                        var sum=0;
-                        for (const data of context.dataset.data){
-                            sum=sum+data;
-                        }
-                        const pers = Math.floor((context.parsed*100)/sum);
-                        return (context.label+": "+pers +'%')
-                    },
-                    afterLabel: (context)=>{
-                        return("Number: "+context.parsed)
-                    }
-                }
-              },
-            title: {
-              display: true,
-              text: "Categories Per User",
-              fontSize: 80,
-            },
-         },
-        }}
-        />
+     <div className="d-flex justify-content-center mt-5">
+       <div
+         style={{
+           minWidth: '550px',
+           maxWidth: '100%',
+           height: "100%",
+           display: "inline-flex",
+         }}
+       >
+         <Pie
+           data={categoriesPerUser}
+           options={{
+             maintanAspectRatio: false,
+             plugins: {
+               tooltip: {
+                 callbacks: {
+                   label: (context) => {
+                     var sum = 0;
+                     for (const data of context.dataset.data) {
+                       sum = sum + data;
+                     }
+                     const pers = Math.floor((context.parsed * 100) / sum);
+                     return context.label + ": " + pers + "%";
+                   },
+                   afterLabel: (context) => {
+                     return "Number: " + context.parsed;
+                   },
+                 },
+               },
+               title: {
+                 display: true,
+                 text: "Categories Per User",
+                 fontSize: 80,
+               },
+             },
+           }}
+         />
+       </div>
      </div>
    </>
  );

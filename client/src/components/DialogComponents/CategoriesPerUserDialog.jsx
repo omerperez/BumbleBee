@@ -56,7 +56,7 @@ export default function CategoriesPerUserDialog({ id, name,disabled }) {
 
   return (
     <div>
-      <Button onClick={handleClickOpen} disabled={disabled} className="capital-letter bg-col-blue" variant="contained">
+      <Button onClick={handleClickOpen} disabled={disabled} className={disabled ? "capital-letter" : "capital-letter bg-col-blue"} variant="contained">
         Categories
       </Button>
       <Dialog
@@ -82,7 +82,6 @@ export default function CategoriesPerUserDialog({ id, name,disabled }) {
          options={{
             cutoutPercentage:0,
              responsive: true,
-            
              plugins: {
                  tooltip:{
                      callbacks:{
