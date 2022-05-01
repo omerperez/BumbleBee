@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -8,12 +8,19 @@ import DialogTitle from "@mui/material/DialogTitle";
 import {createAlert} from "./AlertFunction";
 import { useAuth } from '../../contexts/AuthContext';
 import { Alert } from "react-bootstrap";
+import { io } from "socket.io-client";
+import { emptyProfileImage } from "../images/projectImages";
 
 export default function FirstRequestDialog({ car, showReq }) {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState('');
   const [files, setFiles] = useState(false);
+  const [socket, setSocket] = useState(null);
   const { currentUser } = useAuth();
+
+  useEffect(() => {
+    setSocket(io("http://localhost:5001"));
+  }, []);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -22,16 +29,32 @@ export default function FirstRequestDialog({ car, showReq }) {
   const handleClose = () => {
     setOpen(false);
   };
+  
+  const handleNotification = (name, email, profileImage, dealer, step) => {
+    socket.emit("sendNotification", {
+      senderName: name,
+      senderEmail: email,
+      receiverName: dealer,
+      image: profileImage,
+      step: step,
+    });
+  };
 
   const handleSubmit = async () => {
     setError('');
+    handleNotification(
+      currentUser.firstName + " " + currentUser.lastName,
+      currentUser.email,
+      currentUser.image,
+      car.dealer,
+      1
+    );
     const alert = {
       client: currentUser._id,
       dealer: car.dealer,
       car: car._id,
       payment: files,
     };
-
     const res = await createAlert(alert);
     if (res.data != "Success") {
       console.log("Filed");
@@ -64,7 +87,6 @@ export default function FirstRequestDialog({ car, showReq }) {
         <DialogTitle id="alert-dialog-title">Send Request</DialogTitle>
         <DialogContent>
           <div>
-            <h1 className="text-left mb-1 bumble-title">BumbleBee</h1>
             {error && <Alert variant="danger">{error}</Alert>}
           </div>
           <DialogContentText id="alert-dialog-description">
