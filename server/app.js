@@ -12,10 +12,9 @@ const io = new Server({
 let onlineUsers = [];
 
 const addNewUser = (userId, socketId) => {
-  console.log(onlineUsers);
-  !onlineUsers.some((user) => user._id === userId) &&
+  if(!onlineUsers.some((user) => user.userId === userId)){
     onlineUsers.push({ userId, socketId });
-  console.log(onlineUsers);
+  };
 };
 
 const removeUser = (socketId) => {
@@ -23,24 +22,37 @@ const removeUser = (socketId) => {
 };
 
 const getUser = (userId) => {
-  return onlineUsers.find((user) => user._id === userId);
+  return onlineUsers.find((user) => user.userId === userId); 
 };
 
 io.on("connection", (socket) => {
   socket.on("newUser", (username) => {
-    addNewUser(username._id, socket.id);
+    addNewUser(username, socket.id);
    });
   
   socket.on(
     "sendNotification",
-    ({ senderName, senderEmail, receiverId, image, step }) => {
+    ({ senderId, receiverId, step }) => {
       const receiver = getUser(receiverId);
-      io.to(receiver.socketId).emit("getNotification", {
-        senderName,
-        senderEmail,
-        image,
-        step,
-      });
+      const sender = getUser(senderId);
+      console.log("receiver");
+      console.log(receiver);
+      console.log("sender");
+      console.log(sender);
+      console.log("step");
+      console.log(step);
+      if(receiver){
+        io.to(receiver.socketId).emit("getNotification", {
+          senderId,
+          step,
+        });
+      }
+      if (sender) {
+        io.to(sender.socketId).emit("getNotification", {
+          senderId,
+          step,
+        });
+      }
     }
   );
 

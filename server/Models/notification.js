@@ -6,6 +6,7 @@ const notificationSchema = new Schema({
   client: { type: Schema.Types.ObjectId, ref: "users" },
   dealer: { type: Schema.Types.ObjectId, ref: "users" },
   isCancelRequest: Boolean,
+  isRead: Boolean,
   lastUpdateDate: Date,
   dateOfCreated: Date,
   step: Number,

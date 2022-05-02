@@ -13,7 +13,7 @@ export default function PropperListAlerts({alerts}) {
     if(alerts.length === 0) return null;
 
   return (
-      alerts.map((alert) => {
+      alerts.map((alert, inx) => {
         return (
           <>
             <ListItem alignItems="flex-start">
@@ -46,7 +46,9 @@ export default function PropperListAlerts({alerts}) {
                 }
               />
             </ListItem>
-            <Divider variant="inset" component="li" />
+            {alerts.length !== inx + 1 ? (
+              <Divider variant="inset" component="li" />
+            ) : null }
           </>
         );
     })

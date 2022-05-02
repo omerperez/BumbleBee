@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -14,12 +14,21 @@ import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SaveIcon from "@mui/icons-material/Save";
 import { editAlertFunction } from "./AlertFunction";
+import { io } from "socket.io-client";
 
 export default function SendDhlAndGovIlDialog({ alert }) {
-  
   const [open, setOpen] = useState(false);
   const [dhl, setDhl] = useState();
   const [gov, setGov] = useState();
+  const [socket, setSocket] = useState(null);
+
+  useEffect(() => {
+    setSocket(io("http://localhost:5001"));
+  }, []);
+
+  useEffect(() => {
+    socket?.emit("newUser", alert.dealer);
+  }, [socket]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -36,9 +45,10 @@ export default function SendDhlAndGovIlDialog({ alert }) {
       dhl: dhl,
       govIl: gov,
       step: 3,
+      isRead: false,
     };
 
-    const res = editAlertFunction(editAlert);
+    const res = editAlertFunction(editAlert, socket);
     if (res != "Success") {
       return console.log("Filed");
     } else {

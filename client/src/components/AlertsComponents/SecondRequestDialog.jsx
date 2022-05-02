@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState, useEffect } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -8,12 +8,22 @@ import { uploadMultipleSucces } from "../images/projectImages";
 import { Button, FormControl } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { editAlertFunction } from "./AlertFunction";
+import { io } from "socket.io-client";
 
 export default function SecondRequestDialog({ alert }) {
 
   const [open, setOpen] = useState(false);
   const [files, setFiles] = useState();
   const [comment, setComment] = useState("");
+  const [socket, setSocket] = useState(null);
+
+  useEffect(() => {
+    setSocket(io("http://localhost:5001"));
+  }, []);
+
+  useEffect(() => {
+    socket?.emit("newUser", alert.dealer);
+  }, [socket]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -29,9 +39,10 @@ export default function SecondRequestDialog({ alert }) {
       dealer: alert.dealer,
       license: files,
       step: 2,
+      isRead: false,
     };
 
-    const res = editAlertFunction(editAlert);
+    const res = editAlertFunction(editAlert, socket);
     if (res != "Success") {
       return console.log("Filed");
     } else {

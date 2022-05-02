@@ -9,21 +9,32 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import NotificationPopper from "../AlertsComponents/NotificationPopper";
 import SnackbarAlert from "../AlertsComponents/SnackbarAlert";
+import { io } from "socket.io-client";
 
-export default function Actions({ socket }) {
+export default function Actions() {
   const { currentUser, logout } = useAuth();
   const matches = useMediaQuery("(max-width:515px)");
   let menu = topbarMenuItems;
   
   const [notifications, setNotifications] = useState([]);
-  useEffect(() => {
-    console.log(socket);
-    console.log("socket");
+  const [alertsToShow, setAlertsToShow] = useState([]);
+  const [socket, setSocket] = useState(null);
 
+  useEffect(() => {
+    socket?.emit("newUser", currentUser._id);
     socket?.on("getNotification", (data) => {
       setNotifications((prev) => [...prev, data]);
     });
   }, [socket, notifications]);
+
+  useEffect(() => {
+    setSocket(io("http://localhost:5001"));
+    fetch(
+      `${process.env.REACT_APP_SERVER_API}/notification/${currentUser.role === 2 ? "dealer" : "client"}/navigation/${currentUser._id}`
+    )
+      .then((response) => response.json())
+      .then((data) => setAlertsToShow(data));
+  }, [notifications])
 
   if (currentUser.role === 2) {
     menu = topbarMenuItemsForDealer;
@@ -49,8 +60,8 @@ export default function Actions({ socket }) {
         })}
         {currentUser.role !== 3 ? (
           <NotificationPopper
-            count={notifications.length}
-            alerts={notifications}
+            count={alertsToShow.length}
+            alerts={alertsToShow}
           />
         ) : null}
         <img
@@ -62,15 +73,15 @@ export default function Actions({ socket }) {
         />
       </div>
       <SnackbarAlert
-        isOpen={notifications.length > 0}
+        isOpen={alertsToShow.length > 0}
         step={
-          notifications.length > 0
-            ? notifications[notifications.length - 1].step
+          alertsToShow.length > 0
+            ? alertsToShow[alertsToShow.length - 1].step
             : null
         }
         name={
-          notifications.length > 0
-            ? notifications[notifications.length - 1].senderName
+          alertsToShow.length > 0
+            ? alertsToShow[alertsToShow.length - 1].senderName
             : null
         }
       />

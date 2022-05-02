@@ -21,7 +21,7 @@ export default function SnackbarAlert({isOpen, step, name}) {
   return (
     <Stack spacing={2} style={{ marginLeft: "auto" }}>
       <Snackbar
-        open={isOpen}
+        open={open}
         autoHideDuration={6000}
         onClose={handleClose}
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}

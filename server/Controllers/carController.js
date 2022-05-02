@@ -28,11 +28,12 @@ const getCarById = async (req, res) => {
 };
 
 const getMyCars = (req, res) => {
+  console.log(req.params);
   const userId = req.params.id;
-  console.log(req.params.id);
-  carSchema.find().then((results) => {
+
+  carSchema.find({dealer: userId}).then((results) => {
     try {
-      res.json(results.filter((car) => car.dealer == userId));
+      res.json(results);
       console.log("OK");
     } catch (err) {
       console.log(err);

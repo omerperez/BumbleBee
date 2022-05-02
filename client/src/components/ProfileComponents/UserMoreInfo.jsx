@@ -8,11 +8,13 @@ import TabPanelText from "./TabPanelText";
 import AlertLayout from "../AlertsComponents/AlertLayout";
 import {removeDuplicateCompany} from "../../utils/functions";
 import axios from "axios";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function UserMoreInfo({ currentUser, isUserPtofile }) {
   const [value, setValue] = useState("1");
   const [alert, setAlert] = useState();
   const [companies, setCompanies] = useState();
+  const {currentUser : myUser} = useAuth();
 
   const date = new Date(currentUser.dateOfCreate ?? null);
   date.setHours(0,0,0,0);
@@ -22,8 +24,8 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
   };
 
    const fetchData = () => {
-     const alertsApi = `${process.env.REACT_APP_SERVER_API}/notification/client/${currentUser._id}`;
-     const userCarsApi = `${process.env.REACT_APP_SERVER_API}/car/mycars/${currentUser._id}`;
+     const alertsApi = `${process.env.REACT_APP_SERVER_API}/notification/client/${myUser._id}`;
+     const userCarsApi = `${process.env.REACT_APP_SERVER_API}/car/mycars/${myUser._id}`;
 
      const getAlerts = axios.get(alertsApi);
      const getUserCars = axios.get(userCarsApi);
@@ -33,7 +35,7 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
          const allAlerts = allData[0].data;
          const allCompanies = allData[1].data;
 
-         setAlert(allAlerts.length > 0 ? [allAlerts.length - 1] : null);
+         setAlert(allAlerts.length > 0 ? allAlerts[allAlerts.length - 1] : []);
          setCompanies(allCompanies);
        })
      );

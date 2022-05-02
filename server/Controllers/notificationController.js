@@ -15,37 +15,91 @@ const getAllNotification = (req, res) => {
   });
 };
 
+const getNotificationsForClientNavigation = async (req, res) => {
+  const userId = req.params.id;
+  console.log(userId);
+  let notifications = await notificationSchema.find({ client: userId, isRead: false });
+  let notificationData = [];
+
+  try {
+    for (let alert of notifications.filter((notification) => notification.step % 2 == 0)) {
+      const dealer = await userSchema.findById(alert.dealer);
+      const sender = {
+        _id: alert._id,
+        senderName: dealer.firstName + " " + dealer.lastName,
+        email: dealer.email,
+        image: dealer.image,
+        step: alert.step,
+        isCancelRequest: alert.isCancelRequest
+      };
+      notificationData.push(sender);
+    }
+    await res.json(notificationData);
+    console.log("OK");
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+const getNotificationsForDealerNavigation = async (req, res) => {
+  const userId = req.params.id;
+  let notifications = await notificationSchema.find({
+    dealer: userId,
+    isRead: false,
+  });
+  let notificationData = [];
+
+  try {
+    for (let alert of notifications.filter(
+      (notification) => notification.step % 2 !== 0
+    )) {
+      const client = await userSchema.findById(alert.client);
+      const sender = {
+        _id: alert._id,
+        senderName: client.firstName + " " + client.lastName,
+        email: client.email,
+        image: client.image,
+        step: alert.step,
+        isCancelRequest: alert.isCancelRequest,
+      };
+      notificationData.push(sender);
+    }
+    await res.json(notificationData);
+    console.log("OK");
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 const getNotificationsByClientId = (req, res) => {
-
+  console.log(req.params);
   const userId = req.params.id;
-
-  notificationSchema.find().then((results) => {
+  console.log(userId);  
+  notificationSchema.find({client : userId}).then((results) => {
     try {
-      res.json(results.filter((notification) => notification.client == userId));
+      res.json(results);
       console.log("OK");
-    } catch {
-      console.log("Error");
+    } catch (err) {
+      res.status(400).json({
+        message: err,
+      });
     }
   });
 };
 
-
 const getNotificationsByUserId = (req, res) => {
   console.log(req.params.id);
     const userId = req.params.id;
-    notificationSchema.find().then((results) => {
-    try {
-      res.json(
-        results.filter(
-          (notification) => notification.dealer == userId
-        )
-      );
-      console.log("OK");
-    } catch {
-      console.log("Error");
-    }
-  });
+    notificationSchema.find({ dealer : userId }).then((results) => {
+      try {
+        res.json(results);
+        console.log("OK");
+      } catch (err){
+        res.status(400).json({
+          message: err
+        });
+      }
+    });
 }
 
 /* POST */
@@ -57,6 +111,7 @@ async function createAlert(req, res) {
     dealer: alertFromJason.dealer,
     client: alertFromJason.client,
     isCancelRequest: false,
+    isRead: false,
     dateOfCreated: Date.now(),
     lastUpdateDate: Date.now(),
     step: 1,
@@ -84,7 +139,7 @@ async function createAlert(req, res) {
   const filter = { _id: updateUser._id };
   const update = new userSchema({
     _id: updateUser._id,
-    isSendReq: true,
+    isSendReq: false,
   });
 
   await userSchema.findOneAndUpdate(filter, update, { new: true });
@@ -158,4 +213,6 @@ module.exports = {
   createAlert,
   editAlert,
   getNotificationsByClientId,
+  getNotificationsForClientNavigation,
+  getNotificationsForDealerNavigation,
 };

@@ -5,19 +5,35 @@ import AccessDenied from "../authComponents/AccessDenied";
 import { useAuth } from "../../contexts/AuthContext";
 import AlertLayout from "../AlertsComponents/AlertLayout";
 import TotalAlertStatistic from "../AlertsComponents/TotalAlertStatistic";
+import { io } from "socket.io-client";
 
 export default function OrderStatus() {
    const { currentUser } = useAuth();
    const [loading, setLoading] = useState(true);
    const [alerts, setAlerts] = useState(null);
+   const [socket, setSocket] = useState(null);
+   const [notifications, setNotifications] = useState([]);
+
+   useEffect(() => {
+     if(socket == null){
+       setSocket(io("http://localhost:5001"));
+     }
+     fetch(
+       `${process.env.REACT_APP_SERVER_API}/notification/user/${currentUser._id}`
+     ).then((res) =>
+       res.json().then((data) => {
+         setAlerts(data);
+         setLoading(false);
+       })
+     );
+   }, [notifications]);
    
    useEffect(() => {
-     fetch(`${process.env.REACT_APP_SERVER_API}/notification/user/${currentUser._id}`
-     ).then((res) => res.json().then((data) => {
-       setAlerts(data);
-       setLoading(false);
-      }));
-   }, []);
+     socket?.emit("newUser", currentUser._id);
+     socket?.on("getNotification", (data) => {
+       setNotifications((prev) => [...prev, data]);
+     });
+   }, [socket, notifications]);
 
    
   if (loading) {

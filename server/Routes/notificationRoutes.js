@@ -10,6 +10,16 @@ router.get("/client/:id", notificationController.getNotificationsByClientId);
 
 router.get("/user/:id", notificationController.getNotificationsByUserId);
 
+router.get(
+  "/client/navigation/:id",
+  notificationController.getNotificationsForClientNavigation
+);
+
+router.get(
+  "/dealer/navigation/:id",
+  notificationController.getNotificationsForDealerNavigation
+);
+
 router.post(
   "/create",
   upload.fields([

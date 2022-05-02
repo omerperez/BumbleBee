@@ -15,7 +15,7 @@ export default function PrivateRoute({ children, showSideBar }) {
 
   useEffect(() => {
     if (currentUser !== null) {
-      socket?.emit("newUser", currentUser);
+      socket?.emit("newUser", currentUser._id);
     }
   }, [socket]);
 
