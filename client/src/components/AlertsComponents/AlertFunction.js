@@ -1,3 +1,4 @@
+import React, {useState, useEffect } from "react";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -9,7 +10,15 @@ import ShippingRequestDialog from "./ShippingRequestDialog";
 
 const api = axios.create({ baseURL: process.env.REACT_APP_SERVER_API });
 
-async function createAlert(alert) {
+const handleNotification = (socket, senderId, receiverId, step) => {
+  socket.emit("sendNotification", {
+    senderId: senderId,
+    receiverId: receiverId,
+    step: step,
+  });
+};
+
+async function createAlert(alert, socket) {
 
   var files = alert.payment;
   const now = Date.now();
@@ -26,6 +35,7 @@ async function createAlert(alert) {
   return api
     .post("/notification/create", data)
     .then((response) => {
+      handleNotification(socket, alert.client, alert.dealer, 1);
       return response;    
     })
     .catch((err) => {
@@ -34,14 +44,11 @@ async function createAlert(alert) {
     });
 }
 
-async function editAlertFunction(alert) {
-
+async function editAlertFunction(alert, socket) {
   const now = Date.now();
   const data = new FormData();
-
   if (alert.step == 2) {
     var files = alert.license;
-
     for (let i = 0; i < files.length; i++) {
       const rnd = Math.floor(Math.random() * 1000000) + 1000;
       data.append(`license`, files[i], now + rnd + files[i].name);
@@ -55,7 +62,6 @@ async function editAlertFunction(alert) {
       data.append(`dhl`, dhlFiles[i], now + rnd + dhlFiles[i].name);
       data.append(`dhlFile`, now + rnd + dhlFiles[i].name);
     }
-
     for (let i = 0; i < govFiles.length; i++) {
       const rnd = Math.floor(Math.random() * 1000000) + 1000;
       data.append(`govil`, govFiles[i], now + rnd + govFiles[i].name);
@@ -73,7 +79,13 @@ async function editAlertFunction(alert) {
   data.append("alert", JSON.stringify(alert));
   return api
     .put(`/notification/update/${alert._id}`, data)
-    .then(function (response) {
+    .then(() => {
+      if(alert.step == 3){
+        handleNotification(socket, alert.dealer, alert.client, alert.step);
+      } else {
+        handleNotification(socket, alert.client, alert.dealer, alert.step);  
+      }
+      
       return "Success";
     })
     .catch((err) => {

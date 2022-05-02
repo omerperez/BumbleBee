@@ -21,6 +21,10 @@ export default function FirstRequestDialog({ car, showReq }) {
   useEffect(() => {
     setSocket(io("http://localhost:5001"));
   }, []);
+  
+  useEffect(() => {
+    socket?.emit("newUser", currentUser._id);
+  }, [socket]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -30,32 +34,16 @@ export default function FirstRequestDialog({ car, showReq }) {
     setOpen(false);
   };
   
-  const handleNotification = (name, email, profileImage, dealer, step) => {
-    socket.emit("sendNotification", {
-      senderName: name,
-      senderEmail: email,
-      receiverName: dealer,
-      image: profileImage,
-      step: step,
-    });
-  };
-
   const handleSubmit = async () => {
     setError('');
-    handleNotification(
-      currentUser.firstName + " " + currentUser.lastName,
-      currentUser.email,
-      currentUser.image,
-      car.dealer,
-      1
-    );
+    
     const alert = {
       client: currentUser._id,
       dealer: car.dealer,
       car: car._id,
       payment: files,
     };
-    const res = await createAlert(alert);
+    const res = await createAlert(alert, socket);
     if (res.data != "Success") {
       console.log("Filed");
       setError(res.data);
