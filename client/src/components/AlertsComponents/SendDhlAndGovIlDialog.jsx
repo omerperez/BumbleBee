@@ -38,7 +38,7 @@ export default function SendDhlAndGovIlDialog({ alert }) {
     setOpen(false);
   };
 
-  const handleClickSubmit = () => {
+  const handleClickSubmit = async () => {
     const editAlert = {
       _id: alert._id,
       dealer: alert.dealer,
@@ -48,9 +48,9 @@ export default function SendDhlAndGovIlDialog({ alert }) {
       isRead: false,
     };
 
-    const res = editAlertFunction(editAlert, socket);
-    if (res != "Success") {
-      return console.log("Filed");
+    const res = await editAlertFunction(editAlert, socket);
+    if (res.data != "Success") {
+      console.log("Filed");
     } else {
       return setOpen(false);
     }

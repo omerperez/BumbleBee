@@ -45,6 +45,8 @@ async function createAlert(alert, socket) {
 }
 
 async function editAlertFunction(alert, socket) {
+  console.log(alert);
+  console.log(alert.client);
   const now = Date.now();
   const data = new FormData();
   if (alert.step == 2) {
@@ -81,11 +83,10 @@ async function editAlertFunction(alert, socket) {
     .put(`/notification/update/${alert._id}`, data)
     .then(() => {
       if(alert.step == 3){
-        handleNotification(socket, alert.dealer, alert.client, alert.step);
+        handleNotification(socket, alert.client, alert.dealer, alert.step);   
       } else {
-        handleNotification(socket, alert.client, alert.dealer, alert.step);  
+        handleNotification(socket, alert.dealer, alert.client, alert.step);
       }
-      
       return "Success";
     })
     .catch((err) => {

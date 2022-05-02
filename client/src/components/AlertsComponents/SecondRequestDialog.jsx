@@ -33,20 +33,23 @@ export default function SecondRequestDialog({ alert }) {
     setOpen(false);
   };
 
-  const handleClickSubmit = () => {
+  const handleClickSubmit = async () => {
     const editAlert = {
       _id: alert._id,
       dealer: alert.dealer,
+      client: alert.client,
       license: files,
       step: 2,
       isRead: false,
     };
 
-    const res = editAlertFunction(editAlert, socket);
-    if (res != "Success") {
-      return console.log("Filed");
+    const res = await editAlertFunction(editAlert, socket);
+    if (res.data != "Success") {
+      console.log("Filed");
+      // setError(res.data);
     } else {
-      return setOpen(false);
+      setOpen(false);
+      return window.location.reload();
     }
   };
 

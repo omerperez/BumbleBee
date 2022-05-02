@@ -35,18 +35,19 @@ export default function ShippingRequestDialog({ alert }) {
     setOpen(false);
   };
 
-  const handleClickSubmit = () => {
+  const handleClickSubmit = async () => {
     const editAlert = {
       _id: alert._id,
       dealer: alert.dealer,
       car: alert.car,
+      client: alert.client,
       shipping: files,
       step: 4,
       isRead: false,
     };
 
-    const res = editAlertFunction(editAlert, socket);
-    if (res != "Success") {
+    const res = await editAlertFunction(editAlert, socket);
+    if (res.data != "Success") {
       return console.log("Filed");
     } else {
       return setOpen(false);
