@@ -238,7 +238,7 @@ export default function NewNavigation({socket, children }) {
           </ListItem>
         ) : null}
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 2, p: 2, marginTop: "10px" }}>
+      <Box component="main" sx={{ flexGrow: 2, p: 2, marginTop: "10px" }} onClick={() => !matches ? handleDrawerClose() : null}>
         {children}
       </Box>
     </Box>
