@@ -39,4 +39,6 @@ router.put(
   notificationController.editAlert
 );
 
+router.put("/read/:id", notificationController.markAsRead);
+
 (module.exports = router);

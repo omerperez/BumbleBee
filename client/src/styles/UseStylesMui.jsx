@@ -1,6 +1,5 @@
 import { makeStyles, withStyles, styled } from "@mui/styles";
 import TableCell from "@mui/material/TableCell";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import MuiAppBar from "@mui/material/AppBar";
 
 /* Layout */
@@ -182,7 +181,6 @@ const topProfilePageStyles = makeStyles(() => ({
 
 const defaultNavigationTextStyle = {
   color: "white",
-  // marginLeft: "10px",
   minHeight: "50px",
 };
 
@@ -259,7 +257,6 @@ const useTableStyles = makeStyles(() => ({
   table: {
     minWidth: 666,
     fill: "rgba(0, 0, 0, 0.2)",
-    // tableLayout: "fixed !important",
   },
   tableWrapper: {
     overflowX: "initial",
@@ -270,14 +267,10 @@ const useTableStyles = makeStyles(() => ({
     borderRadius: "0",
   },
   divWrapperOfHeader: {
-    // display: "flex",
-    // height: "80%",
     borderRight: "1px solid #CDCDCD",
     color: "#42ADFF",
   },
   divWrapperOfHeaderAction: {
-    // display: "flex",
-    // height: "80%",
     color: "#42ADFF",
   },
   sortLabel: {

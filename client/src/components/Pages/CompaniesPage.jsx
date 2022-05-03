@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { error403 } from "../images/projectImages";
 import PageTitle from "../Layout/PageTitle";
 
 export default function CompaniesPage() {
@@ -29,15 +30,16 @@ export default function CompaniesPage() {
               className="container"
             >
               <img
+                alt={car.company}
                 className="center"
                 src={`/makers/${car.company.toLowerCase()}.png`}
                 width={175}
+                onError={error403}
               />
             </Link>
           );
         })}
       </div>
     </>
-    //
   );
 }

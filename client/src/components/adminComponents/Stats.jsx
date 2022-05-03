@@ -8,9 +8,9 @@ import InputLabel from "@mui/material/InputLabel";
 import { FormControl } from "@mui/material";
 import { carsProperties } from '../CarComponents/exportForSelect';
 import Loading from "../Layout/Loading";
-
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
+import { useAuth } from '../../contexts/AuthContext';
 
 import {
   getCountByYears,
@@ -22,27 +22,27 @@ import {
 
 export default function Stats() {
 
-//const[govildata,setGovildata] = useState(null);
+const[govildata,setGovildata] = useState(null);
 const[year,setYear] = useState(2015);
 const[model,setModel] = useState('BMW');
 const[categoriesPerUserData,setCategoriesPerUserData] = useState(null);
 const[loading,setLoading] = useState(true);
 
-// const { currentUser } = useAuth();
+const { currentUser } = useAuth();
 
 const fetchData = () => {
     
-  //const govilDataApi = `${process.env.REACT_APP_SERVER_API}/user/dashboard/${year}/${model.hebrew}`;
+  const govilDataApi = `${process.env.REACT_APP_SERVER_API}/user/dashboard/${year}/${model.hebrew}`;
   const categoriesPerUserApi = `${process.env.REACT_APP_SERVER_API}/user/dashboard`;
 
-  //const getGovilData = axios.get(govilDataApi);
+  const getGovilData = axios.get(govilDataApi);
   const getCategoriesPerUserApi = axios.get(categoriesPerUserApi);
 
-  axios.all([ getCategoriesPerUserApi]).then(
+  axios.all([getGovilData, getCategoriesPerUserApi]).then(
     axios.spread((...allData) => {
-      //const allgovilData = allData[0].data;
+      const allgovilData = allData[0].data;
       const allCategoriesPerUserData = allData[0].data;
-      //setGovildata(allgovilData);
+      setGovildata(allgovilData);
       setCategoriesPerUserData(allCategoriesPerUserData);
       setLoading(false);
     })
@@ -57,15 +57,10 @@ if (loading) {
   return <Loading />;
 }
 
- console.log(categoriesPerUserData);
-
-//  const countByYears = getCountByYears(dataVal.countByYears);
-//  const modelsByYear = getModelByYears(dataVal.modelsByYear);
-//  const carsPerYearAndModel = getSpecificModel(dataVal.specificModelGraph);
+ const countByYears = getCountByYears(govildata.countByYears);
+ const modelsByYear = getModelByYears(govildata.modelsByYear);
+ const carsPerYearAndModel = getSpecificModel(govildata.specificModelGraph);
  const categoriesPerUser = getCategoriesPerUser(categoriesPerUserData);
-
-
-
 
  return (
    <>
@@ -112,7 +107,7 @@ if (loading) {
        </div>
      </div>
 
-     {/* <div
+     <div
        style={{
          width: "100%",
          maxWidth: 1000,
@@ -195,7 +190,7 @@ if (loading) {
           },
         }}
         />
-      </div>  */}
+      </div> 
      <div className="d-flex justify-content-center mt-5">
        <div
          style={{

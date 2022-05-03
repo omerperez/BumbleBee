@@ -7,7 +7,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import PropperListAlerts from "./PropperListAlerts";
 import List from "@mui/material/List";
 
-export default function NotificationPopper({count, alerts}) {
+export default function NotificationPopper({ count, alerts, setFlag }) {
   const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [notification, setNotification] = useState(alerts);
@@ -15,7 +15,7 @@ export default function NotificationPopper({count, alerts}) {
 
   useEffect(() => {
     setNotification(alerts);
-  }, [alerts])
+  }, [alerts]);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
     setOpen((previousOpen) => !previousOpen);
@@ -37,6 +37,7 @@ export default function NotificationPopper({count, alerts}) {
         }
       >
         <img
+          alt="user-img"
           src={`/topbar/notification-topbar.png`}
           width={matches ? 20 : 25}
           height={matches ? 20 : 25}
@@ -63,7 +64,7 @@ export default function NotificationPopper({count, alerts}) {
                     bgcolor: "background.paper",
                   }}
                 >
-                  <PropperListAlerts alerts={notification} />
+                  <PropperListAlerts setFlag={setFlag} alerts={notification} />
                 </List>
               ) : (
                 "No Notification Yet"

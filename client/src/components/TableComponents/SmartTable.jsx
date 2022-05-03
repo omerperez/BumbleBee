@@ -10,55 +10,42 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import { StyledTableCell, useTableStyles } from "../../styles/UseStylesMui";
 import ScrollToTop from "./ScrollToTop";
 
-
 const useStyles = useTableStyles;
 
 export default function SmartTable({
   data,
   headCells,
-  columns,
   cells,
-  topNum,
 }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [orderDirection, setOrderDirection] = useState("asc");
   const [valueToOrderBy, setValueToOrderBy] = useState("PatietID");
   const classes = useStyles();
-
   let dataCount = 0;
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
   const createSortHandler = (property) => (event) => {
     handleSortRequest(event, property);
   };
-
   const handleSortRequest = (event, property) => {
     const isAsc = valueToOrderBy === property && orderDirection === "asc";
     setValueToOrderBy(property);
     setOrderDirection(isAsc ? "desc" : "asc");
   };
-
-  const cancelBorderBottom = {
-    borderRight: "none !important"
-  };
-
   return (
     <>
       <ScrollToTop showBelow={250}  />
-
       <Paper className={classes.paper}>
         <TableContainer className={classes.tableWrapper}>
           <Table
             className={classes.table}
-            // size="small"
             stickyHeader
             aria-label="sticky table"
           >

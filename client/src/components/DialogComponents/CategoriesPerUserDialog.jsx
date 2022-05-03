@@ -4,8 +4,6 @@ import Chart from 'chart.js/auto';
 import {Pie} from 'react-chartjs-2'
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
 import Loading from "../Layout/Loading";
@@ -48,9 +46,6 @@ export default function CategoriesPerUserDialog({ id, name,disabled }) {
   if (loading) {
     return <Loading />;
   }
-
-  console.log(categoriesPerUserData);
-
 
   const categoriesPerUser = getCategoriesPerUser(categoriesPerUserData);
 

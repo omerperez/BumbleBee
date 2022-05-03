@@ -1,27 +1,3 @@
-// import { useEffect, useState } from "react";
-
-// function GetCarsData({values}){
-
-//   const [cars, setCars] = useState([]);
-
-//   const comp = values.company;
-
-//   useEffect(() => {
-//     fetch(`${process.env.REACT_APP_SERVER_API}/car`)
-//       .then((response) => response.json())
-//       .then((data) => setCars(data));
-//   }, [])
-  
-//   const dataSet = cars;
-
-//   if(values != null){
-//     setCars(dataSet.filters(car => {
-//       car.companyEnglish === comp
-//     }));
-//   }
-//   return cars; 
-// }
-
 const headersEnglisCarsApi = {
   "x-rapidapi-host": "car-data.p.rapidapi.com",
   "x-rapidapi-key": "4607af252emsh3d7ae6deef5d96ep1f460fjsnd8f476e79f3a",

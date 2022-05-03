@@ -28,7 +28,6 @@ const getCarById = async (req, res) => {
 };
 
 const getMyCars = (req, res) => {
-  console.log(req.params);
   const userId = req.params.id;
 
   carSchema.find({dealer: userId}).then((results) => {
@@ -435,7 +434,6 @@ const script = async () => {
 }
 
 async function omer(a) {
-  // for(var i = 0; i < 5; i++){
   console.log("start");  
   a.forEach(async (car) => {
       let updateDealer = await userSchema.findById(car.dealer);
@@ -451,7 +449,6 @@ async function omer(a) {
       await userSchema.findOneAndUpdate(filter, update, { new: true });
     });
     console.log("end");
-  // }
   return "Omer";
 }
 

@@ -194,7 +194,6 @@ export default function EditProfile({ setOpen, mobileNumber }) {
                     }
                     onChange={(e) => {
                       setMobile(e.target.value);
-                      console.log(e.target.value);
                     }}
                   />
                 </div>

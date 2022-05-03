@@ -15,7 +15,6 @@ const addNewUser = (userId, socketId) => {
   if(!onlineUsers.some((user) => user.userId === userId)){
     onlineUsers.push({ userId, socketId });
   };
-  console.log(onlineUsers);
 };
 
 const removeUser = (socketId) => {
@@ -36,12 +35,6 @@ io.on("connection", (socket) => {
     ({ senderId, receiverId, step }) => {
       const receiver = getUser(receiverId);
       const sender = getUser(senderId);
-      console.log("receiver");
-      console.log(receiver);
-      console.log("sender");
-      console.log(sender);
-      console.log("step");
-      console.log(step);
       if(receiver){
         io.to(receiver.socketId).emit("getNotification", {
           senderId,

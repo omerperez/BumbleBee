@@ -19,25 +19,7 @@ describe('Testing user API', () => {
         const response = await request(app).get('/user')
         expect(response.statusCode).toEqual(200)
     })
-
-    // const user={
-    //     firstName : "tamir",
-    //     lastName : "amar",
-    //     email : userEmail,
-    //     mobile : "05475598663",
-    //     password : userPassword,
-    //     confirmPassword : userPassword,
-    //     role: "1"
-    // }
-
-    // test('add new user', async () => {
-    //     const response = await request(app).post('/user/register').send({user})
-    //     expect(response.statusCode).toEqual(200)
-    //     const newUser = response.body
-    //     expect(newUser.email).toEqual(userEmail)
-    //     expect(newUser.password).toEqual(userPassword)
-    // })
-
+    
     test('login user', async () => {
         const response = await request(app).post('/user/login').send({
             'email' : userEmail,

@@ -13,15 +13,17 @@ export default function MyFavorite() {
   const { currentUser } = useAuth();
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_SERVER_API}/car/my-favorite/${currentUser._id}`)
+    fetch(
+      `${process.env.REACT_APP_SERVER_API}/car/my-favorite/${currentUser._id}`
+    )
       .then((response) => response.json())
       .then((data) => {
         setLoading(false);
         setCars(data);
       });
-  }, []);
+  }, [currentUser._id]);
 
-  if (currentUser.role === 2) {
+  if (currentUser.role !== 1) {
     return (
       <>
         <PageTitle page={"Access Denied"} />
@@ -34,53 +36,42 @@ export default function MyFavorite() {
     return <Loading />;
   }
 
-  if (cars.length == 0)
-    return (
-      <>
-        <PageTitle page={"My Favorite"} />
-        <div>
-          <Alert severity="warning">No Cars Yet</Alert>
-        </div>
-      </>
-    );
-
   return (
     <div className="ml-8">
       <PageTitle page={"My Favorite"} />
       <div className="pl-1 pr-1">
-        <FilterCars carsState={cars} carsSetState={setCars} />
+        {cars && cars.length ? (
+          <FilterCars carsState={cars} carsSetState={setCars} />
+        ) : null}
         <div className="cars-grid">
-          {cars.map((car) => {
-            return (
-              <CarCard
-                key={car._id}
-                _id={car._id}
-                image={
-                  car.mainImage
-                    ? process.env.REACT_APP_S3 + car.mainImage
-                    : car.images && car.images.length > 0
-                    ? process.env.REACT_APP_S3 + car.images[0]
-                    : "/image_not_available.png"
-                }
-                company={car.company ? car.company : car.companyEnglish}
-                model={car.model}
-                year={car.year}
-                used={car.numberOfVehicleOwners}
-                engine={car.engine}
-                km={car.km}
-                price={car.price}
-                currentPage="myFavorite"
-                user={currentUser}
-                // userRole={currentUser.role}
-                // status={
-                //   JSON.stringify(currentUser.cars).indexOf(car._id) !== -1
-                //     ? true
-                //     : false
-                // }
-                // userId={currentUser._id}
-              />
-            );
-          })}
+          {cars && cars.length ? (
+            cars.map((car) => {
+              return (
+                <CarCard
+                  key={car._id}
+                  _id={car._id}
+                  image={
+                    car.mainImage
+                      ? process.env.REACT_APP_S3 + car.mainImage
+                      : car.images && car.images.length > 0
+                      ? process.env.REACT_APP_S3 + car.images[0]
+                      : "/image_not_available.png"
+                  }
+                  company={car.company ? car.company : car.companyEnglish}
+                  model={car.model}
+                  year={car.year}
+                  used={car.numberOfVehicleOwners}
+                  engine={car.engine}
+                  km={car.km}
+                  price={car.price}
+                  currentPage="myFavorite"
+                  user={currentUser}
+                />
+              );
+            })
+          ) : (
+            <Alert className="mt-4 mr-2" severity="warning">No Cars Yet</Alert>
+          )}
         </div>
       </div>
     </div>

@@ -14,9 +14,9 @@ export default function HomePage() {
   useEffect(() => {
     fetch(
       `${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`
-    ).then((res) => res.json()
-    .then((data) => setUser(data)));
-  }, [])
+    ).then((res) => res.json().then((data) => setUser(data)));
+  }, [currentUser._id]);
+
   const { data: cars, setData : setCars, loading } = useFetch(
     `${process.env.REACT_APP_SERVER_API}/car`
   );
@@ -25,7 +25,7 @@ export default function HomePage() {
     return <Loading />;
   }
 
-  if (cars == null) return "";
+  if (cars === null) return "";
 
   return (
     <>
@@ -35,7 +35,7 @@ export default function HomePage() {
       <div className="pr-1">
         <FilterCars carsState={cars} carsSetState={setCars} />
         <div className="cars-grid">
-          {cars.filter((car) => car.isSell != true).map((car) => {
+          {cars.filter((car) => car.isSell !== true).map((car) => {
             return (
               <CarCard
                 key={car._id}
@@ -55,13 +55,11 @@ export default function HomePage() {
                 km={car.km}
                 price={car.price}
                 user={user}
-                // userRole={currentUser.role}
                 status={
                   JSON.stringify(user.cars).indexOf(car._id) !== -1
                     ? true
                     : false
                 }
-                // userId={currentUser._id}
               />
             );
           })}

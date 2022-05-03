@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect, createContext } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
 
 const api = axios.create({ baseURL: process.env.REACT_APP_SERVER_API });
 const AuthContext = createContext();
@@ -12,7 +13,7 @@ export function useAuth() {
 export default function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [mode, setMode] = useState(true);
+  const [socket, setSocket] = useState(null);
   const navigate = useNavigate();
 
   /**** User Functions ****/
@@ -32,7 +33,6 @@ export default function AuthProvider({ children }) {
           cookies.remove("connectUser");
         }
         cookies.set("connectUser", response.data.user);
-        // setFlag(!flag)
         setCurrentUser(response.data.user);
         navigate("/homepage");
       })
@@ -53,7 +53,7 @@ export default function AuthProvider({ children }) {
     return api
       .post("/user/register", userData)
       .then((response) => {
-        console.log(response); //savedUser
+        console.log(response); 
         return "Success";
       })
       .catch((err) => {
@@ -97,8 +97,6 @@ export default function AuthProvider({ children }) {
       });
   }
 
-  
-
   async function editUserProperties(user, userObj) {
     setLoading(true);
     const now = Date.now();
@@ -135,7 +133,6 @@ export default function AuthProvider({ children }) {
   }
 
   /**** Car Functions ****/
-
   /* CAR - POST */
   async function createNewCar(carObj) {
     const formData = new FormData();
@@ -234,13 +231,13 @@ export default function AuthProvider({ children }) {
     } else {
       setCurrentUser(cookies.get("connectUser"));
     }
+    setSocket(io("http://localhost:5001"));
     return setLoading(false);
   }, []);
 
   const value = {
     currentUser,
     login,
-    mode,
     createNewCar,
     signup,
     logout,
@@ -251,6 +248,7 @@ export default function AuthProvider({ children }) {
     editPassword,
     loading,
     addCarToFavorite,
+    socket,
   };
 
   return (
@@ -259,47 +257,3 @@ export default function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-// import { auth } from "../AuthFirebase/firebase";
-
-  function changeMode(userMode) {
-    setMode(!userMode);
-  }
-    // resetPassword,
-    // updatePassword,
-    // updateEmail,
-  function resetPassword(email) {
-    return auth.sendPasswordResetEmail(email);
-  }
-
-  function updateEmail(email) {
-    return currentUser.updateEmail(email);
-  }
-
-  function updatePassword(password) {
-    return currentUser.updatePassword(password);
-  }
-
- */

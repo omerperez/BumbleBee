@@ -6,7 +6,6 @@ const downloadFiles = (filePath, folder) => {
 };
 
 function removeDuplicateCompany(cars) {
-  console.log(cars)
   return (Array.from(new Set(cars.map((obj) => obj.companyEnglish))).map(
     (companyEnglish, key) => {
       return companyEnglish;

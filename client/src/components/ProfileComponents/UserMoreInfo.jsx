@@ -9,12 +9,14 @@ import AlertLayout from "../AlertsComponents/AlertLayout";
 import {removeDuplicateCompany} from "../../utils/functions";
 import axios from "axios";
 import { useAuth } from "../../contexts/AuthContext";
+import Loading from "../Layout/Loading";
 
 export default function UserMoreInfo({ currentUser, isUserPtofile }) {
-  const [value, setValue] = useState("1");
+  const { currentUser: myUser } = useAuth();
   const [alert, setAlert] = useState();
   const [companies, setCompanies] = useState();
-  const {currentUser : myUser} = useAuth();
+  const [value, setValue] = useState(currentUser.role === 1 ? "2" : "1");
+  const [loading, setLoading] = useState(true);
 
   const date = new Date(currentUser.dateOfCreate ?? null);
   date.setHours(0,0,0,0);
@@ -34,9 +36,11 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
        axios.spread((...allData) => {
          const allAlerts = allData[0].data;
          const allCompanies = allData[1].data;
-
-         setAlert(allAlerts.length > 0 ? allAlerts[allAlerts.length - 1] : []);
+         setAlert(allAlerts.length > 0 ? allAlerts.length > 1 ? allAlerts.sort((a, b) => {
+                    return new Date(b.lastUpdateDate) - new Date(a.lastUpdateDate) ;
+                  }) : allAlerts : []);
          setCompanies(allCompanies);
+         setLoading(false);
        })
      );
    };
@@ -44,6 +48,11 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
    useEffect(() => {
      fetchData();
    }, []);
+
+   if(loading){
+     return <Loading />
+   }
+
 
   return (
     <Box sx={{ width: "100%", typography: "body1" }}>
@@ -59,7 +68,7 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
               label="More Inforamtion"
               value="1"
             />
-            {currentUser.role == 1 && isUserPtofile ? (
+            {currentUser.role === 1 && isUserPtofile ? (
               <Tab
                 label="Request Status"
                 className="capital-letter"
@@ -96,21 +105,27 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
           />
         </TabPanel>
         <TabPanel value="2" className={alert ? "p-5 mt-20" : "dis-bg"}>
-          {alert ? (
-            <AlertLayout alert={alert} isDealer={false} />
-          ) : (
-            <div className="m-auto w-50 pad-10">
-              <h4 className="fw-100 ls-1">No Requests Available</h4>
-            </div>
-          )}
+          <div
+            style={{ maxWidth: "100%", maxHeight: "350px", overflow: "auto" }}
+          >
+            {alert && alert.length > 0 ? (
+              alert.map((showAlert) => {
+                return <AlertLayout alert={showAlert} isDealer={false} />;
+              })
+            ) : (
+              <div className="m-auto w-50 pad-10">
+                <h4 className="fw-100 ls-1">No Requests Available</h4>
+              </div>
+            )}
+          </div>
         </TabPanel>
-        {currentUser.role == 2 ? (
+        {currentUser.role === 2 ? (
           <>
             <TabPanelText
               title={"Manufacturer Types"}
               value={
                 companies && companies.length > 0
-                  ? removeDuplicateCompany(companies) // removeDuplicateCompany(companies)
+                  ? removeDuplicateCompany(companies)
                   : "No Manufacturer Yet"
               }
             />

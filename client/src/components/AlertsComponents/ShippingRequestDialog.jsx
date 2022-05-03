@@ -4,37 +4,31 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { uploadMultipleSucces } from "../images/projectImages";
+import { error403, uploadMultipleSucces } from "../images/projectImages";
 import { Button, FormControl } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { editAlertFunction } from "./AlertFunction";
-import { io } from "socket.io-client";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function ShippingRequestDialog({ alert }) {
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const { socket } = useAuth();
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
   const [files, setFiles] = useState();
   const [comment, setComment] = useState("");
-  const [socket, setSocket] = useState(null);
-
-  useEffect(() => {
-    setSocket(io("http://localhost:5001"));
-  }, []);
-
+  
   useEffect(() => {
     socket?.emit("newUser", alert.dealer);
-  }, [socket]);
+  }, [socket, alert.dealer]);
   
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
-
   const handleClickSubmit = async () => {
     const editAlert = {
       _id: alert._id,
@@ -45,9 +39,8 @@ export default function ShippingRequestDialog({ alert }) {
       step: 4,
       isRead: false,
     };
-
     const res = await editAlertFunction(editAlert, socket);
-    if (res.data != "Success") {
+    if (res.data !== "Success") {
       return console.log("Filed");
     } else {
       return setOpen(false);
@@ -85,6 +78,7 @@ export default function ShippingRequestDialog({ alert }) {
                     ? uploadMultipleSucces
                     : "/files/shipping.svg"
                 }
+                onError={error403}
               />
             </label>
             <input
@@ -96,17 +90,13 @@ export default function ShippingRequestDialog({ alert }) {
               className="display-none"
               onChange={(e) => setFiles(e.target.files)}
             />
-            <FormControl
-              fullWidth
-              className="mt-3"
-              // disabled={CheckDisableStatus(values)}
-            >
+            <FormControl fullWidth className="mt-3">
               <TextField
                 rows={3}
                 label="Comment"
                 name="comment"
                 type="text"
-                value={comment != "" ? comment : ""}
+                value={comment !== "" ? comment : ""}
                 onChange={(e) => {
                   setComment(e.target.value);
                 }}

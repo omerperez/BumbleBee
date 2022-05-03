@@ -171,7 +171,6 @@ const editUserAndImage = async (request, response) => {
   const userId = { _id: request.params.id };
   let updateUser = JSON.parse(request.body.user);
   updateUser.image = request.file.originalname;
-  console.log(updateUser);
   try {
     const editUser = await userSchema.findOneAndUpdate(userId, updateUser, {
       new: true,
@@ -258,7 +257,6 @@ const addCarToFavorite = async (req, res) => {
 };
 
 const deleteUser = (req, res) => {
-  console.log(req.params.id);
   const userId = req.params.id;
   const user = userSchema.deleteOne({ _id: userId }).then((results) => {
     return res.json(results);

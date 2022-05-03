@@ -9,32 +9,34 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import NotificationPopper from "../AlertsComponents/NotificationPopper";
 import SnackbarAlert from "../AlertsComponents/SnackbarAlert";
-import { io } from "socket.io-client";
+import { error403 } from "../images/projectImages";
 
 export default function Actions() {
-  const { currentUser, logout } = useAuth();
+
+  const { currentUser, logout, socket } = useAuth();
   const matches = useMediaQuery("(max-width:515px)");
-  let menu = topbarMenuItems;
-  
   const [notifications, setNotifications] = useState([]);
   const [alertsToShow, setAlertsToShow] = useState([]);
-  const [socket, setSocket] = useState(null);
-
+  const [flag, setFlag] = useState(false);
+  let menu = topbarMenuItems;
+  
   useEffect(() => {
     socket?.emit("newUser", currentUser._id);
     socket?.on("getNotification", (data) => {
       setNotifications((prev) => [...prev, data]);
     });
-  }, [socket, notifications]);
+    setFlag(false);
+  }, [socket, notifications, currentUser._id]);
 
   useEffect(() => {
-    setSocket(io("http://localhost:5001"));
     fetch(
-      `${process.env.REACT_APP_SERVER_API}/notification/${currentUser.role === 2 ? "dealer" : "client"}/navigation/${currentUser._id}`
+      `${process.env.REACT_APP_SERVER_API}/notification/${
+        currentUser.role === 2 ? "dealer" : "client"
+      }/navigation/${currentUser._id}`
     )
       .then((response) => response.json())
       .then((data) => setAlertsToShow(data));
-  }, [notifications])
+  }, [notifications, flag, currentUser.role, currentUser._id]);
 
   if (currentUser.role === 2) {
     menu = topbarMenuItemsForDealer;
@@ -50,10 +52,12 @@ export default function Actions() {
           return (
             <Link key={key} to={item.path} className="link-in-btn">
               <img
+                alt={item.path}
                 src={`/topbar/${item.image}-topbar.png`}
                 width={matches ? 20 : 25}
                 height={matches ? 20 : 25}
                 className={matches ? "m-1" : "m-2 cur-pointer"}
+                onError={error403}
               />
             </Link>
           );
@@ -62,18 +66,21 @@ export default function Actions() {
           <NotificationPopper
             count={alertsToShow.length}
             alerts={alertsToShow}
+            setFlag={setFlag}
           />
         ) : null}
         <img
+          alt="logout-icon"
           onClick={() => logout()}
           className={matches ? "m-1" : "m-2 cur-pointer"}
           src={`/topbar/logout-topbar.png`}
           width={matches ? 20 : 25}
           height={matches ? 20 : 25}
+          onError={error403}
         />
       </div>
       <SnackbarAlert
-        isOpen={alertsToShow.length > 0}
+        isOpen={alertsToShow.length > 0 ? true : false}
         step={
           alertsToShow.length > 0
             ? alertsToShow[alertsToShow.length - 1].step

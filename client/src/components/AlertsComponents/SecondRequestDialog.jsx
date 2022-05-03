@@ -4,35 +4,29 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { uploadMultipleSucces } from "../images/projectImages";
+import { error403, uploadMultipleSucces } from "../images/projectImages";
 import { Button, FormControl } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { editAlertFunction } from "./AlertFunction";
-import { io } from "socket.io-client";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function SecondRequestDialog({ alert }) {
 
+  const {socket} = useAuth();
   const [open, setOpen] = useState(false);
   const [files, setFiles] = useState();
   const [comment, setComment] = useState("");
-  const [socket, setSocket] = useState(null);
-
-  useEffect(() => {
-    setSocket(io("http://localhost:5001"));
-  }, []);
-
+  
   useEffect(() => {
     socket?.emit("newUser", alert.dealer);
-  }, [socket]);
+  }, [socket, alert.dealer]);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
-
   const handleClickSubmit = async () => {
     const editAlert = {
       _id: alert._id,
@@ -44,7 +38,7 @@ export default function SecondRequestDialog({ alert }) {
     };
 
     const res = await editAlertFunction(editAlert, socket);
-    if (res.data != "Success") {
+    if (res.data !== "Success") {
       console.log("Filed");
       // setError(res.data);
     } else {
@@ -84,6 +78,7 @@ export default function SecondRequestDialog({ alert }) {
                     ? uploadMultipleSucces
                     : "/files/licenses.svg"
                 }
+                onError={error403}
               />
             </label>
             <input
@@ -101,7 +96,7 @@ export default function SecondRequestDialog({ alert }) {
                 label="Comment"
                 name="comment"
                 type="text"
-                value={comment != "" ? comment : ""}
+                value={comment !== "" ? comment : ""}
                 onChange={(e) => {
                   setComment(e.target.value);
                 }}

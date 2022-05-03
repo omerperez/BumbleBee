@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from "react";
+import React from "react";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -45,18 +45,16 @@ async function createAlert(alert, socket) {
 }
 
 async function editAlertFunction(alert, socket) {
-  console.log(alert);
-  console.log(alert.client);
   const now = Date.now();
   const data = new FormData();
-  if (alert.step == 2) {
+  if (alert.step === 2) {
     var files = alert.license;
     for (let i = 0; i < files.length; i++) {
       const rnd = Math.floor(Math.random() * 1000000) + 1000;
       data.append(`license`, files[i], now + rnd + files[i].name);
       data.append(`carLicenseFile`, now + rnd + files[i].name);
     }
-  } else if (alert.step == 3) {
+  } else if (alert.step === 3) {
     let dhlFiles = alert.dhl;
     let govFiles = alert.govIl;
     for (let i = 0; i < dhlFiles.length; i++) {
@@ -69,7 +67,7 @@ async function editAlertFunction(alert, socket) {
       data.append(`govil`, govFiles[i], now + rnd + govFiles[i].name);
       data.append(`govIlFile`, now + rnd + govFiles[i].name);
     }
-  } else  if (alert.step == 4) {
+  } else if (alert.step === 4) {
     let shipping = alert.shipping;
     for (let i = 0; i < shipping.length; i++) {
       const rnd = Math.floor(Math.random() * 1000000) + 1000;
@@ -82,8 +80,8 @@ async function editAlertFunction(alert, socket) {
   return api
     .put(`/notification/update/${alert._id}`, data)
     .then(() => {
-      if(alert.step == 3){
-        handleNotification(socket, alert.client, alert.dealer, alert.step);   
+      if (alert.step === 3) {
+        handleNotification(socket, alert.client, alert.dealer, alert.step);
       } else {
         handleNotification(socket, alert.dealer, alert.client, alert.step);
       }
@@ -95,24 +93,35 @@ async function editAlertFunction(alert, socket) {
     });
 }
 
+async function markAsRead(id) {
+  return api
+    .put(`/notification/read/${id}`)
+    .then(() => {
+      return "Success";
+    })
+    .catch((err) => {
+      console.log(err);
+      return err.response.data.message;
+    });
+}
 
 const notificationTitle = (name, step) => {
-  if (step == 1) {
-      return "New License Request From" + " " + name;
-      }
-  if (step == 2) {
-    return name + " " + "has confirmed your payment and attach the licenses!";
+  if (step === 1) {
+    return "New License Request From " + name;
   }
-  if (step == 3) {
-     return "Shipping Details Request From" + " " + name;
+  if (step === 2) {
+    return name + " has confirmed your payment and attach the licenses!";
   }
-  if (step == 4) {
+  if (step === 3) {
+    return "Shipping Details Request From " + name;
+  }
+  if (step === 4) {
     return "Purchase process was completed successfully!";
   }
 }
 
 const alertTitle = (step, isDealer, dealer, user) => {
-  if (step == 1) {
+  if (step === 1) {
     if (isDealer) {
       return (
         <>
@@ -143,7 +152,7 @@ const alertTitle = (step, isDealer, dealer, user) => {
       );
     }
   }
-  if (step == 2) {
+  if (step === 2) {
     if (isDealer) {
       return (
         <>
@@ -176,7 +185,7 @@ const alertTitle = (step, isDealer, dealer, user) => {
       );
     }
   }
-  if (step == 3) {
+  if (step === 3) {
     if (isDealer) {
       return (
         <>
@@ -208,7 +217,7 @@ const alertTitle = (step, isDealer, dealer, user) => {
       );
     }
   }
-  if (step == 4) {
+  if (step === 4) {
     if (isDealer) {
       return (
         <>
@@ -242,7 +251,7 @@ const iconToShow = (step, isCancelRequest, isDealer, alert) => {
   if (isCancelRequest) {
     return <CancelIcon color="error" className="m-2" sx={{ fontSize: 50 }} />;
   }
-  else if (step == 1) {
+  else if (step === 1) {
     if (isDealer) {
       return (
         <div className="m-2 row d-flex">
@@ -264,7 +273,7 @@ const iconToShow = (step, isCancelRequest, isDealer, alert) => {
         />
       );
     }
-  } else if (step == 2) {
+  } else if (step === 2) {
     if (isDealer) {
       return (
         <AccessTimeFilledIcon
@@ -281,7 +290,7 @@ const iconToShow = (step, isCancelRequest, isDealer, alert) => {
         />
       );
     }
-  } else if (step == 3) {
+  } else if (step === 3) {
     if (isDealer) {
       return (
         <div className="m-2">
@@ -300,7 +309,7 @@ const iconToShow = (step, isCancelRequest, isDealer, alert) => {
         />
       );
     }
-  } else if (step == 4) {
+  } else if (step === 4) {
     return (
       <CheckCircleIcon
         className="m-2"
@@ -310,10 +319,17 @@ const iconToShow = (step, isCancelRequest, isDealer, alert) => {
   }
 };
 
+const alertDateformat = (date) => {
+  const dateToShow = new Date(date);
+  return dateToShow.toDateString();
+}
+
 export {
   iconToShow,
   alertTitle,
   createAlert,
   editAlertFunction,
   notificationTitle,
+  markAsRead,
+  alertDateformat,
 };

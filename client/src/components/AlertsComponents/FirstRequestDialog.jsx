@@ -8,44 +8,33 @@ import DialogTitle from "@mui/material/DialogTitle";
 import {createAlert} from "./AlertFunction";
 import { useAuth } from '../../contexts/AuthContext';
 import { Alert } from "react-bootstrap";
-import { io } from "socket.io-client";
-import { emptyProfileImage } from "../images/projectImages";
 
 export default function FirstRequestDialog({ car, showReq }) {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState('');
   const [files, setFiles] = useState(false);
-  const [socket, setSocket] = useState(null);
-  const { currentUser } = useAuth();
-
-  useEffect(() => {
-    setSocket(io("http://localhost:5001"));
-  }, []);
+  const { currentUser, socket } = useAuth();
   
   useEffect(() => {
     socket?.emit("newUser", currentUser._id);
-  }, [socket]);
+  }, [socket, currentUser._id]);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
-  
   const handleSubmit = async () => {
     setError('');
-    
     const alert = {
       client: currentUser._id,
       dealer: car.dealer,
       car: car._id,
       payment: files,
     };
-    
     const res = await createAlert(alert, socket);
-    if (res.data != "Success") {
+    if (res.data !== "Success") {
       console.log("Filed");
       setError(res.data);
     } else {

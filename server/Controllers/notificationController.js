@@ -17,7 +17,6 @@ const getAllNotification = (req, res) => {
 
 const getNotificationsForClientNavigation = async (req, res) => {
   const userId = req.params.id;
-  console.log(userId);
   let notifications = await notificationSchema.find({ client: userId, isRead: false });
   let notificationData = [];
 
@@ -72,9 +71,7 @@ const getNotificationsForDealerNavigation = async (req, res) => {
 };
 
 const getNotificationsByClientId = (req, res) => {
-  console.log(req.params);
   const userId = req.params.id;
-  console.log(userId);  
   notificationSchema.find({client : userId}).then((results) => {
     try {
       res.json(results);
@@ -88,7 +85,6 @@ const getNotificationsByClientId = (req, res) => {
 };
 
 const getNotificationsByUserId = (req, res) => {
-  console.log(req.params.id);
     const userId = req.params.id;
     notificationSchema.find({ dealer : userId }).then((results) => {
       try {
@@ -146,6 +142,20 @@ async function createAlert(req, res) {
   console.log("Success");
   return res.send("Success");
 }
+
+const markAsRead = async (req, res) => {
+  const alertId = { _id: req.params.id };
+  const alert = await notificationSchema.findById(alertId);
+  try {
+    alert.isRead = true;
+    await alert.save();
+    console.log("Success");
+    res.send(alert);
+  } catch (err) {
+    console.log("filed");
+    res.status(400).json("Something happened, please try again");
+  }
+};
 
 /* PUT */
 const editAlert = async (req, res) => {
@@ -215,4 +225,5 @@ module.exports = {
   getNotificationsByClientId,
   getNotificationsForClientNavigation,
   getNotificationsForDealerNavigation,
+  markAsRead,
 };

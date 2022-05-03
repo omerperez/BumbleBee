@@ -22,7 +22,6 @@ export default function DealerRatingDialog({dealer, client}) {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
         setRateCount(data ? data.count : 0);
       });
   }, []);

@@ -9,7 +9,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Button, Divider } from "@mui/material";
 import { sendWhatsAppToDealer } from "../CarComponents/carFunctions";
 import axios from "axios";
-import { iconToShow, alertTitle } from "./AlertFunction";
+import { iconToShow, alertTitle, alertDateformat } from "./AlertFunction";
 import Loading from "../Layout/Loading";
 
 export default function AlertLayout({ alert, isDealer }) {
@@ -20,15 +20,12 @@ export default function AlertLayout({ alert, isDealer }) {
   const [loading, setLoading] = useState(true);
 
   const fetchData = () => {
-    
     const userApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${alert.client}`;
     const dealerApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${alert.dealer}`;
     const carApi = `${process.env.REACT_APP_SERVER_API}/car/show/${alert.car}`;
-
     const getUser = axios.get(userApi);
     const getDealer = axios.get(dealerApi);
     const getCar = axios.get(carApi);
-
     axios.all([getUser, getDealer, getCar]).then(
       axios.spread((...allData) => {
         const allUserData = allData[0].data;
@@ -46,7 +43,6 @@ export default function AlertLayout({ alert, isDealer }) {
     fetchData();
   }, []);
   
-
   if(loading){
     return <Loading />;
   }
@@ -78,11 +74,11 @@ export default function AlertLayout({ alert, isDealer }) {
               {alertTitle(alert.step, isDealer, dealer, user)}
               <br />
               <span className="opc-8 f-15">
-                {alert.lastUpdateDate}
+                {alertDateformat(alert.lastUpdateDate)}
                 {alert.isCancelRequest ? (
                   <b className="color-red">{" - Cancel"}</b>
                 ) : null}
-                {alert.step == 4 ? (
+                {alert.step === 4 ? (
                   <b className="color-green">{" - Done"}</b>
                 ) : null}
               </span>
@@ -106,6 +102,7 @@ export default function AlertLayout({ alert, isDealer }) {
         <div className="mb-2">
           <Link to={`/car-profile/${car._id}`}>
             <img
+              alt="car-main"
               className="border-2-black"
               src={process.env.REACT_APP_S3 + car.mainImage}
               width={"95%"}

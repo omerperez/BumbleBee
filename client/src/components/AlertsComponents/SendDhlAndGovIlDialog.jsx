@@ -5,30 +5,22 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import {
+  error403,
   uploadMultipleSucces,
-  uploadMultipleEmpty,
 } from "../images/projectImages";
-import useForm from "../../utils/useForm";
 import { Button } from "@mui/material";
-import TextField from "@mui/material/TextField";
-import LoadingButton from "@mui/lab/LoadingButton";
-import SaveIcon from "@mui/icons-material/Save";
 import { editAlertFunction } from "./AlertFunction";
-import { io } from "socket.io-client";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function SendDhlAndGovIlDialog({ alert }) {
+  const { socket } = useAuth();
   const [open, setOpen] = useState(false);
   const [dhl, setDhl] = useState();
   const [gov, setGov] = useState();
-  const [socket, setSocket] = useState(null);
-
-  useEffect(() => {
-    setSocket(io("http://localhost:5001"));
-  }, []);
-
+  
   useEffect(() => {
     socket?.emit("newUser", alert.dealer);
-  }, [socket]);
+  }, [socket, alert.dealer]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -42,6 +34,7 @@ export default function SendDhlAndGovIlDialog({ alert }) {
     const editAlert = {
       _id: alert._id,
       dealer: alert.dealer,
+      client: alert.client,
       dhl: dhl,
       govIl: gov,
       step: 3,
@@ -49,7 +42,7 @@ export default function SendDhlAndGovIlDialog({ alert }) {
     };
 
     const res = await editAlertFunction(editAlert, socket);
-    if (res.data != "Success") {
+    if (res.data !== "Success") {
       console.log("Filed");
     } else {
       return setOpen(false);
@@ -91,6 +84,7 @@ export default function SendDhlAndGovIlDialog({ alert }) {
                         ? uploadMultipleSucces
                         : "/files/gov.svg"
                     }
+                    onError={error403}
                   />
                 </label>
                 <input
@@ -115,6 +109,7 @@ export default function SendDhlAndGovIlDialog({ alert }) {
                         ? uploadMultipleSucces
                         : "/files/dhl.svg"
                     }
+                    onError={error403}
                   />
                 </label>
                 <input

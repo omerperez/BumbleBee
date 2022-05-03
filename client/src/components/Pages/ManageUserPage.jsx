@@ -2,7 +2,6 @@ import React ,{useState, useEffect} from "react";
 import PageTitle from "../Layout/PageTitle";
 import Loading from "../Layout/Loading";
 import SmartTable from "../TableComponents/SmartTable";
-import TableNoResults from "../TableComponents/TableNoResults";
 import UserCells from "../TableComponents/UserCells";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -17,8 +16,6 @@ export default function ManageUserPage() {
   const navigate = useNavigate();
 
   const [usersToPresent, setUsersToPresent] = useState([]);
-  const [results, setResults] = useState(false);
-  const [reset, setReset] = useState(false);
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
@@ -111,16 +108,7 @@ export default function ManageUserPage() {
           data={usersToPresent}
           headCells={headCells}
           cells={<UserCells />}
-          topNum={40}
         />
-        {results && (
-          <TableNoResults
-            clearFilters={setUsersToPresent}
-            data={usersToPresent}
-            setReset={setReset}
-            value={reset}
-          />
-        )}
       </div>
     </>
   );
