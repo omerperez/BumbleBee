@@ -41,7 +41,7 @@ const fetchData = () => {
   axios.all([getGovilData, getCategoriesPerUserApi]).then(
     axios.spread((...allData) => {
       const allgovilData = allData[0].data;
-      const allCategoriesPerUserData = allData[0].data;
+      const allCategoriesPerUserData = allData[1].data;
       setGovildata(allgovilData);
       setCategoriesPerUserData(allCategoriesPerUserData);
       setLoading(false);
