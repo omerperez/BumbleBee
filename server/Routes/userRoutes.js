@@ -31,8 +31,6 @@ router.put("/edit-password/:id", userController.editPassword);
 
 router.delete("/delete/:id", userController.deleteUser);
 
-//router.get("/dashboard", userController.adminDashboard);
-
 router.get("/dashboard/:year/:model", userController.adminDashboard);
 
 router.get("/dashboard/:id", userController.categoriesPerUser);
