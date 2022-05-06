@@ -6,7 +6,15 @@ export default function DiagramGraph({ data, title }) {
   return (
     <div className="m-auto">
       <h4 className="text-center">{title}</h4>
-      <Bar data={data} />
+      <Bar data={data} 
+      options={{
+        plugins:{
+          legend:{
+            display:false
+          }
+        }
+      }}
+       />
     </div>
   );
 }
