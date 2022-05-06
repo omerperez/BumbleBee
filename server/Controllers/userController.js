@@ -284,11 +284,8 @@ const adminDashboard = async (req, res) => {
     "degem_nm"
   );
   const dataResults = { modelsByYear, countByYears, specificModelGraph };
-
   await res.send(dataResults);
 };
-
-
 
 const categoriesPerUser = async (req,res) => {
 
@@ -310,7 +307,7 @@ const categoriesPerUser = async (req,res) => {
 
 
 const usersCategories = async (req,res) => {
-  const users = await userSchema.find({role:1});
+  const users = await userSchema.find({ role: 1 });
   const carCategoryList=[];
   try{
     for (const user of users) {
@@ -320,12 +317,13 @@ const usersCategories = async (req,res) => {
         carCategoryList.push(car.category);
       }
     }
-     res.send(_.countBy(carCategoryList));  
+    res.send(_.countBy(carCategoryList));  
   }catch (err) {
     console.log("fail");
     res.status(400).json(err.message);
   };
 }
+
 function getToken(user) {
   return jwt.sign(
     {

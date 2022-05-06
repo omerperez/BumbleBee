@@ -10,6 +10,8 @@ router.get("/show/:id", carController.getCarById);
 
 router.get("/script", carController.script);
 
+router.get("/dashboard", carController.carsCategoriesViews);
+
 router.get("/mycars/:id", carController.getMyCars);
 
 router.get("/my-favorite/:id", carController.getFavoriteCars);
