@@ -1,9 +1,9 @@
 import React from "react";
 import { Pie } from "react-chartjs-2";
 
-export default function PieGraph({ data, title }) {
+export default function PieGraph({ data, title, mobileWidth }) {
   return (
-    <div style={{ maxWidth: 450 }} className="m-auto">
+    <div className={mobileWidth ? "m-auto" : "m-auto mw-450"}>
       <h4 className="text-center">{title}</h4>
       <Pie
         data={data}
