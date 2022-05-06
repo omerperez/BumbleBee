@@ -277,12 +277,14 @@ const adminDashboard = async (req, res) => {
     data.filter((car) => car.shnat_yitzur >= 2020),
     "shnat_yitzur"
   );
+
   const specificModelGraph = _.countBy(
     data.filter(
       (car) => car.shnat_yitzur == year && car.tozeret_nm.includes(model)
     ),
     "degem_nm"
   );
+  
   const dataResults = { modelsByYear, countByYears, specificModelGraph };
   await res.send(dataResults);
 };

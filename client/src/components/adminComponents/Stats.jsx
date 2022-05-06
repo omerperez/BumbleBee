@@ -15,10 +15,8 @@ import {
   getCategoriesPerUser,
   yearsForSelect,
 } from "./StatisticsFunctions";
-import CountOfCarsPerModel from "./CountOfCarsPerModel";
-import CarsPerYearAndModel from "./CarsPerYearAndModel";
-import CountOfModelsByYear from "./CountOfModelsByYear";
-import UsersCategories from "./UsersCategories";
+import DiagramGraph from "./DiagramGraph";
+import PieGraph from "./PieGraph";
 
 export default function Stats() {
 
@@ -69,13 +67,10 @@ if (loading) {
  return (
    <div className="d-flex justify-content-center mt-5 row m-5">
      <div className="col-6 mb-5">
-       <UsersCategories
-         data={categoriesPerUser}
-         title={"Favorite Per Category"}
-       />
+       <PieGraph data={categoriesPerUser} title={"Favorite Per Category"} />
      </div>
      <div className="col-6 mb-5">
-       <UsersCategories
+       <PieGraph
          data={getCategoriesPerUser(viewsCategories)}
          title={"Views Per Category"}
        />
@@ -101,10 +96,12 @@ if (loading) {
            </Select>
          </FormControl>
        </div>
-       <CountOfCarsPerModel modelsByYear={modelsByYear} />
+       <DiagramGraph data={modelsByYear} title={"Count By Years"} />
      </div>
      <div className="col-6 mb-5">
-       <CountOfModelsByYear data={countByYears} />
+       <div className='mt-5'>
+         <DiagramGraph data={countByYears} title={"Companies Per Years"} />
+       </div>
      </div>
    </div>
  ); 
