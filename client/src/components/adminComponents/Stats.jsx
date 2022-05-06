@@ -8,7 +8,6 @@ import InputLabel from "@mui/material/InputLabel";
 import { FormControl } from "@mui/material";
 import { carsProperties } from '../CarComponents/exportForSelect';
 import Loading from "../Layout/Loading";
-import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -27,8 +26,6 @@ const[year,setYear] = useState(2015);
 const[model,setModel] = useState('BMW');
 const[categoriesPerUserData,setCategoriesPerUserData] = useState(null);
 const[loading,setLoading] = useState(true);
-
-const { currentUser } = useAuth();
 
 const fetchData = () => {
     
@@ -51,7 +48,7 @@ const fetchData = () => {
 
 useEffect(() => {
   fetchData();
-}, []);
+}, [year,model]);
  
 if (loading) {
   return <Loading />;
@@ -71,7 +68,7 @@ if (loading) {
            <Select
              label="company"
              name="company"
-             value={model != null ? model.english : ""}
+             value={model != null ? model : "BMW"}
              onChange={(e) => setModel(e.target.value)}
              required
            >
