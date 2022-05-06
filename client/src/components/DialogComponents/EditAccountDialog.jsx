@@ -50,9 +50,9 @@ export default function EditAccountDialog({ mobileNumber }) {
           <DialogTitle
             id="alert-dialog-title"
             onClick={handleClose}
-            className="cur-pointer"
+            className="cur-pointer color-red"
           >
-            <h4 className="color-red">X</h4>
+            X
           </DialogTitle>
           <DialogContent>
             <EditProfile setOpen={setOpen} mobileNumber={mobileNumber} />

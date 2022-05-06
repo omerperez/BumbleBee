@@ -5,6 +5,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import Button from "@mui/material/Button";
 import { Link } from 'react-router-dom';
 import Chip from "@mui/material/Chip";
+import { error403 } from "../images/projectImages";
 
 export default function UserCard({ currentUser }) {
   
@@ -18,6 +19,7 @@ export default function UserCard({ currentUser }) {
             className="cover-back border-circle"
             src={process.env.REACT_APP_S3 + currentUser.image}
             alt="Paella dish"
+            onError={error403}
           />
         </div>
         <div className="d-flex justify-content-center mt-2"></div>

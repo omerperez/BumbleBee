@@ -51,7 +51,7 @@ export default function CarImagesCarousel({ images }) {
           })
         ) : (
           <ImageListItem key={1}>
-            <img alt="no_avl_img" src={noAvailable} />
+            <img alt="no_avl_img" src={noAvailable} onError={error403} />
           </ImageListItem>
         )}
       <Dialog
@@ -70,6 +70,7 @@ export default function CarImagesCarousel({ images }) {
                     src={process.env.REACT_APP_S3 + image}
                     key={key}
                     alt={"Car image"}
+                    onError={error403}
                   />
                 </Carousel.Item>
               );

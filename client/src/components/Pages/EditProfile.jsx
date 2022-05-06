@@ -14,6 +14,7 @@ import {
   ImageHandler,
   InitDefauleUserProperties,
 } from "../authComponents/userFunctions";
+import { error403 } from "../images/projectImages";
 
 export default function EditProfile({ setOpen, mobileNumber }) {
 
@@ -92,6 +93,7 @@ export default function EditProfile({ setOpen, mobileNumber }) {
                   : process.env.REACT_APP_S3 + user.image
               }
               alt="profile image"
+              onError={error403}
             />
             <label htmlFor="file" className="bottom-right w-150">
               <div

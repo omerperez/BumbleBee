@@ -6,6 +6,7 @@ import { Divider } from "@mui/material";
 import axios from "axios";
 import fileDownload from "js-file-download";
 import { Link } from "react-router-dom";
+import { error403 } from "../images/projectImages";
 
 const downloadFile = (filePath) => {
   axios
@@ -41,6 +42,7 @@ export default function UserFilesCard() {
               onClick={() =>
                 downloadFile("AgafHaRechev_Yavu_Rechev_FORMS_06427709.pdf")
               }
+              onError={error403}
             />
             <img
               className="cur-pointer"
@@ -52,6 +54,7 @@ export default function UserFilesCard() {
                   "Application_for_personal_import_brokerage_license.pdf"
                 )
               }
+              onError={error403}
             />
             <img
               className="cur-pointer"
@@ -61,6 +64,7 @@ export default function UserFilesCard() {
               onClick={() =>
                 downloadFile("תצהיר יבוא אישי - ידני 22.4.21.pdf.pdf")
               }
+              onError={error403}
             />
           </div>
         </div>

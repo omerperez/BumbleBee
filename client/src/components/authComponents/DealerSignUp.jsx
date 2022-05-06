@@ -8,6 +8,7 @@ import { checkRegisterFields, ImageHandler } from "./userFunctions";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import EditActivityTimeDialog from "../DialogComponents/EditActivityTimeDialog";
+import { error403 } from "../images/projectImages";
 
 export default function DealerSignUp() {
 
@@ -104,6 +105,7 @@ export default function DealerSignUp() {
                             ? profileImage
                             : "/seller-user.png"
                         }
+                        onError={error403}
                       />
                     </div>
                     <input

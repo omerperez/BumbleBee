@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const userController = require("../Controllers/userController");
 const router = express.Router();
-const { upload } = require("../s3");
+const { upload } = require("../utils/s3");
 
 router.post("/register", upload.single("image"), userController.register);
 

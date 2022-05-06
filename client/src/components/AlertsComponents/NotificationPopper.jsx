@@ -6,6 +6,7 @@ import Badge from "@mui/material/Badge";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import PropperListAlerts from "./PropperListAlerts";
 import List from "@mui/material/List";
+import { error403 } from "../images/projectImages";
 
 export default function NotificationPopper({ count, alerts, setFlag }) {
   const [open, setOpen] = useState(false);
@@ -38,9 +39,11 @@ export default function NotificationPopper({ count, alerts, setFlag }) {
       >
         <img
           alt="user-img"
+          className="cur-pointer"
           src={`/topbar/notification-topbar.png`}
           width={matches ? 20 : 25}
           height={matches ? 20 : 25}
+          onError={error403}
         />
       </Badge>
       <Popper id={id} open={open} anchorEl={anchorEl} transition>

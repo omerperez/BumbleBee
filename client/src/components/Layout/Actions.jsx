@@ -72,7 +72,7 @@ export default function Actions() {
         <img
           alt="logout-icon"
           onClick={() => logout()}
-          className={matches ? "m-1" : "m-2 cur-pointer"}
+          className={matches ? "m-1 cur-pointer" : "m-2 cur-pointer"}
           src={`/topbar/logout-topbar.png`}
           width={matches ? 20 : 25}
           height={matches ? 20 : 25}

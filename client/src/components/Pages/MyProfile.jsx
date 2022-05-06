@@ -58,13 +58,6 @@ export default function MyProfile() {
             }
           >
             <ProfileSide currentUser={user} />
-            {user.role === 1 ? (
-              <>
-                <div className="mt-4">
-                  <h3 className="fw-100"> Request Steps </h3>
-                </div>
-              </>
-            ) : null}
           </div>
         )}
         <div
@@ -73,7 +66,7 @@ export default function MyProfile() {
               ? matches770
                 ? "col-12"
                 : "col-6"
-              : "col-12 col-lg-5 col-xl-6 col-xxl-7  ml-25 mt-5 mb-5"
+              : "col-12 col-lg-5 col-xl-6 col-xxl-7 ml-25 mt-5 mb-1"
           }
         >
           <OtherPropertiesCard currentUser={user} />
@@ -81,7 +74,7 @@ export default function MyProfile() {
       </div>
       <div className="d-flex justify-content-center">
         {user.role === 1 ? (
-          <RequestSteps step={alert ? alert.step : 0} />
+            <RequestSteps step={alert ? alert.step : 0} />
         ) : null}
       </div>
     </>

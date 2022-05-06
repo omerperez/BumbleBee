@@ -11,6 +11,7 @@ import { sendWhatsAppToDealer } from "../CarComponents/carFunctions";
 import axios from "axios";
 import { iconToShow, alertTitle, alertDateformat } from "./AlertFunction";
 import Loading from "../Layout/Loading";
+import { error403 } from "../images/projectImages";
 
 export default function AlertLayout({ alert, isDealer }) {
   
@@ -68,6 +69,7 @@ export default function AlertLayout({ alert, isDealer }) {
                   `${isDealer ? user.image : dealer.image}`
                 }
                 className="alert-avatar"
+                onError={error403}
               />
             </div>
             <div className="col f-19 mt-2">
@@ -106,6 +108,7 @@ export default function AlertLayout({ alert, isDealer }) {
               className="border-2-black"
               src={process.env.REACT_APP_S3 + car.mainImage}
               width={"95%"}
+              onError={error403}
             />
           </Link>
           <div className="days-grid mt-2">

@@ -7,6 +7,7 @@ import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import { checkRegisterFields } from "./userFunctions";
 import {
+  error403,
   israelFlag,
 } from "../images/projectImages";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -114,6 +115,7 @@ export default function Signup() {
                           ? profileImage
                           : "/regular-user.png"
                       }
+                      onError={error403}
                     />
                   </div>
                   <input
@@ -159,6 +161,7 @@ export default function Signup() {
                           src={israelFlag}
                           width={25}
                           className="border-circle mr-10"
+                          onError={error403}
                         />
                         +972
                       </InputAdornment>
@@ -169,7 +172,7 @@ export default function Signup() {
               </div>
               <div className="col-9">
                 <TextField
-                  id="standard-email-input"
+                  id="standard-mobile-input"
                   label="Mobile"
                   name="mobile"
                   type="tel"
@@ -211,21 +214,21 @@ export default function Signup() {
           <Form.Group id="cb1">
             <FormControlLabel
               onChange={(e) => setCheckbox1(e.target.value)}
-              control={<Checkbox checkbox1 />}
+              control={<Checkbox />}
               label="Im an Israeli citizen"
             />
           </Form.Group>
           <Form.Group id="cb2">
             <FormControlLabel
               onChange={(e) => setCheckbox2(e.target.value)}
-              control={<Checkbox checkbox2 />}
+              control={<Checkbox />}
               label="I have a valid driver's license"
             />
           </Form.Group>
           <Form.Group id="cb3">
             <FormControlLabel
               onChange={(e) => setCheckbox3(e.target.checked)}
-              control={<Checkbox checkbox3 />}
+              control={<Checkbox />}
               label="I have not imported vehicles in the last 12 months"
             />
           </Form.Group>

@@ -14,6 +14,7 @@ import RatingDealer from "./RatingDealer";
 import DealerRatingDialog from "../DialogComponents/DealerRatingDialog";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import ShowActivityDays from "../DialogComponents/ShowActivityDays";
+import { error403 } from "../images/projectImages";
 
 export default function OtherPropertiesCard({ currentUser }) {
 
@@ -36,6 +37,7 @@ export default function OtherPropertiesCard({ currentUser }) {
                   className="border-circle border-2-black p-0"
                   width={"100%"}
                   src={process.env.REACT_APP_S3 + currentUser.image}
+                  onError={error403}
                 />
               </div>
             </div>

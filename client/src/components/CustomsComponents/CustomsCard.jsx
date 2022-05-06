@@ -6,6 +6,7 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { Button } from "@mui/material";
 import LanguageIcon from "@mui/icons-material/Language";
+import { error403 } from "../images/projectImages";
 
 export default function CustomsCard({ name, link, image, color }) {
   return (
@@ -28,6 +29,7 @@ export default function CustomsCard({ name, link, image, color }) {
             borderTop: `solid 1px ${color}`,
             borderBottom: `solid 1px ${color}`,
           }}
+          onError={error403}
         />
       </a>
       <CardContent>

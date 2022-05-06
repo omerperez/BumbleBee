@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const notificationController = require("../Controllers/notificationController");
 const router = express.Router();
-const { upload } = require("../s3");
+const { upload } = require("../utils/s3");
 
 router.get("/", notificationController.getAllNotification);
 

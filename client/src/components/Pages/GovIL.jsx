@@ -1,6 +1,7 @@
 import React from "react";
 import PageTitle from "../Layout/PageTitle";
 import { downloadFile } from "../../utils/functions";
+import { error403 } from "../images/projectImages";
 
 export default function GovIL() {
   
@@ -39,6 +40,7 @@ export default function GovIL() {
               onClick={() =>
                 downloadFile("AgafHaRechev_Yavu_Rechev_FORMS_06427709.pdf")
               }
+              onError={error403}
             />
             <img
               className="cur-pointer"
@@ -50,6 +52,7 @@ export default function GovIL() {
                   "Application_for_personal_import_brokerage_license.pdf"
                 )
               }
+              onError={error403}
             />
             <img
               className="cur-pointer"
@@ -59,6 +62,7 @@ export default function GovIL() {
               onClick={() =>
                 downloadFile("תצהיר יבוא אישי - ידני 22.4.21.pdf.pdf")
               }
+              onError={error403}
             />
           </div>
           <div className="d-flex justify-content-center">

@@ -4,6 +4,7 @@ import Card from "@mui/material/Card";
 import DealerAvailability from "./DealerAvailability";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useAuth } from "../../contexts/AuthContext";
+import { error403 } from "../images/projectImages";
 
 export default function ProfileSide({ currentUser }) {
 
@@ -26,6 +27,7 @@ export default function ProfileSide({ currentUser }) {
           className={matches ? "cover-back col-6" : "cover-back"}
           src={process.env.REACT_APP_S3 + currentUser.image}
           alt="Paella dish"
+          onError={error403}
         />
       </div>
       {currentUser.role === 2 ? (

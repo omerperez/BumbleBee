@@ -53,7 +53,7 @@ export default function SmartTable({
               <TableRow>
                 {headCells.map((headCell, key) => (
                   <StyledTableCell
-                    key={headCell.label}
+                    key={headCell.id}
                     align={"left"}
                     style={headCell.style}
                   >
@@ -65,7 +65,7 @@ export default function SmartTable({
                       }
                     >
                       <TableSortLabel
-                        key={headCell.id + key}
+                        key={key}
                         className={classes.sortLabel}
                         hideSortIcon={false}
                         align={"left"}

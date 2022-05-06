@@ -8,6 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import {createAlert} from "./AlertFunction";
 import { useAuth } from '../../contexts/AuthContext';
 import { Alert } from "react-bootstrap";
+import { error403 } from "../images/projectImages";
 
 export default function FirstRequestDialog({ car, showReq }) {
   const [open, setOpen] = useState(false);
@@ -78,6 +79,7 @@ export default function FirstRequestDialog({ car, showReq }) {
                   alt="payment_files"
                   className="cur-pointer mt-4 mw-300"
                   src={files ? "/files/check-icon.png" : "/files/payment.svg"}
+                  onError={error403}
                 />
               </label>
               <input

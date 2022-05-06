@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
-import { DialogContent } from "@mui/material";
+import { DialogContent, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import { error403 } from "../images/projectImages";
 
 export default function SelectAccountTypeDialog() {
 
@@ -42,13 +43,13 @@ export default function SelectAccountTypeDialog() {
             onClick={handleClose}
             className="cur-pointer"
           >
-            <h4>X</h4>
+              X
           </DialogTitle>
           <DialogContent>
             <div className="d-flex justify-content-center row">
               <div className="col text-center">
                 <Link to="/signup" className="cancel-underline">
-                  <img src="/regular-user.png" width={170} />
+                  <img src="/regular-user.png" width={170} onError={error403} />
                   <div className="mt-3 font-24 link-dark">
                     <b>Client</b>
                   </div>
@@ -56,7 +57,7 @@ export default function SelectAccountTypeDialog() {
               </div>
               <div className="col text-center">
                 <Link to="/dealer-login" className="cancel-underline">
-                  <img src="/seller-user.png" width={170} />
+                  <img src="/seller-user.png" width={170} onError={error403} />
                   <div className="mt-3 font-24 link-dark">
                     <b>Dealer</b>
                   </div>

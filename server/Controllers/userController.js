@@ -1,7 +1,7 @@
 const userSchema = require("../Models/user");
 const ratingSchema = require("../Models/rating");
 const carSchema = require("../Models/car");
-const { loginValidation, registerValidation } = require("../Validation");
+const { loginValidation, registerValidation } = require("../utils/Validation");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
@@ -277,18 +277,17 @@ const adminDashboard = async (req, res) => {
     data.filter((car) => car.shnat_yitzur >= 2020),
     "shnat_yitzur"
   );
+
   const specificModelGraph = _.countBy(
     data.filter(
       (car) => car.shnat_yitzur == year && car.tozeret_nm.includes(model)
     ),
     "degem_nm"
   );
+  
   const dataResults = { modelsByYear, countByYears, specificModelGraph };
-
   await res.send(dataResults);
 };
-
-
 
 const categoriesPerUser = async (req,res) => {
 
@@ -310,7 +309,7 @@ const categoriesPerUser = async (req,res) => {
 
 
 const usersCategories = async (req,res) => {
-  const users = await userSchema.find({role:1});
+  const users = await userSchema.find({ role: 1 });
   const carCategoryList=[];
   try{
     for (const user of users) {
@@ -320,12 +319,13 @@ const usersCategories = async (req,res) => {
         carCategoryList.push(car.category);
       }
     }
-     res.send(_.countBy(carCategoryList));  
+    res.send(_.countBy(carCategoryList));  
   }catch (err) {
     console.log("fail");
     res.status(400).json(err.message);
   };
 }
+
 function getToken(user) {
   return jwt.sign(
     {

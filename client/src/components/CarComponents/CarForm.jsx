@@ -17,6 +17,7 @@ import {
   uploadMultipleEmpty,
   uploadMainSucces,
   uploadMainEmpty,
+  error403,
 } from "../images/projectImages";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
@@ -117,7 +118,7 @@ export default function CarForm() {
               onChange={userSelectCompany}
               required
             >
-              {carsProperties.makes.map((make) => (
+              {carsProperties.makes.map((make, key) => (
                 <MenuItem key={make.id} value={make}>
                   {make.english}
                 </MenuItem>
@@ -509,6 +510,7 @@ export default function CarForm() {
               width={values.main ? 400 : 200}
               height={values.main ? 300 : null}
               src={values.main ? carMain : uploadMainEmpty}
+              onError={error403}
             />
           </label>
           <input
@@ -533,6 +535,7 @@ export default function CarForm() {
                   ? uploadMultipleSucces
                   : uploadMultipleEmpty
               }
+              onError={error403}
             />
           </label>
           <input

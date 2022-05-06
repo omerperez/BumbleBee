@@ -5,6 +5,7 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import {downloadFiles, downloadFile } from "../../utils/functions";
+import { error403 } from "../images/projectImages";
 
 export default function FilesTabStatus({ step, payment, licenses, govil, dhl, shipping }) {
   const [value, setValue] = useState(step);
@@ -62,6 +63,7 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
                 src="/files/payment.svg"
                 width={"100%"}
                 onClick={() => downloadFiles(payment, process.env.REACT_APP_S3)}
+                onError={error403}
               />
             </div>
           ) : (
@@ -80,6 +82,7 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
                 onClick={() =>
                   downloadFiles(licenses, process.env.REACT_APP_S3)
                 }
+                onError={error403}
               />
             </div>
           ) : (
@@ -96,6 +99,7 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
                 src="/files/gov.svg"
                 width={"100%"}
                 onClick={() => downloadFiles(govil, process.env.REACT_APP_S3)}
+                onError={error403}
               />
             </div>
           ) : (
@@ -112,6 +116,7 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
                 src="/files/dhl.svg"
                 width={"100%"}
                 onClick={() => downloadFiles(dhl, process.env.REACT_APP_S3)}
+                onError={error403}
               />
             </div>
           ) : (
@@ -127,6 +132,7 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
               src="/files/shipping.svg"
               width={"100%"}
               onClick={() => downloadFiles(shipping, process.env.REACT_APP_S3)}
+              onError={error403}
             />
           ) : (
             <div className="d-flex justify-content-center p-25-0">

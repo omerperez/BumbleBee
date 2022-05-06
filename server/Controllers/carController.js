@@ -452,6 +452,52 @@ async function omer(a) {
   return "Omer";
 }
 
+function categoryLocation(category){
+  if (category == "Sport") {
+    return 0;
+  } else if (category == "Sedan") {
+    return 1;
+  } else if (category == "Coupe") {
+    return 2;
+  } else if (category == "Station") {
+    return 3;
+  } else if (category == "Hatchback") {
+    return 4;
+  } else if (category == "Convertible") {
+    return 5;
+  } else if (category == "SUV") {
+    return 6;
+  } else if (category == "Crossover") {
+    return 7;
+  } 
+  return 8;
+} 
+
+const carsCategoriesViews = async (req, res) => {
+ const cars = await carSchema.find();
+ const carCategoryList = [0,0,0,0,0,0,0,0,0];
+ try {
+    for (const car of cars) {
+      carCategoryList[categoryLocation(car.category)] += car.clicksCount;
+    }
+    const obj = {
+      Sport: carCategoryList[0],
+      Sedan: carCategoryList[1],
+      Coupe: carCategoryList[2],
+      Station: carCategoryList[3],
+      Hatchback: carCategoryList[4],
+      Convertible: carCategoryList[5],
+      SUV: carCategoryList[6],
+      Crossover: carCategoryList[7],
+      Electric: carCategoryList[8],
+    };
+    res.send(obj);
+  } catch (err) {
+    console.log("fail");
+    res.status(400).json(err.message);
+  }
+};
+
 /* EXPORTS */
 module.exports = {
   deleteCar,
@@ -463,4 +509,5 @@ module.exports = {
   getAllCars,
   getFavoriteCars,
   script,
+  carsCategoriesViews,
 };
