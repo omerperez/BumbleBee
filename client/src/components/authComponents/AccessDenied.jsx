@@ -5,7 +5,7 @@ import Alert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import PrivateRoute from "../../Routes/PrivateRoute";
-import { bumblebeeLogo } from "../images/projectImages";
+import { bumblebeeLogo, error403 } from "../images/projectImages";
 
 export default function AccessDenied({ showPrivateRoute }) {
   const { currentUser, logout } = useAuth();
@@ -43,7 +43,7 @@ export default function AccessDenied({ showPrivateRoute }) {
         </Alert>
       </div>
       <div className="d-flex justify-content-center">
-        <img src={bumblebeeLogo} />
+        <img src={bumblebeeLogo} onError={error403} />
       </div>
     </>
   );

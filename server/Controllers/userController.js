@@ -1,7 +1,7 @@
 const userSchema = require("../Models/user");
 const ratingSchema = require("../Models/rating");
 const carSchema = require("../Models/car");
-const { loginValidation, registerValidation } = require("../Validation");
+const { loginValidation, registerValidation } = require("../utils/Validation");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");

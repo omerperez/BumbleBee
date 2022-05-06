@@ -21,6 +21,7 @@ import {
   navCurrentPageStyle,
   navigationStyle,
 } from "../../styles/UseStylesMui";
+import { error403 } from "../images/projectImages";
 
 export default function Navigation() {
   const classes = navigationStyle();
@@ -95,6 +96,7 @@ export default function Navigation() {
                     className={
                       item.path === check ? "mr-5 nav-image" : "nav-image"
                     }
+                    onError={error403}
                   />
                 ) : null}
               </ListItem>

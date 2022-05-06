@@ -9,6 +9,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Alert } from "@mui/material";
 import AlertTitle from "@mui/material/AlertTitle";
+import { error403 } from "../images/projectImages";
 
 export default function EditCarForm({car ,saveChanges}) {
     
@@ -214,12 +215,14 @@ export default function EditCarForm({car ,saveChanges}) {
                 width={60}
                 className="border-circle cur-pointer"
                 onClick={handleClickSaveChanges}
+                onError={error403}
               />
               <img
                 src={"/cancel-edit.jpeg"}
                 width={60}
                 className="border-circle mt-2 cur-pointer"
                 onClick={handleClickCancel}
+                onError={error403}
               />
             </>
           )}

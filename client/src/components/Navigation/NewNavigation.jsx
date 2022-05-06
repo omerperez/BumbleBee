@@ -30,6 +30,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Typography from "@mui/material/Typography";
 import Toolbar from "@mui/material/Toolbar";
 import Actions from "../Layout/Actions";
+import { error403 } from "../images/projectImages";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -213,6 +214,7 @@ export default function NewNavigation({socket, children }) {
                             ? "mr10 nav-image"
                             : "nav-image"
                         }
+                        onError={error403}
                       />
                     </ListItemIcon>
                   </div>
@@ -232,13 +234,21 @@ export default function NewNavigation({socket, children }) {
               <div>BumbleBee</div>
             ) : (
               <ListItemIcon className="d-flex justify-content-center">
-                <img className="footer-image" src="/Navigation/bumblebee.png" />
+                <img
+                  className="footer-image"
+                  src="/Navigation/bumblebee.png"
+                  onError={error403}
+                />
               </ListItemIcon>
             )}
           </ListItem>
         ) : null}
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 2, p: 2, marginTop: "10px" }} onClick={() => !matches ? handleDrawerClose() : null}>
+      <Box
+        component="main"
+        sx={{ flexGrow: 2, p: 2, marginTop: "10px" }}
+        onClick={() => (!matches ? handleDrawerClose() : null)}
+      >
         {children}
       </Box>
     </Box>

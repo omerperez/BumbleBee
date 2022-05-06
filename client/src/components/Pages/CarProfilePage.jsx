@@ -3,7 +3,7 @@ import CarImageGallery from "../CarComponents/CarImageGallery";
 import CarProfileBody from "../CarComponents/CarProfileBody";
 import PageTitle from "../Layout/PageTitle";
 import EditCarForm from "../CarComponents/EditCarForm";
-import { editCarIcon } from "../images/projectImages";
+import { editCarIcon, error403 } from "../images/projectImages";
 import { useAuth } from "../../contexts/AuthContext";
 import axios from "axios";
 import Loading from "../Layout/Loading";
@@ -64,6 +64,7 @@ export default function CarProfilePage() {
             src={editCarIcon}
             width={85}
             onClick={() => setIsEdit(true)}
+            onError={error403}
           />
         </div>
         ) : ( null )}

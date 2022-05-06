@@ -55,9 +55,9 @@ export default function OrderStatus() {
       <div>
         {alerts && alerts.map((alt, inx) => {
               return (
-                <div>
+                <div key={inx}>
                   <AlertLayout
-                    key={inx + alt._id}
+                    key={alt._id}
                     alert={alt}
                     isDealer={currentUser.role === 2}
                   />

@@ -1,5 +1,5 @@
 import React from "react";
-import { authBackground } from "../components/images/projectImages"
+import { authBackground, error403 } from "../components/images/projectImages"
 import { useAuth } from "../contexts/AuthContext";
 import AccessDenied from "../components/Pages/AccessDeniedPage"
 
@@ -16,6 +16,7 @@ export default function PublicRoute({ children }) {
         id="public-img"
         className="w-50 bgs-100"
         src={authBackground}
+        onError={error403}
       />
       <div className="m-auto">{children}</div>
     </div>

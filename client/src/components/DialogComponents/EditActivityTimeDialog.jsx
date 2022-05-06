@@ -166,9 +166,9 @@ export default function EditActivityTimeDialog({
           <DialogTitle
             id="alert-dialog-title"
             onClick={handleClose}
-            className="d-flex justify-content-end cur-pointer"
+            className="d-flex justify-content-end cur-pointer color-red"
           >
-            <h4 className="color-red">X</h4>
+            X
           </DialogTitle>
           <DialogContent>
             <h5 className="mb-4">Set Standard Hours</h5>
