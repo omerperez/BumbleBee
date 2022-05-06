@@ -55,7 +55,7 @@ io.on("connection", (socket) => {
   });
 });
 
-io.listen(5001);
+io.listen(443);
 
 const port = 8080; //process.env.PROT;
 app.listen(port, () => {
