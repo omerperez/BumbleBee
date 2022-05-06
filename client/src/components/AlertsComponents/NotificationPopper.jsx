@@ -39,6 +39,7 @@ export default function NotificationPopper({ count, alerts, setFlag }) {
       >
         <img
           alt="user-img"
+          className="cur-pointer"
           src={`/topbar/notification-topbar.png`}
           width={matches ? 20 : 25}
           height={matches ? 20 : 25}

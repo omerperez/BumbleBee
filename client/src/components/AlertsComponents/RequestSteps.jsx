@@ -16,7 +16,10 @@ const steps = [
 export default function RequestSteps({step}) {
   return (
     <Box sx={{ width: "85%", textAlign: "center" }}>
-      <Stepper activeStep={step ? step + 1 : 1 } alternativeLabel>
+      <h3 className="fw-100 d-flex text-start pl-1">
+        Request Steps
+      </h3>
+      <Stepper activeStep={step ? step + 1 : 1} alternativeLabel className="mt-5">
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>

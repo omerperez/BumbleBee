@@ -1,4 +1,4 @@
-import { costomImage, dhlImage } from "../images/projectImages";
+import { costomImage, dhlImage, govilImage } from "../images/projectImages";
 
 const topbarMenuItems = [
   {
@@ -127,6 +127,13 @@ const clientMenuItems = [
     image: dhlImage,
     path: "/dhl-label",
     image: "dhl.png",
+    isDisabled: false,
+    role: "1",
+  },
+  {
+    title: "Gov IL",
+    path: "/govil",
+    image: "gov.png",
     isDisabled: false,
     role: "1",
   },
