@@ -17,6 +17,7 @@ import {
 } from "./StatisticsFunctions";
 import DiagramGraph from "./DiagramGraph";
 import PieGraph from "./PieGraph";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function Stats() {
 
@@ -26,6 +27,7 @@ const[model,setModel] = useState('BMW');
 const [categoriesPerUserData, setCategoriesPerUserData] = useState(null);
 const [viewsCategories, setViewsCategories] = useState(null);
 const[loading,setLoading] = useState(true);
+const matches560 = useMediaQuery("(max-width:560px)");
 
 const fetchData = () => {
     
@@ -65,18 +67,29 @@ if (loading) {
  const categoriesPerUser = getCategoriesPerUser(categoriesPerUserData);
 
  return (
-   <div className="d-flex justify-content-center mt-5 row m-5">
-     <div className="col-6 mb-5">
-       <PieGraph data={categoriesPerUser} title={"Favorite Per Category"} />
+   <div
+     className={
+       matches560
+         ? "d-flex justify-content-center mt-5 row"
+         : "d-flex justify-content-center mt-5 row m-5"
+     }
+   >
+     <div className="col-12 col-md-6 mb-5">
+       <PieGraph
+         data={categoriesPerUser}
+         title={"Favorite Per Category"}
+         mobileWidth={matches560}
+       />
      </div>
-     <div className="col-6 mb-5">
+     <div className="col-12 col-md-6 mb-5">
        <PieGraph
          data={getCategoriesPerUser(viewsCategories)}
          title={"Views Per Category"}
+         mobileWidth={matches560}
        />
      </div>
-     <div className="col-6 mb-4">
-       <div style={{ maxWidth: "25%" }}>
+     <div className="col-12 col-md-6 mb-4">
+       <div style={matches560 ? { maxWidth: "50%" } : { maxWidth: "25%" }}>
          <FormControl fullWidth>
            <InputLabel>Year</InputLabel>
            <Select
@@ -98,8 +111,8 @@ if (loading) {
        </div>
        <DiagramGraph data={modelsByYear} title={"Count By Years"} />
      </div>
-     <div className="col-6 mb-5">
-       <div className='mt-5'>
+     <div className="col-12 col-md-6 mb-4">
+       <div className="mt-5">
          <DiagramGraph data={countByYears} title={"Companies Per Years"} />
        </div>
      </div>

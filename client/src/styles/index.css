@@ -74,6 +74,10 @@ input{
   max-width: 400px !important;
 }
 
+.mw-450 {
+  max-width: 450px !important;
+}
+
 .mw-300 {
   max-width: 300px !important;
 }
