@@ -9,10 +9,12 @@ import {createAlert} from "./AlertFunction";
 import { useAuth } from '../../contexts/AuthContext';
 import { Alert } from "react-bootstrap";
 import { error403 } from "../images/projectImages";
+import Loading from "../Layout/Loading";
 
 export default function FirstRequestDialog({ car, showReq }) {
   const [open, setOpen] = useState(false);
-  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [files, setFiles] = useState(false);
   const { currentUser, socket } = useAuth();
   
@@ -28,6 +30,7 @@ export default function FirstRequestDialog({ car, showReq }) {
   };
   const handleSubmit = async () => {
     setError('');
+    setLoading(true);
     const alert = {
       client: currentUser._id,
       dealer: car.dealer,
@@ -39,11 +42,12 @@ export default function FirstRequestDialog({ car, showReq }) {
       console.log("Filed");
       setError(res.data);
     } else {
+      setLoading(false);
       setOpen(false);
       return window.location.reload();
     }
   };
-
+  
   return (
     <div>
       <Button
@@ -65,38 +69,47 @@ export default function FirstRequestDialog({ car, showReq }) {
       >
         <DialogTitle id="alert-dialog-title">Send Request</DialogTitle>
         <DialogContent>
-          <div>
-            {error && <Alert variant="danger">{error}</Alert>}
-          </div>
+          <div>{error && <Alert variant="danger">{error}</Alert>}</div>
           <DialogContentText id="alert-dialog-description">
             <span className="f-19 text-center color-black ls-less1">
               Are you sure that you want to send request of purchase
               confirmation for this car ?
             </span>
-            <div className="d-flex justify-content-center">
-              <label htmlFor={"payment"}>
-                <img
-                  alt="payment_files"
-                  className="cur-pointer mt-4 mw-300"
-                  src={files ? "/files/check-icon.png" : "/files/payment.svg"}
-                  onError={error403}
+            {loading ? (
+              <Loading />
+            ) : (
+              <div className="d-flex justify-content-center">
+                <label htmlFor={"payment"}>
+                  <img
+                    alt="payment_files"
+                    className="cur-pointer mt-4 mw-300"
+                    src={files ? "/files/check-icon.png" : "/files/payment.svg"}
+                    onError={error403}
+                  />
+                </label>
+                <input
+                  id="payment"
+                  type="file"
+                  name="payment"
+                  multiple
+                  aria-required="true"
+                  className="display-none"
+                  onChange={(e) => setFiles(e.target.files)}
                 />
-              </label>
-              <input
-                id="payment"
-                type="file"
-                name="payment"
-                multiple
-                aria-required="true"
-                className="display-none"
-                onChange={(e) => setFiles(e.target.files)}
-              />
-            </div>
+              </div>
+            )}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSubmit} autoFocus color="success">
+          <Button disabled={loading} onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button
+            onClick={handleSubmit}
+            disabled={loading}
+            autoFocus
+            color="success"
+          >
             Apply
           </Button>
         </DialogActions>

@@ -11,10 +11,12 @@ import {
 import { Button } from "@mui/material";
 import { editAlertFunction } from "./AlertFunction";
 import { useAuth } from "../../contexts/AuthContext";
+import Loading from "../Layout/Loading";
 
 export default function SendDhlAndGovIlDialog({ alert }) {
   const { socket } = useAuth();
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [dhl, setDhl] = useState();
   const [gov, setGov] = useState();
   
@@ -31,6 +33,7 @@ export default function SendDhlAndGovIlDialog({ alert }) {
   };
 
   const handleClickSubmit = async () => {
+    setLoading(true);
     const editAlert = {
       _id: alert._id,
       dealer: alert.dealer,
@@ -45,6 +48,7 @@ export default function SendDhlAndGovIlDialog({ alert }) {
     if (res.data !== "Success") {
       console.log("Filed");
     } else {
+      setLoading(false);
       return setOpen(false);
     }
   };
@@ -67,67 +71,78 @@ export default function SendDhlAndGovIlDialog({ alert }) {
         <DialogTitle id="alert-dialog-title">
           Return request information to the client
         </DialogTitle>
-        <DialogContent>
-          <DialogContentText
-            id="alert-dialog-description"
-            className="text-center"
-          >
-            <div className="d-flex justify-content-center row">
-              <div className="col">
-                <label htmlFor={"gov"}>
-                  <img
-                    alt="other_gov"
-                    className="cur-pointer ml-25"
-                    width={200}
-                    src={
-                      gov && gov.length > 0
-                        ? uploadMultipleSucces
-                        : "/files/gov.svg"
-                    }
-                    onError={error403}
+        {loading ? (
+          <Loading />
+        ) : (
+          <DialogContent>
+            <DialogContentText
+              id="alert-dialog-description"
+              className="text-center"
+            >
+              <div className="d-flex justify-content-center row">
+                <div className="col">
+                  <label htmlFor={"gov"}>
+                    <img
+                      alt="other_gov"
+                      className="cur-pointer ml-25"
+                      width={200}
+                      src={
+                        gov && gov.length > 0
+                          ? uploadMultipleSucces
+                          : "/files/gov.svg"
+                      }
+                      onError={error403}
+                    />
+                  </label>
+                  <input
+                    id="gov"
+                    type="file"
+                    name="gov"
+                    multiple
+                    aria-required="true"
+                    className="display-none"
+                    onChange={(e) => setGov(e.target.files)}
                   />
-                </label>
-                <input
-                  id="gov"
-                  type="file"
-                  name="gov"
-                  multiple
-                  aria-required="true"
-                  className="display-none"
-                  onChange={(e) => setGov(e.target.files)}
-                />
-              </div>
+                </div>
 
-              <div className="col">
-                <label htmlFor={"dhl"}>
-                  <img
-                    alt="other_dhl"
-                    className="cur-pointer ml-25"
-                    width={200}
-                    src={
-                      dhl && dhl.length > 0
-                        ? uploadMultipleSucces
-                        : "/files/dhl.svg"
-                    }
-                    onError={error403}
+                <div className="col">
+                  <label htmlFor={"dhl"}>
+                    <img
+                      alt="other_dhl"
+                      className="cur-pointer ml-25"
+                      width={200}
+                      src={
+                        dhl && dhl.length > 0
+                          ? uploadMultipleSucces
+                          : "/files/dhl.svg"
+                      }
+                      onError={error403}
+                    />
+                  </label>
+                  <input
+                    id="dhl"
+                    type="file"
+                    name="dhl"
+                    multiple
+                    aria-required="true"
+                    className="display-none"
+                    onChange={(e) => setDhl(e.target.files)}
                   />
-                </label>
-                <input
-                  id="dhl"
-                  type="file"
-                  name="dhl"
-                  multiple
-                  aria-required="true"
-                  className="display-none"
-                  onChange={(e) => setDhl(e.target.files)}
-                />
+                </div>
               </div>
-            </div>
-          </DialogContentText>
-        </DialogContent>
+            </DialogContentText>
+          </DialogContent>
+        )}
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClickSubmit} autoFocus color="success">
+          <Button onClick={handleClose} disabled={loading}>
+            Cancel
+          </Button>
+          <Button
+            onClick={handleClickSubmit}
+            disabled={loading}
+            autoFocus
+            color="success"
+          >
             Send Docs
           </Button>
         </DialogActions>

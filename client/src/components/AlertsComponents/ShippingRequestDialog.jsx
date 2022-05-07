@@ -9,11 +9,12 @@ import { Button, FormControl } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { editAlertFunction } from "./AlertFunction";
 import { useAuth } from "../../contexts/AuthContext";
+import Loading from "../Layout/Loading";
 
 export default function ShippingRequestDialog({ alert }) {
 
   const { socket } = useAuth();
-  // const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   // const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
   const [files, setFiles] = useState();
@@ -30,6 +31,7 @@ export default function ShippingRequestDialog({ alert }) {
     setOpen(false);
   };
   const handleClickSubmit = async () => {
+    setLoading(true);
     const editAlert = {
       _id: alert._id,
       dealer: alert.dealer,
@@ -43,7 +45,8 @@ export default function ShippingRequestDialog({ alert }) {
     if (res.data !== "Success") {
       return console.log("Filed");
     } else {
-      return setOpen(false);
+      setLoading(false);
+      setOpen(false);
     }
   };
 
@@ -63,47 +66,51 @@ export default function ShippingRequestDialog({ alert }) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">Attach Licenses Files</DialogTitle>
-        <DialogContent>
-          <DialogContentText
-            id="alert-dialog-description"
-            className="text-center mt-2"
-          >
-            <label htmlFor={"shipping"}>
-              <img
-                alt="shipping"
-                className="cur-pointer ml-25"
-                width={"60%"}
-                src={
-                  files && files.length > 0
-                    ? uploadMultipleSucces
-                    : "/files/shipping.svg"
-                }
-                onError={error403}
+        {loading ? (
+          <Loading />
+        ) : (
+          <DialogContent>
+            <DialogContentText
+              id="alert-dialog-description"
+              className="text-center mt-2"
+            >
+              <label htmlFor={"shipping"}>
+                <img
+                  alt="shipping"
+                  className="cur-pointer ml-25"
+                  width={"60%"}
+                  src={
+                    files && files.length > 0
+                      ? uploadMultipleSucces
+                      : "/files/shipping.svg"
+                  }
+                  onError={error403}
+                />
+              </label>
+              <input
+                id="shipping"
+                type="file"
+                name="shipping"
+                multiple
+                aria-required="true"
+                className="display-none"
+                onChange={(e) => setFiles(e.target.files)}
               />
-            </label>
-            <input
-              id="shipping"
-              type="file"
-              name="shipping"
-              multiple
-              aria-required="true"
-              className="display-none"
-              onChange={(e) => setFiles(e.target.files)}
-            />
-            <FormControl fullWidth className="mt-3">
-              <TextField
-                rows={3}
-                label="Comment"
-                name="comment"
-                type="text"
-                value={comment !== "" ? comment : ""}
-                onChange={(e) => {
-                  setComment(e.target.value);
-                }}
-              />
-            </FormControl>
-          </DialogContentText>
-        </DialogContent>
+              <FormControl fullWidth className="mt-3">
+                <TextField
+                  rows={3}
+                  label="Comment"
+                  name="comment"
+                  type="text"
+                  value={comment !== "" ? comment : ""}
+                  onChange={(e) => {
+                    setComment(e.target.value);
+                  }}
+                />
+              </FormControl>
+            </DialogContentText>
+          </DialogContent>
+        )}
         <DialogActions>
           <Button onClick={handleClose} className="capital-letter f-18">
             Cancel
