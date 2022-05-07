@@ -9,7 +9,7 @@ import StarIcon from "@mui/icons-material/Star";
 import { Button } from "@mui/material";
 import { useAuth } from "../../contexts/AuthContext";
 
-export default function CarCard({ _id, image, company, model, price, currentPage, user }) {
+export default function CarCard({ _id, image, company, model, price, currentPage, user, isSale }) {
 
   const { addCarToFavorite } = useAuth();
   const [newStatus, setNewStatus] = useState(
@@ -47,13 +47,20 @@ export default function CarCard({ _id, image, company, model, price, currentPage
             </div>
           </div>
         ) : (
-          <Link to={`/car-profile/${_id}`} width={300} className="pos-rel">
-            <img
-              src={image}
-              className="cur-pointer br-10"
-              width="100%"
-              onError={error403}
-            />
+          <Link to={`/car-profile/${_id}`} width={300}>
+            <div className="pos-rel">
+              <img
+                src={image}
+                className="cur-pointer br-10"
+                width="100%"
+                onError={error403}
+              />
+              <div className="sale-pos">
+                {isSale ? (
+                  <img src="/images/carSale.png" width={70} height={60} />
+                ) : null}
+              </div>
+            </div>
           </Link>
         )}
         <Typography

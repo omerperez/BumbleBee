@@ -47,8 +47,6 @@ export default function MyCars() {
     </>
   );
 
-  
-
   return (
     <div className="ml-8">
       <PageTitle page={"My Cars"} />
@@ -76,6 +74,7 @@ export default function MyCars() {
                 price={car.price}
                 currentPage="myCars"
                 user={currentUser}
+                isSale={car.isSell}
               />
             );
           })}

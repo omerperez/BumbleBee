@@ -135,7 +135,7 @@ async function createAlert(req, res) {
   const filter = { _id: updateUser._id };
   const update = new userSchema({
     _id: updateUser._id,
-    isSendReq: false,
+    isSendReq: true,
   });
 
   await userSchema.findOneAndUpdate(filter, update, { new: true });

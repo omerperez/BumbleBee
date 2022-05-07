@@ -1016,6 +1016,14 @@ input{
   height: 100%;
 }
 
+.sale-pos {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+}
+
 .yel-col-stars{
   color: #e6af5c !important;
 }
