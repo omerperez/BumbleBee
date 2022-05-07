@@ -112,11 +112,16 @@ export default function ShippingRequestDialog({ alert }) {
           </DialogContent>
         )}
         <DialogActions>
-          <Button onClick={handleClose} className="capital-letter f-18">
+          <Button
+            onClick={handleClose}
+            disabled={loading}
+            className="capital-letter f-18"
+          >
             Cancel
           </Button>
           <Button
             onClick={handleClickSubmit}
+            disabled={loading}
             autoFocus
             color="success"
             className="capital-letter f-18"
