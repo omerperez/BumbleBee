@@ -12,6 +12,7 @@ import axios from "axios";
 import { iconToShow, alertTitle, alertDateformat } from "./AlertFunction";
 import Loading from "../Layout/Loading";
 import { error403 } from "../images/projectImages";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function AlertLayout({ alert, isDealer }) {
   
@@ -19,6 +20,7 @@ export default function AlertLayout({ alert, isDealer }) {
   const [dealer, setDealer] = useState(null);
   const [car, setCar] = useState(null);
   const [loading, setLoading] = useState(true);
+  const matches = useMediaQuery("(max-width:600px)");
 
   const fetchData = () => {
     const userApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${alert.client}`;
@@ -50,6 +52,7 @@ export default function AlertLayout({ alert, isDealer }) {
 
   return (
     <Accordion
+      style={matches ? { maxWidth: "230px" } : null}
       className={`mt-4 mb-2 m-4 alert-bg-${
         alert.isCancelRequest ? 0 : alert.step
       } alert-border-${alert.isCancelRequest ? 0 : alert.step}`}
@@ -59,19 +62,38 @@ export default function AlertLayout({ alert, isDealer }) {
         aria-controls="panel1a-content"
         id="panel1a-header"
       >
-        <Typography sx={{ width: "70%", flexShrink: 0 }}>
-          <div className="row">
-            <div className="col-3 col-sm-2 m-auto d-flex justify-content-center">
+        <Typography
+          sx={matches ? { width: "100%" } : { width: "70%", flexShrink: 0 }}
+        >
+          {matches ? (
+            <div className="d-flex justify-content-center mb-2">
               <img
                 alt="Remy Sharp"
                 src={
                   process.env.REACT_APP_S3 +
                   `${isDealer ? user.image : dealer.image}`
                 }
-                className="alert-avatar"
+                width={80}
+                height={80}
+                className=" border-circle"
                 onError={error403}
               />
             </div>
+          ) : null}
+          <div className="row">
+            {matches ? null : (
+              <div className="col-3 col-sm-2 m-auto d-flex justify-content-center">
+                <img
+                  alt="Remy Sharp"
+                  src={
+                    process.env.REACT_APP_S3 +
+                    `${isDealer ? user.image : dealer.image}`
+                  }
+                  className="alert-avatar"
+                  onError={error403}
+                />
+              </div>
+            )}
             <div className="col f-19 mt-2">
               {alertTitle(alert.step, isDealer, dealer, user)}
               <br />
@@ -86,21 +108,32 @@ export default function AlertLayout({ alert, isDealer }) {
               </span>
             </div>
           </div>
+          {matches ? (
+            <Typography
+              sx={{
+                textAlign: "center",
+              }}
+            >
+              {iconToShow(alert.step, alert.isCancelRequest, isDealer, alert)}
+            </Typography>
+          ) : null}
         </Typography>
-        <Typography
-          sx={{
-            width: "30%",
-            textAlign: "end",
-            display: "flex",
-            justifyContent: "end",
-          }}
-          className="f-18 opc-8 m-auto"
-        >
-          {iconToShow(alert.step, alert.isCancelRequest, isDealer, alert)}
-        </Typography>
+        {matches ? null : (
+          <Typography
+            sx={{
+              width: "30%",
+              textAlign: "end",
+              display: "flex",
+              justifyContent: "end",
+            }}
+            className="f-18 opc-8 m-auto"
+          >
+            {iconToShow(alert.step, alert.isCancelRequest, isDealer, alert)}
+          </Typography>
+        )}
       </AccordionSummary>
       <Divider />
-      <AccordionDetails className="days-grid mt-2">
+      <AccordionDetails className={matches ? "" : "days-grid mt-2"}>
         <div className="mb-2">
           <Link to={`/car-profile/${car._id}`}>
             <img

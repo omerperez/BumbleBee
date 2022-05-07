@@ -5,12 +5,14 @@ import AccessDenied from "../authComponents/AccessDenied";
 import { useAuth } from "../../contexts/AuthContext";
 import AlertLayout from "../AlertsComponents/AlertLayout";
 import TotalAlertStatistic from "../AlertsComponents/TotalAlertStatistic";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function OrderStatus() {
    const { currentUser, socket } = useAuth();
    const [loading, setLoading] = useState(true);
    const [alerts, setAlerts] = useState(null);
    const [notifications, setNotifications] = useState([]);
+   const matches = useMediaQuery("(max-width:600px)");
 
    useEffect(() => {
      fetch(
@@ -49,23 +51,24 @@ export default function OrderStatus() {
   }
   
   return (
-    <>
+    <div>
       <PageTitle page={"Order Status"} />
-      <TotalAlertStatistic alerts={alerts} />
+      {matches ? null : <TotalAlertStatistic alerts={alerts} />}
       <div>
-        {alerts && alerts.map((alt, inx) => {
-              return (
-                <div key={inx}>
-                  <AlertLayout
-                    key={alt._id}
-                    alert={alt}
-                    isDealer={currentUser.role === 2}
-                  />
-                </div>
-              );
-            })}
+        {alerts &&
+          alerts.map((alt, inx) => {
+            return (
+              <div key={inx}>
+                <AlertLayout
+                  key={alt._id}
+                  alert={alt}
+                  isDealer={currentUser.role === 2}
+                />
+              </div>
+            );
+          })}
       </div>
-    </>
+    </div>
   );
 }
 

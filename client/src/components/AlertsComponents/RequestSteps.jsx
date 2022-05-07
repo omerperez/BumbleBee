@@ -13,13 +13,22 @@ const steps = [
   "Car Arrived",
 ];
 
-export default function RequestSteps({step}) {
+export default function RequestSteps({ step, matches770 }) {
   return (
-    <Box sx={{ width: "85%", textAlign: "center" }}>
-      <h3 className="fw-100 d-flex text-start pl-1">
-        Request Steps
-      </h3>
-      <Stepper activeStep={step ? step + 1 : 1} alternativeLabel className="mt-5">
+    <Box
+      sx={
+        matches770
+          ? { width: "100%", textAlign: "center" }
+          : { width: "85%", textAlign: "center" }
+      }
+    >
+      <h3 className="fw-100 d-flex text-start pl-1">Request Steps</h3>
+      <Stepper
+        activeStep={step ? step + 1 : 1}
+        alternativeLabel={matches770 ? false : true}
+        className="mt-5"
+        orientation={matches770 ? "vertical" : "horizontal"}
+      >
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>

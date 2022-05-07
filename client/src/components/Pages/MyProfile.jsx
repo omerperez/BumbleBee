@@ -72,9 +72,12 @@ export default function MyProfile() {
           <OtherPropertiesCard currentUser={user} />
         </div>
       </div>
-      <div className="d-flex justify-content-center">
+      <div className="d-flex justify-content-center mb-5">
         {user.role === 1 ? (
-            <RequestSteps step={alert ? alert.step : 0} />
+          <RequestSteps
+            step={alert ? alert.step : 0}
+            matches770={matches770 ? true : false}
+          />
         ) : null}
       </div>
     </>
