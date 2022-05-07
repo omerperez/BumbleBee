@@ -132,13 +132,8 @@ async function createAlert(req, res) {
     });
   }
   const newAlert = await notificationSchema.create(createAlert);
-  const filter = { _id: updateUser._id };
-  const update = new userSchema({
-    _id: updateUser._id,
-    isSendReq: true,
-  });
-
-  await userSchema.findOneAndUpdate(filter, update, { new: true });
+  updateUser.isSendReq = true;
+  await updateUser.save();
   console.log("Success");
   return res.send("Success");
 }
@@ -176,13 +171,8 @@ const editAlert = async (req, res) => {
 
   if (alertFromJason.isCancelRequest && alertFromJason.isCancelRequest == true){
       let updateUser = await userSchema.findById(createAlert.dealer);
-      const filter = { _id: updateUser._id };
-      const update = new userSchema({
-        _id: updateUser._id,
-        isSendReq: false,
-      });
-      
-      await userSchema.findOneAndUpdate(filter, update, { new: true });
+      updateUser.isSendReq = false;
+      await updateUser.save();
 
   } else if (alertFromJason.step == 2) {
     alertFromJason.carLicenseFile = req.body.carLicenseFile;
@@ -198,14 +188,9 @@ const editAlert = async (req, res) => {
     alertFromJason.containerFiles = req.body.containerFiles;
     alertFromJason.lastUpdateDate = Date.now();
 
-    let carSell = await carSchema.findById(alertFromJason.car);
-    const filter = { _id: alertFromJason.car };
-    const update = new carSchema({
-      _id: carSell._id,
-      isSell: true,
-    });
-
-    await carSchema.findOneAndUpdate(filter, update, { new: true });          
+    let currentCar = await carSchema.findById(alertFromJason.car);
+    currentCar.isSell = true;
+    await currentCar.save();
   }
   
   try {
@@ -218,8 +203,6 @@ const editAlert = async (req, res) => {
     console.log("filed");
     res.status(400).json("Something happened, please try again");
   }
-      // .then((updateAlert) => res.json(updateAlert))
-      // .catch((err) => res.status(400).json("Error: " + err));
 };
 
 /* EXPORTS */
