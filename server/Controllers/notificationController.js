@@ -195,7 +195,6 @@ const editAlert = async (req, res) => {
     alertFromJason.dateOfAttachFiles = Date.now();
     alertFromJason.lastUpdateDate = Date.now(); 
   } else {
-
     alertFromJason.containerFiles = req.body.containerFiles;
     alertFromJason.lastUpdateDate = Date.now();
 
@@ -209,11 +208,18 @@ const editAlert = async (req, res) => {
     await carSchema.findOneAndUpdate(filter, update, { new: true });          
   }
   
-  alertFromJason.markAsRead = false;
-  notificationSchema
-      .findOneAndUpdate(alertId, alertFromJason, { new: true })
-      .then((updateAlert) => res.json(updateAlert))
-      .catch((err) => res.status(400).json("Error: " + err));
+  try {
+    const updateAlert = await notificationSchema.findOneAndUpdate(alertId, alertFromJason, { new: true });
+    updateAlert.isRead = false;
+    await updateAlert.save();
+    console.log("Success");
+    res.send("Success");
+  } catch (err) {
+    console.log("filed");
+    res.status(400).json("Something happened, please try again");
+  }
+      // .then((updateAlert) => res.json(updateAlert))
+      // .catch((err) => res.status(400).json("Error: " + err));
 };
 
 /* EXPORTS */

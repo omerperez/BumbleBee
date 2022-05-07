@@ -49,7 +49,8 @@ export default function SendDhlAndGovIlDialog({ alert }) {
       console.log("Filed");
     } else {
       setLoading(false);
-      return setOpen(false);
+      setOpen(false);
+      return window.location.reload();
     }
   };
 

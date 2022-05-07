@@ -38,7 +38,6 @@ export default function SecondRequestDialog({ alert }) {
       step: 2,
       isRead: false,
     };
-
     const res = await editAlertFunction(editAlert, socket);
     if (res.data !== "Success") {
       console.log("Filed");
