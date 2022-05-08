@@ -107,7 +107,7 @@ export default function AboutUs() {
                   <div className="mt-4 mb-4">
                     <StepTitle step={activeStep} />
                   </div>
-                  <div className="f-lighter">
+                  <div className="f-lighter text-center">
                     <AboutUsBody step={activeStep + 1} />
                   </div>
                 </Typography>
@@ -115,7 +115,7 @@ export default function AboutUs() {
               <Box
                 sx={{
                   display: "flex",
-                  width: "80%",
+                  width: "100%",
                   flexDirection: "row",
                   pt: 2,
                 }}

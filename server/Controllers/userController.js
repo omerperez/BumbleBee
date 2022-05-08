@@ -11,6 +11,21 @@ const axios = require("axios");
 const dotenv = require("dotenv");
 dotenv.config();
 
+const getUserRating = async (req, res) => {  
+  
+  const allDealer = await userSchema.find({role: 2});  
+  var unique = [];
+  for (const dealer of allDealer) {
+    var unique = dealer.usersRate.filter((element, index) => {
+      return dealer.usersRate.indexOf(element) === index;
+    });
+    console.log("B");
+    console.log(dealer.usersRate);
+    console.log(unique);
+    dealer.usersRate = unique;
+    await dealer.save();
+  }
+}
 /* GET */
 const getAllUsers = (req, res) => {
   userSchema.find().then((results) => {
@@ -354,4 +369,5 @@ module.exports = {
   rateDealer,
   findCurrentRating,
   script,
+  getUserRating,
 };

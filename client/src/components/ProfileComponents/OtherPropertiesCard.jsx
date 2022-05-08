@@ -211,9 +211,14 @@ export default function OtherPropertiesCard({ currentUser }) {
       )}
       {matches550 ? (
         <div className="mt-4 d-flex justify-content-center">
-          <div>
-            <DealerRatingDialog dealer={currentUser._id} client={myUser._id} />
-          </div>
+          {currentUser._id === myUser._id || currentUser.role !== 2 ? null : (
+            <div>
+              <DealerRatingDialog
+                dealer={currentUser._id}
+                client={myUser._id}
+              />
+            </div>
+          )}
           <div className="ml-10">
             <ShowActivityDays
               isCanEdit={myUser._id === currentUser._id}

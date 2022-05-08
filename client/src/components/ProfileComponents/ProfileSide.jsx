@@ -23,7 +23,7 @@ export default function ProfileSide({ currentUser }) {
       >
         <img
           width={"100%"}
-          height={matches1000 ? "100%" : 445}
+          height={matches1000 ? "100%" : 'vmax' }
           className={matches ? "cover-back col-6" : "cover-back"}
           src={process.env.REACT_APP_S3 + currentUser.image}
           alt="Paella dish"

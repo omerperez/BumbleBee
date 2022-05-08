@@ -2,25 +2,39 @@ import React, { useState, useEffect } from "react";
 import CarCard from "../CarComponents/CarCard";
 import FilterCars from "../CarComponents/FilterCars";
 import PageTitle from "../Layout/PageTitle";
-import useFetch from "../../utils/useFetch";
 import Loading from "../Layout/Loading";
 import { useAuth } from "../../contexts/AuthContext";
+import axios from "axios";
 
 export default function HomePage() {
-
+  
   const { currentUser } = useAuth();
   const [user, setUser] = useState();
- 
-  useEffect(() => {
-    fetch(
-      `${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`
-    ).then((res) => res.json().then((data) => setUser(data)));
-  }, [currentUser._id]);
+  const [loading, setLoading] = useState(true);
+  const [cars, setCars] = useState();
 
-  const { data: cars, setData : setCars, loading } = useFetch(
-    `${process.env.REACT_APP_SERVER_API}/car`
-  );
- 
+   const fetchData = () => {
+     const currentUserApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`;
+     const carsApi = `${process.env.REACT_APP_SERVER_API}/car`;
+
+     const getUser = axios.get(currentUserApi);
+     const getCars = axios.get(carsApi);
+
+     axios.all([getUser, getCars]).then(
+       axios.spread((...allData) => {
+         const userData = allData[0].data;
+         const carsData = allData[1].data;
+         setUser(userData);
+         setCars(carsData);
+         setLoading(false);
+       })
+     );
+   };
+
+   useEffect(() => {
+     fetchData();
+   }, []);
+
   if(loading) {
     return <Loading />;
   }

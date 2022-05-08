@@ -42,7 +42,7 @@ export default function DealerCard({ dealer, role, car, showReq }) {
             ) : null}
           </div>
           <div
-            className="color-yellow"
+            className={matches1310 ? "color-yellow" : "color-yellow mt-2"}
             style={matches1310 ? { marginTop: "-15%" } : null}
           >
             <RatingDealer
@@ -89,25 +89,31 @@ export default function DealerCard({ dealer, role, car, showReq }) {
             <FirstRequestDialog car={car} showReq={showReq} />
           </div>
         ) : null}
-        <Button
-          className="capital-letter bg-col-green m-2"
-          variant="contained"
-          onClick={() => sendWhatsAppToDealer(mobile, dealer.firstName)}
-        >
-          Contact <WhatsAppIcon className="m-2" />
-        </Button>
-        <Button variant="contained" className="m-2">
-          <Link
-            className="color-white cancel-underline capital-letter"
-            to={
-              currentUser._id === dealer._id
-                ? "/my-profile"
-                : `/profile/${dealer._id}`
-            }
+        {currentUser._id === dealer._id ? null : (
+          <Button
+            className="capital-letter bg-col-green m-2 h-75"
+            variant="contained"
+            onClick={() => sendWhatsAppToDealer(mobile, dealer.firstName)}
           >
-            More Info
-          </Link>
-        </Button>
+            Contact <WhatsAppIcon className="m-2" />
+          </Button>
+        )}
+        <Link
+          className=""
+          to={
+            currentUser._id === dealer._id
+              ? "/my-profile"
+              : `/profile/${dealer._id}`
+          }
+        >
+          <Button
+            variant="contained"
+            fullWidth
+            className="m-2 color-white cancel-underline capital-letter h-75"
+          >
+            {currentUser._id === dealer._id ? "My Profile" : "More Info"}
+          </Button>
+        </Link>
       </div>
     </div>
   );

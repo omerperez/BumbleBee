@@ -115,7 +115,7 @@ export default function NewNavigation({socket, children }) {
       role={max800 ? "presentation" : null}
     >
       <AppBar
-        position="fixed"
+        position="absolute"
         open={open}
         sx={{ background: "none", boxShadow: "none" }}
       >

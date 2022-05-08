@@ -54,7 +54,7 @@ export default function MyProfile() {
             className={
               matches
                 ? "col-4"
-                : "col-12 col-lg-5 col-xl-4 col-xxl-3 mt-5 mb-5 offset-1"
+                : "col-12 col-lg-5 col-xl-4 col-xxl-3 mt-5 mb-5 offset-xxl-1"
             }
           >
             <ProfileSide currentUser={user} />

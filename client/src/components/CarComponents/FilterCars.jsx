@@ -12,6 +12,7 @@ import {
 } from "./CarsFilterFunctions";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import Button from "@mui/material/Button";
+import ClearAllIcon from "@mui/icons-material/ClearAll";
 
 export default function FilterCars({ carsState, carsSetState }) {
   const [filters, setFilters] = useState(false);
@@ -71,12 +72,23 @@ export default function FilterCars({ carsState, carsSetState }) {
     }
   }, [company, engine, gearbox, minKm, maxKm, minPrice, maxPrice]);
 
+  const clearFilters = () => {
+     setCompany(null);
+     setEngine(null);
+     setGearbox(null);
+     setMinKm(0);
+     setMaxKm(10000000);
+     setMinPrice(0);
+     setMaxPrice(10000000);
+     carsSetState(allCarsObjects);
+  }
+
   return (
     <>
       <div className="filters-grid mt-4 mb-2">
         <Button
           onClick={() => setFilters(!filters)}
-          className="filter-car-btn"
+          className="filter-car-btn m-1 mr-2 ml-2"
           variant="contained"
           startIcon={<FilterAltIcon />}
         >
@@ -84,7 +96,15 @@ export default function FilterCars({ carsState, carsSetState }) {
         </Button>
         {filters ? (
           <>
-            <FormControl fullWidth className="pl-1 pr-1">
+            <Button
+              onClick={clearFilters}
+              className="app-background capital-letter ls-1 m-1 mr-2 ml-2"
+              variant="contained"
+              startIcon={<ClearAllIcon />}
+            >
+              Clear
+            </Button>
+            <FormControl fullWidth className="m-1 plr-10px">
               <InputLabel>Manufacturer</InputLabel>
               <Select
                 size="small"
@@ -103,7 +123,7 @@ export default function FilterCars({ carsState, carsSetState }) {
                 })}
               </Select>
             </FormControl>
-            <FormControl fullWidth className="pl-1 pr-1">
+            <FormControl fullWidth className="m-1 plr-10px">
               <InputLabel>Engine</InputLabel>
               <Select
                 size="small"
@@ -113,16 +133,19 @@ export default function FilterCars({ carsState, carsSetState }) {
                   setEngine(handleChangeSelect(e.target.value, engineList))
                 }
               >
-                {engineList.sort().reverse().map((engine) => {
-                  return (
-                    <MenuItem key={engine.id} value={engine}>
-                      {engine}
-                    </MenuItem>
-                  );
-                })}
+                {engineList
+                  .sort()
+                  .reverse()
+                  .map((engine) => {
+                    return (
+                      <MenuItem key={engine.id} value={engine}>
+                        {engine}
+                      </MenuItem>
+                    );
+                  })}
               </Select>
             </FormControl>
-            <FormControl fullWidth className="pl-1 pr-1">
+            <FormControl fullWidth className="m-1 plr-10px">
               <InputLabel>Gearbox</InputLabel>
               <Select
                 size="small"
@@ -141,7 +164,7 @@ export default function FilterCars({ carsState, carsSetState }) {
                 })}
               </Select>
             </FormControl>
-            <FormControl fullWidth className="pl-1 pr-1">
+            <FormControl fullWidth className="m-1 plr-10px">
               <TextField
                 size="small"
                 label="Min Price"
@@ -152,7 +175,7 @@ export default function FilterCars({ carsState, carsSetState }) {
                 }
               ></TextField>
             </FormControl>
-            <FormControl fullWidth className="pl-1 pr-1">
+            <FormControl fullWidth className="m-1 plr-10px">
               <TextField
                 size="small"
                 label="Max Price"
@@ -163,7 +186,7 @@ export default function FilterCars({ carsState, carsSetState }) {
                 }
               ></TextField>
             </FormControl>
-            <FormControl fullWidth className="pl-1 pr-1">
+            <FormControl fullWidth className="m-1 plr-10px">
               <TextField
                 size="small"
                 label="Min Kilometer"
@@ -174,7 +197,7 @@ export default function FilterCars({ carsState, carsSetState }) {
                 }
               ></TextField>
             </FormControl>
-            <FormControl fullWidth className="pl-1 pr-1">
+            <FormControl fullWidth className="m-1 plr-10px">
               <TextField
                 size="small"
                 label="Max Kilometer"

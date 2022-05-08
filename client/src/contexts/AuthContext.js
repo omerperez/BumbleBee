@@ -80,6 +80,10 @@ export default function AuthProvider({ children }) {
         return err.response.data.message;
       });
   }
+  function cleanCookie() {
+    cookies.remove("auth-token");
+    cookies.remove("connectUser");
+  } 
 
   async function editUserPropertiesWithoutImage(user) {
     return api
@@ -249,6 +253,7 @@ export default function AuthProvider({ children }) {
     loading,
     addCarToFavorite,
     socket,
+    cleanCookie,
   };
 
   return (

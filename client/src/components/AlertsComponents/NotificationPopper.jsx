@@ -57,6 +57,7 @@ export default function NotificationPopper({ count, alerts, setFlag }) {
                 marginLeft: "auto",
                 marginTop: 1,
                 marginRight: 5,
+                paddingBottom: 1
               }}
             >
               {alerts.length > 0 ? (

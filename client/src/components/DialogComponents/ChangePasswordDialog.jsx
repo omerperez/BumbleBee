@@ -4,7 +4,9 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useAuth } from "../../contexts/AuthContext";
 import { DialogContent } from "@mui/material";
-import { Button, Form, Alert } from "react-bootstrap";
+import { Form, Alert } from "react-bootstrap";
+import { Button } from "@mui/material";
+import Loading from "../Layout/Loading";
 
 export default function ChangePasswordDialog() {
   const [open, setOpen] = useState(false);
@@ -24,23 +26,23 @@ export default function ChangePasswordDialog() {
   };
 
   const handleChangePassword = async () => {
-     if (newPass !== confimPass) {
-       return setError("Password Not Matches");
-     }
-     try {
-       setError("");
-       setLoading(true);
-       const results = await editPassword(oldPass, newPass);
-       if (results !== "Success") {
-         setLoading(false);
-         setError(results);
-       } else {
+    if (newPass !== confimPass) {
+      return setError("Password Not Matches");
+    }
+    setLoading(true);
+    try {
+      setError("");
+      const results = await editPassword(oldPass, newPass);
+      if (results !== "Success") {
+        setLoading(false);
+        setError(results);
+      } else {
         setLoading(false);
         setOpen(false);
       }
-     } catch (err) {
-       setError(err);
-     } 
+    } catch (err) {
+      setError(err);
+    } 
   };
 
   return (
@@ -60,40 +62,58 @@ export default function ChangePasswordDialog() {
         aria-describedby="alert-dialog-description"
       >
         <div>
-          <DialogTitle id="alert-dialog-title" className="w-500">Change Password</DialogTitle>
+          <DialogTitle id="alert-dialog-title" className="w-500">
+            Change Password
+          </DialogTitle>
           {error && <Alert variant="danger">{error}</Alert>}
-          <DialogContent>
-            <Form.Group className="mt-3">
-              <Form.Label>Old Password</Form.Label>
-              <Form.Control
-                type="password"
-                onChange={(e) => {
-                  setOldPass(e.target.value);
-                }}
-              />
-            </Form.Group>
-            <Form.Group className="mt-3">
-              <Form.Label>New Password</Form.Label>
-              <Form.Control
-                type="password"
-                onChange={(e) => {
-                  setNewPass(e.target.value);
-                }}
-              />
-            </Form.Group>
-            <Form.Group className="mt-3">
-              <Form.Label>Confirm New Password</Form.Label>
-              <Form.Control
-                type="password"
-                onChange={(e) => {
-                  setConfimPass(e.target.value);
-                }}
-              />
-            </Form.Group>
-          </DialogContent>
+          {loading ? (
+            <Loading />
+          ) : (
+            <DialogContent>
+              <Form.Group className="mt-3">
+                <Form.Label>Old Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  onChange={(e) => {
+                    setOldPass(e.target.value);
+                  }}
+                />
+              </Form.Group>
+              <Form.Group className="mt-3">
+                <Form.Label>New Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  onChange={(e) => {
+                    setNewPass(e.target.value);
+                  }}
+                />
+              </Form.Group>
+              <Form.Group className="mt-3">
+                <Form.Label>Confirm New Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  onChange={(e) => {
+                    setConfimPass(e.target.value);
+                  }}
+                />
+              </Form.Group>
+            </DialogContent>
+          )}
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={handleChangePassword} autoFocus color="primary">
+            <Button
+              onClick={handleClose}
+              disabled={loading}
+              className="cancel-back w-100 no-border mw-95 color-white capital-letter ls-2"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleChangePassword}
+              autoFocus
+              disabled={loading}
+              color="primary"
+              className="green-back no-border w-100 mw-95 color-white capital-letter ls-2"
+            >
               Apply
             </Button>
           </DialogActions>

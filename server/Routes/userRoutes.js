@@ -37,5 +37,6 @@ router.get("/dashboard/:id", userController.categoriesPerUser);
 
 router.get("/dashboard", userController.usersCategories);
 
+router.get("/rating", userController.getUserRating);
 
 module.exports = router;

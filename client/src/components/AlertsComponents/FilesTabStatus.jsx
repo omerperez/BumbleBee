@@ -12,15 +12,15 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
   const [flag, setFlag] = useState(false);
 
   useEffect(() => {
-      if (value == "1" && payment != null) {
+      if (value == "1" && payment != null && payment.length > 0) {
         setFlag(false);
-      } else if (value == "2" && licenses != null) {
+      } else if (value == "2" && licenses != null && licenses.length > 0) {
         setFlag(false);
-      } else if (value == "3" && govil != null) {
+      } else if (value == "3" && govil != null && govil.length > 0) {
         setFlag(false);
-      } else if (value == "4" && dhl != null) {
+      } else if (value == "4" && dhl != null && dhl.length > 0) {
         setFlag(false);
-      } else if (value == "5" && shipping != null) {
+      } else if (value == "5" && shipping != null && shipping.length > 0) {
         setFlag(false);
       } else {
         setFlag(true);
@@ -56,7 +56,7 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
           </TabList>
         </Box>
         <TabPanel value="1">
-          {payment ? (
+          {payment && payment.length > 0 ? (
             <div className="d-flex justify-content-center">
               <img
                 className="cur-pointer mw-400"
@@ -73,7 +73,7 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
           )}
         </TabPanel>
         <TabPanel value="2">
-          {licenses ? (
+          {licenses && licenses.length > 0 ? (
             <div className="d-flex justify-content-center">
               <img
                 className=" cur-pointer mw-400"
@@ -92,7 +92,7 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
           )}
         </TabPanel>
         <TabPanel value="3">
-          {govil ? (
+          {govil && govil.length > 0 ? (
             <div className="d-flex justify-content-center">
               <img
                 className="cur-pointer mw-400"
@@ -109,7 +109,7 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
           )}
         </TabPanel>
         <TabPanel value="4">
-          {dhl ? (
+          {dhl && dhl.length > 0 ? (
             <div className="d-flex justify-content-center">
               <img
                 className=" cur-pointer mw-400"
@@ -126,7 +126,7 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
           )}
         </TabPanel>
         <TabPanel value="5">
-          {shipping ? (
+          {shipping && shipping.length > 0 ? (
             <img
               className=" cur-pointer mw-400"
               src="/files/shipping.svg"

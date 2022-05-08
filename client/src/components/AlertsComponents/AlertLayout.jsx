@@ -119,15 +119,7 @@ export default function AlertLayout({ alert, isDealer }) {
           ) : null}
         </Typography>
         {matches ? null : (
-          <Typography
-            sx={{
-              width: "30%",
-              textAlign: "end",
-              display: "flex",
-              justifyContent: "end",
-            }}
-            className="f-18 opc-8 m-auto"
-          >
+          <Typography className="f-18 opc-8 m-auto pl-10">
             {iconToShow(alert.step, alert.isCancelRequest, isDealer, alert)}
           </Typography>
         )}
@@ -164,24 +156,25 @@ export default function AlertLayout({ alert, isDealer }) {
               </div>
             </div>
             <div className="w-90">
-              <div>
-                <Button
-                  className="capital-letter mt-3"
-                  color="info"
-                  fullWidth
-                  variant="contained"
-                >
-                  <Link
-                    className="color-white cancel-underline"
-                    to={`/profile/${user._id}`}
+              {isDealer ? (
+                <div className="m-auto">
+                  <Button
+                    className="capital-letter mt-5"
+                    color="info"
+                    fullWidth
+                    variant="contained"
                   >
-                    Client Details
-                  </Link>
-                </Button>
-              </div>
-              <div>
+                    <Link
+                      className="color-white cancel-underline"
+                      to={`/profile/${user._id}`}
+                    >
+                      Client Details
+                    </Link>
+                  </Button>
+                </div>
+              ) : (
                 <Button
-                  className="capital-letter mt-3"
+                  className="capital-letter mt-5"
                   color="success"
                   fullWidth
                   variant="contained"
@@ -191,7 +184,7 @@ export default function AlertLayout({ alert, isDealer }) {
                 >
                   Send Whatsapp
                 </Button>
-              </div>
+              )}
             </div>
           </div>
         </div>

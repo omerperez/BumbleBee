@@ -38,7 +38,10 @@ export default function GovIL() {
               width={300}
               height={250}
               onClick={() =>
-                downloadFile("AgafHaRechev_Yavu_Rechev_FORMS_06427709.pdf")
+                downloadFile(
+                  "/AgafHaRechev_Yavu_Rechev_FORMS_06427709.pdf",
+                  "files"
+                )
               }
               onError={error403}
             />
@@ -49,7 +52,8 @@ export default function GovIL() {
               height={250}
               onClick={() =>
                 downloadFile(
-                  "Application_for_personal_import_brokerage_license.pdf"
+                  "/Application_for_personal_import_brokerage_license.pdf",
+                  "files"
                 )
               }
               onError={error403}
@@ -60,7 +64,7 @@ export default function GovIL() {
               width={300}
               height={250}
               onClick={() =>
-                downloadFile("תצהיר יבוא אישי - ידני 22.4.21.pdf.pdf")
+                downloadFile("/תצהיר יבוא אישי - ידני 22.4.21.pdf.pdf", "files")
               }
               onError={error403}
             />
