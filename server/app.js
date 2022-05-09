@@ -5,7 +5,7 @@ const app = require("./server");
 
 const io = new Server({
   cors: {
-    origin: "http://localhost:3000",
+    origin: "http://localhost:80",
   },
 });
 
@@ -55,7 +55,7 @@ io.on("connection", (socket) => {
   });
 });
 
-io.listen(443);
+io.listen(3000);
 
 const port = 8080; //process.env.PROT;
 app.listen(port, () => {

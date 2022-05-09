@@ -44,14 +44,40 @@ export default function CarForm() {
            data.result.records.filter((car) => car.shnat_yitzur >= 2020)
          )
        );
-     fetch(process.env.REACT_APP_CARS_ENGLISH_PROPERTIES + company.english, {
-       method: "GET",
-       headers: headersEnglisCarsApi,
-     })
-       .then((response) => response.json())
-       .then((data) => {
-         setDataFromSecApi(data.filter((car) => car.year >= 2020));
-       });
+
+       console.log(dataFromApi);
+       
+       const where = encodeURIComponent(
+         JSON.stringify({
+           Make: company.english ? company.english.charAt(0).toUpperCase() + company.english.slice(1) : '',
+           Year: {
+             $gte: 2015,
+           },
+         })
+       );
+      fetch(
+        `https://parseapi.back4app.com/classes/Car_Model_List?order=Model&keys=Make,Model&where=${where}`,
+        {
+          headers: {
+            "X-Parse-Application-Id":
+              "hlhoNKjOvEhqzcVAJ1lxjicJLZNVv36GdbboZj3Z",
+            "X-Parse-Master-Key": "SNMJJF0CZZhTPhLDIqGhTlUNV9r60M2Z5spyWfXW",
+          },
+        }
+      ).then((response) => response.json())
+        .then((data) => {
+          console.log(data)
+          setDataFromSecApi(data.results);
+        });;
+
+    //  fetch(process.env.REACT_APP_CARS_ENGLISH_PROPERTIES + company.english, {
+    //    method: "GET",
+    //    headers: headersEnglisCarsApi,
+    //  })
+    //    .then((response) => response.json())
+    //    .then((data) => {
+    //      setDataFromSecApi(data.filter((car) => car.year >= 2020));
+    //    });
    }, [company]);
 
    const userSelectCompany = (e) => {
@@ -99,6 +125,9 @@ export default function CarForm() {
     };
     reader.readAsDataURL(e.target.files[0]);
   };
+  console.log("Hey!");
+
+  console.log(dataFromSecApi);
   return (
     <div>
       {error ? (
@@ -136,11 +165,11 @@ export default function CarForm() {
               onChange={userSelectModel}
               required
             >
-              {Array.from(new Set(dataFromApi.map((obj) => obj.degem_nm))).map(
-                (degem_nm, key) => {
+              {Array.from(new Set(dataFromSecApi.map((obj) => obj.Model))).map(
+                (Model, key) => {
                   return (
-                    <MenuItem key={degem_nm.id} value={degem_nm}>
-                      {degem_nm}
+                    <MenuItem key={Model.id} value={Model}>
+                      {Model}
                     </MenuItem>
                   );
                 }
@@ -158,11 +187,18 @@ export default function CarForm() {
               onChange={(e) => carChange(e)}
               required
             >
-              {Array.from(
+              {carsProperties.Year.map((year, key) => {
+                return (
+                  <MenuItem key={year.id} value={year}>
+                    {year}
+                  </MenuItem>
+                );
+              })}
+              {/* {Array.from(
                 new Set(
-                  dataFromApi
-                    .filter((car) => car.degem_nm === model)
-                    .map((obj) => obj.shnat_yitzur)
+                  dataFromSecApi
+                    .filter((car) => car.Model === model)
+                    .map((obj) => obj.Year)
                 )
               ).map((shnat_yitzur, key) => {
                 return (
@@ -170,16 +206,12 @@ export default function CarForm() {
                     {shnat_yitzur}
                   </MenuItem>
                 );
-              })}
+              })} */}
             </Select>
           </FormControl>
         </div>
         <div className="col-12 col-sm-3 col-lg-2">
-          <FormControl
-            fullWidth
-            disabled={CheckDisableStatus(values)}
-            className="mt-3"
-          >
+          <FormControl fullWidth disabled={secondStatus} className="mt-3">
             <InputLabel>Category</InputLabel>
             <Select
               label="category"
@@ -208,19 +240,23 @@ export default function CarForm() {
               onChange={(e) => carChange(e)}
               required
             >
-              {Array.from(
-                new Set(
-                  dataFromApi
-                    .filter((car) => car.degem_nm === model)
-                    .map((obj) => obj.nefach_manoa)
-                )
+              {carsProperties.engines.map((engine, key) => {
+                return (
+                  <MenuItem key={engine.id} value={engine}>
+                    {engine}
+                  </MenuItem>
+                );
+              })}
+
+              {/* {Array.from(
+                new Set(dataFromApi.map((obj) => obj.nefach_manoa))
               ).map((nefach_manoa, key) => {
                 return (
                   <MenuItem key={nefach_manoa.id} value={nefach_manoa}>
                     {nefach_manoa}
                   </MenuItem>
                 );
-              })}
+              })} */}
             </Select>
           </FormControl>
         </div>
@@ -299,11 +335,9 @@ export default function CarForm() {
               {Array.from(
                 new Set(
                   dataFromApi
-                    .filter(
-                      (car) =>
-                        car.degem_nm === model &&
-                        car.nefach_manoa === values.engine
-                    )
+                    // .filter(
+                    //   (car) => car.nefach_manoa === values.engine
+                    // )
                     .map((obj) => obj.sug_delek_nm)
                 )
               ).map((sug_delek_nm, key) => {

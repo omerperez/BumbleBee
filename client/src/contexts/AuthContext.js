@@ -235,7 +235,7 @@ export default function AuthProvider({ children }) {
     } else {
       setCurrentUser(cookies.get("connectUser"));
     }
-    setSocket(io("http://localhost:443"));
+    setSocket(io("http://localhost:3000"));
     return setLoading(false);
   }, []);
 

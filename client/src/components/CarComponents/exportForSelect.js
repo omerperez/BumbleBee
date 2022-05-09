@@ -6,6 +6,33 @@ const carsProperties = {
   doorCountOptions: ["2", "3", "4", "5"],
   countOfSeatsOptions: [2, 4, 5, 6, 7],
   gearBoxesList: ["Concentric", "Parallel", "Right Angle", "Shaft Mount	"],
+  Year: [2020, 2021, 2022],
+  engines: [
+    "1.0 L",
+    "1.2 L",
+    "1.3 L",
+    "1.4 L",
+    "1.5 L",
+    "1.6 L",
+    "1.8 L",
+    "2.0 L",
+    "2.2 L",
+    "2.3 L",
+    "2.5 L",
+    "2.7 L",
+    "3.0 L",
+    "3.3 L",
+    "3.6 L",
+    "4.0 L",
+    "4.6 L",
+    "5.0 L",
+    "5.2 L",
+    "5.4 L",
+    "5.7 L",
+    "5.9 L",
+    "6.2 L",
+    "6.6 L",
+  ],
   NumberOfOwners: [
     "00",
     "01",
@@ -110,7 +137,7 @@ const carsProperties = {
       hebrew: "יגואר",
     },
     {
-      english: "Mercedes Benz",
+      english: "Mercedes-Benz",
       hebrew: "מרצדס",
     },
     {
@@ -126,7 +153,7 @@ const carsProperties = {
       hebrew: "קאדילאק",
     },
     {
-      english: "Fiat",
+      english: "FIAT",
       hebrew: "פיאט קרייזלר",
     },
     {
@@ -146,7 +173,7 @@ const carsProperties = {
       hebrew: "ג'יפ",
     },
     {
-      english: "Mazda",
+      english: "MAZDA",
       hebrew: "מזדה",
     },
     {
