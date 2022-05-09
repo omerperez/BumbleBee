@@ -8,6 +8,8 @@ const carsProperties = {
   gearBoxesList: ["Concentric", "Parallel", "Right Angle", "Shaft Mount	"],
   Year: [2020, 2021, 2022],
   engines: [
+    "Hybrid",
+    "Electric",
     "1.0 L",
     "1.2 L",
     "1.3 L",
