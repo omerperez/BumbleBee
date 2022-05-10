@@ -8,12 +8,14 @@ import DialogTitle from "@mui/material/DialogTitle";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
 import axios from "axios";
 import RatingDealer from "../ProfileComponents/RatingDealer";
+import Loading from "../Layout/Loading";
 
 const api = axios.create({ baseURL: process.env.REACT_APP_SERVER_API });
 
 export default function DealerRatingDialog({dealer, client}) {
   
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [rateCount, setRateCount] = useState();
 
   useEffect(() => {
@@ -27,6 +29,7 @@ export default function DealerRatingDialog({dealer, client}) {
   }, []);
 
   const sendRating = () => {
+    setLoading(true);
     const message = {
       client: client,
       dealer: dealer,
@@ -34,14 +37,14 @@ export default function DealerRatingDialog({dealer, client}) {
     };
     api
       .post(`/user/rating`, message)
-      .then(function (response) {
-        console.log(response);
+      .then(() => {
+        setLoading(false);
+        setOpen(false);
+        window.location.reload(true);
       })
       .catch(function (error) {
         console.log(error);
       });
-    setOpen(false);
-    window.location.reload(true);
   };
 
   return (
@@ -65,19 +68,26 @@ export default function DealerRatingDialog({dealer, client}) {
           Star Rating
         </DialogTitle>
         <DialogContent>
-          <DialogContentText
-            id="alert-dialog-description"
-            className="text-center"
-          >
-            <RatingDealer
-              readOnly={false}
-              ratingCount={rateCount}
-              setRatingCount={setRateCount}
-            />
-          </DialogContentText>
+          {loading ? (
+            <div className="d-flex justify-content-center">
+              <Loading />
+            </div>
+          ) : (
+            <DialogContentText
+              id="alert-dialog-description"
+              className="text-center"
+            >
+              <RatingDealer
+                readOnly={false}
+                ratingCount={rateCount}
+                setRatingCount={setRateCount}
+              />
+            </DialogContentText>
+          )}
         </DialogContent>
         <DialogActions>
           <Button
+            disabled={loading}
             onClick={() => setOpen(false)}
             color="error"
             className="capital-letter ls-2 f-18"
@@ -85,6 +95,7 @@ export default function DealerRatingDialog({dealer, client}) {
             Cancel
           </Button>
           <Button
+            disabled={loading}
             onClick={sendRating}
             autoFocus
             color="primary"

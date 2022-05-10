@@ -74,6 +74,7 @@ export default function HomePage() {
                     ? true
                     : false
                 }
+                isOwner={user._id === car.dealer}
               />
             );
           })}

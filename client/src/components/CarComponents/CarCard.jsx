@@ -8,8 +8,10 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from "@mui/icons-material/Star";
 import { Button } from "@mui/material";
 import { useAuth } from "../../contexts/AuthContext";
+import Chip from "@mui/material/Chip";
+import CarRentalIcon from "@mui/icons-material/CarRental";
 
-export default function CarCard({ _id, image, company, model, price, currentPage, user, isSale }) {
+export default function CarCard({ _id, image, company, model, price, currentPage, user, isSale, isOwner }) {
 
   const { addCarToFavorite } = useAuth();
   const [newStatus, setNewStatus] = useState(
@@ -58,6 +60,8 @@ export default function CarCard({ _id, image, company, model, price, currentPage
               <div className="sale-pos">
                 {isSale ? (
                   <img src="/images/carSale.png" width={70} height={60} />
+                ) : isOwner ? (
+                  <Chip icon={<CarRentalIcon />} label="Your vehicle" color="success" className="opc-8 m-1"/>
                 ) : null}
               </div>
             </div>

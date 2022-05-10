@@ -109,15 +109,11 @@ async function createCar(req, res) {
     });
   }
   const newCar = await carSchema.create(createNewCar);
-
-  const filter = { _id: updateDealer._id };
   const carList = await updateDealer.cars;
   carList.push(newCar._id);
-  const update = new userSchema({
-    _id: updateDealer._id,
-    cars: carList,
-  });
-  await userSchema.findOneAndUpdate(filter, update, { new: true });
+  updateDealer.cars = carList;
+  
+  await updateDealer.save();
   return res.send(newCar._id);
 }
 

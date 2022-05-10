@@ -13,18 +13,15 @@ dotenv.config();
 
 const getUserRating = async (req, res) => {  
   
-  const allDealer = await userSchema.find({role: 2});  
+  const rat = ratingSchema.find();
+  const allDealer = await userSchema.find();  
   var unique = [];
-  for (const dealer of allDealer) {
-    var unique = dealer.usersRate.filter((element, index) => {
-      return dealer.usersRate.indexOf(element) === index;
-    });
-    console.log("B");
-    console.log(dealer.usersRate);
-    console.log(unique);
-    dealer.usersRate = unique;
+  for (const dealer of allDealer.filter(d => d.role == 2)) {
+    dealer.usersRate = [];
+    dealer.rating = 0;
     await dealer.save();
   }
+      console.log("DONE");
 }
 /* GET */
 const getAllUsers = (req, res) => {
@@ -39,12 +36,12 @@ const getAllUsers = (req, res) => {
 };
 
 const script = async () => {
-  const user = await userSchema.findById("6269d148524f06b2b81b0104");
-  const users = await userSchema.find();
+  const user = await userSchema.findById("6269baffce8ed2c913d26232");
+  const users = await userSchema.find({role: 2});
   for(const u of users){
-    user._id = new mongoose.Types.ObjectId();
-    const newUser = user;
-    await userSchema.create(newUser);
+    // user._id = new mongoose.Types.ObjectId();
+    u.activityDaysTime = user.activityDaysTime;
+    await u.save();
   }
   return null;
 }

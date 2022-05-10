@@ -90,16 +90,6 @@ export default function CarProfileBody({car}) {
               <tr>
                 <th>First Registration</th>
                 <td>
-                  {/* {(car.firstRegistration)
-                    .toString()
-                    .substring(
-                      0,
-                     (car.firstRegistration).toString().indexOf(":") - 2
-                    )
-                    .substring(
-                      (car.firstRegistration).toString().indexOf(" ")
-                    )} */}
-
                   {`${convertDateFormat(car.firstRegistration)[2]}/${
                     convertDateFormat(car.firstRegistration)[1]
                   }/${convertDateFormat(car.firstRegistration)[0]}`}
