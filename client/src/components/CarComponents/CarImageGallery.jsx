@@ -9,11 +9,12 @@ import { Button } from "@mui/material";
 import { useAuth } from "../../contexts/AuthContext";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import DealerPropertiesDialog from "../DialogComponents/DealerPropertiesDialog";
+import { minWidth } from "@mui/system";
 
 export default function CarImageGallery({ id, car, user }) {
   const [dealer, setDealer] = useState(car.dealer);
   const [newStatus, setNewStatus] = useState(JSON.stringify(user.cars).indexOf(car._id) != -1 ? true : false);
-  const {addCarToFavorite} = useAuth();
+  const { addCarToFavorite, currentUser } = useAuth();
   const matches770 = useMediaQuery("(max-width:770px)");
   const matches1070 = useMediaQuery("(max-width:1070px)");
 
@@ -44,7 +45,7 @@ export default function CarImageGallery({ id, car, user }) {
             <ImageList
               className="border-3-black"
               gap={0}
-              sx={{ height: 550, background: '#363636' }}
+              sx={{ height: 550, background: "#363636" }}
               cols={1}
             >
               <CarImagesCarousel images={[...car.images, car.mainImage]} />
@@ -79,15 +80,20 @@ export default function CarImageGallery({ id, car, user }) {
               }
               onError={error403}
             />
-            <div className="start-pos">
-              <Button className="no-border no-bg" onClick={AddCarToFavorite}>
-                {newStatus ? (
-                  <StarIcon fontSize="large" className="yel-col-stars" />
-                ) : (
-                  <StarBorderIcon fontSize="large" className="yel-col-stars" />
-                )}
-              </Button>
-            </div>
+            {currentUser.role === 1 ? (
+              <div className="start-pos">
+                <Button className="no-border no-bg" onClick={AddCarToFavorite}>
+                  {newStatus ? (
+                    <StarIcon fontSize="large" className="yel-col-stars" />
+                  ) : (
+                    <StarBorderIcon
+                      fontSize="large"
+                      className="yel-col-stars"
+                    />
+                  )}
+                </Button>
+              </div>
+            ) : null}
           </div>
         </div>
         {matches770 ? (
