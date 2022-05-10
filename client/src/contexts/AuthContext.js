@@ -222,7 +222,7 @@ export default function AuthProvider({ children }) {
     } else {
       setCurrentUser(cookies.get("connectUser"));
     }
-    setSocket(io("http://193.106.55.112:3000"));
+    setSocket(io("http://localhost:3000"));
     return setLoading(false);
   }, []);
 
