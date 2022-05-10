@@ -166,13 +166,11 @@ const editPassword = async (request, response) => {
 const editUser = async (request, response) => {
   const userId = { _id: request.body._id };
   let updateUser = request.body;
-  console.log(updateUser);
   try {
     const editUser = await userSchema.findOneAndUpdate(userId, updateUser, {
       new: true,
     });
-    const token = getToken(editUser);
-    response.send({ token, editUser });
+    response.send(editUser);
   } catch (err) {
     console.log("filed");
     response.status(400).json("Something happened, please try again");
@@ -187,8 +185,7 @@ const editUserAndImage = async (request, response) => {
     const editUser = await userSchema.findOneAndUpdate(userId, updateUser, {
       new: true,
     });
-    const token = getToken(editUser);
-    response.send({ token, editUser });
+    response.send(editUser);
   } catch (err) {
     console.log("filed");
     response.status(400).json("Something happened, please try again");

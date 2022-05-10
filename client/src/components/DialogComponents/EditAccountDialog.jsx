@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import EditProfile from "../Pages/EditProfile";
 import { Button } from "react-bootstrap";
 
-export default function EditAccountDialog({ mobileNumber }) {
+export default function EditAccountDialog({ mobileNumber, setFlag, flag }) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -55,7 +55,12 @@ export default function EditAccountDialog({ mobileNumber }) {
             X
           </DialogTitle>
           <DialogContent>
-            <EditProfile setOpen={setOpen} mobileNumber={mobileNumber} />
+            <EditProfile
+              setOpen={setOpen}
+              mobileNumber={mobileNumber}
+              setFlag={setFlag}
+              flag={flag}
+            />
           </DialogContent>
         </div>
       </Dialog>

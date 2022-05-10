@@ -88,14 +88,9 @@ export default function AuthProvider({ children }) {
   async function editUserPropertiesWithoutImage(user) {
     return api
       .put(`/user/edit/${currentUser._id}`, user)
-      .then(function (response) {
-        cookies.set("auth-token", response.data.token);
-        cookies.remove("connectUser", response.data.editUser);
-        setCurrentUser(response.data.editUser);
-        cookies.set("connectUser", response.data.editUser);
-        return currentUser;
-      })
-      .catch((err) => {
+      .then((response) => {
+        return response.data;
+      }).catch((err) => {
         console.log(err);
         return err.response.data.message;
       });
@@ -113,14 +108,9 @@ export default function AuthProvider({ children }) {
           "Content-Type": "multipart/form-data",
         },
       })
-      .then(function (response) {
-        cookies.set("auth-token", response.data.token);
-        cookies.remove("connectUser", response.data.editUser);
-        setCurrentUser(response.data.editUser);
-        cookies.set("connectUser", response.data.editUser);
-        return currentUser;
-      })
-      .catch((err) => {
+      .then((response) => {
+        return response.data;
+      }).catch((err) => {
         console.log(err);
         return err.response.data.message;
       });

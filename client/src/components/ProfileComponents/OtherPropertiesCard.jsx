@@ -16,8 +16,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import ShowActivityDays from "../DialogComponents/ShowActivityDays";
 import { error403 } from "../images/projectImages";
 
-export default function OtherPropertiesCard({ currentUser }) {
-
+export default function OtherPropertiesCard({ currentUser, setFlag, flag }) {
   const { currentUser: myUser } = useAuth();
   const matches = useMediaQuery("(max-width:1010px)");
   const matches770 = useMediaQuery("(max-width:770px)");
@@ -94,7 +93,11 @@ export default function OtherPropertiesCard({ currentUser }) {
               <ChangePasswordDialog />
             </div>
             <div className="col-12 col-xl">
-              <EditAccountDialog mobileNumber={currentUser.phoneNumber} />
+              <EditAccountDialog
+                mobileNumber={currentUser.phoneNumber}
+                setFlag={setFlag}
+                flag={flag}
+              />
             </div>
           </div>
         ) : null}

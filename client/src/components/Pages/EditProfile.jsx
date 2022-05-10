@@ -16,8 +16,7 @@ import {
 } from "../authComponents/userFunctions";
 import { error403 } from "../images/projectImages";
 
-export default function EditProfile({ setOpen, mobileNumber }) {
-
+export default function EditProfile({ setOpen, mobileNumber, setFlag, flag }) {
   const { currentUser } = useAuth();
   const { editUserProperties, editUserPropertiesWithoutImage } = useAuth();
   const [values, carChange] = useForm();
@@ -43,25 +42,25 @@ export default function EditProfile({ setOpen, mobileNumber }) {
     user._id = currentUser._id;
     let mobileNumber;
     if (user.role === 1) {
-      mobileNumber = mobile.includes("+972") ? mobile : `+972${mobile}`
+      mobileNumber = mobile.includes("+972") ? mobile : `+972${mobile}`;
       values.phoneNumber = mobileNumber;
     } else {
       values.phoneNumber = mobile;
     }
     try {
-      if (profileImage != null){
+      if (profileImage != null) {
         const res = await editUserProperties(values);
         if (res._id === user._id) {
+          setFlag(!flag);
           setOpen(false);
-          window.location.reload();
         } else {
           setError(res);
         }
       } else {
         const results = await editUserPropertiesWithoutImage(values);
         if (results._id === user._id) {
+          setFlag(!flag);
           setOpen(false);
-          window.location.reload();
         } else {
           setError(results);
         }
@@ -71,10 +70,13 @@ export default function EditProfile({ setOpen, mobileNumber }) {
     }
     setLoading(false);
   }
-   
+
   if (loading) {
     return (
-      <div className="d-flex justify-content-center" style={{ minWidth : 350, minHeight: 350 }}>
+      <div
+        className="d-flex justify-content-center"
+        style={{ minWidth: 350, minHeight: 350 }}
+      >
         <Loading />
       </div>
     );

@@ -13,6 +13,7 @@ export default function MyProfile() {
   const { currentUser } = useAuth();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [flag, setFlag] = useState(false);
   const [alert, setAlert] = useState(null);
   const matches = useMediaQuery("(max-width:1000px)");
   const matches770 = useMediaQuery("(max-width:770px)");
@@ -39,7 +40,7 @@ export default function MyProfile() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [flag]);
 
   if (loading) {
     return <Loading />;
@@ -69,7 +70,7 @@ export default function MyProfile() {
               : "col-12 col-lg-5 col-xl-6 col-xxl-7 ml-25 mt-5 mb-1"
           }
         >
-          <OtherPropertiesCard currentUser={user} />
+          <OtherPropertiesCard currentUser={user} setFlag={setFlag} flag={flag} />
         </div>
       </div>
       <div className="d-flex justify-content-center mb-5">
