@@ -3,6 +3,7 @@ import './table.css'
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import ProfileBodyMobile from "./ProfileBodyMobile";
+import {convertDateFormat} from "./carFunctions";
 
 export default function CarProfileBody({car}) {
   const matches675 = useMediaQuery("(max-width:675px)");
@@ -89,15 +90,19 @@ export default function CarProfileBody({car}) {
               <tr>
                 <th>First Registration</th>
                 <td>
-                  {Date(car.firstRegistration)
+                  {/* {(car.firstRegistration)
                     .toString()
                     .substring(
                       0,
-                      Date(car.firstRegistration).toString().indexOf(":") - 2
+                     (car.firstRegistration).toString().indexOf(":") - 2
                     )
                     .substring(
-                      Date(car.firstRegistration).toString().indexOf(" ")
-                    )}
+                      (car.firstRegistration).toString().indexOf(" ")
+                    )} */}
+
+                  {`${convertDateFormat(car.firstRegistration)[2]}/${
+                    convertDateFormat(car.firstRegistration)[1]
+                  }/${convertDateFormat(car.firstRegistration)[0]}`}
                 </td>
               </tr>
               <tr>

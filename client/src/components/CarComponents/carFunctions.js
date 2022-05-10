@@ -17,6 +17,14 @@ export function sendWhatsAppToDealer(mobile, firstName) {
   );
 };
 
+
+export function convertDateFormat(registrationDate) {
+  const dateWithoutTime = registrationDate.substring(
+    0,
+    registrationDate.indexOf("T")
+  );
+  return dateWithoutTime.split("-");
+}
 export function CheckDisableStatus(values) {
   return !(
     values.company &&
