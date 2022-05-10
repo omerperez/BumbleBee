@@ -101,14 +101,12 @@ export default function AuthProvider({ children }) {
       });
   }
 
-  async function editUserProperties(user, userObj) {
-    setLoading(true);
+  async function editUserProperties(user) {
     const now = Date.now();
     const userData = new FormData();
-    var newProfileImage = userObj.image;
+    var newProfileImage = user.image;
     userData.append("image", newProfileImage[0], now + newProfileImage[0].name);
     userData.append("user", JSON.stringify(user));
-    console.log(user);
     return api
       .put(`/user/edit-with-image/${user._id}`, userData, {
         headers: {
@@ -120,7 +118,6 @@ export default function AuthProvider({ children }) {
         cookies.remove("connectUser", response.data.editUser);
         setCurrentUser(response.data.editUser);
         cookies.set("connectUser", response.data.editUser);
-        setLoading(false);
         return currentUser;
       })
       .catch((err) => {

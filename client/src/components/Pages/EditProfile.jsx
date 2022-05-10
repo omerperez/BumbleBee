@@ -41,14 +41,16 @@ export default function EditProfile({ setOpen, mobileNumber }) {
     setError("");
     setLoading(true);
     user._id = currentUser._id;
+    let mobileNumber;
     if (user.role === 1) {
-      values.phoneNumber = mobile.includes("+972") ? mobile : `+972${mobile}`;
+      mobileNumber = mobile.includes("+972") ? mobile : `+972${mobile}`
+      values.phoneNumber = mobileNumber;
     } else {
       values.phoneNumber = mobile;
     }
     try {
       if (profileImage != null){
-        const res = await editUserProperties(values, values);
+        const res = await editUserProperties(values);
         if (res._id === user._id) {
           setOpen(false);
           window.location.reload();
@@ -71,7 +73,11 @@ export default function EditProfile({ setOpen, mobileNumber }) {
   }
    
   if (loading) {
-    return <Loading />;
+    return (
+      <div className="d-flex justify-content-center" style={{ minWidth : 350, minHeight: 350 }}>
+        <Loading />
+      </div>
+    );
   }
 
   return (
@@ -167,10 +173,8 @@ export default function EditProfile({ setOpen, mobileNumber }) {
               <PhoneInput
                 defaultCountry="IL"
                 placeholder="Mobile"
-                value={values.phoneNumber}
-                onChange={(e) => {
-                  carChange(e);
-                }}
+                value={mobile ? mobile : mobileNumber}
+                onChange={setMobile}
               />
             </Form.Group>
           ) : (
