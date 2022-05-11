@@ -13,7 +13,7 @@ import { error403 } from "../images/projectImages";
 
 export default function EditCarForm({car ,saveChanges}) {
     
-    const {editCar } = useAuth();
+    const { editCar } = useAuth();
     const [colour, setColour] = useState(car.colour);
     const [price, setPrice] = useState(car.price);
     const [km, setKm] = useState(car.km);

@@ -178,7 +178,7 @@ export default function NewNavigation({socket, children }) {
               key={index}
               to={
                 item.path.includes("mycars")
-                  ? item.path + "/" + currentUser._id
+                  ? item.path 
                   : item.path
               }
               className="link-in-btn"

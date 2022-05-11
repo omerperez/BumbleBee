@@ -10,20 +10,20 @@ import Loading from "../Layout/Loading";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function CarProfilePage() {
-
+  
+  const { currentUser } = useAuth();
   const [car, setCar] = useState();
   const [loading, setLoading ] = useState(true);
   const [isEdit, setIsEdit] = useState(false);
-  const { currentUser } = useAuth();
   const [user, setUser] = useState();
   const matches675 = useMediaQuery("(max-width:675px)");
 
   const fetchData = () => {
-    
+    const userId = currentUser._id;
     const index = window.location.toString().lastIndexOf("/") + 1;
     const id = window.location.toString().substring(index);
     
-    const userApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`;
+    const userApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${userId}`;
     const carApi = `${process.env.REACT_APP_SERVER_API}/car/show/${id}`;
 
     const getUser = axios.get(userApi);
