@@ -1,10 +1,8 @@
 import React from "react";
 import Dialog from "@mui/material/Dialog";
-import CollectionsIcon from "@mui/icons-material/Collections";
-import { Button, Carousel } from "react-bootstrap";
+import { Carousel } from "react-bootstrap";
 import { error403, noAvailable } from "../images/projectImages";
 import ImageListItem from "@mui/material/ImageListItem";
-import CloseIcon from "@mui/icons-material/Close";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function CarImagesCarousel({ images }) {
