@@ -210,7 +210,7 @@ export default function AuthProvider({ children }) {
    if (cookies.get("auth-token") && cookies.get("connectUser")) {
       setCurrentUser(cookies.get("connectUser"));
     }
-    setSocket(io("http://0.0.0.0:3000"));
+    setSocket(io("http://localhost:3000"));
     setLoading(false);
   }, []);
 

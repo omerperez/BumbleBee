@@ -83,7 +83,7 @@ export default function NewNavigation({socket, children }) {
     if(!matches){
       setOpen(false)
     }
-    const index = window.location.toString().indexOf("t/");
+    const index = window.location.toString().indexOf("1/");
     const id = window.location.toString().substring(index);
     const temp = id.substring(id.indexOf("/") + 1);
     const name = (

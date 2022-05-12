@@ -5,7 +5,7 @@ const app = require("./server");
 
 const io = new Server({
   cors: {
-    origin: "http:// 0.0.0.0:3001",
+    origin: "http://localhost:3001",
   },
 });
 
