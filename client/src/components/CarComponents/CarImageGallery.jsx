@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import ImageList from "@mui/material/ImageList";
+import CarImagesCarousel from "../DialogComponents/CarImagesCarousel";
 import DealerCard from "./DealerCard";
 import { error403, image403 } from "../images/projectImages";
-import CarImagesCarousel from "../DialogComponents/CarImagesCarousel";
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from "@mui/icons-material/Star";
 import { Button } from "@mui/material";
@@ -12,19 +12,19 @@ import DealerPropertiesDialog from "../DialogComponents/DealerPropertiesDialog";
 import { minWidth } from "@mui/system";
 
 export default function CarImageGallery({ id, car, user }) {
-  const [dealer, setDealer] = useState(car.dealer);
+  const [dealer, setDealer] = useState(id);
   const [newStatus, setNewStatus] = useState(JSON.stringify(user.cars).indexOf(car._id) != -1 ? true : false);
   const { addCarToFavorite, currentUser } = useAuth();
   const matches770 = useMediaQuery("(max-width:770px)");
   const matches1070 = useMediaQuery("(max-width:1070px)");
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_SERVER_API}/user/my-user/${car.dealer}`)
+    fetch(`${process.env.REACT_APP_SERVER_API}/user/my-user/${id}`)
       .then((response) => response.json())
       .then((data) => {
         setDealer(data);
       });
-  }, [car.dealer]);
+  }, [id]);
 
   const AddCarToFavorite = async () => {
     const res = await addCarToFavorite(user._id, car._id);

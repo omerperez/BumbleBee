@@ -17,7 +17,6 @@ export default function AuthProvider({ children }) {
   const navigate = useNavigate();
 
   /**** User Functions ****/
-
   /* USER - POST */
   async function login(email, password) {
     const user = {
@@ -26,12 +25,8 @@ export default function AuthProvider({ children }) {
     };
     return api
       .post("/user/login", user)
-      .then(function (response) {
-        // cookies.remove("auth-token");
+      .then((response) => {
         cookies.set("auth-token", response.data.token);
-        if (cookies.get("connectUser")) {
-          cookies.remove("connectUser");
-        }
         cookies.set("connectUser", response.data.user);
         setCurrentUser(response.data.user);
         navigate("/homepage");
@@ -89,6 +84,9 @@ export default function AuthProvider({ children }) {
     return api
       .put(`/user/edit/${currentUser._id}`, user)
       .then((response) => {
+        cookies.remove("connectUser");
+        setCurrentUser(response.data);
+        cookies.set("connectUser", response.data);
         return response.data;
       }).catch((err) => {
         console.log(err);
@@ -109,6 +107,9 @@ export default function AuthProvider({ children }) {
         },
       })
       .then((response) => {
+        cookies.remove("connectUser");
+        setCurrentUser(response.data);
+        cookies.set("connectUser", response.data);
         return response.data;
       }).catch((err) => {
         console.log(err);
@@ -118,9 +119,9 @@ export default function AuthProvider({ children }) {
 
   /* USER - OTHERS */
   function logout() {
-    setCurrentUser(null);
     cookies.remove("auth-token");
     cookies.remove("connectUser");
+    setCurrentUser(null);
   }
 
   /**** Car Functions ****/
@@ -206,24 +207,11 @@ export default function AuthProvider({ children }) {
   }
 
   useEffect(() => {
-    if (
-      JSON.stringify(cookies.get("connectUser")) !==
-        JSON.stringify(currentUser) &&
-      currentUser != null
-    ) {
-      fetch(
-        `${process.env.REACT_APP_SERVER_API}/user/my-user/` + currentUser._id
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          setCurrentUser(data);
-          cookies.set("connectUser", currentUser);
-        });
-    } else {
+   if (cookies.get("auth-token") && cookies.get("connectUser")) {
       setCurrentUser(cookies.get("connectUser"));
     }
     setSocket(io("http://localhost:3000"));
-    return setLoading(false);
+    setLoading(false);
   }, []);
 
   const value = {

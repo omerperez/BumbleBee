@@ -55,13 +55,19 @@ export default function CarCard({ _id, image, company, model, price, currentPage
                 src={image}
                 className="cur-pointer br-10"
                 width="100%"
+                height={170}
                 onError={error403}
               />
               <div className="sale-pos">
                 {isSale ? (
                   <img src="/images/carSale.png" width={70} height={60} />
                 ) : isOwner ? (
-                  <Chip icon={<CarRentalIcon />} label="Your vehicle" color="success" className="opc-8 m-1"/>
+                  <Chip
+                    icon={<CarRentalIcon />}
+                    label="Your vehicle"
+                    color="success"
+                    className="opc-8 m-1"
+                  />
                 ) : null}
               </div>
             </div>

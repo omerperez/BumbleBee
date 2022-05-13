@@ -3,16 +3,32 @@ const userSchema = require("../Models/user");
 const mongoose = require("mongoose");
 
 /* GET */
-const getAllCars = (req, res) => {
-  carSchema.find().then((results) => {
-    try {
-      res.json(results);
-      console.log("OK");
-    } catch {
-      console.log("Error");
-    }
-  });
-};
+// const getAllCars = (req, res) => {
+//   carSchema.find().then((results) => {
+//     try {
+//       res.json(results);
+//       console.log("OK");
+//     } catch {
+//       console.log("Error");
+//     }
+//   });
+// };
+
+const getAllCars = async (req, res) => {
+  // await carSchema.deleteOne({ dealer: "6269baffce8ed2c913d26232" });
+  const cars = await carSchema.find();
+  try {
+    // for (let c of cars) {
+    //   c._id = new mongoose.Types.ObjectId();
+    //   c.dealer = "6269a796ce8ed2c913d2616c";
+    //   c.dealer = await carSchema.create(omer);
+    // }
+    res.json(cars);
+  } catch (err){
+    console.log(err);
+  }
+  
+}
 
 const getCarById = async (req, res) => {
   const carId = req.params.id;
@@ -156,11 +172,11 @@ const a = new carSchema({
   _id: new mongoose.Types.ObjectId(),
   companyEnglish: "BMW",
   companyHebrew: "ב מ וו",
-  model: "M4",
+  model: "M4 competition",
   year: 2020,
   category: "Sport",
   numberOfVehicleOwners: "01",
-  engine: "2979",
+  engine: "3.0 L",
   km: 2000,
   price: 100000,
   netPrice: 70000,
@@ -183,18 +199,18 @@ const a = new carSchema({
   saleStatus: false,
   isSell: false,
   clicksCount: 0,
-  dealer: "6269a796ce8ed2c913d2616c",
+  dealer: "6269ba7dce8ed2c913d26226",
 });
 
 const b = new carSchema({
   _id: new mongoose.Types.ObjectId(),
   companyEnglish: "BMW",
   companyHebrew: "ב מ וו",
-  model: "M240I",
+  model: "M2CS",
   year: 2020,
   category: "Sport",
   numberOfVehicleOwners: "01",
-  engine: "2998",
+  engine: "3.0 L",
   km: 10000,
   price: 90000,
   netPrice: 63000,
@@ -217,7 +233,7 @@ const b = new carSchema({
   saleStatus: false,
   isSell: false,
   clicksCount: 0,
-  dealer: "6269b983ce8ed2c913d261ea",
+  dealer: "6269ba7dce8ed2c913d26226",
 });
 
   const c = new carSchema({
@@ -228,7 +244,7 @@ const b = new carSchema({
     year: 2020,
     category: "Sport",
     numberOfVehicleOwners: "00",
-    engine: "1984",
+    engine: "2.0 L",
     km: 8000,
     price: 110000,
     netPrice: 77000,
@@ -251,18 +267,18 @@ const b = new carSchema({
     saleStatus: false,
     isSell: false,
     clicksCount: 0,
-    dealer: "6269a796ce8ed2c913d2616c",
+    dealer: "6269ba7dce8ed2c913d26226",
   });
 
   const d = new carSchema({
     _id: new mongoose.Types.ObjectId(),
     companyEnglish: "Audi",
     companyHebrew: "אאודי",
-    model: "SQ7 ZZZ",
+    model: "SQ7",
     year: 2022,
     category: "Crossover",
     numberOfVehicleOwners: "3996",
-    engine: "1984",
+    engine: "4.0 L",
     km: 300,
     price: 180000,
     netPrice: 126000,
@@ -285,18 +301,18 @@ const b = new carSchema({
     saleStatus: false,
     isSell: false,
     clicksCount: 0,
-    dealer: "6269baffce8ed2c913d26232",
+    dealer: "6269ba7dce8ed2c913d26226",
   });
 
   const e = new carSchema({
     _id: new mongoose.Types.ObjectId(),
     companyEnglish: "Porsche",
     companyHebrew: "פורשה",
-    model: "CARRERA     992120",
+    model: "CARRERA 992",
     year: 2020,
     category: "Convertible",
     numberOfVehicleOwners: "3996",
-    engine: "3000",
+    engine: "3.0 L",
     km: 20000,
     price: 24000,
     netPrice: 16800,
@@ -319,85 +335,85 @@ const b = new carSchema({
     saleStatus: false,
     isSell: false,
     clicksCount: 0,
-    dealer: "6269b983ce8ed2c913d261ea",
+    dealer: "6269ba7dce8ed2c913d26226",
   });
 
-  const f = new carSchema({
-    _id: new mongoose.Types.ObjectId(),
-    companyEnglish: "BMW",
-    companyHebrew: "ב מ וו",
-    model: "AEOC",
-    year: 2022,
-    category: "Station",
-    numberOfVehicleOwners: "01",
-    engine: "4400",
-    km: 10000,
-    price: 36000,
-    netPrice: 29000,
-    images: [
-      "1650914479008dc0cdd81-9bee-4b6d-88a0-458aacd3f046.jpg",
-      "1650914623534dee1e7f6-2c67-4e4a-aaf2-f7685bc188c8.jpg",
-      "1650914768267fa0a65a8-71e2-4a85-8ed7-9282c79b9518.jpg",
-    ],
-    mainImage: "16509140629820cfa5188-cfe7-456d-9011-aa87344286bc.jpg",
-    fuelConsumption: "בנזין",
-    numberOfSeats: 5,
-    doorCount: 5,
-    gearbox: "Right Angle",
-    emissionClass: "Euro6",
-    firstRegistration: Date("2022-11-20T15:17:25.000+00:00"),
-    colour: "Black",
-    interiorDesign: "Leather",
-    dateOfCreate: Date.now(),
-    saleStatus: false,
-    isSell: false,
-    clicksCount: 0,
-    dealer: "6269b9f8ce8ed2c913d2621a",
-  });
+  // const f = new carSchema({
+  //   _id: new mongoose.Types.ObjectId(),
+  //   companyEnglish: "BMW",
+  //   companyHebrew: "ב מ וו",
+  //   model: "AEOC",
+  //   year: 2022,
+  //   category: "Station",
+  //   numberOfVehicleOwners: "01",
+  //   engine: "4400",
+  //   km: 10000,
+  //   price: 36000,
+  //   netPrice: 29000,
+  //   images: [
+  //     "1650914479008dc0cdd81-9bee-4b6d-88a0-458aacd3f046.jpg",
+  //     "1650914623534dee1e7f6-2c67-4e4a-aaf2-f7685bc188c8.jpg",
+  //     "1650914768267fa0a65a8-71e2-4a85-8ed7-9282c79b9518.jpg",
+  //   ],
+  //   mainImage: "16509140629820cfa5188-cfe7-456d-9011-aa87344286bc.jpg",
+  //   fuelConsumption: "בנזין",
+  //   numberOfSeats: 5,
+  //   doorCount: 5,
+  //   gearbox: "Right Angle",
+  //   emissionClass: "Euro6",
+  //   firstRegistration: Date("2022-11-20T15:17:25.000+00:00"),
+  //   colour: "Black",
+  //   interiorDesign: "Leather",
+  //   dateOfCreate: Date.now(),
+  //   saleStatus: false,
+  //   isSell: false,
+  //   clicksCount: 0,
+  //   dealer: "6269b9f8ce8ed2c913d2621a",
+  // });
 
-  const g = new carSchema({
-    _id: new mongoose.Types.ObjectId(),
-    companyEnglish: "Audi  ",
-    companyHebrew: "אאודי",
-    model: "4MNRV2",
-    year: 2021,
-    category: "Convertible",
-    numberOfVehicleOwners: "00",
-    engine: "3996",
-    km: 8000,
-    price: 40000,
-    netPrice: 26000,
-    images: [
-      "16509145565128c8e2619-1ed8-4556-ba6c-cf5157d2978b.jpg",
-      "165091452790383dfe925-0708-4a36-8af8-d593fcd8a51f.jpg",
-      "165091427874993fd32c2-b84b-46e0-a429-f1b657d3d8d7.jpg",
-      "165091477418767741e91-93fe-478d-b933-ce7f2216f80a.jpg",
-    ],
-    mainImage: "16509139407260c652844-a384-4914-a30a-74ad94d7c105.jpg",
-    fuelConsumption: "בנזין",
-    numberOfSeats: 4,
-    doorCount: 2,
-    gearbox: "Right Angle",
-    emissionClass: "Euro6",
-    firstRegistration: Date("2021-07-20T15:17:25.000+00:00"),
-    colour: "Black",
-    interiorDesign: "Leather",
-    dateOfCreate: Date.now(),
-    saleStatus: false,
-    isSell: false,
-    clicksCount: 0,
-    dealer: "6269b9f8ce8ed2c913d2621a",
-  });
+  // const g = new carSchema({
+  //   _id: new mongoose.Types.ObjectId(),
+  //   companyEnglish: "Audi  ",
+  //   companyHebrew: "אאודי",
+  //   model: "4MNRV2",
+  //   year: 2021,
+  //   category: "Convertible",
+  //   numberOfVehicleOwners: "00",
+  //   engine: "3996",
+  //   km: 8000,
+  //   price: 40000,
+  //   netPrice: 26000,
+  //   images: [
+  //     "16509145565128c8e2619-1ed8-4556-ba6c-cf5157d2978b.jpg",
+  //     "165091452790383dfe925-0708-4a36-8af8-d593fcd8a51f.jpg",
+  //     "165091427874993fd32c2-b84b-46e0-a429-f1b657d3d8d7.jpg",
+  //     "165091477418767741e91-93fe-478d-b933-ce7f2216f80a.jpg",
+  //   ],
+  //   mainImage: "16509139407260c652844-a384-4914-a30a-74ad94d7c105.jpg",
+  //   fuelConsumption: "בנזין",
+  //   numberOfSeats: 4,
+  //   doorCount: 2,
+  //   gearbox: "Right Angle",
+  //   emissionClass: "Euro6",
+  //   firstRegistration: Date("2021-07-20T15:17:25.000+00:00"),
+  //   colour: "Black",
+  //   interiorDesign: "Leather",
+  //   dateOfCreate: Date.now(),
+  //   saleStatus: false,
+  //   isSell: false,
+  //   clicksCount: 0,
+  //   dealer: "6269b9f8ce8ed2c913d2621a",
+  // });
 
   const h = new carSchema({
     _id: new mongoose.Types.ObjectId(),
     companyEnglish: "Audi",
     companyHebrew: "אאודי",
-    model: "FYTC9Y",
+    model: "RSQ3",
     year: 2021,
     category: "Crossover",
     numberOfVehicleOwners: "00",
-    engine: "4395",
+    engine: "2.5 L",
     km: 5000,
     price: 50000,
     netPrice: 38000,
@@ -427,11 +443,11 @@ const b = new carSchema({
     _id: new mongoose.Types.ObjectId(),
     companyEnglish: "Audi",
     companyHebrew: "אאודי",
-    model: "FYBB2Y",
+    model: "RS3",
     year: 2021,
     category: "Hatchback",
     numberOfVehicleOwners: "00",
-    engine: "1984",
+    engine: "2.5 L",
     km: 10000,
     price: 45000,
     netPrice: 36000,
@@ -454,18 +470,18 @@ const b = new carSchema({
     saleStatus: false,
     isSell: false,
     clicksCount: 0,
-    dealer: "6269a796ce8ed2c913d2616c",
+    dealer: "6269ba7dce8ed2c913d26226",
   });
 
   var p = new carSchema({
     _id: new mongoose.Types.ObjectId(),
     companyEnglish: "Mercedes Benz",
     companyHebrew: "מרצדס",
-    model: "AMG GT53 290.661",
+    model: "AMG GT63",
     year: 2022,
     category: "Sedan",
     numberOfVehicleOwners: "00",
-    engine: "3000",
+    engine: "4.0 L",
     km: 0,
     price: 160000,
     netPrice: 147000,
@@ -488,18 +504,18 @@ const b = new carSchema({
     saleStatus: false,
     isSell: false,
     clicksCount: 0,
-    dealer: "6269a796ce8ed2c913d2616c",
+    dealer: "6269ba7dce8ed2c913d26226",
   });
 
   var pp = new carSchema({
     _id: new mongoose.Types.ObjectId(),
-    companyEnglish: "honda",
+    companyEnglish: "Honda",
     companyHebrew: "הונדה",
-    model: "CIVIC",
+    model: "CIVIC Type R",
     year: 2022,
     category: "Hatchback",
     numberOfVehicleOwners: "00",
-    engine: "1500",
+    engine: "2.0 L",
     km: 9000,
     price: 42000,
     netPrice: 36000,
@@ -522,44 +538,44 @@ const b = new carSchema({
     saleStatus: false,
     isSell: false,
     clicksCount: 0,
-    dealer: "6269a796ce8ed2c913d2616c",
+    dealer: "6269ba7dce8ed2c913d26226",
   });
 
-  var ppp = new carSchema({
-    _id: new mongoose.Types.ObjectId(),
-    companyEnglish: "Mercedes Benz",
-    companyHebrew: "מרצדס",
-    model: "E300DE",
-    year: 2022,
-    category: "Sedan",
-    numberOfVehicleOwners: "00",
-    engine: "1950",
-    km: 2000,
-    price: 65000,
-    netPrice: 53000,
-    images: [
-      "WhatsApp Image 2022-05-07 at 7.40.06 PM (2).jpeg	",
-      "WhatsApp Image 2022-05-07 at 7.40.06 PM (3).jpeg",
-      "WhatsApp Image 2022-05-07 at 7.40.06 PM (4).jpeg",
-      "WhatsApp Image 2022-05-07 at 7.40.06 PM.jpeg",
-    ],
-    mainImage: "WhatsApp Image 2022-05-07 at 7.40.06 PM (1).jpeg",
-    fuelConsumption: "בנזין",
-    numberOfSeats: 5,
-    doorCount: 4,
-    gearbox: "Parallel",
-    emissionClass: "Euro6",
-    firstRegistration: Date("2022-03-10T15:17:25.000+00:00"),
-    colour: "Black",
-    interiorDesign: "Alcanthara",
-    dateOfCreate: Date.now(),
-    saleStatus: false,
-    isSell: false,
-    clicksCount: 0,
-    dealer: "6269a796ce8ed2c913d2616c",
-  });
+  // var ppp = new carSchema({
+  //   _id: new mongoose.Types.ObjectId(),
+  //   companyEnglish: "Mercedes Benz",
+  //   companyHebrew: "מרצדס",
+  //   model: "E300DE",
+  //   year: 2022,
+  //   category: "Sedan",
+  //   numberOfVehicleOwners: "00",
+  //   engine: "1950",
+  //   km: 2000,
+  //   price: 65000,
+  //   netPrice: 53000,
+  //   images: [
+  //     "WhatsApp Image 2022-05-07 at 7.40.06 PM (2).jpeg	",
+  //     "WhatsApp Image 2022-05-07 at 7.40.06 PM (3).jpeg",
+  //     "WhatsApp Image 2022-05-07 at 7.40.06 PM (4).jpeg",
+  //     "WhatsApp Image 2022-05-07 at 7.40.06 PM.jpeg",
+  //   ],
+  //   mainImage: "WhatsApp Image 2022-05-07 at 7.40.06 PM (1).jpeg",
+  //   fuelConsumption: "בנזין",
+  //   numberOfSeats: 5,
+  //   doorCount: 4,
+  //   gearbox: "Parallel",
+  //   emissionClass: "Euro6",
+  //   firstRegistration: Date("2022-03-10T15:17:25.000+00:00"),
+  //   colour: "Black",
+  //   interiorDesign: "Alcanthara",
+  //   dateOfCreate: Date.now(),
+  //   saleStatus: false,
+  //   isSell: false,
+  //   clicksCount: 0,
+  //   dealer: "6269a796ce8ed2c913d2616c",
+  // });
 
-return (cars = [p, pp, ppp]);
+return (cars = [a, b, c, d, e, h, i, p, pp]);
 }
 const script = async () => {
   return omer(getCars());

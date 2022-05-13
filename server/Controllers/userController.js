@@ -37,10 +37,11 @@ const getAllUsers = (req, res) => {
 
 const script = async () => {
   const user = await userSchema.findById("6269baffce8ed2c913d26232");
-  const users = await userSchema.find({role: 2});
+  const users = await userSchema.find({role: 1});
   for(const u of users){
     // user._id = new mongoose.Types.ObjectId();
-    u.activityDaysTime = user.activityDaysTime;
+    u.isSendReq = false;
+    // user.activityDaysTime;
     await u.save();
   }
   return null;

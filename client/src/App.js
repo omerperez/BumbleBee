@@ -52,7 +52,7 @@ function App() {
             }
           />
           <Route
-            path="mycars/:id"
+            path="/mycars"
             element={
               <>
                 <PrivateRoute>
