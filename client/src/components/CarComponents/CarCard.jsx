@@ -36,6 +36,7 @@ export default function CarCard({ _id, image, company, model, price, currentPage
               src={image}
               className="cur-pointer br-10"
               width="100%"
+              height={170}
               onError={error403}
             />
             <div className="start-pos">
