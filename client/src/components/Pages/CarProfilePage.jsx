@@ -11,7 +11,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function CarProfilePage() {
   
-  const { currentUser } = useAuth();
+  const { currentUser, currency } = useAuth();
   const [car, setCar] = useState();
   const [loading, setLoading ] = useState(true);
   const [isEdit, setIsEdit] = useState(false);
@@ -43,7 +43,7 @@ export default function CarProfilePage() {
 
   useEffect(() => {
     fetchData();
-  }, [isEdit]);
+  }, [isEdit, currency]);
 
   if (loading) {
     return <Loading />;

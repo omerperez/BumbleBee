@@ -12,6 +12,8 @@ import AlertTitle from "@mui/material/AlertTitle";
 import Alert from "@mui/material/Alert";
 import { checkCarsFields, CheckDisableStatus } from "./carFunctions";
 import SaveIcon from "@mui/icons-material/Save";
+import EuroIcon from "@mui/icons-material/Euro";
+import ChangeCurrency from "../Layout/ChangeCurrency"
 import {
   uploadMultipleSucces,
   uploadMultipleEmpty,
@@ -20,6 +22,7 @@ import {
   error403,
 } from "../images/projectImages";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { Carousel } from "react-bootstrap";
 
 export default function CarForm() {
   
@@ -35,18 +38,20 @@ export default function CarForm() {
   const [loading, setLoading] = useState(false);
   const [carMain, setCarMain] = useState(null);
   const matches = useMediaQuery("(max-width:800px)");
+  const [imageFiles, setImageFiles] = useState([]);
+  const [images, setImages] = useState([]);
+  const [usdToeur, setUsdToeur] = useState(true);
+  const [changeToEUR, setChangeToEUR] = useState(true);
 
   useEffect(() => {
-     fetch(process.env.REACT_APP_GOVIL_CARS_API + company.hebrew)
+
+    fetch(process.env.REACT_APP_GOVIL_CARS_API + company.hebrew)
        .then((response) => response.json())
        .then((data) =>
          setDataFromApi(
            data.result.records.filter((car) => car.shnat_yitzur >= 2020)
          )
-       );
-
-       console.log(dataFromApi);
-       
+       );       
        const where = encodeURIComponent(
          JSON.stringify({
            Make: company.english ? company.english.charAt(0).toUpperCase() + company.english.slice(1) : '',
@@ -66,19 +71,32 @@ export default function CarForm() {
         }
       ).then((response) => response.json())
         .then((data) => {
-          console.log(data)
           setDataFromSecApi(data.results);
         });;
-
-    //  fetch(process.env.REACT_APP_CARS_ENGLISH_PROPERTIES + company.english, {
-    //    method: "GET",
-    //    headers: headersEnglisCarsApi,
-    //  })
-    //    .then((response) => response.json())
-    //    .then((data) => {
-    //      setDataFromSecApi(data.filter((car) => car.year >= 2020));
-    //    });
    }, [company]);
+
+   useEffect(() => {
+     var myHeaders = new Headers();
+     myHeaders.append("apikey", "dFJZcKt9PZWMJjAoHBHst6W1xgr381ZJ");
+
+     const convertOption = usdToeur
+       ? null
+       : "https://api.apilayer.com/exchangerates_data/convert?to=USD&from=EUR&amount=1";
+
+     var requestOptions = {
+       method: "GET",
+       redirect: "follow",
+       headers: myHeaders,
+     };
+     if (convertOption !== null){
+       fetch(convertOption, requestOptions)
+         .then((response) => response.text())
+         .then((result) => setChangeToEUR(JSON.parse(result).result))
+         .catch((error) => console.log("error", error));
+     } else {
+       setChangeToEUR(1)
+     }
+   }, [usdToeur]);
 
    const userSelectCompany = (e) => {
     setCompany(e.target.value); 
@@ -104,6 +122,7 @@ export default function CarForm() {
            );
            values.firstRegistrationDate = changeDateFormat;
            values.netPrice = values.price * 0.7;
+           values.price = values.price * changeToEUR;
            setLoading(true);
            const status = await createNewCar(values);
            if (status !== "Success") {
@@ -125,9 +144,54 @@ export default function CarForm() {
     };
     reader.readAsDataURL(e.target.files[0]);
   };
-  console.log("Hey!");
+  const imageTypeRegex = /image\/(png|jpg|jpeg)/gm;
 
-  console.log(dataFromSecApi);
+  const changeHandler = (e) => {
+    const { files } = e.target;
+    const validImageFiles = [];
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      if (file.type.match(imageTypeRegex)) {
+        validImageFiles.push(file);
+      }
+    }
+    if (validImageFiles.length) {
+      setImageFiles(validImageFiles);
+      return;
+    }
+    setError("Selected images are not of valid type!");
+  };
+  
+  useEffect(() => {
+    const images = [],
+      fileReaders = [];
+    let isCancel = false;
+    if (imageFiles.length) {
+      imageFiles.forEach((file) => {
+        const fileReader = new FileReader();
+        fileReaders.push(fileReader);
+        fileReader.onload = (e) => {
+          const { result } = e.target;
+          if (result) {
+            images.push(result);
+          }
+          if (images.length === imageFiles.length && !isCancel) {
+            setImages(images);
+          }
+        };
+        fileReader.readAsDataURL(file);
+      });
+    }
+    return () => {
+      isCancel = true;
+      fileReaders.forEach((fileReader) => {
+        if (fileReader.readyState === 1) {
+          fileReader.abort();
+        }
+      });
+    };
+  }, [imageFiles]);
+
   return (
     <div>
       {error ? (
@@ -194,19 +258,6 @@ export default function CarForm() {
                   </MenuItem>
                 );
               })}
-              {/* {Array.from(
-                new Set(
-                  dataFromSecApi
-                    .filter((car) => car.Model === model)
-                    .map((obj) => obj.Year)
-                )
-              ).map((shnat_yitzur, key) => {
-                return (
-                  <MenuItem key={shnat_yitzur.id} value={shnat_yitzur}>
-                    {shnat_yitzur}
-                  </MenuItem>
-                );
-              })} */}
             </Select>
           </FormControl>
         </div>
@@ -247,16 +298,6 @@ export default function CarForm() {
                   </MenuItem>
                 );
               })}
-
-              {/* {Array.from(
-                new Set(dataFromApi.map((obj) => obj.nefach_manoa))
-              ).map((nefach_manoa, key) => {
-                return (
-                  <MenuItem key={nefach_manoa.id} value={nefach_manoa}>
-                    {nefach_manoa}
-                  </MenuItem>
-                );
-              })} */}
             </Select>
           </FormControl>
         </div>
@@ -333,13 +374,7 @@ export default function CarForm() {
               required
             >
               {Array.from(
-                new Set(
-                  dataFromApi
-                    // .filter(
-                    //   (car) => car.nefach_manoa === values.engine
-                    // )
-                    .map((obj) => obj.sug_delek_nm)
-                )
+                new Set(dataFromApi.map((obj) => obj.sug_delek_nm))
               ).map((sug_delek_nm, key) => {
                 return (
                   <MenuItem key={sug_delek_nm.id} value={sug_delek_nm}>
@@ -506,43 +541,42 @@ export default function CarForm() {
             </Select>
           </FormControl>
         </div>
-        <div className="col-12 col-sm-4">
-          <FormControl fullWidth className="mt-3">
-            <TextField
-              disabled={CheckDisableStatus(values)}
-              label="Price $"
-              name="price"
-              type="number"
-              value={values.price && values.price > -1 ? values.price : ""}
-              onChange={(e) => {
-                carChange(e);
-                if (e.target.value < 0) {
-                  setError(
-                    error.includes("Please Enter Positive Number ")
-                      ? error
-                      : "Please Enter Positive Number " + error
-                  );
-                } else {
-                  setError("");
-                }
-              }}
-            />
-          </FormControl>
+        <div className="col-12 col-sm-4 row mt-3">
+          <div className="col-9">
+            <FormControl fullWidth>
+              <TextField
+                disabled={CheckDisableStatus(values)}
+                label="Price"
+                name="price"
+                type="number"
+                value={values.price && values.price > -1 ? values.price : ""}
+                onChange={(e) => {
+                  carChange(e);
+                  if (e.target.value < 0) {
+                    setError(
+                      error.includes("Please Enter Positive Number ")
+                        ? error
+                        : "Please Enter Positive Number " + error
+                    );
+                  } else {
+                    setError("");
+                  }
+                }}
+              />
+            </FormControl>{" "}
+          </div>
+          <div className="col-3 d-flex">
+            <ChangeCurrency flag={usdToeur} setFlag={setUsdToeur} />
+          </div>
         </div>
-        <div className="col-12 col-sm-4">
-          <Alert severity="info" className="mt-3">
-            <AlertTitle>
-              Net Price - {values.price ? values.price * 0.7 + " " : " "}$
-            </AlertTitle>
-          </Alert>
-        </div>
+        <div className="col-12 col-sm-4"></div>
         <div className="d-flex mt-4">
           <label htmlFor={"main"}>
             <img
               alt="main_image"
               className="cur-pointer br-15"
-              width={values.main ? 400 : 200}
-              height={values.main ? 300 : null}
+              width={values.main ? 300 : 300}
+              height={values.main ? 200 : 200}
               src={values.main ? carMain : uploadMainEmpty}
               onError={error403}
             />
@@ -559,18 +593,46 @@ export default function CarForm() {
               ImageHandler(e);
             }}
           />
-          <label htmlFor={"image"}>
-            <img
-              alt="other_images"
-              className="cur-pointer ml-25"
-              width={200}
-              src={
-                values.image && values.image.length
-                  ? uploadMultipleSucces
-                  : uploadMultipleEmpty
-              }
-              onError={error403}
-            />
+          {images.length > 0 ? (
+            <Carousel fade interval={null} className="mr-2">
+              {images.map((image, key) => {
+                return (
+                  <Carousel.Item>
+                    <img
+                      className="cover-back br-15"
+                      src={image}
+                      width={300}
+                      height={200}
+                      alt={"Car image"}
+                      onError={error403}
+                    />
+                  </Carousel.Item>
+                );
+              })}
+            </Carousel>
+          ) : null}
+          <label
+            htmlFor={"image"}
+            style={images.length > 0 ? { maxHeight: 20, width: 60 } : null}
+          >
+            {images.length > 0 ? (
+              <div className="ml-2 text-center cur-pointer p-5 br-10 border-1-black app-background color-white">
+                Edit
+              </div>
+            ) : (
+              <img
+                alt="other_images"
+                className="cur-pointer ml-25"
+                width={300}
+                height={200}
+                src={
+                  values.image && values.image.length
+                    ? uploadMultipleSucces
+                    : uploadMultipleEmpty
+                }
+                onError={error403}
+              />
+            )}
           </label>
           <input
             id="image"
@@ -580,7 +642,10 @@ export default function CarForm() {
             multiple
             aria-required="true"
             className="display-none"
-            onChange={(e) => carChange(e)}
+            onChange={(e) => {
+              carChange(e);
+              changeHandler(e);
+            }}
           />
           {matches ? <br /> : null}
           <div className={matches ? "m-auto" : "jc-end"}>

@@ -17,6 +17,9 @@ export function sendWhatsAppToDealer(mobile, firstName) {
   );
 };
 
+export function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 export function convertDateFormat(registrationDate) {
   const dateWithoutTime = registrationDate.substring(

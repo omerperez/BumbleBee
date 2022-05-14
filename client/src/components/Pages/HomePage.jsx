@@ -5,31 +5,33 @@ import PageTitle from "../Layout/PageTitle";
 import Loading from "../Layout/Loading";
 import { useAuth } from "../../contexts/AuthContext";
 import axios from "axios";
+import calcNetPrice from "../../utils/calcNetPrice";
 
 export default function HomePage() {
   
-  const { currentUser } = useAuth();
+  const { currentUser, currencyValue } = useAuth();
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
   const [cars, setCars] = useState();
+  
+  const fetchData = () => {
+    setLoading(true);
+    const currentUserApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`;
+    const carsApi = `${process.env.REACT_APP_SERVER_API}/car`;
 
-   const fetchData = () => {
-     const currentUserApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`;
-     const carsApi = `${process.env.REACT_APP_SERVER_API}/car`;
+    const getUser = axios.get(currentUserApi);
+    const getCars = axios.get(carsApi);
 
-     const getUser = axios.get(currentUserApi);
-     const getCars = axios.get(carsApi);
-
-     axios.all([getUser, getCars]).then(
-       axios.spread((...allData) => {
-         const userData = allData[0].data;
-         const carsData = allData[1].data;
-         setUser(userData);
-         setCars(carsData);
-         setLoading(false);
-       })
-     );
-   };
+    axios.all([getUser, getCars]).then(
+      axios.spread((...allData) => {
+        const userData = allData[0].data;
+        const carsData = allData[1].data;
+        setUser(userData);
+        setCars(carsData);
+        setLoading(false);
+      })
+    );
+  };
 
    useEffect(() => {
      fetchData();
@@ -67,7 +69,13 @@ export default function HomePage() {
                 used={car.numberOfVehicleOwners}
                 engine={car.engine}
                 km={car.km}
-                price={car.price}
+                price={Math.round((car.price * currencyValue * 100) / 100)}
+                netPrice={Math.round(
+                  (calcNetPrice(car.fuelConsumption, car.price) *
+                    currencyValue *
+                    100) /
+                    100
+                )}
                 user={user}
                 status={
                   JSON.stringify(user.cars).indexOf(car._id) !== -1

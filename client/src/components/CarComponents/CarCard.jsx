@@ -10,10 +10,11 @@ import { Button } from "@mui/material";
 import { useAuth } from "../../contexts/AuthContext";
 import Chip from "@mui/material/Chip";
 import CarRentalIcon from "@mui/icons-material/CarRental";
+import {numberWithCommas} from "./carFunctions";
 
-export default function CarCard({ _id, image, company, model, price, currentPage, user, isSale, isOwner }) {
+export default function CarCard({ _id, image, company, model, price, netPrice, currentPage, user, isSale, isOwner }) {
 
-  const { addCarToFavorite } = useAuth();
+  const { addCarToFavorite, currency } = useAuth();
   const [newStatus, setNewStatus] = useState(
     currentPage === "myFavorite" ? true : JSON.stringify(user.cars).indexOf(_id) !== -1 ? true : false
   );
@@ -88,7 +89,17 @@ export default function CarCard({ _id, image, company, model, price, currentPage
               : company + " " + model}
           </b>
           <br />
-          {price + "$"}
+          {currency == 1
+            ? "$" + numberWithCommas(price)
+            : currency == 2
+            ? numberWithCommas(price) + "€"
+            : numberWithCommas(price) + "₪"}
+          <br />
+          {currency == 1
+            ? "$" + numberWithCommas(netPrice)
+            : currency == 2
+            ? numberWithCommas(netPrice) + "€"
+            : numberWithCommas(netPrice) + "₪"}
           <div className="text-center">
             <Link
               to={`/car-profile/${_id}`}

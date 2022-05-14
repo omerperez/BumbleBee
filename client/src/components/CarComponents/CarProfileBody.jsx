@@ -3,9 +3,12 @@ import './table.css'
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import ProfileBodyMobile from "./ProfileBodyMobile";
-import {convertDateFormat} from "./carFunctions";
+import { convertDateFormat, numberWithCommas } from "./carFunctions";
+import { useAuth } from "../../contexts/AuthContext";
+import calcNetPrice from "../../utils/calcNetPrice";
 
 export default function CarProfileBody({car}) {
+  const { currency, currencyValue } = useAuth();
   const matches675 = useMediaQuery("(max-width:675px)");
 
   return matches675 ? (
@@ -54,11 +57,30 @@ export default function CarProfileBody({car}) {
                 <td>{car.numberOfVehicleOwners}</td>
               </tr>
               <tr>
-                <th>Price (Net)</th>
+                <th>Price (Total)</th>
                 <td>
-                  {`${car.price}$ (${
+                  {currency == 1
+                    ? "$" + numberWithCommas(car.price)
+                    : currency == 2
+                    ? numberWithCommas(Math.round(car.price * currencyValue)) +
+                      "€"
+                    : numberWithCommas(Math.round(car.price * currencyValue)) +
+                      "₪"}
+
+                  {currency == 1 ? " ($" : " ("}
+                  {numberWithCommas(
+                    Math.round(
+                      ((calcNetPrice(car.fuelConsumption, car.price) +
+                        car.price) *
+                        currencyValue *
+                        100) /
+                        100
+                    )
+                  )}
+                  {currency == 2 ? "€)" : currency == 3 ? "₪)" : ")"}
+                  {/* {`${car.price}$ (${
                     car.netPrice ?? (car.price * 0.7).toString().substring(0, 8)
-                  }$)`}
+                  }$)`} */}
                 </td>
               </tr>
               <tr>

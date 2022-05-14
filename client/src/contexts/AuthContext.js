@@ -3,6 +3,7 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
+import useLocalStorage from "../utils/useLocalStorage";
 
 const api = axios.create({ baseURL: process.env.REACT_APP_SERVER_API });
 const AuthContext = createContext();
@@ -14,6 +15,11 @@ export default function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [socket, setSocket] = useState(null);
+  const [currency, setCurrency] = useLocalStorage("currency", "1");
+    const [currencyValue, setCurrencyValue] = useLocalStorage(
+      "currencyValue",
+      1
+    );
   const navigate = useNavigate();
 
   /**** User Functions ****/
@@ -210,9 +216,55 @@ export default function AuthProvider({ children }) {
    if (cookies.get("auth-token") && cookies.get("connectUser")) {
       setCurrentUser(cookies.get("connectUser"));
     }
-    setSocket(io("http://localhost:3000"));
+    var myHeaders = new Headers();
+    myHeaders.append("apikey", "dFJZcKt9PZWMJjAoHBHst6W1xgr381ZJ");
+
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+      headers: myHeaders,
+    };
+    fetch(
+      "https://api.apilayer.com/exchangerates_data/convert?to=USD&from=ILS&amount=1",
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then((res) => {
+        localStorage.setItem("usd-ils", JSON.parse(res).result);
+      })
+      .catch((error) => console.log("error", error));
+
+    setSocket(io("http://localhost:3001"));
     setLoading(false);
   }, []);
+
+  useEffect(() => {
+    var myHeaders = new Headers();
+    myHeaders.append("apikey", "dFJZcKt9PZWMJjAoHBHst6W1xgr381ZJ");
+
+    const convertOption =
+      currency === 2
+        ? "https://api.apilayer.com/exchangerates_data/convert?to=EUR&from=USD&amount=1"
+        : currency === 3
+        ? "https://api.apilayer.com/exchangerates_data/convert?to=ILS&from=USD&amount=1"
+        : null;
+
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+      headers: myHeaders,
+    };
+    if (convertOption !== null) {
+      fetch(convertOption, requestOptions)
+        .then((response) => response.text())
+        .then((res) => {
+          setCurrencyValue(JSON.parse(res).result);
+        })
+        .catch((error) => console.log("error", error));
+    } else {
+      setCurrencyValue(1);
+    }
+  }, [currency]);
 
   const value = {
     currentUser,
@@ -229,6 +281,9 @@ export default function AuthProvider({ children }) {
     addCarToFavorite,
     socket,
     cleanCookie,
+    currency,
+    setCurrency,
+    currencyValue,
   };
 
   return (

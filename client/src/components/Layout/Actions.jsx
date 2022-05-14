@@ -10,10 +10,11 @@ import { useAuth } from "../../contexts/AuthContext";
 import NotificationPopper from "../AlertsComponents/NotificationPopper";
 import SnackbarAlert from "../AlertsComponents/SnackbarAlert";
 import { error403 } from "../images/projectImages";
+import UserChangeCurrency from "./UserChangeCurrency";
 
 export default function Actions() {
 
-  const { currentUser, logout, socket } = useAuth();
+  const { currentUser, logout, socket, currency, setCurrency } = useAuth();
   const matches = useMediaQuery("(max-width:515px)");
   const [notifications, setNotifications] = useState([]);
   const [alertsToShow, setAlertsToShow] = useState([]);
@@ -48,6 +49,7 @@ export default function Actions() {
   return (
     <>
       <div className="icons-title-pos">
+        <UserChangeCurrency currency={currency} setCurrency={setCurrency} />
         {menu.map((item, key) => {
           return (
             <Link key={key} to={item.path} className="link-in-btn">

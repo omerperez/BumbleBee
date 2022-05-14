@@ -947,6 +947,10 @@ input{
 .bg-col-green{
   background-color: #36b46f !important;
 }
+
+.bg-gold{
+  background: #FFD700 !important;
+}
 .bg-col-blue {
   background-color: #1096fd !important;
 }

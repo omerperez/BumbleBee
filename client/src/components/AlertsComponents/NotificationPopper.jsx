@@ -17,6 +17,7 @@ export default function NotificationPopper({ count, alerts, setFlag }) {
   useEffect(() => {
     setNotification(alerts);
   }, [alerts]);
+  
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
     setOpen((previousOpen) => !previousOpen);
