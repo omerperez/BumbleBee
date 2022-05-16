@@ -16,10 +16,10 @@ export default function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [socket, setSocket] = useState(null);
   const [currency, setCurrency] = useLocalStorage("currency", "1");
-    const [currencyValue, setCurrencyValue] = useLocalStorage(
-      "currencyValue",
-      1
-    );
+  const [currencyValue, setCurrencyValue] = useState(
+      // "value",
+      // "1"
+      );
   const navigate = useNavigate();
 
   /**** User Functions ****/
@@ -216,53 +216,39 @@ export default function AuthProvider({ children }) {
    if (cookies.get("auth-token") && cookies.get("connectUser")) {
       setCurrentUser(cookies.get("connectUser"));
     }
-    var myHeaders = new Headers();
-    myHeaders.append("apikey", "dFJZcKt9PZWMJjAoHBHst6W1xgr381ZJ");
-
-    var requestOptions = {
-      method: "GET",
-      redirect: "follow",
-      headers: myHeaders,
-    };
     fetch(
-      "https://api.apilayer.com/exchangerates_data/convert?to=USD&from=ILS&amount=1",
-      requestOptions
-    )
-      .then((response) => response.text())
-      .then((res) => {
-        localStorage.setItem("usd-ils", JSON.parse(res).result);
-      })
-      .catch((error) => console.log("error", error));
-
+        "https://v6.exchangerate-api.com/v6/ee217cedbacb0650fd63d1cb/latest/ILS"
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          localStorage.setItem("usd-ils", data.conversion_rates.USD);
+        })
+        .catch((error) => {
+          localStorage.setItem("usd-ils", "0.29");
+          console.log("error", error);
+        });
     setSocket(io("http://localhost:3001"));
     setLoading(false);
   }, []);
 
   useEffect(() => {
-    var myHeaders = new Headers();
-    myHeaders.append("apikey", "dFJZcKt9PZWMJjAoHBHst6W1xgr381ZJ");
-
-    const convertOption =
-      currency === 2
-        ? "https://api.apilayer.com/exchangerates_data/convert?to=EUR&from=USD&amount=1"
-        : currency === 3
-        ? "https://api.apilayer.com/exchangerates_data/convert?to=ILS&from=USD&amount=1"
-        : null;
-
-    var requestOptions = {
-      method: "GET",
-      redirect: "follow",
-      headers: myHeaders,
-    };
-    if (convertOption !== null) {
-      fetch(convertOption, requestOptions)
-        .then((response) => response.text())
-        .then((res) => {
-          setCurrencyValue(JSON.parse(res).result);
-        })
-        .catch((error) => console.log("error", error));
+    if(currency != 1){
+      fetch(
+        "https://v6.exchangerate-api.com/v6/ee217cedbacb0650fd63d1cb/latest/USD"
+      )
+        .then((response) => response.json())
+        .then((data) =>
+          setCurrencyValue(
+            currency == 2
+              ? data.conversion_rates.EUR
+              : data.conversion_rates.ILS
+          )
+        )
+        .catch((error) => {
+          console.log("error", error);
+        });
     } else {
-      setCurrencyValue(1);
+      setCurrencyValue(1)
     }
   }, [currency]);
 

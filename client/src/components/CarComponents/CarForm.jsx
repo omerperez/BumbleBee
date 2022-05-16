@@ -12,7 +12,6 @@ import AlertTitle from "@mui/material/AlertTitle";
 import Alert from "@mui/material/Alert";
 import { checkCarsFields, CheckDisableStatus } from "./carFunctions";
 import SaveIcon from "@mui/icons-material/Save";
-import EuroIcon from "@mui/icons-material/Euro";
 import ChangeCurrency from "../Layout/ChangeCurrency"
 import {
   uploadMultipleSucces,
@@ -76,23 +75,19 @@ export default function CarForm() {
    }, [company]);
 
    useEffect(() => {
-     var myHeaders = new Headers();
-     myHeaders.append("apikey", "dFJZcKt9PZWMJjAoHBHst6W1xgr381ZJ");
-
-     const convertOption = usdToeur
-       ? null
-       : "https://api.apilayer.com/exchangerates_data/convert?to=USD&from=EUR&amount=1";
-
-     var requestOptions = {
-       method: "GET",
-       redirect: "follow",
-       headers: myHeaders,
-     };
-     if (convertOption !== null){
-       fetch(convertOption, requestOptions)
-         .then((response) => response.text())
-         .then((result) => setChangeToEUR(JSON.parse(result).result))
-         .catch((error) => console.log("error", error));
+     if (!usdToeur){
+       fetch(
+         "https://v6.exchangerate-api.com/v6/ee217cedbacb0650fd63d1cb/latest/EUR"
+       )
+         .then((response) => response.json())
+         .then((data) => {
+           console.log(data.conversion_rates.USD);
+           setChangeToEUR(data.conversion_rates.USD);
+         })
+         .catch((error) => {
+           setChangeToEUR(0.96);
+           console.log("error", error);
+         });
      } else {
        setChangeToEUR(1)
      }

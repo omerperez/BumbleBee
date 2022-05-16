@@ -13,7 +13,7 @@ const coinsIconsUrl = "/images/";
 export default function UserChangeCurrency({ currency, setCurrency}) {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
-  const [currencyValue, setCurrencyValue] = useLocalStorage("currencyValue", 1);
+  // const [currencyValue, setCurrencyValue] = useLocalStorage("currencyValue", 1);
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
