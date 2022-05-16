@@ -22,7 +22,7 @@ import {
 } from "../images/projectImages";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Carousel } from "react-bootstrap";
-
+import useLocalStorage from "../../utils/useLocalStorage";
 export default function CarForm() {
   
   const [values, carChange] = useForm();
@@ -40,7 +40,7 @@ export default function CarForm() {
   const [imageFiles, setImageFiles] = useState([]);
   const [images, setImages] = useState([]);
   const [usdToeur, setUsdToeur] = useState(true);
-  const [changeToEUR, setChangeToEUR] = useState(true);
+  const [changeToEUR, setChangeToEUR] = useLocalStorage("usdToeur", true);
 
   useEffect(() => {
 

@@ -16,10 +16,7 @@ export default function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [socket, setSocket] = useState(null);
   const [currency, setCurrency] = useLocalStorage("currency", "1");
-  const [currencyValue, setCurrencyValue] = useState(
-      // "value",
-      // "1"
-      );
+  const [currencyValue, setCurrencyValue] = useState(1);
   const navigate = useNavigate();
 
   /**** User Functions ****/

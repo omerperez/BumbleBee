@@ -6,25 +6,24 @@ import { Alert } from "@mui/material";
 import AccessDenied from "../authComponents/AccessDenied";
 import Loading from "../Layout/Loading";
 import FilterCars from "../CarComponents/FilterCars";
+import calcNetPrice from "../../utils/calcNetPrice";
 
 export default function MyCars() {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
   const [access, setAccess] = useState("");
-  const { currentUser } = useAuth();
+  const { currentUser, currencyValue } = useAuth();
 
   useEffect(() => {
-    //  const index = window.location.toString().lastIndexOf("/") + 1;
-    //  const id = window.location.toString().substring(index);
-    //  setAccess(id);
-    fetch(`${process.env.REACT_APP_SERVER_API}/car/mycars/${currentUser._id}`)
+    fetch(`${process.env.REACT_APP_SERVER_API}/car`)
       .then((response) => response.json())
       .then((data) => {
+        const myCars = data.filter((car) => car.dealer === currentUser._id);
         setLoading(false);
-        setCars(data);
+        setCars(myCars);
       });
   }, []);
-  //access != currentUser._id ||
+
   if (currentUser.role !== 2) {
     return (
       <>
@@ -72,7 +71,13 @@ export default function MyCars() {
                 used={car.numberOfVehicleOwners}
                 engine={car.engine}
                 km={car.km}
-                price={car.price}
+                price={Math.round((car.price * currencyValue * 100) / 100)}
+                netPrice={Math.round(
+                  (calcNetPrice(car.fuelConsumption, car.price) *
+                    currencyValue *
+                    100) /
+                    100
+                )}
                 currentPage="myCars"
                 user={currentUser}
                 isSale={car.isSell}

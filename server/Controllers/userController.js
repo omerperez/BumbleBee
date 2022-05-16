@@ -322,7 +322,7 @@ const usersCategories = async (req,res) => {
   const users = await userSchema.find({ role: 1 });
   const carCategoryList=[];
   try{
-    for (const user of users) {
+    for (const user of users) {      
       const favoriteCars = user.cars;
       for (const carId of favoriteCars) {
         const car = await carSchema.findById(carId);
@@ -331,7 +331,7 @@ const usersCategories = async (req,res) => {
     }
     res.send(_.countBy(carCategoryList));  
   }catch (err) {
-    console.log("fail");
+    console.log(err);
     res.status(400).json(err.message);
   };
 }

@@ -6,11 +6,12 @@ import { Alert } from "@mui/material";
 import AccessDenied from "../authComponents/AccessDenied";
 import Loading from "../Layout/Loading";
 import FilterCars from "../CarComponents/FilterCars";
+import calcNetPrice from "../../utils/calcNetPrice";
 
 export default function MyFavorite() {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { currentUser } = useAuth();
+  const { currentUser, currencyValue } = useAuth();
 
   useEffect(() => {
     fetch(
@@ -63,7 +64,13 @@ export default function MyFavorite() {
                   used={car.numberOfVehicleOwners}
                   engine={car.engine}
                   km={car.km}
-                  price={car.price}
+                  price={Math.round((car.price * currencyValue * 100) / 100)}
+                  netPrice={Math.round(
+                    (calcNetPrice(car.fuelConsumption, car.price) *
+                      currencyValue *
+                      100) /
+                      100
+                  )}
                   currentPage="myFavorite"
                   user={currentUser}
                 />

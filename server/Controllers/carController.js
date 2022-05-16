@@ -15,19 +15,12 @@ const mongoose = require("mongoose");
 // };
 
 const getAllCars = async (req, res) => {
-  // await carSchema.deleteOne({ dealer: "6269baffce8ed2c913d26232" });
   const cars = await carSchema.find();
   try {
-    // for (let c of cars) {
-    //   c._id = new mongoose.Types.ObjectId();
-    //   c.dealer = "6269a796ce8ed2c913d2616c";
-    //   c.dealer = await carSchema.create(omer);
-    // }
     res.json(cars);
   } catch (err){
     console.log(err);
   }
-  
 }
 
 const getCarById = async (req, res) => {
@@ -45,7 +38,6 @@ const getCarById = async (req, res) => {
 
 const getMyCars = (req, res) => {
   const userId = req.params.id;
-
   carSchema.find({dealer: userId}).then((results) => {
     try {
       res.json(results);
@@ -59,16 +51,13 @@ const getMyCars = (req, res) => {
 const getFavoriteCars = async (req, res) => {
   const userId = req.params.id;
   const currentUser = await userSchema.findById(userId);
-  carSchema.find().then((results) => {
-    try {
-      res.json(
-        results.filter((car) => currentUser.cars.includes(car._id))
-      );
-      console.log("OK");
-    } catch {
-      console.log("Error");
-    }
-  });
+  const allCars =  await carSchema.find({isSell : false});
+  try {
+    res.json(allCars.filter((car) => currentUser.cars.includes(car._id)));
+    console.log("OK");
+  } catch {
+    console.log("Error");
+  }
 };
 
 const getCarByCompany = (request, respons) => {
@@ -160,9 +149,10 @@ const updateCar = async (req, res) => {
 };
 
 /* DELETE */
-const deleteCar = (req, res) => {
+const deleteCar = async (req, res) => {
   const _id = req.params.id;
-  const user = carSchema.deleteOne({ _id: _id }).then((results) => {
+  await userSchema.updateMany( { }, {$pull : { cars: req.params.id }})
+  carSchema.deleteOne({ _id: _id }).then((results) => {
    return res.json(results); 
   });
 };
