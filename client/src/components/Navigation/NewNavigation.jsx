@@ -60,7 +60,7 @@ export default function NewNavigation({socket, children }) {
   const [check, setCheck] = useState("/homepage");
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  const matches = useMediaQuery("(min-height:570px)");
+  const matches = useMediaQuery("(min-height:0px)");
   const max800 = useMediaQuery("(max-width:800px)");
   const navigationWidth = useMediaQuery("(max-width:500px)");
 
@@ -164,7 +164,7 @@ export default function NewNavigation({socket, children }) {
                     aria-label="open drawer"
                     onClick={handleDrawerOpen}
                   >
-                    <MenuIcon className="cur-pointer" />
+                    {/* <MenuIcon className="cur-pointer" /> */}
                   </IconButton>
                 </div>
               ) : null}
@@ -176,11 +176,7 @@ export default function NewNavigation({socket, children }) {
           {menuItems.map((item, index) => (
             <Link
               key={index}
-              to={
-                item.path.includes("mycars")
-                  ? item.path 
-                  : item.path
-              }
+              to={item.path.includes("mycars") ? item.path : item.path}
               className="link-in-btn"
             >
               <div>

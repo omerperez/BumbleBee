@@ -78,9 +78,6 @@ export default function CarProfileBody({car}) {
                     )
                   )}
                   {currency == 2 ? "€)" : currency == 3 ? "₪)" : ")"}
-                  {/* {`${car.price}$ (${
-                    car.netPrice ?? (car.price * 0.7).toString().substring(0, 8)
-                  }$)`} */}
                 </td>
               </tr>
               <tr>

@@ -65,12 +65,16 @@ export default function MyProfile() {
           className={
             matches
               ? matches770
-                ? "col-12"
+                ? "col-12  mt-3"
                 : "col-6"
               : "col-12 col-lg-5 col-xl-6 col-xxl-7 ml-25 mt-5 mb-1"
           }
         >
-          <OtherPropertiesCard currentUser={user} setFlag={setFlag} flag={flag} />
+          <OtherPropertiesCard
+            currentUser={user}
+            setFlag={setFlag}
+            flag={flag}
+          />
         </div>
       </div>
       <div className="d-flex justify-content-center mb-5">

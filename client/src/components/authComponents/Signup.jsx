@@ -5,7 +5,11 @@ import { useAuth } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
-import { checkRegisterFields } from "./userFunctions";
+import {
+  checkRegisterFields,
+  ValidateEmail,
+  ImageHandler,
+} from "./userFunctions";
 import {
   error403,
   israelFlag,
@@ -24,19 +28,12 @@ export default function Signup() {
   const [checkbox3, setCheckbox3] = useState(false);
   const [loading, setLoading] = useState(false);
   const [profileImage, setProfileImage] = useState();
-
-  const ImageHandler = (e) => {
-    const reader = new FileReader();
-    reader.onload = () =>{
-      if(reader.readyState === 2){
-        setProfileImage(reader.result)
-      }
-    }
-    reader.readAsDataURL(e.target.files[0]);
-  }
   
   async function handleSubmit(e) {
     e.preventDefault();
+    if (values.image == null) {
+      return setError("Please Upload Image Profile");
+    }
     if (!checkbox1 || !checkbox2 || !checkbox3) {
       return setError("Please confirm all checkboxes");
     }
@@ -45,6 +42,9 @@ export default function Signup() {
     }
     if (values.password.length < 6) {
       return setError("Password must be at least 6 characters long");
+    }
+    if(!ValidateEmail(values.email)){
+      return setError("You have entered an invalid email address");
     }
     if (checkRegisterFields(values)) {
       return setError("Please add image profile");
@@ -126,7 +126,7 @@ export default function Signup() {
                     className="display-none"
                     onChange={(event) => {
                       carChange(event);
-                      ImageHandler(event);
+                      ImageHandler(event, setProfileImage);
                     }}
                   />
                 </label>

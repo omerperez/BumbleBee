@@ -7,13 +7,13 @@ import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import { IconButton } from "@mui/material";
 import useLocalStorage from "../../utils/useLocalStorage";
+import Fade from "@mui/material/Fade";
 
 const coinsIconsUrl = "/images/";
 
 export default function UserChangeCurrency({ currency, setCurrency}) {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
-  // const [currencyValue, setCurrencyValue] = useLocalStorage("currencyValue", 1);
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -82,7 +82,7 @@ export default function UserChangeCurrency({ currency, setCurrency}) {
         transition
       >
         {({ TransitionProps, placement }) => (
-          <Grow
+          <Fade
             {...TransitionProps}
             style={{
               transformOrigin:
@@ -93,23 +93,32 @@ export default function UserChangeCurrency({ currency, setCurrency}) {
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList
                   autoFocusItem={open}
+                  className="row"
                   id="composition-menu"
                   aria-labelledby="composition-button"
                   onKeyDown={handleListKeyDown}
                 >
-                  <MenuItem onClick={() => setCurrency(1)}>
+                  <MenuItem onClick={() => setCurrency(1)} className="col">
                     <img src={`${coinsIconsUrl}coin.png`} width={25} />
                   </MenuItem>
-                  <MenuItem onClick={() => setCurrency(2)} key={2}>
+                  <MenuItem
+                    onClick={() => setCurrency(2)}
+                    key={2}
+                    className="col"
+                  >
                     <img src={`${coinsIconsUrl}euro.png`} width={25} />
                   </MenuItem>
-                  <MenuItem onClick={() => setCurrency(3)} key={3}>
+                  <MenuItem
+                    onClick={() => setCurrency(3)}
+                    key={3}
+                    className="col"
+                  >
                     <img src={`${coinsIconsUrl}shekel.png`} width={25} />
                   </MenuItem>
                 </MenuList>
               </ClickAwayListener>
             </Paper>
-          </Grow>
+          </Fade>
         )}
       </Popper>
     </>

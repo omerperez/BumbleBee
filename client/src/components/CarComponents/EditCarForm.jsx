@@ -10,10 +10,12 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { Alert } from "@mui/material";
 import AlertTitle from "@mui/material/AlertTitle";
 import { error403 } from "../images/projectImages";
+import calcNetPrice from "../../utils/calcNetPrice";
+import { numberWithCommas } from "./carFunctions";
 
 export default function EditCarForm({car ,saveChanges}) {
     
-    const { editCar } = useAuth();
+    const { editCar, currency, currencyValue } = useAuth();
     const [colour, setColour] = useState(car.colour);
     const [price, setPrice] = useState(car.price);
     const [km, setKm] = useState(car.km);
@@ -105,16 +107,29 @@ export default function EditCarForm({car ,saveChanges}) {
                     <th>Owners</th>
                     <td>{car.numberOfVehicleOwners}</td>
                   </tr>
+                  <th>Price (Net)</th>
+                  <td>
+                    <TextField
+                      defaultValue={car.price}
+                      label="price"
+                      type="number"
+                      onChange={(e) => setPrice(e.target.value)}
+                      fullWidth
+                    />
+                  </td>
                   <tr>
                     <th>Price (Net)</th>
                     <td>
-                      <TextField
-                        defaultValue={car.price}
-                        label="price"
-                        type="number"
-                        onChange={(e) => setPrice(e.target.value)}
-                        fullWidth
-                      />
+                      {numberWithCommas(
+                        Math.round(
+                          ((calcNetPrice(car.fuelConsumption, car.price) +
+                            car.price) *
+                            currencyValue *
+                            100) /
+                            100
+                        )
+                      )}
+                      {currency == 2 ? "€)" : currency == 3 ? "₪)" : ")"}
                     </td>
                   </tr>
                   <tr>
@@ -188,7 +203,7 @@ export default function EditCarForm({car ,saveChanges}) {
                   </tr>
                   <tr>
                     <th>Interior Design</th>
-                    <td>{car.iteriorDesign}</td>
+                    <td>{car.interiorDesign}</td>
                   </tr>
                 </tbody>
               </table>

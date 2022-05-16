@@ -10,11 +10,11 @@ export default function PublicRoute({ children }) {
   return currentUser ? (
     <AccessDenied />
   ) : (
-    <div className="public-router-layout">
+    <div className="public-router-layout container1">
       <img
         alt="layout"
         id="public-img"
-        className="w-50 bgs-100"
+        className="w-50 bgs-100 shark-1"
         src={authBackground}
         onError={error403}
       />

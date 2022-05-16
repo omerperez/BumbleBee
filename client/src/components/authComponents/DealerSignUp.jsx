@@ -4,7 +4,11 @@ import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
-import { checkRegisterFields, ImageHandler } from "./userFunctions";
+import {
+  checkRegisterFields,
+  ImageHandler,
+  ValidateEmail,
+} from "./userFunctions";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import EditActivityTimeDialog from "../DialogComponents/EditActivityTimeDialog";
@@ -24,11 +28,18 @@ export default function DealerSignUp() {
 
   async function handleSubmit(e) {
      e.preventDefault();
+     console.log(values.image);
+    if (values.image == null) {
+      return setError("Please Upload Image Profile");
+    }
     if (values.password !== values.confirmPassword) {
       return setError("Password do not match");
     }
     if(values.password.length < 6){
       return setError("Password must be at least 6 characters long");
+    }
+    if (!ValidateEmail(values.email)) {
+      return setError("You have entered an invalid email address");
     }
     values.mobile = mobile;
     if (checkRegisterFields(values)) {

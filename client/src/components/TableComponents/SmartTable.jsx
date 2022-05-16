@@ -41,7 +41,7 @@ export default function SmartTable({
   };
   return (
     <>
-      <ScrollToTop showBelow={250}  />
+      <ScrollToTop showBelow={250} />
       <Paper className={classes.paper}>
         <TableContainer className={classes.tableWrapper}>
           <Table
@@ -64,16 +64,7 @@ export default function SmartTable({
                           : classes.divWrapperOfHeaderAction
                       }
                     >
-                      <TableSortLabel
-                        key={key}
-                        className={classes.sortLabel}
-                        hideSortIcon={false}
-                        align={"left"}
-                        active={false}
-                        onClick={createSortHandler(headCell.id)}
-                      >
-                        <span className={classes.span}>{headCell.label}</span>
-                      </TableSortLabel>
+                      <span className={classes.span}>{headCell.label}</span>
                     </div>
                   </StyledTableCell>
                 ))}
@@ -90,6 +81,7 @@ export default function SmartTable({
         </TableContainer>
         {dataCount.length === 0 ? null : (
           <TablePagination
+            style={{ marginRight: 30 }}
             rowsPerPageOptions={[10, 30, 50, 100, 200, 500]}
             component="div"
             count={data.length}

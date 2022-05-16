@@ -59,6 +59,16 @@ input{
   font-weight: 500 !important;
   color: #363636 !important;
 }
+.container1 {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+.shark-1 {
+  position: sticky;
+  top: 0;
+}
 
 .color-black {
   color: #363636 !important;

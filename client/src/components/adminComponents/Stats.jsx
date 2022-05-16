@@ -113,7 +113,10 @@ if (loading) {
      </div>
      <div className="col-12 col-md-6 mb-4">
        <div className="mt-5">
-         <DiagramGraph data={countByYears} title={"Companies Per Years"} />
+         <DiagramGraph
+           data={countByYears}
+           title={"Companies By Years"}
+         />
        </div>
      </div>
    </div>
