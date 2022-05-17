@@ -20,7 +20,7 @@ export default function EditProfile({ setOpen, mobileNumber, setFlag, flag }) {
   const { currentUser } = useAuth();
   const { editUserProperties, editUserPropertiesWithoutImage } = useAuth();
   const [values, carChange] = useForm();
-  const [mobile, setMobile] = useState();
+  const [mobile, setMobile] = useState(mobileNumber);
   const [user, setUser] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
@@ -40,10 +40,13 @@ export default function EditProfile({ setOpen, mobileNumber, setFlag, flag }) {
     setError("");
     setLoading(true);
     user._id = currentUser._id;
-    let mobileNumber;
+    let mNumber;
     if (user.role === 1) {
-      mobileNumber = mobile.includes("+972") ? mobile : `+972${mobile}`;
-      values.phoneNumber = mobileNumber;
+      if (mobile == null){
+        setMobile(user.phoneNumber);
+      }
+      mNumber = mobile.includes("+972") ? mobile : `+972${mobile}`;
+      values.phoneNumber = mNumber;
     } else {
       values.phoneNumber = mobile;
     }

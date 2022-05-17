@@ -1,6 +1,7 @@
 const userSchema = require("../Models/user");
 const ratingSchema = require("../Models/rating");
 const carSchema = require("../Models/car");
+const {sendRegistrationEmail} = require("../utils/EmailFunctions");
 const { loginValidation, registerValidation } = require("../utils/Validation");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -110,6 +111,7 @@ const register = async (request, response) => {
   try {
     const savedUser = await userSchema.create(newUser);
     console.log("Success");
+    sendRegistrationEmail(newUser.email, newUser.firstName + " " + newUser.lastName);
     response.send(savedUser);
   } catch (err) {
     console.log("filed");
@@ -165,6 +167,7 @@ const editPassword = async (request, response) => {
 };
 
 const editUser = async (request, response) => {
+  console.log(request.body._id);
   const userId = { _id: request.body._id };
   let updateUser = request.body;
   try {
@@ -179,6 +182,7 @@ const editUser = async (request, response) => {
 };
 
 const editUserAndImage = async (request, response) => {
+  console.log(request.body._id);
   const userId = { _id: request.params.id };
   let updateUser = JSON.parse(request.body.user);
   updateUser.image = request.file.originalname;

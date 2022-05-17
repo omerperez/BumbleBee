@@ -2,6 +2,7 @@ const notificationSchema = require("../Models/notification");
 const carSchema = require("../Models/car");
 const userSchema = require("../Models/user");
 const mongoose = require("mongoose");
+const {sendEmailNotification} = require("../utils/EmailFunctions");
 
 /* GET */
 const getAllNotification = (req, res) => {
@@ -98,6 +99,36 @@ const getNotificationsByUserId = (req, res) => {
     });
 }
 
+// async function sendEmailNotification(senderId, reciverId) {
+//   const sender = await userSchema.findById(senderId);
+//   const reciver = await userSchema.findById(reciverId);
+//   let transporter = nodemailer.createTransport({
+//     service: "hotmail",
+//     auth: {
+//       user: "omerperez222@gmail.com", 
+//       pass: "omer200198", 
+//     },
+//   });
+
+//   let email = `BumbleBee <omerperez222@gmail.com>`;
+
+//   const msg = {
+//     from: email, 
+//     to: "tamiramar22@gmail.com",
+//     subject: `BumbleBee - New Request From ${
+//       sender.firstName + " " + sender.lastName
+//     }`,
+//     text: `Hey ${reciver.firstName} you have new notification from ${sender.firstName} to see the new request - http://bumblebee.cs.colman.ac.il:3000/login`,
+//   };
+//   transporter.sendMail(msg, function (err, info) {
+//     if(err){
+//       console.log(err);
+//       return
+//     }
+//     console.log("Send: " + info.response);
+//   })
+// }
+
 /* POST */
 async function createAlert(req, res) {
   const alertFromJason = JSON.parse(req.body.alert);
@@ -132,9 +163,10 @@ async function createAlert(req, res) {
     });
   }
   const newAlert = await notificationSchema.create(createAlert);
-  updateUser.isSendReq = true;
+  updateUser.isSendReq = false;
   await updateUser.save();
   console.log("Success");
+  sendEmailNotification(alertFromJason.client, alertFromJason.dealer, 1);
   return res.send("Success");
 }
 
@@ -198,6 +230,11 @@ const editAlert = async (req, res) => {
     updateAlert.isRead = false;
     await updateAlert.save();
     console.log("Success");
+    sendEmailNotification(
+      alertFromJason.client,
+      alertFromJason.dealer,
+      alertFromJason.step
+    );
     res.send("Success");
   } catch (err) {
     console.log("filed");
