@@ -1,6 +1,7 @@
 const { Server } = require("socket.io");
 const dotenv = require("dotenv");
 const express = require("express");
+const path = require("path");
 dotenv.config();
 const app = require("./server");
 
