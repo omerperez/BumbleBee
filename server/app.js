@@ -1,5 +1,6 @@
 const { Server } = require("socket.io");
 const dotenv = require("dotenv");
+const express = require("express");
 dotenv.config();
 const app = require("./server");
 
@@ -56,6 +57,13 @@ io.on("connection", (socket) => {
 });
 
 io.listen(3001);
+
+const root = require('path').join(__dirname, 'build');
+app.use(express.static(root));
+
+app.use('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 const port = 8080;
 app.listen(port, () => {
