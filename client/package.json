@@ -2,6 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@date-io/date-fns": "^2.13.1",
     "@devexpress/dx-react-chart": "^3.0.2",
@@ -48,7 +49,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "PUBLIC_URL=app react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
