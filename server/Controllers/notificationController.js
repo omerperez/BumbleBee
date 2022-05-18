@@ -4,7 +4,6 @@ const userSchema = require("../Models/user");
 const mongoose = require("mongoose");
 const {sendEmailNotification} = require("../utils/EmailFunctions");
 
-/* GET */
 const getAllNotification = (req, res) => {
   notificationSchema.find().then((results) => {
     try {
@@ -99,37 +98,6 @@ const getNotificationsByUserId = (req, res) => {
     });
 }
 
-// async function sendEmailNotification(senderId, reciverId) {
-//   const sender = await userSchema.findById(senderId);
-//   const reciver = await userSchema.findById(reciverId);
-//   let transporter = nodemailer.createTransport({
-//     service: "hotmail",
-//     auth: {
-//       user: "omerperez222@gmail.com", 
-//       pass: "omer200198", 
-//     },
-//   });
-
-//   let email = `BumbleBee <omerperez222@gmail.com>`;
-
-//   const msg = {
-//     from: email, 
-//     to: "tamiramar22@gmail.com",
-//     subject: `BumbleBee - New Request From ${
-//       sender.firstName + " " + sender.lastName
-//     }`,
-//     text: `Hey ${reciver.firstName} you have new notification from ${sender.firstName} to see the new request - http://bumblebee.cs.colman.ac.il:3000/login`,
-//   };
-//   transporter.sendMail(msg, function (err, info) {
-//     if(err){
-//       console.log(err);
-//       return
-//     }
-//     console.log("Send: " + info.response);
-//   })
-// }
-
-/* POST */
 async function createAlert(req, res) {
   const alertFromJason = JSON.parse(req.body.alert);
   const createAlert = new notificationSchema({
@@ -184,7 +152,6 @@ const markAsRead = async (req, res) => {
   }
 };
 
-/* PUT */
 const editAlert = async (req, res) => {
 
   const alertFromJason = JSON.parse(req.body.alert);
@@ -242,7 +209,6 @@ const editAlert = async (req, res) => {
   }
 };
 
-/* EXPORTS */
 module.exports = {
   getAllNotification,
   getNotificationsByUserId,

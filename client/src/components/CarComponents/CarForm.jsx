@@ -81,7 +81,6 @@ export default function CarForm() {
        )
          .then((response) => response.json())
          .then((data) => {
-           console.log(data.conversion_rates.USD);
            setChangeToEUR(data.conversion_rates.USD);
          })
          .catch((error) => {

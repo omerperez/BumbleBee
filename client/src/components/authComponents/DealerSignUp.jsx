@@ -28,7 +28,6 @@ export default function DealerSignUp() {
 
   async function handleSubmit(e) {
      e.preventDefault();
-     console.log(values.image);
     if (values.image == null) {
       return setError("Please Upload Image Profile");
     }

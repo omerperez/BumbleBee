@@ -4,17 +4,15 @@ const userController = require("../Controllers/userController");
 const router = express.Router();
 const { upload } = require("../utils/s3");
 
+router.get("/", userController.getAllUsers);
+
 router.post("/register", upload.single("image"), userController.register);
 
 router.post("/login", userController.login);
 
 router.get("/my-user/:id", userController.getUserById);
 
-router.get("/script", userController.script);
-
 router.get("/find-rating/:client/:dealer", userController.findCurrentRating);
-
-router.get("/", userController.getAllUsers);
 
 router.put("/edit/:id", userController.editUser);
 
@@ -39,5 +37,7 @@ router.get("/dashboard/:id", userController.categoriesPerUser);
 router.get("/dashboard", userController.usersCategories);
 
 router.get("/rating", userController.getUserRating);
+
+router.get("/script", userController.script);
 
 module.exports = router;

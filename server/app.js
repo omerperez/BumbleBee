@@ -6,18 +6,7 @@ const app = require("./server");
 const io = new Server({
   cors: {
     origin: "http://localhost:3000",
-    // origins: ["*"],
   },
-  //   handlePreflightRequest: (req, res) => {
-  //     res.writeHead(200, {
-  //       "Access-Control-Allow-Origin": "*",
-  //       "Access-Control-Allow-Methods": "GET, POST",
-  //       "Access-Control-Allow-Headers": "my-custom-header",
-  //       "Access-Control-Allow-Credentials": true,
-  //     });
-  //     res.end();
-  //   },
-  // },
 });
 
 let onlineUsers = [];
@@ -68,7 +57,7 @@ io.on("connection", (socket) => {
 
 io.listen(3001);
 
-const port = 8080; //process.env.PROT;
+const port = 8080;
 app.listen(port, () => {
   console.log("server started on port " + port);
 });

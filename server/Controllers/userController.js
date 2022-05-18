@@ -1,6 +1,7 @@
 const userSchema = require("../Models/user");
 const ratingSchema = require("../Models/rating");
 const carSchema = require("../Models/car");
+const notificationSchema = require("../Models/notification");
 const {sendRegistrationEmail} = require("../utils/EmailFunctions");
 const { loginValidation, registerValidation } = require("../utils/Validation");
 const jwt = require("jsonwebtoken");
@@ -138,8 +139,12 @@ const login = async (request, response) => {
       message: "Email or password is wrong",
     });
   }
+  try {
   const token = getToken(user);
   response.header("auth-token", token).send({ token, user });
+  } catch(err){
+    console.log(err);
+  }
 };
 
 const editPassword = async (request, response) => {
@@ -167,7 +172,6 @@ const editPassword = async (request, response) => {
 };
 
 const editUser = async (request, response) => {
-  console.log(request.body._id);
   const userId = { _id: request.body._id };
   let updateUser = request.body;
   try {
@@ -182,7 +186,6 @@ const editUser = async (request, response) => {
 };
 
 const editUserAndImage = async (request, response) => {
-  console.log(request.body._id);
   const userId = { _id: request.params.id };
   let updateUser = JSON.parse(request.body.user);
   updateUser.image = request.file.originalname;
@@ -270,9 +273,12 @@ const addCarToFavorite = async (req, res) => {
   }
 };
 
-const deleteUser = (req, res) => {
+const deleteUser = async (req, res) => {
   const userId = req.params.id;
-  const user = userSchema.deleteOne({ _id: userId }).then((results) => {
+  await notificationSchema.deleteMany({ dealer: { $in: userId } });
+  await notificationSchema.deleteMany({ client: { $in: userId } });
+  await carSchema.deleteMany({ dealer: { $in: userId } });
+  userSchema.deleteOne({ _id: userId }).then((results) => {
     return res.json(results);
   });
 };

@@ -27,7 +27,7 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
 
    const fetchData = () => {
      const alertsApi = `${process.env.REACT_APP_SERVER_API}/notification/client/${myUser._id}`;
-     const userCarsApi = `${process.env.REACT_APP_SERVER_API}/car/mycars/${myUser._id}`;
+     const userCarsApi = `${process.env.REACT_APP_SERVER_API}/car/user/${myUser._id}`;
 
      const getAlerts = axios.get(alertsApi);
      const getUserCars = axios.get(userCarsApi);

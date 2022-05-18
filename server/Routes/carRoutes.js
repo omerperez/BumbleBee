@@ -12,9 +12,9 @@ router.get("/script", carController.script);
 
 router.get("/dashboard", carController.carsCategoriesViews);
 
-router.get("/mycars/:id", carController.getMyCars);
+router.get("/user/:id", carController.getCarsByUser);
 
-router.get("/my-favorite/:id", carController.getFavoriteCars);
+// router.get("/my-favorite/:id", carController.getCarsByUser);
 
 router.get("/", carController.getAllCars);
 

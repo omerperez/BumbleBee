@@ -60,7 +60,7 @@ export default function NewNavigation({socket, children }) {
   const [check, setCheck] = useState("/homepage");
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  const matches = useMediaQuery("(min-height:0px)");
+  const matches = useMediaQuery("(min-height:570px)");
   const max800 = useMediaQuery("(max-width:800px)");
   const navigationWidth = useMediaQuery("(max-width:500px)");
 
@@ -127,6 +127,7 @@ export default function NewNavigation({socket, children }) {
             edge="start"
             sx={{
               marginRight: 5,
+              margin: 'auto',
               ...(open && { display: "none" }),
             }}
           >
@@ -164,7 +165,7 @@ export default function NewNavigation({socket, children }) {
                     aria-label="open drawer"
                     onClick={handleDrawerOpen}
                   >
-                    {/* <MenuIcon className="cur-pointer" /> */}
+                    <MenuIcon className="cur-pointer" />
                   </IconButton>
                 </div>
               ) : null}

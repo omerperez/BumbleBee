@@ -24,6 +24,7 @@ async function sendEmailNotification(clientId, dealerId, stepNumber) {
 }
 
 async function sendRegistrationEmail(userEmail, fullName) {
+  let email = `BumbleBee <omerperez222@gmail.com>`;
   let transporter = nodemailer.createTransport({
     service: "hotmail",
     auth: {
@@ -31,7 +32,6 @@ async function sendRegistrationEmail(userEmail, fullName) {
       pass: "omer200198",
     },
   });
-  console.log(userEmail);
   const msg = {
     from: email,
     to: userEmail,
@@ -53,7 +53,6 @@ function getMessageToAlert(dealer, client, step) {
   let email = `BumbleBee <omerperez222@gmail.com>`;
   
   if (step == 1) {
-    console.log(dealer.email)
     return {
       from: email,
       to: dealer.email,
