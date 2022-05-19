@@ -130,12 +130,19 @@ async function createAlert(req, res) {
       message: "Access blocked - you are not an client user",
     });
   }
-  const newAlert = await notificationSchema.create(createAlert);
-  updateUser.isSendReq = false;
-  await updateUser.save();
-  console.log("Success");
-  sendEmailNotification(alertFromJason.client, alertFromJason.dealer, 1);
-  return res.send("Success");
+  
+  try {
+    await notificationSchema.create(createAlert);
+    updateUser.isSendReq = false;
+    await updateUser.save();
+    console.log("Success");
+    sendEmailNotification(alertFromJason.client, alertFromJason.dealer, 1);
+    res.send("Success");
+  } catch (err) {
+    res.status(400).json({
+      message: "Something happened, please try again",
+    });
+  }
 }
 
 const markAsRead = async (req, res) => {

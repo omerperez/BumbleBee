@@ -21,7 +21,7 @@ const getUserRating = async (req, res) => {
     dealer.rating = 0;
     await dealer.save();
   }
-      console.log("DONE");
+  console.log("DONE");
 }
 /* GET */
 const getAllUsers = (req, res) => {

@@ -84,13 +84,19 @@ async function createCar(req, res) {
       message: "Access blocked - you are not an administrator user",
     });
   }
-  const newCar = await carSchema.create(createNewCar);
-  const carList = await updateDealer.cars;
-  carList.push(newCar._id);
-  updateDealer.cars = carList;
-  
-  await updateDealer.save();
-  return res.send(newCar._id);
+
+  try {
+    const newCar = await carSchema.create(createNewCar);
+    const carList = await updateDealer.cars;
+    carList.push(newCar._id);
+    updateDealer.cars = carList;
+    await updateDealer.save();
+    return res.send(newCar._id);
+  } catch (err) {
+    res.status(400).json({
+      message: "Something happened, please try again",
+    });
+  }
 }
 
 const updateCar = async (req, res) => { 
@@ -120,11 +126,17 @@ const updateCar = async (req, res) => {
 
 const deleteCar = async (req, res) => {
   const _id = req.params.id;
-  await userSchema.updateMany({}, { $pull: { cars: req.params.id } });
-  await notificationSchema.deleteMany({ car: { $in: _id } });
-  carSchema.deleteOne({ _id: _id }).then((results) => {
-   return res.json(results); 
-  });
+  try {
+    await userSchema.updateMany({}, { $pull: { cars: req.params.id } });
+    await notificationSchema.deleteMany({ car: { $in: _id } });
+    carSchema.deleteOne({ _id: _id }).then((results) => {
+      return res.json(results);
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: "Something happened, please try again",
+    });
+  }
 };
 
 const script = async () => {
