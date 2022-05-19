@@ -59,12 +59,12 @@ io.on("connection", (socket) => {
 
 io.listen(3001);
 
-const root = require('path').join(__dirname, 'build');
-app.use(express.static(root));
+// const root = require('path').join(__dirname, 'build');
+// app.use(express.static(root));
 
-app.use('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+// app.use('/*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
 
 const port = 8080;
 app.listen(port, () => {

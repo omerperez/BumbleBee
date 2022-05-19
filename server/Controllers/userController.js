@@ -14,8 +14,6 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const getUserRating = async (req, res) => {  
-  
-  const rat = ratingSchema.find();
   const allDealer = await userSchema.find();  
   var unique = [];
   for (const dealer of allDealer.filter(d => d.role == 2)) {
@@ -158,6 +156,11 @@ const editPassword = async (request, response) => {
       message: "Password is wrong, please try again",
     });
   }
+  if (request.body.newPassword.length < 6) {
+    return response.status(400).json({
+      message: "Password need 6 charcters minimum",
+    });
+  }
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(request.body.newPassword, salt);
   try {
@@ -171,32 +174,58 @@ const editPassword = async (request, response) => {
   }
 };
 
+async function checkValidEmailAndPassword(user) {
+  const users = await userSchema.find();
+  const usersWithoutEditUser = users.filter((u) => u._id != user._id);
+  if (usersWithoutEditUser.filter(u => u.email == user.email).length != 0) {
+      return "Email already exists.";
+  } else if (
+    usersWithoutEditUser.filter((u) => u.phoneNumber == user.phoneNumber)
+      .length != 0
+  ) {
+    return "Mobile already exists.";
+  }
+  return null
+}
 const editUser = async (request, response) => {
   const userId = { _id: request.body._id };
   let updateUser = request.body;
-  try {
-    const editUser = await userSchema.findOneAndUpdate(userId, updateUser, {
-      new: true,
+  const msg = await checkValidEmailAndPassword(updateUser);
+  if (msg != null) {
+    response.status(400).json({
+      message: msg,
     });
-    response.send(editUser);
-  } catch (err) {
-    console.log("filed");
-    response.status(400).json("Something happened, please try again");
+  } else {
+    try {
+      const editUser = await userSchema.findOneAndUpdate(userId, updateUser, {
+        new: true,
+      });
+      response.send(editUser);
+    } catch (err) {
+      console.log("filed");
+      response.status(400).json("Something happened, please try again");
+    }
   }
-};
-
+}
 const editUserAndImage = async (request, response) => {
   const userId = { _id: request.params.id };
   let updateUser = JSON.parse(request.body.user);
   updateUser.image = request.file.originalname;
-  try {
-    const editUser = await userSchema.findOneAndUpdate(userId, updateUser, {
-      new: true,
+   const msg = await checkValidEmailAndPassword(updateUser);
+  if (msg != null) {
+    response.status(400).json({
+      message: msg,
     });
-    response.send(editUser);
-  } catch (err) {
-    console.log("filed");
-    response.status(400).json("Something happened, please try again");
+  } else {
+    try {
+      const editUser = await userSchema.findOneAndUpdate(userId, updateUser, {
+        new: true,
+      });
+      response.send(editUser);
+    } catch (err) {
+      console.log("filed");
+      response.status(400).json("Something happened, please try again");
+    }
   }
 };
 

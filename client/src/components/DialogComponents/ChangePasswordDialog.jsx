@@ -28,6 +28,8 @@ export default function ChangePasswordDialog() {
   const handleChangePassword = async () => {
     if (newPass !== confimPass) {
       return setError("Password Not Matches");
+    } else if (newPass.length < 6) {
+      return setError("Password must be at least 6 characters long");
     }
     setLoading(true);
     try {
