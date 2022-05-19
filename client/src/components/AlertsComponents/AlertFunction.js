@@ -244,6 +244,32 @@ const alertTitle = (step, isDealer, dealer, user) => {
         </>
       );
     }
+  } 
+  else {
+    if (isDealer) {
+      return (
+        <>
+          <div>
+            You cancel the request from
+            <b>{" - " + user.firstName + " " + user.lastName}</b>
+          </div>
+          <span className="f-15">Requset of payment is cancel</span>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <div>
+            <b>{dealer.firstName + " " + dealer.lastName + " "}</b>
+            cancel your payment request
+          </div>
+          <span className="f-15">
+            Please check with 
+            <b>{" " + dealer.firstName} </b> the reason
+          </span>
+        </>
+      );
+    }
   }
 };
 

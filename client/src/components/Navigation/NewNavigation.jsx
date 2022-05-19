@@ -120,19 +120,23 @@ export default function NewNavigation({socket, children }) {
         sx={{ background: "none", boxShadow: "none" }}
       >
         <Toolbar sx={{ background: "none", boxShadow: "none" }}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              margin: 'auto',
-              ...(open && { display: "none" }),
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
+          {matches ? (
+            <IconButton
+              color="inherit"
+              // className="auto-margin"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={{
+                marginRight: 5,
+                position: "fixed",
+                // margin: "auto",
+                ...(open && { display: "none" }),
+              }}
+            >
+              <MenuIcon />
+            </IconButton>
+          ) : null}
           <Typography
             variant="h6"
             color={"black"}
@@ -160,13 +164,13 @@ export default function NewNavigation({socket, children }) {
                 </>
               ) : matches ? (
                 <div className="auto-margin">
-                  <IconButton
-                    className="color-white"
+                  {/* <IconButton
+                    className="color-white cur-pointer"
                     aria-label="open drawer"
                     onClick={handleDrawerOpen}
                   >
                     <MenuIcon className="cur-pointer" />
-                  </IconButton>
+                  </IconButton> */}
                 </div>
               ) : null}
             </DrawerHeader>

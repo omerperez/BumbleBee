@@ -6,10 +6,12 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { editAlertFunction } from "./AlertFunction";
+import Loading from "../Layout/Loading";
 
 export default function CancelRequestDialog({alert}) {
 
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -19,7 +21,8 @@ export default function CancelRequestDialog({alert}) {
     setOpen(false);
   };
 
-  const handleCancelRequest = () => {
+  const handleCancelRequest = async () => {
+    setLoading(true);
      const editAlert = {
        _id: alert._id,
        client: alert.client,
@@ -27,10 +30,12 @@ export default function CancelRequestDialog({alert}) {
        step: 5,
      };
 
-     const res = editAlertFunction(editAlert);
+     const res = await editAlertFunction(editAlert);
      if (res != "Success") {
+       setLoading(false);
        return console.log("Filed");
      } else {
+       setLoading(false);
        return setOpen(false);
      }
   }
@@ -51,28 +56,34 @@ export default function CancelRequestDialog({alert}) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Send Request</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            <span className="f-19 text-center color-black ls-less1">
-              Are you sure that you want to cancel the request of purchase this
-              car ?
-            </span>
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button className=" capital-letter f-18" onClick={handleClose}>
-            Back
-          </Button>
-          <Button
-            onClick={handleCancelRequest}
-            autoFocus
-            color="error"
-            className=" capital-letter f-18"
-          >
-            Cancel Request
-          </Button>
-        </DialogActions>
+        {loading ? (
+          <Loading />
+        ) : (
+          <>
+            <DialogTitle id="alert-dialog-title">Send Request</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                <span className="f-19 text-center color-black ls-less1">
+                  Are you sure that you want to cancel the request of purchase
+                  this car ?
+                </span>
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button className=" capital-letter f-18" onClick={handleClose}>
+                Back
+              </Button>
+              <Button
+                onClick={handleCancelRequest}
+                autoFocus
+                color="error"
+                className=" capital-letter f-18"
+              >
+                Cancel Request
+              </Button>
+            </DialogActions>
+          </>
+        )}
       </Dialog>
     </div>
   );

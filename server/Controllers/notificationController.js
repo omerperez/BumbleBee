@@ -132,8 +132,11 @@ async function createAlert(req, res) {
   }
   
   try {
+    let car = await carSchema.findById(alertFromJason.car);
+    car.inProcess = true;
+    await car.save();
     await notificationSchema.create(createAlert);
-    updateUser.isSendReq = false;
+    updateUser.isSendReq = true;
     await updateUser.save();
     console.log("Success");
     sendEmailNotification(alertFromJason.client, alertFromJason.dealer, 1);
@@ -176,10 +179,12 @@ const editAlert = async (req, res) => {
   }
 
   if (alertFromJason.isCancelRequest && alertFromJason.isCancelRequest == true){
-      let updateUser = await userSchema.findById(createAlert.dealer);
+      let updateUser = await userSchema.findById(alert.client);
+      let carToCancelProcess = await carSchema.findById(alert.car);
       updateUser.isSendReq = false;
+      carToCancelProcess.inProcess = false;
       await updateUser.save();
-
+      await carToCancelProcess.save();
   } else if (alertFromJason.step == 2) {
     alertFromJason.carLicenseFile = req.body.carLicenseFile;
     alertFromJason.dateOfDealerResponse = Date.now();
@@ -204,11 +209,7 @@ const editAlert = async (req, res) => {
     updateAlert.isRead = false;
     await updateAlert.save();
     console.log("Success");
-    sendEmailNotification(
-      alertFromJason.client,
-      alertFromJason.dealer,
-      alertFromJason.step
-    );
+    sendEmailNotification(alert.client, alert.dealer, alertFromJason.step);
     res.send("Success");
   } catch (err) {
     console.log("filed");

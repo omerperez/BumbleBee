@@ -24,6 +24,7 @@ const carSchema = new Schema({
   interiorDesign: String,
   dateOfCreate: Date,
   saleStatus: Boolean,
+  inProcess: Boolean,
   isSell: Boolean,
   clicksCount: Number,
   dealer: { type: Schema.Types.ObjectId, ref: "users" },

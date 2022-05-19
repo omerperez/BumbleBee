@@ -8,6 +8,7 @@ const getAllCars = async (req, res) => {
   const cars = await carSchema.find();
   try {
     res.json(cars);
+    console.log("Send all cars");
   } catch (err){
     console.log(err);
   }
@@ -20,7 +21,7 @@ const getCarById = async (req, res) => {
     car.clicksCount = car.clicksCount + 1;
     await car.save();
     res.json(car);
-    console.log("OK");
+    console.log("Send specific car");
   } catch(err) {
     console.log(err);
   }
@@ -36,7 +37,7 @@ const getCarsByUser = async (req, res) => {
     } else {
       const allCars = await carSchema.find({ isSell: false });
       res.json(allCars.filter((car) => currentUser.cars.includes(car._id)));
-      console.log("OK");
+      console.log("send all cars of specific user");
     }
   } catch {
     console.log("Error");
@@ -74,6 +75,7 @@ async function createCar(req, res) {
     iteriorDesign: carFromJason.interiorDesign,
     dateOfCreate: Date.now(),
     saleStatus: false,
+    inProcess: false,
     isSell: false,
     dealer: req.body.dealer,
   });
@@ -81,7 +83,7 @@ async function createCar(req, res) {
   let updateDealer = await userSchema.findById(req.body.dealer);
   if (updateDealer.role !== 2) {
     return res.status(400).json({
-      message: "Access blocked - you are not an administrator user",
+      message: "Access blocked - you are not a delaer user",
     });
   }
 
@@ -91,6 +93,7 @@ async function createCar(req, res) {
     carList.push(newCar._id);
     updateDealer.cars = carList;
     await updateDealer.save();
+    console.log("Create new car success");
     return res.send(newCar._id);
   } catch (err) {
     res.status(400).json({
@@ -100,10 +103,8 @@ async function createCar(req, res) {
 }
 
 const updateCar = async (req, res) => { 
-
   const carId = { _id: req.body._id};
   const car = await carSchema.findById(carId);
-
   if (car.dealer.valueOf() != req.body.dealer) {
     return res.status(400).json({
       message: "Access blocked - you are not owner on this car",
@@ -117,10 +118,12 @@ const updateCar = async (req, res) => {
     colour: req.body.colour,
     images: car.images,
   });
-  
   carSchema
     .findOneAndUpdate(carId, newCarProperties, { new: true })
-    .then((updateCar) => res.json(updateCar))
+    .then((updateCar) => {
+      res.json(updateCar)
+      console.log("Edit car success");
+    })
     .catch((err) => res.status(400).json("Error: " + err));
 };
 
@@ -130,6 +133,7 @@ const deleteCar = async (req, res) => {
     await userSchema.updateMany({}, { $pull: { cars: req.params.id } });
     await notificationSchema.deleteMany({ car: { $in: _id } });
     carSchema.deleteOne({ _id: _id }).then((results) => {
+      console.log("Delete car success");
       return res.json(results);
     });
   } catch (err) {
@@ -180,6 +184,7 @@ const carsCategoriesViews = async (req, res) => {
       Crossover: carCategoryList[7],
       Electric: carCategoryList[8],
     };
+    console.log("Graph by category data send");
     res.send(obj);
   } catch (err) {
     console.log("fail");

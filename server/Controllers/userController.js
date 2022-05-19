@@ -24,7 +24,7 @@ const getUserRating = async (req, res) => {
   console.log("DONE");
 }
 /* GET */
-const getAllUsers = (req, res) => {
+const getAllUsers = async (req, res) => {
   userSchema.find().then((results) => {
     try {
       res.json(results);

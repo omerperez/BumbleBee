@@ -105,7 +105,7 @@ export default function CarImageGallery({ id, car, user }) {
           <DealerPropertiesDialog
             dealer={dealer}
             role={user.role}
-            showReq={user.isSendReq}
+            showReq={user.isSendReq || car.inProcess}
             car={car}
           />
         ) : (
@@ -113,7 +113,7 @@ export default function CarImageGallery({ id, car, user }) {
             <DealerCard
               dealer={dealer}
               role={user.role}
-              showReq={user.isSendReq}
+              showReq={user.isSendReq || car.inProcess}
               car={car}
             />
           </div>
