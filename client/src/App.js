@@ -20,14 +20,12 @@ import CreateCarPage from './components/Pages/CreateCarPage';
 import ManageUserPage from './components/Pages/ManageUserPage';
 import CarProfilePage from './components/Pages/CarProfilePage';
 import CompaniesPage from './components/Pages/CompaniesPage';
-import { createTheme } from "@mui/material/styles";
 import EditCarForm from './components/CarComponents/EditCarForm';
 import { maxWidthCardApp, minHeightContainerApp } from "./styles/UseStylesMui";
 import MyCars from './components/Pages/MyCars';
 import EditProfile from './components/Pages/EditProfile';
 import ManagerDashboard from './components/Pages/ManagerDashboard';
 import OrderStatus from "./components/Pages/OrderStatus";
-import AccessDenied from "./components/Pages/AccessDeniedPage";
 
 function App() {
   
@@ -122,14 +120,6 @@ function App() {
             element={
               <PrivateRoute>
                 <GovIL />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="access-denied"
-            element={
-              <PrivateRoute>
-                <AccessDenied />
               </PrivateRoute>
             }
           />

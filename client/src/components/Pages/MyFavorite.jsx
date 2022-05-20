@@ -3,10 +3,10 @@ import CarCard from "../CarComponents/CarCard";
 import PageTitle from "../Layout/PageTitle";
 import { useAuth } from "../../contexts/AuthContext";
 import { Alert } from "@mui/material";
-import AccessDenied from "../authComponents/AccessDenied";
 import Loading from "../Layout/Loading";
 import FilterCars from "../CarComponents/FilterCars";
 import calcNetPrice from "../../utils/calcNetPrice";
+import { Navigate } from "react-router-dom";
 
 export default function MyFavorite() {
   const [cars, setCars] = useState([]);
@@ -25,12 +25,7 @@ export default function MyFavorite() {
   }, [currentUser._id]);
 
   if (currentUser.role !== 1) {
-    return (
-      <>
-        <PageTitle page={"Access Denied"} />
-        <AccessDenied />
-      </>
-    );
+    return <Navigate to={-1} />;
   }
 
   if (loading) {

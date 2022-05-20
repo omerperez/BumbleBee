@@ -212,7 +212,7 @@ export default function OtherPropertiesCard({ currentUser, setFlag, flag }) {
           ) : null}
         </div>
       )}
-      {matches550 ? (
+      {matches550 && currentUser.role === 2 ? (
         <div className="mt-4 d-flex justify-content-center">
           {currentUser._id === myUser._id || currentUser.role !== 2 ? null : (
             <div>

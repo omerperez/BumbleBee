@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PageTitle from "../Layout/PageTitle";
 import Loading from "../Layout/Loading";
-import AccessDenied from "../authComponents/AccessDenied";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import AlertLayout from "../AlertsComponents/AlertLayout";
 import TotalAlertStatistic from "../AlertsComponents/TotalAlertStatistic";
@@ -42,12 +42,7 @@ export default function OrderStatus() {
   if (loading) return <Loading />;
   
   if (currentUser && currentUser.role !== 2) {
-    return (
-      <>
-        <PageTitle page={"Access Denied"} />
-        <AccessDenied />
-      </>
-    );
+    return <Navigate to={-1} />;
   }
   
   return (

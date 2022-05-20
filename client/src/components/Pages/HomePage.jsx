@@ -13,7 +13,7 @@ export default function HomePage() {
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
   const [cars, setCars] = useState();
-  
+
   const fetchData = () => {
     setLoading(true);
     const currentUserApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`;
@@ -45,47 +45,49 @@ export default function HomePage() {
 
   return (
     <>
-      <div className="ml-8" style={{ maxWidth: '500px'}}>
+      <div className="ml-8" style={{ maxWidth: "500px" }}>
         <PageTitle page={"Home Page"} />
       </div>
       <div className="pr-1">
         <FilterCars carsState={cars} carsSetState={setCars} />
         <div className="cars-grid">
-          {cars.filter((car) => car.isSell !== true).map((car) => {
-            return (
-              <CarCard
-                key={car._id}
-                _id={car._id}
-                image={
-                  car.mainImage
-                    ? process.env.REACT_APP_S3 + car.mainImage
-                    : car.images && car.images.length > 0
-                    ? process.env.REACT_APP_S3 + car.images[0]
-                    : "/image_not_available.png"
-                }
-                company={car.company ? car.company : car.companyEnglish}
-                model={car.model}
-                year={car.year}
-                used={car.numberOfVehicleOwners}
-                engine={car.engine}
-                km={car.km}
-                price={Math.round((car.price * currencyValue * 100) / 100)}
-                netPrice={Math.round(
-                  (calcNetPrice(car.fuelConsumption, car.price) *
-                    currencyValue *
-                    100) /
-                    100
-                )}
-                user={user}
-                status={
-                  JSON.stringify(user.cars).indexOf(car._id) !== -1
-                    ? true
-                    : false
-                }
-                isOwner={user._id === car.dealer}
-              />
-            );
-          })}
+          {cars
+            .filter((car) => car.isSell !== true)
+            .map((car) => {
+              return (
+                <CarCard
+                  key={car._id}
+                  _id={car._id}
+                  image={
+                    car.mainImage
+                      ? process.env.REACT_APP_S3 + car.mainImage
+                      : car.images && car.images.length > 0
+                      ? process.env.REACT_APP_S3 + car.images[0]
+                      : "/image_not_available.png"
+                  }
+                  company={car.company ? car.company : car.companyEnglish}
+                  model={car.model}
+                  year={car.year}
+                  used={car.numberOfVehicleOwners}
+                  engine={car.engine}
+                  km={car.km}
+                  price={Math.round((car.price * currencyValue * 100) / 100)}
+                  netPrice={Math.round(
+                    (calcNetPrice(car.fuelConsumption, car.price) *
+                      currencyValue *
+                      100) /
+                      100
+                  )}
+                  user={user}
+                  status={
+                    JSON.stringify(user.cars).indexOf(car._id) !== -1
+                      ? true
+                      : false
+                  }
+                  isOwner={user._id === car.dealer}
+                />
+              );
+            })}
         </div>
       </div>
     </>

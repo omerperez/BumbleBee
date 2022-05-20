@@ -3,7 +3,7 @@ import CarCard from "../CarComponents/CarCard";
 import PageTitle from "../Layout/PageTitle";
 import { useAuth } from "../../contexts/AuthContext";
 import { Alert } from "@mui/material";
-import AccessDenied from "../authComponents/AccessDenied";
+import { Navigate } from "react-router-dom";
 import Loading from "../Layout/Loading";
 import FilterCars from "../CarComponents/FilterCars";
 import calcNetPrice from "../../utils/calcNetPrice";
@@ -25,12 +25,7 @@ export default function MyCars() {
   }, []);
 
   if (currentUser.role !== 2) {
-    return (
-      <>
-        <PageTitle page={"Access Denied"} />
-        <AccessDenied />
-      </>
-    );
+    return <Navigate to={-1} />;
   }
 
   if (loading) {

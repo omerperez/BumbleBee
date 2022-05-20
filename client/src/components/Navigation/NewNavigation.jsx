@@ -60,7 +60,7 @@ export default function NewNavigation({socket, children }) {
   const [check, setCheck] = useState("/homepage");
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  const matches = useMediaQuery("(min-height:570px)");
+  const matches = useMediaQuery("(min-height:0px)");
   const max800 = useMediaQuery("(max-width:800px)");
   const navigationWidth = useMediaQuery("(max-width:500px)");
 
