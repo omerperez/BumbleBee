@@ -144,7 +144,8 @@ export default function EditProfile({ setOpen, mobileNumber, setFlag, flag }) {
               <Form.Control
                 name="firstName"
                 type="text"
-                value={values.firstName ? values.firstName : user.firstName}
+                defaultValue={user.firstName}
+                value={values.firstName}
                 onChange={(e) => {
                   carChange(e);
                 }}
@@ -155,7 +156,8 @@ export default function EditProfile({ setOpen, mobileNumber, setFlag, flag }) {
               <Form.Control
                 name="lastName"
                 type="text"
-                value={values.lastName ? values.lastName : user.lastName}
+                defaultValue={user.lastName}
+                value={values.lastName}
                 onChange={(e) => {
                   carChange(e);
                 }}
@@ -167,7 +169,8 @@ export default function EditProfile({ setOpen, mobileNumber, setFlag, flag }) {
             <Form.Control
               name="email"
               type="email"
-              value={values.email ? values.email : user.email}
+              defaultValue={user.email}
+              value={values.email}
               onChange={(e) => {
                 carChange(e);
               }}

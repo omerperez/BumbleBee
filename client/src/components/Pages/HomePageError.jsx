@@ -6,10 +6,9 @@ import Loading from "../Layout/Loading";
 import { useAuth } from "../../contexts/AuthContext";
 import axios from "axios";
 import calcNetPrice from "../../utils/calcNetPrice";
-import NoResultsAlert from "../Layout/NoResultsAlert";
+import AlertOfAccess from "../Layout/AlertOfAccess";
 
-export default function HomePage() {
-  
+export default function HomePageError() {
   const { currentUser, currencyValue } = useAuth();
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
@@ -34,13 +33,15 @@ export default function HomePage() {
     );
   };
 
-   useEffect(() => {
-     fetchData();
-   }, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  if(loading) {
+  if (loading) {
     return <Loading />;
   }
+
+  if (cars === null) return "";
 
   return (
     <>
@@ -49,6 +50,7 @@ export default function HomePage() {
       </div>
       <div className="pr-1">
         <FilterCars carsState={cars} carsSetState={setCars} />
+        <AlertOfAccess />
         <div className="cars-grid">
           {cars
             .filter((car) => car.isSell !== true)
@@ -92,3 +94,4 @@ export default function HomePage() {
     </>
   );
 }
+

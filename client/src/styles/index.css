@@ -351,8 +351,8 @@ input{
 .car-card-div {
   display: flex;
   justify-content: center;
-  margin-top: 10px;
-  margin-bottom: 12px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   padding: 10px;
 }
 .mt-20{

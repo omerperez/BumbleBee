@@ -13,6 +13,8 @@ import {
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import Button from "@mui/material/Button";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
+import { Alert } from "@mui/material";
+import NoResultsAlert from "../Layout/NoResultsAlert";
 
 export default function FilterCars({ carsState, carsSetState }) {
   const [filters, setFilters] = useState(false);
@@ -27,6 +29,7 @@ export default function FilterCars({ carsState, carsSetState }) {
   const [maxKm, setMaxKm] = useState(10000000);
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(10000000);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (company === null && engine === null) {
@@ -181,9 +184,19 @@ export default function FilterCars({ carsState, carsSetState }) {
                 label="Max Price"
                 type="number"
                 value={maxPrice && maxPrice !== 10000000 ? maxPrice : ""}
-                onChange={(e) =>
-                  setMaxPrice(handleChangeValueNumber(e.target.value, 10000000))
-                }
+                onChange={(e) => {
+                  if (e.target.value < 0) {
+                    setError("Please enter only positive numbers");
+                    setMaxPrice(
+                      handleChangeValueNumber(e.target.value, 10000000)
+                    );
+                  } else {
+                    setError("");
+                    setMaxPrice(
+                      handleChangeValueNumber(e.target.value, 10000000)
+                    );
+                  }
+                }}
               ></TextField>
             </FormControl>
             <FormControl fullWidth className="m-1 plr-10px">
@@ -211,6 +224,16 @@ export default function FilterCars({ carsState, carsSetState }) {
           </>
         ) : null}
       </div>
+
+      {error ? (
+        <div className="p-1">
+          <Alert sx={{ mb: 2, mt: 2 }} severity="info">
+            {error}
+          </Alert>
+        </div>
+      ) : carsState.length == 0 ? (
+        <NoResultsAlert />
+      ) : null}
     </>
   );
 }

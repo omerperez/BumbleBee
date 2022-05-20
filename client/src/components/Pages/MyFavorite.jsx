@@ -6,7 +6,7 @@ import { Alert } from "@mui/material";
 import Loading from "../Layout/Loading";
 import FilterCars from "../CarComponents/FilterCars";
 import calcNetPrice from "../../utils/calcNetPrice";
-import { Navigate } from "react-router-dom";
+import {Navigate} from "react-router-dom";
 
 export default function MyFavorite() {
   const [cars, setCars] = useState([]);
@@ -14,9 +14,7 @@ export default function MyFavorite() {
   const { currentUser, currencyValue } = useAuth();
 
   useEffect(() => {
-    fetch(
-      `${process.env.REACT_APP_SERVER_API}/car/my-favorite/${currentUser._id}`
-    )
+    fetch(`${process.env.REACT_APP_SERVER_API}/car/user/${currentUser._id}`)
       .then((response) => response.json())
       .then((data) => {
         setLoading(false);
@@ -25,7 +23,7 @@ export default function MyFavorite() {
   }, [currentUser._id]);
 
   if (currentUser.role !== 1) {
-    return <Navigate to={-1} />;
+    return <Navigate to="/homepage-error" />;
   }
 
   if (loading) {

@@ -89,23 +89,33 @@ export default function CarCard({ _id, image, company, model, price, netPrice, c
               : company + " " + model}
           </b>
           <br />
-          {currency == 1
-            ? "$" + numberWithCommas(price)
-            : currency == 2
-            ? numberWithCommas(price) + "€"
-            : numberWithCommas(price) + "₪"}
-          <br />
-          {currency == 1
-            ? "$" + numberWithCommas(netPrice)
-            : currency == 2
-            ? numberWithCommas(netPrice) + "€"
-            : numberWithCommas(netPrice) + "₪"}
+          <span className="mr-2 w-400" style={{ color: "#3CB371" }}>
+            Price:
+          </span>
+          <span className="fw-100">
+            {currency == 1
+              ? "$" + numberWithCommas(price)
+              : currency == 2
+              ? numberWithCommas(price) + "€"
+              : numberWithCommas(price) + "₪"}
+            <br />
+          </span>
+          <span className="mr-2 fw-400" style={{ color: "#FF6347" }}>
+            Taxes:
+          </span>
+          <span className="fw-100">
+            {currency == 1
+              ? "$" + numberWithCommas(netPrice)
+              : currency == 2
+              ? numberWithCommas(netPrice) + "€"
+              : numberWithCommas(netPrice) + "₪"}
+          </span>
           <div className="text-center">
             <Link
               to={`/car-profile/${_id}`}
-              className="cancel-underline f-14 capital-letter info-text-color"
+              className="cancel-underline capital-letter info-text-color" //f-14
             >
-              click for more info
+              more info
             </Link>
           </div>
         </Typography>
