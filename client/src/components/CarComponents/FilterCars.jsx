@@ -173,9 +173,15 @@ export default function FilterCars({ carsState, carsSetState }) {
                 label="Min Price"
                 value={minPrice && minPrice !== 0 ? minPrice : ""}
                 type="number"
-                onChange={(e) =>
-                  setMinPrice(handleChangeValueNumber(e.target.value, 0))
-                }
+                onChange={(e) => {
+                  if (e.target.value < 0) {
+                    setError("Please enter only positive numbers");
+                    setMinPrice(handleChangeValueNumber(e.target.value, 0));
+                  } else {
+                    setError("");
+                    setMinPrice(handleChangeValueNumber(e.target.value, 0));
+                  }
+                }}
               ></TextField>
             </FormControl>
             <FormControl fullWidth className="m-1 plr-10px">
@@ -205,9 +211,15 @@ export default function FilterCars({ carsState, carsSetState }) {
                 label="Min Kilometer"
                 type="number"
                 value={minKm && minKm !== 0 ? minKm : ""}
-                onChange={(e) =>
-                  setMinKm(handleChangeValueNumber(e.target.value, 0))
-                }
+                onChange={(e) => {
+                  if (e.target.value < 0) {
+                    setError("Please enter only positive numbers");
+                    setMinKm(handleChangeValueNumber(e.target.value, 0));
+                  } else {
+                    setError("");
+                    setMinKm(handleChangeValueNumber(e.target.value, 0));
+                  }
+                }}
               ></TextField>
             </FormControl>
             <FormControl fullWidth className="m-1 plr-10px">
@@ -216,9 +228,15 @@ export default function FilterCars({ carsState, carsSetState }) {
                 label="Max Kilometer"
                 value={maxKm && maxKm !== 10000000 ? maxKm : ""}
                 type="number"
-                onChange={(e) =>
-                  setMaxKm(handleChangeValueNumber(e.target.value, 10000000))
-                }
+                onChange={(e) => {
+                  if (e.target.value < 0) {
+                    setError("Please enter only positive numbers");
+                    setMaxKm(handleChangeValueNumber(e.target.value, 10000000));
+                  } else {
+                    setError("");
+                    setMaxKm(handleChangeValueNumber(e.target.value, 10000000));
+                  }
+                }}
               ></TextField>
             </FormControl>
           </>
