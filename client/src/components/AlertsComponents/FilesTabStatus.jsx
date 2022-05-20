@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
-import {downloadFiles, downloadFile } from "../../utils/functions";
+import { Box, Tab } from "@mui/material";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
+import {downloadFiles } from "../../utils/functions";
 import { error403 } from "../images/projectImages";
 
 export default function FilesTabStatus({ step, payment, licenses, govil, dhl, shipping }) {

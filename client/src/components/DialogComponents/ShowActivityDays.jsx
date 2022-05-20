@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import { DialogContent } from "@mui/material";
-import { Button } from "@mui/material";
 import DealerAvailability from "../ProfileComponents/DealerAvailability";
+import { DialogContent, DialogTitle, Dialog, Button } from "@mui/material";
 
 export default function ShowActivityDays({ activityDays, activityDaysTime, isCanEdit }) {
   

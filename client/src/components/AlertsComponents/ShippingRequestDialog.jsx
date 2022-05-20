@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import { error403, uploadMultipleSucces } from "../images/projectImages";
-import { Button, FormControl } from "@mui/material";
-import TextField from "@mui/material/TextField";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
+import { error403 } from "../images/projectImages";
 import { editAlertFunction } from "./AlertFunction";
 import { useAuth } from "../../contexts/AuthContext";
 import Loading from "../Layout/Loading";
+import { Alert } from "react-bootstrap";
 
 export default function ShippingRequestDialog({ alert }) {
 
   const { socket } = useAuth();
   const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState("");
+  const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
-  const [files, setFiles] = useState();
-  const [comment, setComment] = useState("");
-  
+  const [files, setFiles] = useState([]);
+
   useEffect(() => {
     socket?.emit("newUser", alert.dealer);
   }, [socket, alert.dealer]);
@@ -31,6 +32,10 @@ export default function ShippingRequestDialog({ alert }) {
     setOpen(false);
   };
   const handleClickSubmit = async () => {
+    if(files.length === 0){
+      return setError("Please upload Shipping files");
+    }
+    setError("");
     setLoading(true);
     const editAlert = {
       _id: alert._id,
@@ -42,7 +47,7 @@ export default function ShippingRequestDialog({ alert }) {
       isRead: false,
     };
     const res = await editAlertFunction(editAlert, socket);
-    if (res.data !== "Success") {
+    if (res !== "Success") {
       return console.log("Filed");
     } else {
       setLoading(false);
@@ -70,6 +75,7 @@ export default function ShippingRequestDialog({ alert }) {
           <Loading />
         ) : (
           <DialogContent>
+            <div>{error && <Alert variant="danger">{error}</Alert>}</div>
             <DialogContentText
               id="alert-dialog-description"
               className="text-center mt-2"
@@ -81,7 +87,7 @@ export default function ShippingRequestDialog({ alert }) {
                   width={"60%"}
                   src={
                     files && files.length > 0
-                      ? uploadMultipleSucces
+                      ? "/files/check-icon.png"
                       : "/files/shipping.svg"
                   }
                   onError={error403}
@@ -96,18 +102,6 @@ export default function ShippingRequestDialog({ alert }) {
                 className="display-none"
                 onChange={(e) => setFiles(e.target.files)}
               />
-              <FormControl fullWidth className="mt-3">
-                <TextField
-                  rows={3}
-                  label="Comment"
-                  name="comment"
-                  type="text"
-                  value={comment !== "" ? comment : ""}
-                  onChange={(e) => {
-                    setComment(e.target.value);
-                  }}
-                />
-              </FormControl>
             </DialogContentText>
           </DialogContent>
         )}

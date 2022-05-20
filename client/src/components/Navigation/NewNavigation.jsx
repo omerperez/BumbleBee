@@ -1,15 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Alert from "@mui/material/Alert";
 import {
   clientMenuItems,
   managerMenuItems,
@@ -18,6 +8,8 @@ import {
 import { useAuth } from "../../contexts/AuthContext";
 import MuiDrawer from "@mui/material/Drawer";
 import UserProfile from "./UserProfile";
+import Actions from "../Layout/Actions";
+import { error403 } from "../images/projectImages";
 import { Link, useNavigate } from "react-router-dom";
 import {
   defaultNavigationTextStyle,
@@ -26,11 +18,21 @@ import {
   closedMixin,
   AppBar,
 } from "../../styles/UseStylesMui";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import Typography from "@mui/material/Typography";
-import Toolbar from "@mui/material/Toolbar";
-import Actions from "../Layout/Actions";
-import { error403 } from "../images/projectImages";
+import {
+  Box,
+  List,
+  Divider,
+  IconButton,
+  ListItem,
+  Alert,
+  useMediaQuery,
+  Typography,
+  Toolbar,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",

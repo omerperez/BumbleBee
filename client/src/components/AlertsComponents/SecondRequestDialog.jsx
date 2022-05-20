@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 import { error403, uploadMultipleSucces } from "../images/projectImages";
-import { Button, FormControl } from "@mui/material";
-import TextField from "@mui/material/TextField";
 import { editAlertFunction } from "./AlertFunction";
 import { useAuth } from "../../contexts/AuthContext";
 import Loading from "../Layout/Loading";
+import { Alert } from "react-bootstrap";
 
 export default function SecondRequestDialog({ alert }) {
   const {socket} = useAuth();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [files, setFiles] = useState();
-  const [comment, setComment] = useState("");
-  
+  const [files, setFiles] = useState([]);
+  const [error, setError] = useState("");
+
   useEffect(() => {
     socket?.emit("newUser", alert.dealer);
   }, [socket, alert.dealer]);
@@ -29,6 +31,10 @@ export default function SecondRequestDialog({ alert }) {
     setOpen(false);
   };
   const handleClickSubmit = async () => {
+    if(files.length === 0){
+      return setError("Please upload license files");
+    }
+    setError("")
     setLoading(true);
     const editAlert = {
       _id: alert._id,
@@ -41,7 +47,7 @@ export default function SecondRequestDialog({ alert }) {
     const res = await editAlertFunction(editAlert, socket);
     if (res.data !== "Success") {
       console.log("Filed");
-      // setError(res.data);
+      setError(res.data);
     } else {
       setLoading(false);
       setOpen(false);
@@ -69,6 +75,7 @@ export default function SecondRequestDialog({ alert }) {
           <Loading />
         ) : (
           <DialogContent>
+            <div>{error && <Alert variant="danger">{error}</Alert>}</div>
             <DialogContentText
               id="alert-dialog-description"
               className="text-center mt-2"
@@ -80,7 +87,7 @@ export default function SecondRequestDialog({ alert }) {
                   width={"60%"}
                   src={
                     files && files.length > 0
-                      ? uploadMultipleSucces
+                      ? "/files/check-icon.png"
                       : "/files/licenses.svg"
                   }
                   onError={error403}
@@ -95,18 +102,6 @@ export default function SecondRequestDialog({ alert }) {
                 className="display-none"
                 onChange={(e) => setFiles(e.target.files)}
               />
-              <FormControl fullWidth className="mt-3">
-                <TextField
-                  rows={3}
-                  label="Comment"
-                  name="comment"
-                  type="text"
-                  value={comment !== "" ? comment : ""}
-                  onChange={(e) => {
-                    setComment(e.target.value);
-                  }}
-                />
-              </FormControl>
             </DialogContentText>
           </DialogContent>
         )}

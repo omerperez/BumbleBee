@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogTitle from "@mui/material/DialogTitle";
 import { useAuth } from "../../contexts/AuthContext";
-import { DialogContent } from "@mui/material";
 import { Form, Alert } from "react-bootstrap";
-import { Button } from "@mui/material";
 import Loading from "../Layout/Loading";
+import {
+  DialogContent,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  Button,
+} from "@mui/material";
 
 export default function ChangePasswordDialog() {
   const [open, setOpen] = useState(false);

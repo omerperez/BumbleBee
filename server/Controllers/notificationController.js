@@ -163,7 +163,7 @@ const markAsRead = async (req, res) => {
 };
 
 const editAlert = async (req, res) => {
-
+  
   const alertFromJason = JSON.parse(req.body.alert);
   const alertId = { _id: req.params.id };
   const alert = await notificationSchema.findById(alertId);

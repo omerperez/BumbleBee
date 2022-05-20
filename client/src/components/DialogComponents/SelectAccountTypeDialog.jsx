@@ -1,22 +1,17 @@
 import React, { useState } from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import { DialogContent, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { error403 } from "../images/projectImages";
+import { Dialog, DialogTitle, DialogContent } from "@mui/material";
 
 export default function SelectAccountTypeDialog() {
 
   const [open, setOpen] = useState(false);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
-
 
   return (
     <div>

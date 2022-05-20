@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
-import Grow from "@mui/material/Grow";
-import Paper from "@mui/material/Paper";
-import Popper from "@mui/material/Popper";
-import MenuItem from "@mui/material/MenuItem";
-import MenuList from "@mui/material/MenuList";
-import { IconButton } from "@mui/material";
-import useLocalStorage from "../../utils/useLocalStorage";
-import Fade from "@mui/material/Fade";
+import {
+  Fade,
+  IconButton,
+  MenuList,
+  MenuItem,
+  Popper,
+  Paper,
+  ClickAwayListener,
+} from "@mui/material";
 
 const coinsIconsUrl = "/images/";
 

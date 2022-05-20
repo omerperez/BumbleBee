@@ -1,12 +1,11 @@
 import * as React from "react";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import Button from "@mui/material/Button";
+import { ButtonGroup, Button } from "@mui/material";
 
 export default function ChangeCurrency({flag, setFlag}) {
 
   const changeFlag = () => setFlag(!flag);
   return (
-    <ButtonGroup disableElevation variant="contained">
+    <ButtonGroup disableElevation variant="contained" sx={{ height: '100%', width: '100%'}}>
       <Button variant={flag ? "contained" : "outlined"} onClick={changeFlag}>
         USD
       </Button>

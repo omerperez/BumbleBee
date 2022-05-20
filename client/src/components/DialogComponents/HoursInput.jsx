@@ -3,10 +3,12 @@ import { Form } from "react-bootstrap";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import TimePicker from "@mui/lab/TimePicker";
-import TextField from "@mui/material/TextField";
-import Switch from "@mui/material/Switch";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import {
+  TextField,
+  Switch,
+  FormControlLabel,
+  useMediaQuery,
+} from "@mui/material";
 
 export default function HoursInput({
   title,

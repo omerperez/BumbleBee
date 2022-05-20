@@ -1,10 +1,9 @@
 import React from "react";
-import Typography from "@mui/material/Typography";
 import "./Navigation.modules.css";
 import { useAuth } from '../../contexts/AuthContext';
 import { error403 } from "../images/projectImages";
 import {userProfileStyles} from "../../styles/UseStylesMui";
-import Chip from "@mui/material/Chip";
+import { Chip, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export default function UserProfile() {

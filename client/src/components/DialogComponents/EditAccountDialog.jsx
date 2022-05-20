@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import { DialogContent } from "@mui/material";
-import { Link } from "react-router-dom";
 import EditProfile from "../Pages/EditProfile";
 import { Button } from "react-bootstrap";
+import { DialogContent, DialogTitle, Dialog } from "@mui/material";
 
 export default function EditAccountDialog({ mobileNumber, setFlag, flag }) {
   const [open, setOpen] = useState(false);

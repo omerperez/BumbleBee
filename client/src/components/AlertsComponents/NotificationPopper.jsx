@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from "react";
-import Box from "@mui/material/Box";
-import Popper from "@mui/material/Popper";
-import Fade from "@mui/material/Fade";
-import Badge from "@mui/material/Badge";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import {
+  Box,
+  Popper,
+  Fade,
+  Badge,
+  useMediaQuery,
+  List,
+} from "@mui/material";
 import PropperListAlerts from "./PropperListAlerts";
-import List from "@mui/material/List";
 import { error403 } from "../images/projectImages";
 
 export default function NotificationPopper({ count, alerts, setFlag }) {

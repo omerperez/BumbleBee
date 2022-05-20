@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
 import axios from "axios";
 import RatingDealer from "../ProfileComponents/RatingDealer";
 import Loading from "../Layout/Loading";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
+} from "@mui/material";
 
 const api = axios.create({ baseURL: process.env.REACT_APP_SERVER_API });
 

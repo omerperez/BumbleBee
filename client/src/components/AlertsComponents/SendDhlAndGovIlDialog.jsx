@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
+import { error403 } from "../images/projectImages";
 import {
-  error403,
-  uploadMultipleSucces,
-} from "../images/projectImages";
-import { Button } from "@mui/material";
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 import { editAlertFunction } from "./AlertFunction";
 import { useAuth } from "../../contexts/AuthContext";
 import Loading from "../Layout/Loading";
+import { Alert } from "react-bootstrap";
 
 export default function SendDhlAndGovIlDialog({ alert }) {
   const { socket } = useAuth();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [dhl, setDhl] = useState();
-  const [gov, setGov] = useState();
-  
+  const [dhl, setDhl] = useState([]);
+  const [gov, setGov] = useState([]);
+  const [error, setError] = useState("");
+
   useEffect(() => {
     socket?.emit("newUser", alert.dealer);
   }, [socket, alert.dealer]);
@@ -33,6 +34,12 @@ export default function SendDhlAndGovIlDialog({ alert }) {
   };
 
   const handleClickSubmit = async () => {
+    if(dhl.length === 0){
+      return setError("Please upload DHL files");
+    } else if (gov.length === 0){
+      return setError("Please upload GOV IL files");
+    }
+    setError("");
     setLoading(true);
     const editAlert = {
       _id: alert._id,
@@ -45,8 +52,8 @@ export default function SendDhlAndGovIlDialog({ alert }) {
     };
 
     const res = await editAlertFunction(editAlert, socket);
-    if (res.data !== "Success") {
-      console.log("Filed");
+    if (res !== "Success") {
+      setError(res);
     } else {
       setLoading(false);
       setOpen(false);
@@ -76,6 +83,7 @@ export default function SendDhlAndGovIlDialog({ alert }) {
           <Loading />
         ) : (
           <DialogContent>
+            <div>{error && <Alert variant="danger">{error}</Alert>}</div>
             <DialogContentText
               id="alert-dialog-description"
               className="text-center"
@@ -89,7 +97,7 @@ export default function SendDhlAndGovIlDialog({ alert }) {
                       width={200}
                       src={
                         gov && gov.length > 0
-                          ? uploadMultipleSucces
+                          ? "/files/check-icon.png"
                           : "/files/gov.svg"
                       }
                       onError={error403}
@@ -114,7 +122,7 @@ export default function SendDhlAndGovIlDialog({ alert }) {
                       width={200}
                       src={
                         dhl && dhl.length > 0
-                          ? uploadMultipleSucces
+                          ? "/files/check-icon.png"
                           : "/files/dhl.svg"
                       }
                       onError={error403}

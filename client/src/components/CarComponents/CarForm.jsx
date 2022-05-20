@@ -1,28 +1,31 @@
 import React, { useEffect, useState } from "react";
 import useForm from "../../utils/useForm";
 import { useAuth } from "../../contexts/AuthContext";
-import TextField from "@mui/material/TextField";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import InputLabel from "@mui/material/InputLabel";
-import { Button, FormControl } from "@mui/material";
-import LoadingButton from "@mui/lab/LoadingButton";
-import { carsProperties, headersEnglisCarsApi } from "./exportForSelect";
-import AlertTitle from "@mui/material/AlertTitle";
-import Alert from "@mui/material/Alert";
+import { carsProperties } from "./exportForSelect";
 import { checkCarsFields, CheckDisableStatus } from "./carFunctions";
-import SaveIcon from "@mui/icons-material/Save";
 import ChangeCurrency from "../Layout/ChangeCurrency"
 import {
-  uploadMultipleSucces,
   uploadMultipleEmpty,
-  uploadMainSucces,
   uploadMainEmpty,
   error403,
 } from "../images/projectImages";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { Carousel } from "react-bootstrap";
 import useLocalStorage from "../../utils/useLocalStorage";
+import AlertInfoCarForm from "../Layout/AlertInfoCarForm";
+import SaveIcon from "@mui/icons-material/Save";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { Carousel } from "react-bootstrap";
+import {
+  Button,
+  FormControl,
+  TextField,
+  Select,
+  MenuItem,
+  InputLabel,
+  AlertTitle,
+  Alert,
+  useMediaQuery,
+} from "@mui/material";
+
 export default function CarForm() {
   
   const [values, carChange] = useForm();
@@ -149,8 +152,12 @@ export default function CarForm() {
         validImageFiles.push(file);
       }
     }
-    if (validImageFiles.length) {
+    if (validImageFiles.length > 2) {
       setImageFiles(validImageFiles);
+      return;
+    }
+    else {
+      setError("3 Images Minimum");  
       return;
     }
     setError("Selected images are not of valid type!");
@@ -192,8 +199,10 @@ export default function CarForm() {
         <Alert severity="error" className="mt-3 m-4 alert-border">
           <AlertTitle>{error}</AlertTitle>
         </Alert>
-      ) : null}
-      <div className="d-flex row">
+      ) : (
+        <AlertInfoCarForm />
+      )}
+      <div className="d-flex row mt-3">
         <h5>General Information</h5>
         <div className="col-12 col-sm-3 col-lg-2">
           <FormControl fullWidth className="mt-3">
@@ -467,7 +476,7 @@ export default function CarForm() {
             <Select
               label="color"
               name="colour"
-              value={values.colour ? values.colour : ""}
+              value={values.colour ??  ""}
               onChange={(e) => carChange(e)}
               required
             >
@@ -493,8 +502,9 @@ export default function CarForm() {
             <TextField
               label="km"
               name="km"
+              min="0"
               type="number"
-              value={values.km && values.km > -1 ? values.km : ""}
+              value={values.km}
               onChange={(e) => {
                 carChange(e);
                 if (e.target.value < 0) {
@@ -536,14 +546,14 @@ export default function CarForm() {
           </FormControl>
         </div>
         <div className="col-12 col-sm-4 row mt-3">
-          <div className="col-9">
+          <div className="col-8 col-sm-9">
             <FormControl fullWidth>
               <TextField
                 disabled={CheckDisableStatus(values)}
                 label="Price"
                 name="price"
                 type="number"
-                value={values.price && values.price > -1 ? values.price : ""}
+                value={values.price ?? ""}
                 onChange={(e) => {
                   carChange(e);
                   if (e.target.value < 0) {
@@ -559,90 +569,98 @@ export default function CarForm() {
               />
             </FormControl>{" "}
           </div>
-          <div className="col-3 d-flex">
+          <div className="col-4 col-sm-3">
             <ChangeCurrency flag={usdToeur} setFlag={setUsdToeur} />
           </div>
         </div>
-        <div className="col-12 col-sm-4"></div>
-        <div className="d-flex mt-4">
-          <label htmlFor={"main"}>
-            <img
-              alt="main_image"
-              className="cur-pointer br-15"
-              width={values.main ? 300 : 300}
-              height={values.main ? 200 : 200}
-              src={values.main ? carMain : uploadMainEmpty}
-              onError={error403}
-            />
-          </label>
-          <input
-            id="main"
-            type="file"
-            accept="image/png, image/jpeg"
-            name="main"
-            aria-required="true"
-            className="display-none"
-            onChange={(e) => {
-              carChange(e);
-              ImageHandler(e);
-            }}
-          />
-          {images.length > 0 ? (
-            <Carousel fade interval={null} className="mr-2">
-              {images.map((image, key) => {
-                return (
-                  <Carousel.Item>
-                    <img
-                      className="cover-back br-15"
-                      src={image}
-                      width={300}
-                      height={200}
-                      alt={"Car image"}
-                      onError={error403}
-                    />
-                  </Carousel.Item>
-                );
-              })}
-            </Carousel>
-          ) : null}
-          <label
-            htmlFor={"image"}
-            style={images.length > 0 ? { maxHeight: 20, width: 60 } : null}
-          >
-            {images.length > 0 ? (
-              <div className="ml-2 text-center cur-pointer p-5 br-10 border-1-black app-background color-white">
-                Edit
-              </div>
-            ) : (
+        <div className={"d-flex row"}>
+          <div className="col-12 col-md-2 mt-4">
+            <label htmlFor={"main"}>
               <img
-                alt="other_images"
-                className="cur-pointer ml-25"
-                width={300}
-                height={200}
-                src={
-                  values.image && values.image.length
-                    ? uploadMultipleSucces
-                    : uploadMultipleEmpty
-                }
+                alt="main_image"
+                className="cur-pointer br-15"
+                width={matches ? "100%" : 300}
+                height={matches ? "100%" : 200}
+                src={values.main ? carMain : uploadMainEmpty}
                 onError={error403}
               />
-            )}
-          </label>
-          <input
-            id="image"
-            type="file"
-            accept="image/png, image/jpeg"
-            name="image"
-            multiple
-            aria-required="true"
-            className="display-none"
-            onChange={(e) => {
-              carChange(e);
-              changeHandler(e);
-            }}
-          />
-          {matches ? <br /> : null}
-          <div className={matches ? "m-auto" : "jc-end"}>
+            </label>
+            <input
+              id="main"
+              type="file"
+              accept="image/png, image/jpeg"
+              name="main"
+              aria-required="true"
+              className="display-none"
+              onChange={(e) => {
+                carChange(e);
+                ImageHandler(e);
+              }}
+            />
+          </div>
+          <div className="col-12 col-md-3 justify-content-center d-flex mt-4">
+            {images.length > 0 ? (
+              <Carousel fade interval={null} className="mr-2">
+                {images.map((image, key) => {
+                  return (
+                    <Carousel.Item>
+                      <img
+                        className="cover-back br-15"
+                        src={image}
+                        width={matches ? 200 : 300}
+                        height={200}
+                        alt={"Car image"}
+                        onError={error403}
+                      />
+                    </Carousel.Item>
+                  );
+                })}
+              </Carousel>
+            ) : null}
+            <label
+              htmlFor={"image"}
+              style={images.length > 0 ? { maxHeight: 20, width: 60 } : null}
+            >
+              {images.length > 0 ? (
+                <div className="ml-2 text-center cur-pointer p-5 br-10 border-1-black app-background color-white">
+                  Edit
+                </div>
+              ) : (
+                <img
+                  alt="other_images"
+                  className={matches ? "cur-pointer" : "cur-pointer ml-25"}
+                  width={matches ? "100%" : 300}
+                  height={matches ? "100%" : 200}
+                  src={uploadMultipleEmpty}
+                  onError={error403}
+                />
+              )}
+            </label>
+            <input
+              id="image"
+              type="file"
+              accept="image/png, image/jpeg"
+              name="image"
+              multiple
+              aria-required="true"
+              className="display-none"
+              onChange={(e) => {
+                if (e.target.files.length > 2) {
+                  carChange(e);
+                  changeHandler(e);
+                } else {
+                  changeHandler(e);
+                }
+              }}
+            />
+          </div>
+          <div
+            className={
+              matches
+                ? "m-auto col text-center mt-3 mb-2"
+                : "jc-end mt-3 col text-end"
+            }
+          >
             {loading ? (
               <LoadingButton
                 className="creat-car-btn"

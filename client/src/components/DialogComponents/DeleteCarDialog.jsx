@@ -1,19 +1,12 @@
 import React, { useState } from "react";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogTitle from "@mui/material/DialogTitle";
-import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
-import { useAuth } from "../../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Button, Dialog, DialogActions, DialogTitle } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const api = axios.create({ baseURL: process.env.REACT_APP_SERVER_API });
 
 export default function DeleteCarDialog({id, name, role}) {
   const [open, setOpen] = useState(false);
-  const {currentUser, deleteCar } = useAuth();
-  const navigate = useNavigate();
 
   const handleClickOpen = () => {
     setOpen(true);

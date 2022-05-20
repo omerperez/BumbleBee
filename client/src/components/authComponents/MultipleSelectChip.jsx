@@ -1,10 +1,12 @@
 import React from "react";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import ListItemText from "@mui/material/ListItemText";
-import Checkbox from "@mui/material/Checkbox";
+import {
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+  ListItemText,
+  Checkbox,
+} from "@mui/material";
 
 const days = [
   "Sunday",

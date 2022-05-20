@@ -1,12 +1,14 @@
 import React, {useState,useEffect} from "react";
-import Button from "@mui/material/Button";
 import Chart from 'chart.js/auto';
-import {Pie} from 'react-chartjs-2'
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogTitle from "@mui/material/DialogTitle";
+import { Pie } from 'react-chartjs-2'
 import axios from "axios";
 import Loading from "../Layout/Loading";
+import {
+  Button,
+  DialogTitle,
+  DialogActions,
+  Dialog,
+} from "@mui/material";
 
 import {getCategoriesPerUser} from "../adminComponents/StatisticsFunctions";
 

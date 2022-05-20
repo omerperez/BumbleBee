@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-import Card from "@mui/material/Card";
-import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import { error403 } from "../images/projectImages";
 import DeleteCarDialog from "../DialogComponents/DeleteCarDialog";
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import StarIcon from "@mui/icons-material/Star";
-import { Button } from "@mui/material";
 import { useAuth } from "../../contexts/AuthContext";
-import Chip from "@mui/material/Chip";
-import CarRentalIcon from "@mui/icons-material/CarRental";
 import {numberWithCommas} from "./carFunctions";
+import { Card, Typography, Button, Chip } from "@mui/material";
+import CarRentalIcon from "@mui/icons-material/CarRental";
+import StarIcon from "@mui/icons-material/Star";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
 
 export default function CarCard({ _id, image, company, model, price, netPrice, currentPage, user, isSale, isOwner }) {
 

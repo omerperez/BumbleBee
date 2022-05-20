@@ -1,11 +1,11 @@
 import React,{useState, useEffect} from 'react';
-import Chart from 'chart.js/auto';
-import {Bar , Pie} from 'react-chartjs-2'
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import InputLabel from "@mui/material/InputLabel";
-import { FormControl } from "@mui/material";
-import { carsProperties } from '../CarComponents/exportForSelect';
+import {
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  useMediaQuery,
+} from "@mui/material";
 import Loading from "../Layout/Loading";
 import axios from "axios";
 import {
@@ -17,7 +17,6 @@ import {
 } from "./StatisticsFunctions";
 import DiagramGraph from "./DiagramGraph";
 import PieGraph from "./PieGraph";
-import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function Stats() {
 
@@ -122,29 +121,3 @@ if (loading) {
    </div>
  ); 
 }
-
- {
-   /* <div className="col-6 mb-5">
-       <div style={{ maxWidth: "25%" }}>
-         <FormControl fullWidth>
-           <InputLabel>Company</InputLabel>
-           <Select
-             label="company"
-             name="company"
-             value={model != null ? model.english : ""}
-             onChange={(e) => setModel(e.target.value)}
-             required
-           >
-             {carsProperties.makes.map((make, key) => {
-               return (
-                 <MenuItem key={make.id} value={make}>
-                   {make.english}
-                 </MenuItem>
-               );
-             })}
-           </Select>
-         </FormControl>
-       </div>
-       <CarsPerYearAndModel data={carsPerYearAndModel} />
-     </div> */
- }

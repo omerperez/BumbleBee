@@ -1,17 +1,15 @@
 import React from "react"; 
-import Typography from "@mui/material/Typography";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
-import PhoneInTalkIcon from "@mui/icons-material/PhoneInTalk";
-import { Button, Divider } from "@mui/material";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { sendWhatsAppToDealer } from "./carFunctions";
 import { error403 } from "../images/projectImages";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import FirstRequestDialog from "../AlertsComponents/FirstRequestDialog";
 import RatingDealer from "../ProfileComponents/RatingDealer";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import { Button, Divider, Typography, useMediaQuery } from "@mui/material";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
+import PhoneInTalkIcon from "@mui/icons-material/PhoneInTalk";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 
 export default function DealerCard({ dealer, role, car, showReq }) {
   const mobile = dealer.phoneNumber ? dealer.phoneNumber : "+972522520484";

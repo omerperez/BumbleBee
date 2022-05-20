@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import Dialog from "@mui/material/Dialog";
 import { Button } from "react-bootstrap";
 import DealerCard from "../CarComponents/DealerCard";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import { Dialog, useMediaQuery } from "@mui/material";
 
 export default function DealerPropertiesDialog({ dealer, role, car, showReq }) {
   const [open, setOpen] = useState(false);

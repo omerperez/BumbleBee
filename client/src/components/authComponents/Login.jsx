@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Form, Button, Card, Alert } from "react-bootstrap";
+import React, { useRef, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import TextField from "@mui/material/TextField";
 import SelectAccountTypeDialog from "../DialogComponents/SelectAccountTypeDialog";
+import { Form, Button, Card, Alert } from "react-bootstrap";
+import TextField from "@mui/material/TextField";
 
 export default function Login() {
 

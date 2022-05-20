@@ -1,18 +1,20 @@
 import React from "react";
-import ListItem from "@mui/material/ListItem";
-import Divider from "@mui/material/Divider";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
-import Typography from "@mui/material/Typography";
 import { notificationTitle } from "./AlertFunction";
 import {markAsRead} from "./AlertFunction";
+import {
+  Button,
+  ListItem,
+  Divider,
+  ListItemText,
+  ListItemAvatar,
+  Avatar,
+  Typography,
+  IconButton,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import IconButton from "@mui/material/IconButton";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { Button } from "@mui/material";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 export default function PropperListAlerts({ alerts, setFlag }) {
   

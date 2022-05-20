@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 import {createAlert} from "./AlertFunction";
 import { useAuth } from '../../contexts/AuthContext';
 import { Alert } from "react-bootstrap";
@@ -15,7 +17,7 @@ export default function FirstRequestDialog({ car, showReq }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [files, setFiles] = useState(false);
+  const [files, setFiles] = useState([]);
   const { currentUser, socket } = useAuth();
   
   useEffect(() => {
@@ -29,7 +31,10 @@ export default function FirstRequestDialog({ car, showReq }) {
     setOpen(false);
   };
   const handleSubmit = async () => {
-    setError('');
+    if (files && files.length == 0){
+      return setError("Please upload payment files");
+    } 
+    setError("");
     setLoading(true);
     const alert = {
       client: currentUser._id,
@@ -83,7 +88,11 @@ export default function FirstRequestDialog({ car, showReq }) {
                   <img
                     alt="payment_files"
                     className="cur-pointer mt-4 mw-300"
-                    src={files ? "/files/check-icon.png" : "/files/payment.svg"}
+                    src={
+                      files && files.length !== 0
+                        ? "/files/check-icon.png"
+                        : "/files/payment.svg"
+                    }
                     onError={error403}
                   />
                 </label>

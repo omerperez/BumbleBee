@@ -1,9 +1,9 @@
 import React from "react";
-import './table.css'
+import './table.css';
+import { convertDateFormat, numberWithCommas } from "./carFunctions";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import ProfileBodyMobile from "./ProfileBodyMobile";
-import { convertDateFormat, numberWithCommas } from "./carFunctions";
 import { useAuth } from "../../contexts/AuthContext";
 import calcNetPrice from "../../utils/calcNetPrice";
 

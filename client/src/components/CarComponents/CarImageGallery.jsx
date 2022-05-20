@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
-import ImageList from "@mui/material/ImageList";
 import CarImagesCarousel from "../DialogComponents/CarImagesCarousel";
 import DealerCard from "./DealerCard";
+import { useAuth } from "../../contexts/AuthContext";
+import DealerPropertiesDialog from "../DialogComponents/DealerPropertiesDialog";
 import { error403, image403 } from "../images/projectImages";
+import { Button, ImageList, useMediaQuery } from "@mui/material";
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from "@mui/icons-material/Star";
-import { Button } from "@mui/material";
-import { useAuth } from "../../contexts/AuthContext";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import DealerPropertiesDialog from "../DialogComponents/DealerPropertiesDialog";
-import { minWidth } from "@mui/system";
 
 export default function CarImageGallery({ id, car, user }) {
   const [dealer, setDealer] = useState(id);

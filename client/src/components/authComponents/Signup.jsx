@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import useForm from "../../utils/useForm";
-import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
 import {
   checkRegisterFields,
   ValidateEmail,
@@ -14,8 +11,13 @@ import {
   error403,
   israelFlag,
 } from "../images/projectImages";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+import {
+  TextField,
+  InputAdornment,
+  FormControlLabel,
+  Checkbox,
+} from "@mui/material";
+import { Form, Button, Card, Alert } from "react-bootstrap";
 
 export default function Signup() {
   

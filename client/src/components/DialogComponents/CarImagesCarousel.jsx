@@ -1,9 +1,7 @@
 import React from "react";
-import Dialog from "@mui/material/Dialog";
 import { Carousel } from "react-bootstrap";
 import { error403, noAvailable } from "../images/projectImages";
-import ImageListItem from "@mui/material/ImageListItem";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import { Dialog, ImageListItem, useMediaQuery } from "@mui/material";
 
 export default function CarImagesCarousel({ images }) {
   const [open, setOpen] = React.useState(false);

@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import { DialogActions, DialogContent } from "@mui/material";
-import { Button } from "react-bootstrap";
 import HoursInput from "./HoursInput";
 import { useAuth } from "../../contexts/AuthContext";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { Button } from "react-bootstrap";
+import {
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  DialogContent,
+} from "@mui/material";
 
 export default function EditActivityTimeDialog({
   activityDays,

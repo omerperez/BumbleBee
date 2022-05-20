@@ -1,18 +1,18 @@
 import React, { useState } from "react";
+import "react-phone-number-input/style.css";
 import useForm from "../../utils/useForm";
-import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-import TextField from "@mui/material/TextField";
 import {
   checkRegisterFields,
   ImageHandler,
   ValidateEmail,
 } from "./userFunctions";
 import PhoneInput from "react-phone-number-input";
-import "react-phone-number-input/style.css";
 import EditActivityTimeDialog from "../DialogComponents/EditActivityTimeDialog";
 import { error403 } from "../images/projectImages";
+import { Form, Button, Card, Alert } from "react-bootstrap";
+import TextField from "@mui/material/TextField";
 
 export default function DealerSignUp() {
 

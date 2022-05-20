@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import {
+  handleChangeSelect,
+  handleChangeValueNumber,
+} from "./CarsFilterFunctions";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import ClearAllIcon from "@mui/icons-material/ClearAll";
+import NoResultsAlert from "../Layout/NoResultsAlert";
+import {
   FormControl,
   InputLabel,
   MenuItem,
   Select,
   TextField,
+  Button,
+  Alert,
 } from "@mui/material";
-import {
-  handleChangeSelect,
-  handleChangeValueNumber,
-} from "./CarsFilterFunctions";
-import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import Button from "@mui/material/Button";
-import ClearAllIcon from "@mui/icons-material/ClearAll";
-import { Alert } from "@mui/material";
-import NoResultsAlert from "../Layout/NoResultsAlert";
 
 export default function FilterCars({ carsState, carsSetState }) {
   const [filters, setFilters] = useState(false);

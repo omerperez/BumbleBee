@@ -1,12 +1,14 @@
 import React from "react";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardContent from "@mui/material/CardContent";
-import Avatar from "@mui/material/Avatar";
-import Typography from "@mui/material/Typography";
-import { Button } from "@mui/material";
-import LanguageIcon from "@mui/icons-material/Language";
 import { error403 } from "../images/projectImages";
+import LanguageIcon from "@mui/icons-material/Language";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  Avatar,
+  Typography,
+  Button,
+} from "@mui/material";
 
 export default function CustomsCard({ name, link, image, color }) {
   return (

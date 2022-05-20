@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import PageTitle from "../Layout/PageTitle";
 import { useAuth } from "../../contexts/AuthContext";
-import Alert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
-import PrivateRoute from "../../Routes/PrivateRoute";
 import { bumblebeeLogo, error403 } from "../images/projectImages";
+import { Button, Alert } from "@mui/material";
 
 export default function AccessDenied({ showPrivateRoute }) {
   const { currentUser, logout } = useAuth();
