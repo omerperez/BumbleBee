@@ -53,7 +53,12 @@ export default function CategoriesPerUserDialog({ id, name,disabled }) {
 
   return (
     <div>
-      <Button onClick={handleClickOpen} disabled={disabled} className={disabled ? "capital-letter" : "capital-letter bg-col-blue"} variant="contained">
+      <Button
+        onClick={handleClickOpen}
+        disabled={disabled}
+        className={disabled ? "capital-letter" : "capital-letter bg-col-blue"}
+        variant="contained"
+      >
         Categories
       </Button>
       <Dialog
@@ -63,43 +68,38 @@ export default function CategoriesPerUserDialog({ id, name,disabled }) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-            <div>{"Categories of " + name}</div>
+          <div>{"Categories of " + name}</div>
         </DialogTitle>
-        
-     <div
-    //    style={{
-    //      width: "100%",
-    //      maxWidth: 1000,
-    //      height: "400px",
-    //      display: "inline-flex",
-    //    }}
-     >
-       <Pie
-         data={categoriesPerUser}
-         options={{
-            cutoutPercentage:0,
-             responsive: true,
-             plugins: {
-                 tooltip:{
-                     callbacks:{
-                         label:(context)=>{
-                             var sum=0;
-                             for (const data of context.dataset.data){
-                                 sum=sum+data;
-                             }
-                             const pers = Math.floor((context.parsed*100)/sum);
-                             return (context.label+": "+pers +'%')
-
-                         },
-                         afterLabel: (context)=>{
-                             return("Number: "+context.parsed)
-                         }
-                     }
-                 }
-              },
-        }}
-        />
-     </div>
+        {categoriesPerUser.labels.length > 0 ? (
+          <div>
+            <Pie
+              data={categoriesPerUser}
+              options={{
+                cutoutPercentage: 0,
+                responsive: true,
+                plugins: {
+                  tooltip: {
+                    callbacks: {
+                      label: (context) => {
+                        var sum = 0;
+                        for (const data of context.dataset.data) {
+                          sum = sum + data;
+                        }
+                        const pers = Math.floor((context.parsed * 100) / sum);
+                        return context.label + ": " + pers + "%";
+                      },
+                      afterLabel: (context) => {
+                        return "Number: " + context.parsed;
+                      },
+                    },
+                  },
+                },
+              }}
+            />
+          </div>
+        ) : (
+          <div className="d-flex text-center m-auto">No Data Available</div>
+        )}
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
         </DialogActions>

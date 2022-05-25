@@ -26,7 +26,10 @@ export default function CarCard({ _id, image, company, model, price, netPrice, c
   }
   
   return (
-    <div className="car-card-div mw-300">
+    <div
+      className="car-card-div mw-300"
+      style={{ background: "#F8F8F8	", borderRadius: 5, padding: 1, margin: 10 }}
+    >
       <Card className="car-card-width box-shadow-none">
         {user && user.role === 1 ? (
           <div className="pos-rel">
