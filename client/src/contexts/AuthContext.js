@@ -226,9 +226,7 @@ export default function AuthProvider({ children }) {
           console.log("error", error);
         });
     setSocket(
-      io(process.env.REACT_APP_SERVER_API, {
-        path: "/my-custom-path/",
-      })
+      io()
     );
     setLoading(false);
   }, []);
