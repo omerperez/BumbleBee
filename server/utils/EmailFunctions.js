@@ -14,13 +14,13 @@ async function sendEmailNotification(clientId, dealerId, stepNumber) {
 
   const msg = getMessageToAlert(dealer, client, stepNumber);
 
-  // transporter.sendMail(msg, function (err, info) {
-  //   if (err) {
-  //     console.log(err);
-  //     return;
-  //   }
-  //   console.log("Send: " + info.response);
-  // });
+  transporter.sendMail(msg, function (err, info) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    console.log("Send: " + info.response);
+  });
 }
 
 async function sendRegistrationEmail(userEmail, fullName) {

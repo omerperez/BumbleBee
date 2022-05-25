@@ -574,7 +574,7 @@ export default function CarForm() {
           </div>
         </div>
         <div className={"d-flex row"}>
-          <div className="col-12 col-md-2 mt-4">
+          <div className="col-12 col-md-3 mt-4">
             <label htmlFor={"main"}>
               <img
                 alt="main_image"

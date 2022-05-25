@@ -21,13 +21,15 @@ export default function HoursInput({
 }) {
   const matches = useMediaQuery("(max-width:1060px)");
   const [check, setCheck] = useState(
-    (activityDays).indexOf(title) != -1 
+    activityDays && (activityDays).indexOf(title) != -1
   );
   useEffect(() => {
    if (check) {
      setActivityDays([...activityDays, title]);
    } else {
-     setActivityDays(activityDays.filter((day) => day.indexOf(title) == -1));
+     setActivityDays(
+       activityDays ? activityDays.filter((day) => day.indexOf(title) == -1) : []
+     );
    }
   }, [check]);
 

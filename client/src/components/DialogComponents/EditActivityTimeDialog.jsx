@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import HoursInput from "./HoursInput";
 import { useAuth } from "../../contexts/AuthContext";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import { Button } from "react-bootstrap";
+import Lodaing from "../Layout/Loading";
 import {
   Dialog,
   DialogTitle,
@@ -17,9 +17,8 @@ export default function EditActivityTimeDialog({
   createAccount,
 }) {
   const { currentUser, editUserPropertiesWithoutImage } = useAuth();
-  const matches = useMediaQuery("(min-height:570px)");
-
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [dealerActivityDays, setDealerActivityDays] = useState(
     activityDays ? activityDays.split(",") : null
   );
@@ -73,6 +72,7 @@ export default function EditActivityTimeDialog({
   };
 
   const handleSubmit = async () => {
+    setLoading(true);
     const activityDaysTimeChange = [
       {
         start: new Date(startHour1).toLocaleString("en-US").split(",")[1],
@@ -120,9 +120,11 @@ export default function EditActivityTimeDialog({
       try {
         const results = await editUserPropertiesWithoutImage(edit);
         if (results._id === edit._id) {
+          setLoading(false);
           setOpen(false);
           window.location.reload();
         } else {
+          setLoading(false);
           console.log(results);
         }
       } catch (err) {}
@@ -173,76 +175,81 @@ export default function EditActivityTimeDialog({
           >
             X
           </DialogTitle>
-          <DialogContent>
-            <h5 className="mb-4">Set Standard Hours</h5>
-            <HoursInput
-              title={"Sunday"}
-              valueStart={startHour1}
-              setValueStart={setStartHour1}
-              valueEnd={endHour1}
-              setValueEnd={setEndHour1}
-              activityDays={dealerActivityDays}
-              setActivityDays={setDealerActivityDays}
-            />
-            <HoursInput
-              title={" Monday"}
-              valueStart={startHour2}
-              setValueStart={setStartHour2}
-              valueEnd={endHour2}
-              setValueEnd={setEndHour2}
-              activityDays={dealerActivityDays}
-              setActivityDays={setDealerActivityDays}
-            />
-            <HoursInput
-              title={"Tuesday"}
-              valueStart={startHour3}
-              setValueStart={setStartHour3}
-              valueEnd={endHour3}
-              setValueEnd={setEndHour3}
-              activityDays={dealerActivityDays}
-              setActivityDays={setDealerActivityDays}
-            />
-            <HoursInput
-              title={"Wednesday"}
-              valueStart={startHour4}
-              setValueStart={setStartHour4}
-              valueEnd={endHour4}
-              setValueEnd={setEndHour4}
-              activityDays={dealerActivityDays}
-              setActivityDays={setDealerActivityDays}
-            />
-            <HoursInput
-              title={"Thursday"}
-              valueStart={startHour5}
-              setValueStart={setStartHour5}
-              valueEnd={endHour5}
-              setValueEnd={setEndHour5}
-              activityDays={dealerActivityDays}
-              setActivityDays={setDealerActivityDays}
-            />
-            <HoursInput
-              title={"Friday"}
-              valueStart={startHour6}
-              setValueStart={setStartHour6}
-              valueEnd={endHour6}
-              setValueEnd={setEndHour6}
-              activityDays={dealerActivityDays}
-              setActivityDays={setDealerActivityDays}
-            />
-            <HoursInput
-              title={"Saturday"}
-              valueStart={startHour7}
-              setValueStart={setStartHour7}
-              valueEnd={endHour7}
-              setValueEnd={setEndHour7}
-              activityDays={dealerActivityDays}
-              setActivityDays={setDealerActivityDays}
-            />
-          </DialogContent>
+          {loading ? (
+            <Lodaing />
+          ) : (
+            <DialogContent>
+              <h5 className="mb-4">Set Standard Hours</h5>
+              <HoursInput
+                title={"Sunday"}
+                valueStart={startHour1}
+                setValueStart={setStartHour1}
+                valueEnd={endHour1}
+                setValueEnd={setEndHour1}
+                activityDays={dealerActivityDays}
+                setActivityDays={setDealerActivityDays}
+              />
+              <HoursInput
+                title={" Monday"}
+                valueStart={startHour2}
+                setValueStart={setStartHour2}
+                valueEnd={endHour2}
+                setValueEnd={setEndHour2}
+                activityDays={dealerActivityDays}
+                setActivityDays={setDealerActivityDays}
+              />
+              <HoursInput
+                title={"Tuesday"}
+                valueStart={startHour3}
+                setValueStart={setStartHour3}
+                valueEnd={endHour3}
+                setValueEnd={setEndHour3}
+                activityDays={dealerActivityDays}
+                setActivityDays={setDealerActivityDays}
+              />
+              <HoursInput
+                title={"Wednesday"}
+                valueStart={startHour4}
+                setValueStart={setStartHour4}
+                valueEnd={endHour4}
+                setValueEnd={setEndHour4}
+                activityDays={dealerActivityDays}
+                setActivityDays={setDealerActivityDays}
+              />
+              <HoursInput
+                title={"Thursday"}
+                valueStart={startHour5}
+                setValueStart={setStartHour5}
+                valueEnd={endHour5}
+                setValueEnd={setEndHour5}
+                activityDays={dealerActivityDays}
+                setActivityDays={setDealerActivityDays}
+              />
+              <HoursInput
+                title={"Friday"}
+                valueStart={startHour6}
+                setValueStart={setStartHour6}
+                valueEnd={endHour6}
+                setValueEnd={setEndHour6}
+                activityDays={dealerActivityDays}
+                setActivityDays={setDealerActivityDays}
+              />
+              <HoursInput
+                title={"Saturday"}
+                valueStart={startHour7}
+                setValueStart={setStartHour7}
+                valueEnd={endHour7}
+                setValueEnd={setEndHour7}
+                activityDays={dealerActivityDays}
+                setActivityDays={setDealerActivityDays}
+              />
+            </DialogContent>
+          )}
           <DialogActions className="d-flex justify-content-center mt-3 mb-3">
             <div className="row">
               <div className="col mr-10px">
                 <Button
+                  disabled={loading}
                   onClick={() => setOpen(false)}
                   className="cancel-back w-100 no-border mw-95 color-white capital-letter ls-2"
                 >
@@ -251,6 +258,7 @@ export default function EditActivityTimeDialog({
               </div>
               <div className="col">
                 <Button
+                  disabled={loading}
                   onClick={() => {
                     handleSubmit();
                   }}
