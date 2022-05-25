@@ -21,7 +21,9 @@ const getNotificationsForClientNavigation = async (req, res) => {
   let notificationData = [];
 
   try {
-    for (let alert of notifications.filter((notification) => notification.step % 2 == 0)) {
+    for (let alert of notifications.filter(
+      (notification) => notification.step % 2 == 0 || notification.step === 5
+    )) {
       const dealer = await userSchema.findById(alert.dealer);
       const sender = {
         _id: alert._id,
@@ -29,7 +31,7 @@ const getNotificationsForClientNavigation = async (req, res) => {
         email: dealer.email,
         image: dealer.image,
         step: alert.step,
-        isCancelRequest: alert.isCancelRequest
+        isCancelRequest: alert.isCancelRequest,
       };
       notificationData.push(sender);
     }
@@ -50,7 +52,7 @@ const getNotificationsForDealerNavigation = async (req, res) => {
 
   try {
     for (let alert of notifications.filter(
-      (notification) => notification.step % 2 !== 0
+      (notification) => notification.step % 2 !== 0 && notification.step !== 5
     )) {
       const client = await userSchema.findById(alert.client);
       const sender = {

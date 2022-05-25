@@ -225,7 +225,7 @@ export default function AuthProvider({ children }) {
           localStorage.setItem("usd-ils", "0.29");
           console.log("error", error);
         });
-    setSocket(io("http://localhost:3001"));
+    setSocket(io());
     setLoading(false);
   }, []);
 

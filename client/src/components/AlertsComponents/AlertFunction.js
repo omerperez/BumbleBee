@@ -31,7 +31,6 @@ async function createAlert(alert, socket) {
  }
 
   data.append("alert", JSON.stringify(alert));
-
   return api
     .post("/notification/create", data)
     .then((response) => {
@@ -47,7 +46,19 @@ async function createAlert(alert, socket) {
 async function editAlertFunction(alert, socket) {
   const now = Date.now();
   const data = new FormData();
-  if (alert.step === 2) {
+  if(alert.isCancelRequest){
+    data.append("alert", JSON.stringify(alert));
+    return api
+      .put(`/notification/update/${alert._id}`, data)
+      .then(() => {
+        handleNotification(socket, alert.dealer, alert.client, 5);
+        return "Success";
+      })
+      .catch((err) => {
+        console.log(err);
+        return err.response.data.message;
+      });
+  } else if (alert.step === 2) {
     var files = alert.license;
     for (let i = 0; i < files.length; i++) {
       const rnd = Math.floor(Math.random() * 1000000) + 1000;
@@ -117,6 +128,9 @@ const notificationTitle = (name, step) => {
   }
   if (step === 4) {
     return "Purchase process was completed successfully!";
+  }
+  if (step === 5){
+    return name + " cancel your request";
   }
 }
 

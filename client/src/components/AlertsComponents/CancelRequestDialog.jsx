@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Dialog,
@@ -9,11 +9,17 @@ import {
 } from "@mui/material";
 import { editAlertFunction } from "./AlertFunction";
 import Loading from "../Layout/Loading";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function CancelRequestDialog({alert}) {
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { currentUser, socket } = useAuth();
+
+  useEffect(() => {
+    socket?.emit("newUser", currentUser._id);
+  }, [socket, currentUser._id]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -29,16 +35,19 @@ export default function CancelRequestDialog({alert}) {
        _id: alert._id,
        client: alert.client,
        isCancelRequest: true,
+       dealer: currentUser._id,
        step: 5,
      };
 
-     const res = await editAlertFunction(editAlert);
+     const res = await editAlertFunction(editAlert, socket);
+     console.log(res);
      if (res != "Success") {
        setLoading(false);
        return console.log("Filed");
      } else {
        setLoading(false);
-       return setOpen(false);
+       setOpen(false);
+       return;
      }
   }
 
