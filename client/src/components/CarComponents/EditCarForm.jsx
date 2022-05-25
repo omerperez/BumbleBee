@@ -26,25 +26,22 @@ export default function EditCarForm({car ,saveChanges}) {
     
     const handleClickSaveChanges = async (e) => {
       e.preventDefault();
+      if (error !== "") {
+        return setError("please fixed the negative price / km");
+      } else {
         try {
           setLoading(true);
-          const status = await editCar(
-            car._id,
-            km,
-            price,
-            colour,
-            car.images
-        );
-         if (status !== "Success") {
-           setError(status);
+          const status = await editCar(car._id, km, price, colour, car.images);
+          if (status !== "Success") {
+            setError(status);
             setLoading(false);
-         }else
-           <CarProfilePage />;
-           saveChanges();
-           setLoading(false);
-      } catch {
+          } else <CarProfilePage />;
+          saveChanges();
+          setLoading(false);
+        } catch {
           setError("Failed to sign in");
         }
+      }
     }
 
     const handleClickCancel = async (e) => {
@@ -94,7 +91,16 @@ export default function EditCarForm({car ,saveChanges}) {
                         defaultValue={car.km}
                         label="KM"
                         type="number"
-                        onChange={(e) => setKm(e.target.value)}
+                        onChange={(e) => {
+                          if (e.target.value < 0 && error === "") {
+                            setError(
+                              "Km not valide, please enter positive km"
+                            );
+                          } else if (e.target.value > 0) {
+                            setError("");
+                          }
+                          setKm(e.target.value)
+                        }}
                         fullWidth
                       />
                     </td>
@@ -115,7 +121,14 @@ export default function EditCarForm({car ,saveChanges}) {
                       defaultValue={car.price}
                       label="price"
                       type="number"
-                      onChange={(e) => setPrice(e.target.value)}
+                      onChange={(e) => {
+                        if(e.target.value < 0 && error === '') {
+                          setError("Price not valide, please enter positive price")
+                        } else if (e.target.value > 0){
+                          setError('');
+                        }
+                        setPrice(e.target.value)
+                      }}
                       fullWidth
                     />
                   </td>
