@@ -1,0 +1,30 @@
+{
+  "projectId": "114",
+  "name": "BumbleBee",
+  "image": "114.jpeg",
+  "members": [
+    {
+      "name": "Omer Perez",
+      "email": "omerperez222@gmail.com"
+    },
+    {
+      "name": "Linoy Bekker",
+      "email": "linoylbekker@gmail.com"
+    },
+    {
+      "name": "Eden David",
+      "email": "edendavid102@gmail.com"
+    },
+    {
+      "name": "Tamir Amar",
+      "email": "tamiramar22@gmail.com"
+    },
+    {
+      "name": "Keren Birzon",
+      "email": "kerenbirzon4@gmail.com"
+    }
+  ],
+  "instructorId": "3",
+  "internshipId": "4",
+  "description": "Bumblebee is a platform that helps you buy and import vehicles to Israel independently. The platform contains all the steps you need to consider as an independent importer, and helps you avoid additional cost and middleman. In Bumblebee you can see all the different vehicles you can buy and import. You can find a wide variety of cars, you may even get your hands on an unusual model that's not available to the Israeli market."
+}

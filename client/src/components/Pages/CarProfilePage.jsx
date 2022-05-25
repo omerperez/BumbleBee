@@ -19,22 +19,23 @@ export default function CarProfilePage() {
   const matches675 = useMediaQuery("(max-width:675px)");
 
   const fetchData = () => {
-    const userId = currentUser._id;
+    // const userId = currentUser._id;
     const index = window.location.toString().lastIndexOf("/") + 1;
     const id = window.location.toString().substring(index);
-    
-    const userApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${userId}`;
+
+    // const userApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${userId}`;
     const carApi = `${process.env.REACT_APP_SERVER_API}/car/show/${id}`;
 
-    const getUser = axios.get(userApi);
+    // const getUser = axios.get(userApi);
     const getCar = axios.get(carApi);
 
-    axios.all([getUser, getCar]).then(
+    //getUser,
+    axios.all([getCar]).then(
       axios.spread((...allData) => {
-        const allUserData = allData[0].data;
-        const allCarData = allData[1].data;
+        // const allUserData = allData[0].data;
+        const allCarData = allData[0].data; // 1
 
-        setUser(allUserData);
+        // setUser(allUserData);
         setCar(allCarData);
         setLoading(false);
       })
@@ -82,8 +83,8 @@ export default function CarProfilePage() {
       <CarImageGallery
         id={car.dealer}
         car={car}
-        user={user}
-        status={JSON.stringify(user.cars).indexOf(car.id)}
+        user={currentUser}
+        status={JSON.stringify(currentUser.cars).indexOf(car.id)}
       />
       {isEdit ? (
         <EditCarForm car={car} saveChanges={saveChanges} />

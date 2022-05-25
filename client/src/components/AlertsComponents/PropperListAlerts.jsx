@@ -36,28 +36,30 @@ export default function PropperListAlerts({ alerts, setFlag }) {
       <>
         <div className="row">
           <div className="col">
-            <ListItem alignItems="flex-start">
-              <ListItemAvatar sx={{ marginRight: "5%" }}>
-                <Avatar
-                  sx={{ width: 56, height: 56 }}
-                  alt="Remy Sharp"
-                  src={process.env.REACT_APP_S3 + alert.image}
+            <Link to="/order-status" className="cancel-underline">
+              <ListItem alignItems="flex-start">
+                <ListItemAvatar sx={{ marginRight: "5%" }}>
+                  <Avatar
+                    sx={{ width: 56, height: 56 }}
+                    alt="Remy Sharp"
+                    src={process.env.REACT_APP_S3 + alert.image}
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  secondary={
+                    <React.Fragment>
+                      <Typography variant="body2" color="text.primary">
+                        <span className="f-19 ls-less1 fw-100">
+                          {alert.senderName}
+                        </span>
+                        <br />
+                        <b>{notificationTitle(alert.senderName, alert.step)}</b>
+                      </Typography>
+                    </React.Fragment>
+                  }
                 />
-              </ListItemAvatar>
-              <ListItemText
-                secondary={
-                  <React.Fragment>
-                    <Typography variant="body2" color="text.primary">
-                      <span className="f-19 ls-less1 fw-100">
-                        {alert.senderName}
-                      </span>
-                      <br />
-                      <b>{notificationTitle(alert.senderName, alert.step)}</b>
-                    </Typography>
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
+              </ListItem>
+            </Link>
           </div>
           <div className="col-2 mt-2 border-circle">
             <IconButton
