@@ -21,7 +21,7 @@ export default function EditActivityTimeDialog({
 
   const [open, setOpen] = useState(false);
   const [dealerActivityDays, setDealerActivityDays] = useState(
-    activityDays.split(",")
+    activityDays ? activityDays.split(",") : null
   );
   const [startHour1, setStartHour1] = useState(
     new Date("2018-01-01T06:30:00.000Z").getTime()

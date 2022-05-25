@@ -15,7 +15,9 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
   const { currentUser: myUser } = useAuth();
   const [alert, setAlert] = useState();
   const [companies, setCompanies] = useState();
-  const [value, setValue] = useState(currentUser.role === 1 ? "2" : "1");
+  const [value, setValue] = useState(
+    currentUser.role === 1 && currentUser.isSendReq ? "2" : "1"
+  );
   const [loading, setLoading] = useState(true);
 
   const date = new Date(currentUser.dateOfCreate ?? null);

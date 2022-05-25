@@ -232,14 +232,14 @@ export default function NewNavigation({socket, children }) {
           ) : null}
         </List>
         {matches ? (
-          <ListItem className="menuFooter">
+          <ListItem className={open ? "menuFooter bumble-bg" : "menuFooter"}>
             {open ? (
               <div>BumbleBee</div>
             ) : (
               <ListItemIcon className="d-flex justify-content-center">
                 <img
                   className="footer-image"
-                  src="/Navigation/bumblebee.png"
+                  src="/Navigation/hatchback.png" //bumblebee.png"
                   onError={error403}
                 />
               </ListItemIcon>

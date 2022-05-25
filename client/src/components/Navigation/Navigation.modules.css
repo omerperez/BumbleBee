@@ -15,6 +15,9 @@
     letter-spacing: 3px;
     color: #363636 !important;
     text-align: center !important;
+}
+
+.bumble-bg{
     background-color: #42ADFF;
 }
 .profileImage {

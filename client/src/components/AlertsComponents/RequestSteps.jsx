@@ -21,7 +21,7 @@ export default function RequestSteps({ step, matches770 }) {
     >
       <h3 className="fw-100 d-flex text-start pl-1">Request Steps</h3>
       <Stepper
-        activeStep={step ? step + 1 : 1}
+        activeStep={step && step !== 5 ? step + 1 : 1}
         alternativeLabel={matches770 ? false : true}
         className="mt-5"
         orientation={matches770 ? "vertical" : "horizontal"}
