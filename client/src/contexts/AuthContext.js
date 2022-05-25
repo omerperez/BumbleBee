@@ -225,7 +225,11 @@ export default function AuthProvider({ children }) {
           localStorage.setItem("usd-ils", "0.29");
           console.log("error", error);
         });
-    setSocket(io());
+    setSocket(
+      io(process.env.REACT_APP_SERVER_API, {
+        path: "/my-custom-path/",
+      })
+    );
     setLoading(false);
   }, []);
 

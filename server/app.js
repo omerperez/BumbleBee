@@ -7,7 +7,9 @@ const dotenv = require("dotenv");
 const path = require("path");
 dotenv.config();
 
-const io = new Server(server);
+const io = new Server(server, {
+  path: "/my-custom-path/",
+});
 // const io = new Server({
 //   cors: {
 //     origin: "http://localhost:3000",
