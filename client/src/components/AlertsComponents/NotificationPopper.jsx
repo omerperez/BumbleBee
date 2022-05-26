@@ -5,6 +5,7 @@ import {
   Fade,
   Badge,
   useMediaQuery,
+  ClickAwayListener,
   List,
 } from "@mui/material";
 import PropperListAlerts from "./PropperListAlerts";
@@ -23,6 +24,13 @@ export default function NotificationPopper({ count, alerts, setFlag }) {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
     setOpen((previousOpen) => !previousOpen);
+  };
+
+  const handleClose = (event) => {
+    if (anchorEl.current && anchorEl.current.contains(event.target)) {
+      return;
+    }
+    setOpen(false);
   };
 
   const canBeOpen = open && Boolean(anchorEl);
@@ -60,22 +68,27 @@ export default function NotificationPopper({ count, alerts, setFlag }) {
                 marginLeft: "auto",
                 marginTop: 1,
                 marginRight: 5,
-                paddingBottom: 1
+                paddingBottom: 1,
               }}
             >
-              {alerts.length > 0 ? (
-                <List
-                  sx={{
-                    width: "100%",
-                    maxWidth: 360,
-                    bgcolor: "background.paper",
-                  }}
-                >
-                  <PropperListAlerts setFlag={setFlag} alerts={notification} />
-                </List>
-              ) : (
-                "No Notification Yet"
-              )}
+              <ClickAwayListener onClickAway={handleClose}>
+                {alerts.length > 0 ? (
+                  <List
+                    sx={{
+                      width: "100%",
+                      maxWidth: 360,
+                      bgcolor: "background.paper",
+                    }}
+                  >
+                    <PropperListAlerts
+                      setFlag={setFlag}
+                      alerts={notification}
+                    />
+                  </List>
+                ) : (
+                  "No Notification Yet"
+                )}
+              </ClickAwayListener>
             </Box>
           </Fade>
         )}

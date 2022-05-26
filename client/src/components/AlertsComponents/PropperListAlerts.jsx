@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { notificationTitle } from "./AlertFunction";
 import {markAsRead} from "./AlertFunction";
 import {
@@ -19,7 +19,7 @@ import { useAuth } from "../../contexts/AuthContext";
 export default function PropperListAlerts({ alerts, setFlag }) {
   
   const {currentUser} = useAuth();
-
+  const [page, setPage] = useState(window.location.toString().indexOf("order-status") != - 1 ? true : false);
   const userReadAlert = async (id) =>  {
     const res = await markAsRead(id);
     if (res === "Success") {
@@ -74,7 +74,7 @@ export default function PropperListAlerts({ alerts, setFlag }) {
         </div>
         {alerts.length !== inx + 1 ? (
           <Divider />
-        ) : (
+        ) : page ? null : (
           <div className="bg-col-blue">
             <Divider />
             <Link

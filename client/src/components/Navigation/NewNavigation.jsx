@@ -239,7 +239,7 @@ export default function NewNavigation({socket, children }) {
               <ListItemIcon className="d-flex justify-content-center">
                 <img
                   className="footer-image"
-                  src="/Navigation/hatchback.png" //bumblebee.png"
+                  src="/Navigation/logocar.svg" //bumblebee.png"
                   onError={error403}
                 />
               </ListItemIcon>

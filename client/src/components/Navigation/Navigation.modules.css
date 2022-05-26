@@ -17,6 +17,17 @@
     text-align: center !important;
 }
 
+.menuFooter-open {
+    height: 120px;
+    justify-content: center !important;
+    position: absolute !important;
+    bottom: 0;
+    font-size: 20px;
+    /* letter-spacing: 3px; */
+    color: #363636 !important;
+    text-align: center !important;
+}
+
 .bumble-bg{
     background-color: #42ADFF;
 }
@@ -44,6 +55,13 @@
     }
 }
 
+.footer-image-open {
+    max-height: 100px;
+    max-width: 100px;
+    /* padding: 10%; */
+    border-radius: 50%;
+    /* border: solid 2px #363636; */
+}
 
 .footer-image {
     max-height: 55px; 

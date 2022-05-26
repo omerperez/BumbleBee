@@ -47,7 +47,7 @@ export default function CancelRequestDialog({alert}) {
      } else {
        setLoading(false);
        setOpen(false);
-       return;
+       return window.location.reload();
      }
   }
 
