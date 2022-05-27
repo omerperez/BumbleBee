@@ -7,8 +7,10 @@ import NewNavigation from "../components/Navigation/NewNavigation";
 
 export default function PrivateRoute({ children, showSideBar }) {
 
-  const { currentUser } = useAuth();
-  return currentUser ? (
+  const { currentUser, cookies } = useAuth();
+  const cookieCurrentUser = cookies.get().get("connectUser");
+
+  return currentUser || cookieCurrentUser != undefined ? (
     <ThemeProvider theme={whiteTheme}>
       {showSideBar && showSideBar === false ? (
         { children }

@@ -269,6 +269,7 @@ export default function AuthProvider({ children }) {
     currency,
     setCurrency,
     currencyValue,
+    cookies
   };
 
   return (
