@@ -5,9 +5,9 @@ import {
   Fade,
   Badge,
   useMediaQuery,
-  ClickAwayListener,
   List,
 } from "@mui/material";
+import ClickAwayListener from "@mui/material/ClickAwayListener"
 import PropperListAlerts from "./PropperListAlerts";
 import { error403 } from "../images/projectImages";
 
@@ -26,7 +26,7 @@ export default function NotificationPopper({ count, alerts, setFlag }) {
     setOpen((previousOpen) => !previousOpen);
   };
 
-  const handleClose = (event) => {
+  const closeByHandle = (event) => {
     if (anchorEl.current && anchorEl.current.contains(event.target)) {
       return;
     }
@@ -71,23 +71,28 @@ export default function NotificationPopper({ count, alerts, setFlag }) {
                 paddingBottom: 1,
               }}
             >
-              <ClickAwayListener onClickAway={handleClose}>
-                {alerts.length > 0 ? (
-                  <List
-                    sx={{
-                      width: "100%",
-                      maxWidth: 360,
-                      bgcolor: "background.paper",
-                    }}
-                  >
-                    <PropperListAlerts
-                      setFlag={setFlag}
-                      alerts={notification}
-                    />
-                  </List>
-                ) : (
-                  "No Notification Yet"
-                )}
+              <ClickAwayListener onClickAway={closeByHandle}>
+              {alerts.length > 0 ? (
+                <List
+                  sx={{
+                    width: "100%",
+                    maxWidth: 360,
+                    bgcolor: "background.paper",
+                  }}
+                >
+                  <PropperListAlerts setFlag={setFlag} alerts={notification} />
+                </List>
+              ) : (
+                <List
+                  sx={{
+                    width: "100%",
+                    maxWidth: 360,
+                    bgcolor: "background.paper",
+                  }}
+                >
+                  No Notification Yet
+                </List>
+              )}
               </ClickAwayListener>
             </Box>
           </Fade>
