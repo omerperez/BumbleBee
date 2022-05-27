@@ -211,23 +211,22 @@ export default function AuthProvider({ children }) {
   }
 
   useEffect(() => {
-   if (cookies.get("auth-token") && cookies.get("connectUser")) {
-      setCurrentUser(cookies.get("connectUser"));
-    }
-    fetch(
-        "https://v6.exchangerate-api.com/v6/ee217cedbacb0650fd63d1cb/latest/ILS"
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          localStorage.setItem("usd-ils", data.conversion_rates.USD);
-        })
-        .catch((error) => {
-          localStorage.setItem("usd-ils", "0.29");
-          console.log("error", error);
-        });
-    setSocket(
-      io()
-    );
+    const cookieUser = cookies.get("connectUser");
+   if (cookies.get("auth-token") !== undefined && cookieUser !== undefined) {
+     setCurrentUser(cookieUser);
+   }
+   fetch(
+     "https://v6.exchangerate-api.com/v6/ee217cedbacb0650fd63d1cb/latest/ILS"
+   )
+     .then((response) => response.json())
+     .then((data) => {
+       localStorage.setItem("usd-ils", data.conversion_rates.USD);
+     })
+     .catch((error) => {
+       localStorage.setItem("usd-ils", "0.29");
+       console.log("error", error);
+     });
+   setSocket(io());
     setLoading(false);
   }, []);
 
