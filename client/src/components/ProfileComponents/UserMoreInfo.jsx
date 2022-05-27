@@ -11,16 +11,16 @@ import axios from "axios";
 import { useAuth } from "../../contexts/AuthContext";
 import Loading from "../Layout/Loading";
 
-export default function UserMoreInfo({ currentUser, isUserPtofile }) {
-  const { currentUser: myUser } = useAuth();
+export default function UserMoreInfo({ user, isUserPtofile }) {
+  const { currentUser } = useAuth();
   const [alert, setAlert] = useState();
   const [companies, setCompanies] = useState();
   const [value, setValue] = useState(
-    currentUser.role === 1 && currentUser.isSendReq ? "2" : "1"
+    user.role === 1 && user.isSendReq ? "2" : "1"
   );
   const [loading, setLoading] = useState(true);
 
-  const date = new Date(currentUser.dateOfCreate ?? null);
+  const date = new Date(user.dateOfCreate ?? null);
   date.setHours(0,0,0,0);
 
   const handleChange = (event, newValue) => {
@@ -28,8 +28,8 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
   };
 
    const fetchData = () => {
-     const alertsApi = `${process.env.REACT_APP_SERVER_API}/notification/client/${myUser._id}`;
-     const userCarsApi = `${process.env.REACT_APP_SERVER_API}/car/user/${myUser._id}`;
+     const alertsApi = `${process.env.REACT_APP_SERVER_API}/notification/client/${currentUser._id}`;
+     const userCarsApi = `${process.env.REACT_APP_SERVER_API}/car/user/${currentUser._id}`;
 
      const getAlerts = axios.get(alertsApi);
      const getUserCars = axios.get(userCarsApi);
@@ -70,7 +70,7 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
               label="More Inforamtion"
               value="1"
             />
-            {currentUser.role === 1 && isUserPtofile ? (
+            {user.role === 1 && isUserPtofile ? (
               <Tab
                 label="Request Status"
                 className="capital-letter"
@@ -85,18 +85,18 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
           </div>
           <TabPanelText
             title={"Phone"}
-            value={currentUser.phoneNumber}
+            value={user.phoneNumber}
             isEditOption={isUserPtofile}
           />
           <TabPanelText
             title={"E-mail"}
-            value={currentUser.email}
+            value={user.email}
             isEditOption={isUserPtofile}
           />
           <TabPanelText
             title={"Registration Date"}
             value={
-              currentUser.dateOfCreate
+              user.dateOfCreate
                 ? date.getDate().toString().padStart(2, "0") +
                   "." +
                   (date.getMonth() + 1).toString().padStart(2, "0") +
@@ -121,7 +121,7 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
             )}
           </div>
         </TabPanel>
-        {currentUser.role === 2 ? (
+        {user.role === 2 ? (
           <>
             <TabPanelText
               title={"Manufacturer Types"}
@@ -132,8 +132,8 @@ export default function UserMoreInfo({ currentUser, isUserPtofile }) {
               }
             />
             <TabPanelText
-              title={currentUser.website ? "Website" : "Website "}
-              value={currentUser.website ?? "No Website"}
+              title={user.website ? "Website" : "Website "}
+              value={user.website ?? "No Website"}
               isEditOption={isUserPtofile}
             />
           </>

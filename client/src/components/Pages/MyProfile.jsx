@@ -58,7 +58,7 @@ export default function MyProfile() {
                 : "col-12 col-lg-5 col-xl-4 col-xxl-3 mt-5 mb-5 offset-xxl-1"
             }
           >
-            <ProfileSide currentUser={user} />
+            <ProfileSide user={user} />
           </div>
         )}
         <div
@@ -70,11 +70,7 @@ export default function MyProfile() {
               : "col-12 col-lg-5 col-xl-6 col-xxl-7 ml-25 mt-5 mb-1"
           }
         >
-          <OtherPropertiesCard
-            currentUser={user}
-            setFlag={setFlag}
-            flag={flag}
-          />
+          <OtherPropertiesCard user={user} setFlag={setFlag} flag={flag} />
         </div>
       </div>
       <div className="d-flex justify-content-center mb-5">

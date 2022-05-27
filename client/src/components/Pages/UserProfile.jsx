@@ -50,17 +50,19 @@ export default function UserProfile() {
                 : "col-12 col-lg-5 col-xl-4 col-xxl-3 mt-5 mb-5 offset-1"
             }
           >
-            <ProfileSide currentUser={user} />
+            <ProfileSide user={user} />
           </div>
         )}
         <div
           className={
             matches
-              ? matches770 ? "col-12" : "col-6"
+              ? matches770
+                ? "col-12"
+                : "col-6"
               : "col-12 col-lg-5 col-xl-6 col-xxl-7  ml-25 mt-5 mb-5"
           }
         >
-          <OtherPropertiesCard currentUser={user} />
+          <OtherPropertiesCard user={user} />
         </div>
       </div>
     </>

@@ -6,9 +6,9 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useAuth } from "../../contexts/AuthContext";
 import { error403 } from "../images/projectImages";
 
-export default function ProfileSide({ currentUser }) {
+export default function ProfileSide({ user }) {
 
-  const { currentUser: myUser } = useAuth();
+  const { currentUser } = useAuth();
   const matches = useMediaQuery("(max-width:770px)");
   const matches1000 = useMediaQuery("(max-width:1000px)");
 
@@ -23,19 +23,19 @@ export default function ProfileSide({ currentUser }) {
       >
         <img
           width={"100%"}
-          height={matches1000 ? "100%" : 'vmax' }
+          height={matches1000 ? "100%" : "vmax"}
           className={matches ? "cover-back col-6" : "cover-back"}
-          src={process.env.REACT_APP_S3 + currentUser.image}
+          src={process.env.REACT_APP_S3 + user.image}
           alt="Paella dish"
           onError={error403}
         />
       </div>
-      {currentUser.role === 2 ? (
+      {user.role === 2 ? (
         <>
           <DealerAvailability
-            isCanEdit={myUser._id === currentUser._id}
-            activityDays={currentUser.activityDays}
-            activityDaysTime={currentUser.activityDaysTime}
+            isCanEdit={currentUser._id === user._id}
+            activityDays={user.activityDays}
+            activityDaysTime={user.activityDaysTime}
           />
         </>
       ) : null}

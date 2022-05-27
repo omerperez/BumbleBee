@@ -16,8 +16,8 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import ShowActivityDays from "../DialogComponents/ShowActivityDays";
 import { error403 } from "../images/projectImages";
 
-export default function OtherPropertiesCard({ currentUser, setFlag, flag }) {
-  const { currentUser: myUser } = useAuth();
+export default function OtherPropertiesCard({ user, setFlag, flag }) {
+  const { currentUser } = useAuth();
   const matches = useMediaQuery("(max-width:1010px)");
   const matches770 = useMediaQuery("(max-width:770px)");
   const matches550 = useMediaQuery("(max-width:770px)");
@@ -29,26 +29,26 @@ export default function OtherPropertiesCard({ currentUser, setFlag, flag }) {
           {matches770 ? (
             <div className="row d-flex mt-3">
               <h2 className="col-8 col-sm-6 col-md-3 opc-8 ls-2 nowrap">
-                {currentUser.firstName + " " + currentUser.lastName}
+                {user.firstName + " " + user.lastName}
               </h2>
               <div className="m-auto col-6 col-sm-4 offset-1 col-md-3 ">
                 <img
                   className="border-circle border-2-black p-0"
                   width={"100%"}
-                  src={process.env.REACT_APP_S3 + currentUser.image}
+                  src={process.env.REACT_APP_S3 + user.image}
                   onError={error403}
                 />
               </div>
             </div>
           ) : (
             <h2 className="opc-8 ls-2">
-              {currentUser.firstName + " " + currentUser.lastName}
+              {user.firstName + " " + user.lastName}
             </h2>
           )}
           <div
             style={
               matches770
-                ? currentUser.role === 1
+                ? user.role === 1
                   ? {
                       marginTop: "-10%",
                     }
@@ -60,7 +60,7 @@ export default function OtherPropertiesCard({ currentUser, setFlag, flag }) {
           >
             <b
               style={
-                currentUser.role === 1
+                user.role === 1
                   ? {
                       color: "#3cb371",
                       fontSize: 18,
@@ -73,15 +73,11 @@ export default function OtherPropertiesCard({ currentUser, setFlag, flag }) {
                     }
               }
             >
-              {currentUser.role === 2
-                ? "Dealer"
-                : currentUser.role == 3
-                ? "Admin"
-                : "Client"}
+              {user.role === 2 ? "Dealer" : user.role == 3 ? "Admin" : "Client"}
             </b>
           </div>
         </div>
-        {myUser._id === currentUser._id ? (
+        {currentUser._id === user._id ? (
           <div
             className={
               matches
@@ -94,7 +90,7 @@ export default function OtherPropertiesCard({ currentUser, setFlag, flag }) {
             </div>
             <div className="col-12 col-xl">
               <EditAccountDialog
-                mobileNumber={currentUser.phoneNumber}
+                mobileNumber={user.phoneNumber}
                 setFlag={setFlag}
                 flag={flag}
               />
@@ -102,7 +98,7 @@ export default function OtherPropertiesCard({ currentUser, setFlag, flag }) {
           </div>
         ) : null}
       </div>
-      {currentUser.role === 2 ? (
+      {user.role === 2 ? (
         <>
           <div className="mt-5 opc-8">
             <Typography variant="subtitle1">
@@ -135,7 +131,7 @@ export default function OtherPropertiesCard({ currentUser, setFlag, flag }) {
               style={{ fontSize: 14, fontWeight: 100, letterSpacing: 1 }}
               className="opc-8"
             >
-              {`Rating (${currentUser.usersRate.length} ratings)`}
+              {`Rating (${user.usersRate.length} ratings)`}
             </span>
             <Typography variant="subtitle1" color={"#e2a021"}>
               <span
@@ -147,18 +143,17 @@ export default function OtherPropertiesCard({ currentUser, setFlag, flag }) {
                   marginRight: 8,
                 }}
               >
-                {currentUser.rating && currentUser.usersRate
-                  ? Math.round(
-                      (currentUser.rating / currentUser.usersRate.length) * 100
-                    ) / 100
+                {user.rating && user.usersRate
+                  ? Math.round((user.rating / user.usersRate.length) * 100) /
+                    100
                   : 4}
               </span>
               <span style={{ verticalAlign: "middle" }}>
                 <RatingDealer
                   readOnly={true}
                   ratingCount={
-                    currentUser.rating && currentUser.usersRate
-                      ? currentUser.rating / currentUser.usersRate.length
+                    user.rating && user.usersRate
+                      ? user.rating / user.usersRate.length
                       : 4
                   }
                 />
@@ -167,7 +162,7 @@ export default function OtherPropertiesCard({ currentUser, setFlag, flag }) {
           </div>
         </>
       ) : null}
-      {currentUser._id === myUser._id || currentUser.role !== 2 ? null : (
+      {user._id === currentUser._id || user.role !== 2 ? null : (
         <div
           className={
             matches550 ? "d-flex justify-content-center mt-4" : "mt-4 d-flex"
@@ -184,10 +179,7 @@ export default function OtherPropertiesCard({ currentUser, setFlag, flag }) {
             className="ml-10 capital-letter ls-less1"
             variant="contained"
             onClick={() =>
-              sendWhatsAppToDealer(
-                currentUser.phoneNumber,
-                currentUser.firstName
-              )
+              sendWhatsAppToDealer(user.phoneNumber, user.firstName)
             }
             endIcon={<WhatsAppIcon />}
           >
@@ -195,46 +187,40 @@ export default function OtherPropertiesCard({ currentUser, setFlag, flag }) {
           </Button>
           {matches550 ? null : (
             <div className="ml-10">
-              <DealerRatingDialog
-                dealer={currentUser._id}
-                client={myUser._id}
-              />
+              <DealerRatingDialog dealer={user._id} client={currentUser._id} />
             </div>
           )}
           {matches770 && !matches550 ? (
             <div className="ml-10">
               <ShowActivityDays
-                isCanEdit={myUser._id === currentUser._id}
-                activityDays={currentUser.activityDays}
-                activityDaysTime={currentUser.activityDaysTime}
+                isCanEdit={currentUser._id === user._id}
+                activityDays={user.activityDays}
+                activityDaysTime={user.activityDaysTime}
               />
             </div>
           ) : null}
         </div>
       )}
-      {matches550 && currentUser.role === 2 ? (
+      {matches550 && user.role === 2 ? (
         <div className="mt-4 d-flex justify-content-center">
-          {currentUser._id === myUser._id || currentUser.role !== 2 ? null : (
+          {user._id === currentUser._id || user.role !== 2 ? null : (
             <div>
-              <DealerRatingDialog
-                dealer={currentUser._id}
-                client={myUser._id}
-              />
+              <DealerRatingDialog dealer={user._id} client={currentUser._id} />
             </div>
           )}
           <div className="ml-10">
             <ShowActivityDays
-              isCanEdit={myUser._id === currentUser._id}
-              activityDays={currentUser.activityDays}
-              activityDaysTime={currentUser.activityDaysTime}
+              isCanEdit={currentUser._id === user._id}
+              activityDays={user.activityDays}
+              activityDaysTime={user.activityDaysTime}
             />
           </div>
         </div>
       ) : null}
       <div className="mt-4">
         <UserMoreInfo
-          currentUser={currentUser}
-          isUserPtofile={myUser._id === currentUser._id}
+          user={user}
+          isUserPtofile={currentUser._id === user._id}
         />
       </div>
     </Card>
