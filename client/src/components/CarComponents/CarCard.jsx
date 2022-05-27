@@ -67,7 +67,7 @@ export default function CarCard({ _id, image, company, model, price, netPrice, c
                   <Chip
                     icon={<CarRentalIcon />}
                     label="Your vehicle"
-                    color="success"
+                    sx={{ background: "#42ADFF", color: 'white' }}
                     className="opc-8 m-1"
                   />
                 ) : null}
