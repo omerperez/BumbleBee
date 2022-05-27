@@ -1,4 +1,5 @@
-const authBackground = "/authImage.jpeg";
+// const authBackground = "/authImage.jpeg";
+const authBackground = "/rollsroycewall.jpeg";
 const carHeaderImage = "/car.png";
 const costomImage = "/costoms.jpeg";
 const govilImage = "/govil.jpeg";
