@@ -6,7 +6,12 @@ import { Divider } from "@mui/material";
 import axios from "axios";
 import fileDownload from "js-file-download";
 import { Link } from "react-router-dom";
-import { error403 } from "../images/projectImages";
+import {
+  error403,
+  govFile1,
+  govFile2,
+  govFile3,
+} from "../images/projectImages";
 
 const downloadFile = (filePath) => {
   axios
@@ -36,7 +41,7 @@ export default function UserFilesCard() {
           <div className="d-flex justify-content-center mt-4">
             <img
               className="cur-pointer"
-              src="/svg/download_file_3.svg"
+              src={govFile3}
               width={225}
               height={150}
               onClick={() =>
@@ -46,7 +51,7 @@ export default function UserFilesCard() {
             />
             <img
               className="cur-pointer"
-              src="/svg/download_file_2.svg"
+              src={govFile2}
               width={225}
               height={150}
               onClick={() =>
@@ -58,7 +63,7 @@ export default function UserFilesCard() {
             />
             <img
               className="cur-pointer"
-              src="/svg/download_file_1.svg"
+              src={govFile1}
               width={225}
               height={150}
               onClick={() =>

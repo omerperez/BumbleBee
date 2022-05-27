@@ -2,7 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Box, Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import {downloadFiles } from "../../utils/functions";
-import { error403 } from "../images/projectImages";
+import {
+  error403,
+  paymentImage,
+  licensesImage,
+  govImage,
+  dhlFileImage,
+  shippingImage,
+} from "../images/projectImages";
 
 export default function FilesTabStatus({ step, payment, licenses, govil, dhl, shipping }) {
   const [value, setValue] = useState(step);
@@ -57,7 +64,7 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
             <div className="d-flex justify-content-center">
               <img
                 className="cur-pointer mw-400"
-                src="/files/payment.svg"
+                src={paymentImage}
                 width={"100%"}
                 onClick={() => downloadFiles(payment, process.env.REACT_APP_S3)}
                 onError={error403}
@@ -74,7 +81,7 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
             <div className="d-flex justify-content-center">
               <img
                 className=" cur-pointer mw-400"
-                src="/files/licenses.svg"
+                src={licensesImage}
                 width={"100%"}
                 onClick={() =>
                   downloadFiles(licenses, process.env.REACT_APP_S3)
@@ -93,7 +100,7 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
             <div className="d-flex justify-content-center">
               <img
                 className="cur-pointer mw-400"
-                src="/files/gov.svg"
+                src={govImage}
                 width={"100%"}
                 onClick={() => downloadFiles(govil, process.env.REACT_APP_S3)}
                 onError={error403}
@@ -110,7 +117,7 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
             <div className="d-flex justify-content-center">
               <img
                 className=" cur-pointer mw-400"
-                src="/files/dhl.svg"
+                src={dhlFileImage}
                 width={"100%"}
                 onClick={() => downloadFiles(dhl, process.env.REACT_APP_S3)}
                 onError={error403}
@@ -126,7 +133,7 @@ export default function FilesTabStatus({ step, payment, licenses, govil, dhl, sh
           {shipping && shipping.length > 0 ? (
             <img
               className=" cur-pointer mw-400"
-              src="/files/shipping.svg"
+              src={shippingImage}
               width={"100%"}
               onClick={() => downloadFiles(shipping, process.env.REACT_APP_S3)}
               onError={error403}

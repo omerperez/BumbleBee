@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { error403 } from "../images/projectImages";
+import {
+  error403,
+  regularUserImage,
+  dealerUserImage,
+} from "../images/projectImages";
 import { Dialog, DialogTitle, DialogContent } from "@mui/material";
 
 export default function SelectAccountTypeDialog() {
@@ -38,13 +42,13 @@ export default function SelectAccountTypeDialog() {
             onClick={handleClose}
             className="cur-pointer"
           >
-              X
+            X
           </DialogTitle>
           <DialogContent>
             <div className="d-flex justify-content-center row">
               <div className="col text-center">
                 <Link to="/signup" className="cancel-underline">
-                  <img src="/regular-user.png" width={170} onError={error403} />
+                  <img src={regularUserImage} width={170} onError={error403} />
                   <div className="mt-3 font-24 link-dark">
                     <b>Client</b>
                   </div>
@@ -52,7 +56,7 @@ export default function SelectAccountTypeDialog() {
               </div>
               <div className="col text-center">
                 <Link to="/dealer-login" className="cancel-underline">
-                  <img src="/seller-user.png" width={170} onError={error403} />
+                  <img src={dealerUserImage} width={170} onError={error403} />
                   <div className="mt-3 font-24 link-dark">
                     <b>Dealer</b>
                   </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { error403 } from "../images/projectImages";
+import { error403, carRedIconSale } from "../images/projectImages";
 import DeleteCarDialog from "../DialogComponents/DeleteCarDialog";
 import { useAuth } from "../../contexts/AuthContext";
 import {numberWithCommas} from "./carFunctions";
@@ -62,7 +62,7 @@ export default function CarCard({ _id, image, company, model, price, netPrice, c
               />
               <div className="sale-pos">
                 {isSale ? (
-                  <img src="/images/carSale.png" width={70} height={60} />
+                  <img src={carRedIconSale} width={70} height={60} />
                 ) : isOwner ? (
                   <Chip
                     icon={<CarRentalIcon />}

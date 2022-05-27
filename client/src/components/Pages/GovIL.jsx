@@ -1,7 +1,13 @@
 import React from "react";
 import PageTitle from "../Layout/PageTitle";
 import { downloadFile } from "../../utils/functions";
-import { error403 } from "../images/projectImages";
+import {
+  error403,
+  youtubeVideoAboutUs,
+  govFile1,
+  govFile2,
+  govFile3,
+} from "../images/projectImages";
 
 export default function GovIL() {
   
@@ -24,7 +30,7 @@ export default function GovIL() {
             <iframe
               width="850"
               height="310"
-              src="https://www.youtube.com/embed/vV0mj43AI3E"
+              src={youtubeVideoAboutUs}
               title="YouTube video player"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -34,7 +40,7 @@ export default function GovIL() {
           <div className="d-flex justify-content-center mt-4">
             <img
               className="cur-pointer"
-              src="/svg/download_file_3.svg"
+              src={govFile3}
               width={300}
               height={250}
               onClick={() =>
@@ -47,7 +53,7 @@ export default function GovIL() {
             />
             <img
               className="cur-pointer"
-              src="/svg/download_file_2.svg"
+              src={govFile2}
               width={300}
               height={250}
               onClick={() =>
@@ -60,7 +66,7 @@ export default function GovIL() {
             />
             <img
               className="cur-pointer"
-              src="/svg/download_file_1.svg"
+              src={govFile1}
               width={300}
               height={250}
               onClick={() =>

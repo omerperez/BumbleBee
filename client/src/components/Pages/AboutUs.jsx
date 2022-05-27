@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import AboutUsBody from "../InformationComponents/AboutUsBody";
 import StepTitle from "../InformationComponents/StepTitle";
-import { error403 } from "../images/projectImages";
+import { error403, youtubeVideoAboutUs } from "../images/projectImages";
 
 const steps = [
   "Find the vehicle you want",
@@ -71,7 +71,7 @@ export default function AboutUs() {
         <iframe
           width="850"
           height="310"
-          src="https://www.youtube.com/embed/vV0mj43AI3E"
+          src={youtubeVideoAboutUs}
           title="YouTube video player"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

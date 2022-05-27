@@ -9,7 +9,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import MuiDrawer from "@mui/material/Drawer";
 import UserProfile from "./UserProfile";
 import Actions from "../Layout/Actions";
-import { error403 } from "../images/projectImages";
+import { error403, footerImageNavigation } from "../images/projectImages";
 import { Link, useNavigate } from "react-router-dom";
 import {
   defaultNavigationTextStyle,
@@ -239,7 +239,7 @@ export default function NewNavigation({socket, children }) {
               <ListItemIcon className="d-flex justify-content-center">
                 <img
                   className="footer-image"
-                  src="/Navigation/logocar.svg" //bumblebee.png"
+                  src={footerImageNavigation}
                   onError={error403}
                 />
               </ListItemIcon>
