@@ -21,12 +21,13 @@ export default function DeleteCarDialog({id, name, role}) {
       .delete(`/car/delete/${id}`)
       .then(function (response) {
         console.log(response);
+        setOpen(false);
+        window.location.reload(true);
       })
       .catch(function (error) {
         console.log(error);
+        setOpen(false);
       });
-    setOpen(false);
-    window.location.reload(true);
   }
 
   return (

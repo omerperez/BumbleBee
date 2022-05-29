@@ -216,7 +216,7 @@ export default function AuthProvider({ children }) {
      setCurrentUser(cookieUser);
    }
    fetch(
-     "https://v6.exchangerate-api.com/v6/ee217cedbacb0650fd63d1cb/latest/ILS"
+     "https://v6.exchangerate-api.com/v6/df683e595d6e03131da42fee/latest/ILS"
    )
      .then((response) => response.json())
      .then((data) => {
@@ -233,7 +233,7 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     if(currency != 1){
       fetch(
-        "https://v6.exchangerate-api.com/v6/ee217cedbacb0650fd63d1cb/latest/USD"
+        "https://v6.exchangerate-api.com/v6/df683e595d6e03131da42fee/latest/USD"
       )
         .then((response) => response.json())
         .then((data) =>

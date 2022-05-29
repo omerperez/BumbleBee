@@ -80,7 +80,7 @@ export default function CarForm() {
    useEffect(() => {
      if (!usdToeur){
        fetch(
-         "https://v6.exchangerate-api.com/v6/ee217cedbacb0650fd63d1cb/latest/EUR"
+         "https://v6.exchangerate-api.com/v6/df683e595d6e03131da42fee/latest/EUR"
        )
          .then((response) => response.json())
          .then((data) => {
@@ -476,7 +476,7 @@ export default function CarForm() {
             <Select
               label="color"
               name="colour"
-              value={values.colour ??  ""}
+              value={values.colour ?? ""}
               onChange={(e) => carChange(e)}
               required
             >
@@ -574,7 +574,7 @@ export default function CarForm() {
           </div>
         </div>
         <div className={"d-flex row"}>
-          <div className="col-12 col-md-3 mt-4">
+          <div className="col-12 col-md-6 col-lg-4 col-xl-3 mt-4 justify-content-center d-flex">
             <label htmlFor={"main"}>
               <img
                 alt="main_image"
@@ -598,7 +598,7 @@ export default function CarForm() {
               }}
             />
           </div>
-          <div className="col-12 col-md-3 justify-content-center d-flex mt-4">
+          <div className="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3 justify-content-center d-flex mt-4">
             {images.length > 0 ? (
               <Carousel fade interval={null} className="mr-2">
                 {images.map((image, key) => {
