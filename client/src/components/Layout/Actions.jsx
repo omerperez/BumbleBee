@@ -22,12 +22,14 @@ export default function Actions() {
   let menu = topbarMenuItems;
   
   useEffect(() => {
-    socket?.emit("newUser", currentUser._id);
-    socket?.on("getNotification", (data) => {
-      setNotifications((prev) => [...prev, data]);
-    });
+    if (currentUser != null) {
+      socket?.emit("newUser", currentUser._id);
+      socket?.on("getNotification", (data) => {
+        setNotifications((prev) => [...prev, data]);
+      });
+    }
     setFlag(false);
-  }, [socket, notifications, currentUser._id]);
+  }, [socket, notifications]);
 
   useEffect(() => {
     fetch(

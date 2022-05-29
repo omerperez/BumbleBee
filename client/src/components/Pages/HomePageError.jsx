@@ -16,17 +16,17 @@ export default function HomePageError() {
 
   const fetchData = () => {
     setLoading(true);
-    const currentUserApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`;
+    // const currentUserApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`;
     const carsApi = `${process.env.REACT_APP_SERVER_API}/car`;
 
-    const getUser = axios.get(currentUserApi);
+    // const getUser = axios.get(currentUserApi);
     const getCars = axios.get(carsApi);
-
-    axios.all([getUser, getCars]).then(
+    // getUser,
+    axios.all([getCars]).then(
       axios.spread((...allData) => {
-        const userData = allData[0].data;
-        const carsData = allData[1].data;
-        setUser(userData);
+        // const userData = allData[0].data;
+        const carsData = allData[0].data;
+        // setUser(userData);
         setCars(carsData);
         setLoading(false);
       })
@@ -79,13 +79,13 @@ export default function HomePageError() {
                       100) /
                       100
                   )}
-                  user={user}
+                  user={currentUser}
                   status={
-                    JSON.stringify(user.cars).indexOf(car._id) !== -1
+                    JSON.stringify(currentUser.cars).indexOf(car._id) !== -1
                       ? true
                       : false
                   }
-                  isOwner={user._id === car.dealer}
+                  isOwner={currentUser._id === car.dealer}
                 />
               );
             })}

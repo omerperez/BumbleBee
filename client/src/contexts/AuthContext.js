@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, createContext } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import useLocalStorage from "../utils/useLocalStorage";
 
@@ -126,6 +126,7 @@ export default function AuthProvider({ children }) {
     cookies.remove("auth-token");
     cookies.remove("connectUser");
     setCurrentUser(null);
+    <Navigate to="/login" />
   }
 
   /**** Car Functions ****/

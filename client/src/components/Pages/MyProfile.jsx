@@ -19,19 +19,21 @@ export default function MyProfile() {
   const matches770 = useMediaQuery("(max-width:770px)");
 
   const fetchData = () => {
-    const currentUserApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`;
+    // const currentUserApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`;
     const notificationApi = `${process.env.REACT_APP_SERVER_API}/notification/client/${currentUser._id}`;
 
-    const getUser = axios.get(currentUserApi);
+    // const getUser = axios.get(currentUserApi);
     const getNotification = axios.get(notificationApi);
-
-    axios.all([getUser, getNotification]).then(
+    // getUser,
+    axios.all([getNotification]).then(
       axios.spread((...allData) => {
-        const userData = allData[0].data;
-        const notificationData = allData[1].data;
-        setUser(userData);
+        // const userData = allData[0].data;
+        const notificationData = allData[0].data;
+        // setUser(userData);
         setAlert(
-          notificationData.length > 0 ? notificationData[notificationData.length - 1] : null
+          notificationData.length > 0
+            ? notificationData[notificationData.length - 1]
+            : null
         );
         setLoading(false);
       })
@@ -58,7 +60,7 @@ export default function MyProfile() {
                 : "col-12 col-lg-5 col-xl-4 col-xxl-3 mt-5 mb-5 offset-xxl-1"
             }
           >
-            <ProfileSide user={user} />
+            <ProfileSide user={currentUser} />
           </div>
         )}
         <div
@@ -70,11 +72,15 @@ export default function MyProfile() {
               : "col-12 col-lg-5 col-xl-6 col-xxl-7 ml-25 mt-5 mb-1"
           }
         >
-          <OtherPropertiesCard user={user} setFlag={setFlag} flag={flag} />
+          <OtherPropertiesCard
+            user={currentUser}
+            setFlag={setFlag}
+            flag={flag}
+          />
         </div>
       </div>
       <div className="d-flex justify-content-center mb-5">
-        {user.role === 1 ? (
+        {currentUser.role === 1 ? (
           <RequestSteps
             step={alert ? alert.step : 0}
             matches770={matches770 ? true : false}

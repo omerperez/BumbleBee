@@ -10,7 +10,7 @@ import MuiDrawer from "@mui/material/Drawer";
 import UserProfile from "./UserProfile";
 import Actions from "../Layout/Actions";
 import { error403, footerImageNavigation } from "../images/projectImages";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import {
   defaultNavigationTextStyle,
   navCurrentPageStyle,
@@ -67,10 +67,13 @@ export default function NewNavigation({socket, children }) {
   const navigationWidth = useMediaQuery("(max-width:500px)");
 
   let menuItems = clientMenuItems;
-  if (currentUser.role === 3) {
+  if (currentUser == null){
+    <Navigate to={'/login'} />
+  }
+  if (currentUser && currentUser.role === 3) {
     menuItems = managerMenuItems;
   }
-  if(currentUser.role === 2){
+  if (currentUser && currentUser.role === 2) {
     menuItems = dealerMenuItems;
   }
   const handleDrawerOpen = () => {
