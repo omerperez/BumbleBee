@@ -8,7 +8,11 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import AboutUsBody from "../InformationComponents/AboutUsBody";
 import StepTitle from "../InformationComponents/StepTitle";
-import { error403, youtubeVideoAboutUs } from "../images/projectImages";
+import {
+  clapsImage,
+  error403,
+  youtubeVideoAboutUs,
+} from "../images/projectImages";
 
 const steps = [
   "Find the vehicle you want",
@@ -89,7 +93,7 @@ export default function AboutUs() {
                       <img
                         width={40}
                         className="mb-1"
-                        src={stepsImages[index]}
+                        src={index !== 5 ? stepsImages[index] : clapsImage}
                         onError={error403}
                       />
                       <br />
