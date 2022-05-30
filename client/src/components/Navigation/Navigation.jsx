@@ -1,17 +1,8 @@
 import React, { useState, useEffect } from "react";
-import "./Navigation.modules.css";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import { useTheme } from "@mui/material/styles";
-import UserProfile from "./UserProfile";
 import { Link, useNavigate } from "react-router-dom";
+import "./Navigation.modules.css";
+import UserProfile from "./UserProfile";
 import { useAuth } from "../../contexts/AuthContext";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
-import Alert from "@mui/material/Alert";
 import {
   clientMenuItems,
   managerMenuItems,
@@ -21,6 +12,18 @@ import {
   navCurrentPageStyle,
   navigationStyle,
 } from "../../styles/UseStylesMui";
+import { useTheme } from "@mui/material/styles";
+import {
+  Drawer,
+  List,
+  Divider,
+  ListItem,
+  ListItemText,
+  FormControlLabel,
+  Switch,
+  Alert,
+} from "@mui/material";
+
 import { error403 } from "../images/projectImages";
 
 export default function Navigation() {
