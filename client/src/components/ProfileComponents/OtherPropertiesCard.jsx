@@ -133,28 +133,31 @@ export default function OtherPropertiesCard({ user, setFlag, flag }) {
             >
               {`Rating (${user.usersRate.length} ratings)`}
             </span>
-            <Typography variant="subtitle1" color={"#e2a021"}>
-              <span
-                style={{
-                  fontSize: 24,
-                  color: "black",
-                  opacity: 0.5,
-                  fontWeight: 600,
-                  marginRight: 8,
-                }}
-              >
-                {user.rating && user.usersRate
-                  ? Math.round((user.rating / user.usersRate.length) * 100) /
-                    100
-                  : 4}
-              </span>
+            <Typography
+              variant="subtitle1"
+              color={user.rating && user.usersRate ? "#e2a021" : null}
+            >
+              {user.rating && user.usersRate ? (
+                <span
+                  style={{
+                    fontSize: 24,
+                    color: "black",
+                    opacity: 0.5,
+                    fontWeight: 600,
+                    marginRight: 8,
+                  }}
+                >
+                  {Math.round((user.rating / user.usersRate.length) * 100) /
+                    100}
+                </span>
+              ) : null}
               <span style={{ verticalAlign: "middle" }}>
                 <RatingDealer
                   readOnly={true}
                   ratingCount={
                     user.rating && user.usersRate
                       ? user.rating / user.usersRate.length
-                      : 4
+                      : null
                   }
                 />
               </span>
