@@ -4,7 +4,6 @@ import { useAuth } from "../../contexts/AuthContext";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { sendWhatsAppToDealer } from "../CarComponents/carFunctions";
 import UserMoreInfo from "./UserMoreInfo";
