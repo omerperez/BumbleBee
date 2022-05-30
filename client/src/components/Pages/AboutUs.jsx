@@ -1,13 +1,15 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import PageTitle from "../Layout/PageTitle";
-import Box from '@mui/material/Box';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepButton from '@mui/material/StepButton';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import AboutUsBody from "../InformationComponents/AboutUsBody";
 import StepTitle from "../InformationComponents/StepTitle";
+import {
+  Box,
+  Stepper,
+  Step,
+  StepButton,
+  Button,
+  Typography,
+} from "@mui/material";
 import {
   clapsImage,
   error403,
