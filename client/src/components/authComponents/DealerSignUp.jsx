@@ -7,6 +7,7 @@ import {
   checkRegisterFields,
   ImageHandler,
   ValidateEmail,
+  checkLanguageInput,
 } from "./userFunctions";
 import PhoneInput from "react-phone-number-input";
 import EditActivityTimeDialog from "../DialogComponents/EditActivityTimeDialog";
@@ -28,6 +29,9 @@ export default function DealerSignUp() {
 
   async function handleSubmit(e) {
      e.preventDefault();
+     if (error !== "") {
+       return error;
+     }
     if (values.image == null) {
       return setError("Please Upload Image Profile");
     }
@@ -87,14 +91,20 @@ export default function DealerSignUp() {
                     type="text"
                     variant="standard"
                     name="firstName"
-                    onChange={(e) => carChange(e)}
+                    onChange={(e) => {
+                      checkLanguageInput(e, setError);
+                      carChange(e);
+                    }}
                     required
                     disabled={loading}
                   />
                   <TextField
                     className="form-control"
                     name="lastName"
-                    onChange={(e) => carChange(e)}
+                    onChange={(e) => {
+                      checkLanguageInput(e, setError);
+                      carChange(e);
+                    }}
                     id="last-name-user"
                     label="Last Name"
                     type="text"
