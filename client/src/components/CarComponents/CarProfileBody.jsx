@@ -57,7 +57,7 @@ export default function CarProfileBody({car}) {
                 <td>{car.numberOfVehicleOwners}</td>
               </tr>
               <tr>
-                <th>Price (Total)</th>
+                <th>Dealer Price</th>
                 <td>
                   {currency == 1
                     ? "$" + numberWithCommas(car.price)
@@ -66,8 +66,12 @@ export default function CarProfileBody({car}) {
                       "€"
                     : numberWithCommas(Math.round(car.price * currencyValue)) +
                       "₪"}
-
-                  {currency == 1 ? " ($" : " ("}
+                </td>
+              </tr>
+              <tr>
+                <th>Total Price</th>
+                <td>
+                  {currency == 1 ? " $" : ""}
                   {numberWithCommas(
                     Math.round(
                       ((calcNetPrice(car.fuelConsumption, car.price) +
@@ -77,7 +81,7 @@ export default function CarProfileBody({car}) {
                         100
                     )
                   )}
-                  {currency == 2 ? "€)" : currency == 3 ? "₪)" : ")"}
+                  {currency == 2 ? "€" : currency == 3 ? "₪" : ""}
                 </td>
               </tr>
               <tr>
@@ -92,16 +96,16 @@ export default function CarProfileBody({car}) {
                 <th>Door Count</th>
                 <td>{car.doorCount}</td>
               </tr>
-              <tr>
-                <th>Gearbox</th>
-                <td>{car.gearbox}</td>
-              </tr>
             </tbody>
           </table>
         </div>
         <div className="col">
           <table>
             <tbody>
+              <tr>
+                <th>Gearbox</th>
+                <td>{car.gearbox}</td>
+              </tr>
               <tr>
                 <th>Emission Class</th>
                 <td>{car.emissionClass}</td>
