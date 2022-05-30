@@ -1,14 +1,11 @@
 import React from "react";
 import PageTitle from "../Layout/PageTitle";
 import { useAuth } from "../../contexts/AuthContext";
-import Alert from "@mui/material/Alert";
 import CarForm from "../CarComponents/CarForm";
-
+import Alert from "@mui/material/Alert";
 
 export default function CreateCarPage() {
-
   const {currentUser} = useAuth();
-
   return currentUser && currentUser.role !== 1 ? (
     <div className="ml-8">
       <PageTitle page={"New Car"} />
