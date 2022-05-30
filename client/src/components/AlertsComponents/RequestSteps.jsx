@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { Box, Stepper, Step, StepLabel } from "@mui/material";
 
 const steps = [
