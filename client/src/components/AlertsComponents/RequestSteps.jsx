@@ -2,7 +2,7 @@ import * as React from "react";
 import { Box, Stepper, Step, StepLabel } from "@mui/material";
 
 const steps = [
-  "Searching new car",
+  "Site registeration",
   "Payment For Car",
   "Waiting For Licenses Docs",
   "Dealer Wait For DHL & GOV IL Docs",
