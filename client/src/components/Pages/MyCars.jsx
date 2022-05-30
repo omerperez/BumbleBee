@@ -11,7 +11,6 @@ import calcNetPrice from "../../utils/calcNetPrice";
 export default function MyCars() {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [access, setAccess] = useState("");
   const { currentUser, currencyValue } = useAuth();
 
   useEffect(() => {
