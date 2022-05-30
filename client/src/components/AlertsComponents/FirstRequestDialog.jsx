@@ -61,9 +61,12 @@ export default function FirstRequestDialog({ car, showReq }) {
           showReq ? "capital-letter color-black" : "capital-letter bg-col-blue"
         }
         variant="contained"
+        fullWidth
         onClick={handleClickOpen}
       >
-        Request for Docs
+        Request for
+        <br/>
+        Docs
       </Button>
       <Dialog
         fullWidth
