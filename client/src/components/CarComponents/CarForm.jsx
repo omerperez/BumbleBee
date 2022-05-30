@@ -376,7 +376,14 @@ export default function CarForm() {
               onChange={(e) => carChange(e)}
               required
             >
-              {Array.from(
+              {carsProperties.FuelTypes.map((fuel, key) => {
+                return (
+                  <MenuItem key={fuel.id} value={fuel}>
+                    {fuel}
+                  </MenuItem>
+                );
+              })}
+              {/* {Array.from(
                 new Set(dataFromApi.map((obj) => obj.sug_delek_nm))
               ).map((sug_delek_nm, key) => {
                 return (
@@ -384,7 +391,7 @@ export default function CarForm() {
                     {sug_delek_nm}
                   </MenuItem>
                 );
-              })}
+              })} */}
             </Select>
           </FormControl>
         </div>
