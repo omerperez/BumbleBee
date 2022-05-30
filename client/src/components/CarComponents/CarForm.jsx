@@ -383,15 +383,6 @@ export default function CarForm() {
                   </MenuItem>
                 );
               })}
-              {/* {Array.from(
-                new Set(dataFromApi.map((obj) => obj.sug_delek_nm))
-              ).map((sug_delek_nm, key) => {
-                return (
-                  <MenuItem key={sug_delek_nm.id} value={sug_delek_nm}>
-                    {sug_delek_nm}
-                  </MenuItem>
-                );
-              })} */}
             </Select>
           </FormControl>
         </div>
