@@ -6,6 +6,7 @@ import {
   checkRegisterFields,
   ValidateEmail,
   ImageHandler,
+  checkLanguageInput,
 } from "./userFunctions";
 import {
   error403,
@@ -33,6 +34,9 @@ export default function Signup() {
   
   async function handleSubmit(e) {
     e.preventDefault();
+    if (error !== "") {
+      return error;
+    }
     if (values.image == null) {
       return setError("Please Upload Image Profile");
     }
@@ -70,6 +74,7 @@ export default function Signup() {
     setLoading(false);
   }
 
+  
   return (
     <Card className="no-border">
       <div>
@@ -92,7 +97,10 @@ export default function Signup() {
                   type="text"
                   variant="standard"
                   required
-                  onChange={(e) => carChange(e)}
+                  onChange={(e) => {
+                    checkLanguageInput(e, setError);
+                    carChange(e);
+                  }}
                 />
                 <TextField
                   className="form-control"
@@ -102,7 +110,10 @@ export default function Signup() {
                   type="text"
                   variant="standard"
                   required
-                  onChange={(e) => {carChange(e)}}
+                  onChange={(e) => {
+                    checkLanguageInput(e, setError);
+                    carChange(e);
+                  }}
                 />
               </div>
               <div className="col d-flex justify-content-center">
@@ -145,7 +156,9 @@ export default function Signup() {
               variant="standard"
               fullWidth
               required
-              onChange={(e) => carChange(e)}
+              onChange={(e) => {
+                carChange(e)
+              }}
             />
           </Form.Group>
           <Form.Group id="mobile" className="mb-2">
