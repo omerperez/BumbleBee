@@ -215,13 +215,25 @@ export default function EditProfile({ setOpen, mobileNumber, setFlag, flag }) {
             </Form.Group>
           )}
           <Form.Group className="mt-3">
+            <Form.Label>Website</Form.Label>
+            <Form.Control
+              name="website"
+              type="url"
+              defaultValue={user.website ?? "Website Not Valid"}
+              value={values.website}
+              onChange={(e) => {
+                carChange(e);
+              }}
+            />
+          </Form.Group>
+          {/* <Form.Group className="mt-3">
             <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"
               readOnly
               placeholder={"*************"}
             />
-          </Form.Group>
+          </Form.Group> */}
           <Form.Group className="row mt-3 mb-3 mw-550">
             <div className="col mr-10px">
               <Button
