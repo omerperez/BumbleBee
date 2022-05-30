@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from "react";
-import PageTitle from "../Layout/PageTitle";
 import { useAuth } from "../../contexts/AuthContext";
 import { Form, Alert } from "react-bootstrap";
 import useForm  from "../../utils/useForm";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
-import { useNavigate } from "react-router-dom";
 import EditIcon from '@mui/icons-material/Edit';
-import ChangePasswordDialog from "../DialogComponents/ChangePasswordDialog";
 import { Button } from "@mui/material";
 import Loading from "../Layout/Loading";
 import {
