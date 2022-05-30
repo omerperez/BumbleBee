@@ -11,6 +11,13 @@ export function checkRegisterFields(
     : true;
 }
 
+export function checkLanguageInput(e, setError) {
+  var english = /^[A-Za-z0-9]*$/;
+  if (!english.test(e.target.value))
+    return setError("Please Enter English Letters");
+  return setError("");
+}
+
 export function ImageHandler(e, setState){
   const reader = new FileReader();
   reader.onload = () => {
@@ -32,7 +39,9 @@ export function InitDefauleUserProperties(values, user) {
 }
 
 export function ValidateEmail(mail) {
-  if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+  if(mail.length < 8){
+    return false
+  } else if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
     return true;
   }
   return false;
