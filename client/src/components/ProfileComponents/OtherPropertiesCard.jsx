@@ -168,13 +168,13 @@ export default function OtherPropertiesCard({ user, setFlag, flag }) {
             matches550 ? "d-flex justify-content-center mt-4" : "mt-4 d-flex"
           }
         >
-          <Button
+          {/* <Button
             className="capital-letter ls-less1"
             variant="contained"
             endIcon={<MailOutlineIcon />}
           >
             Send Email
-          </Button>
+          </Button> */}
           <Button
             className="ml-10 capital-letter ls-less1"
             variant="contained"
