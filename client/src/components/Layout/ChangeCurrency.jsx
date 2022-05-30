@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { ButtonGroup, Button } from "@mui/material";
 
 export default function ChangeCurrency({flag, setFlag}) {
