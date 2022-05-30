@@ -11,7 +11,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 export default function MyProfile() {
 
   const { currentUser } = useAuth();
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [flag, setFlag] = useState(false);
   const [alert, setAlert] = useState(null);
@@ -21,7 +21,6 @@ export default function MyProfile() {
   const fetchData = () => {
     // const currentUserApi = `${process.env.REACT_APP_SERVER_API}/user/my-user/${currentUser._id}`;
     const notificationApi = `${process.env.REACT_APP_SERVER_API}/notification/client/${currentUser._id}`;
-
     // const getUser = axios.get(currentUserApi);
     const getNotification = axios.get(notificationApi);
     // getUser,
