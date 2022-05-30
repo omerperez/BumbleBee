@@ -1,8 +1,8 @@
 import React from "react";
 import PageTitle from "../Layout/PageTitle";
+import Stats from "../adminComponents/Stats";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import Stats from "../adminComponents/Stats";
 
 export default function ManagerDashboard() {
   const { currentUser } = useAuth();
