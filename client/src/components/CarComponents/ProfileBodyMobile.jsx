@@ -167,7 +167,7 @@ export default function ProfileBodyMobile({car}) {
                 Interior Design
               </TableCell>
               <TableCell hidden={checkHideStatus(page, rowsPerPage, 16)}>
-                {car.companyEnglish}
+                {car.interiorDesign}
               </TableCell>
             </TableRow>
             <TableRow hover role="checkbox" tabIndex={-1}>
