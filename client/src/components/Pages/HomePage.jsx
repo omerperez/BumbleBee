@@ -6,7 +6,6 @@ import Loading from "../Layout/Loading";
 import { useAuth } from "../../contexts/AuthContext";
 import axios from "axios";
 import calcNetPrice from "../../utils/calcNetPrice";
-import NoResultsAlert from "../Layout/NoResultsAlert";
 
 export default function HomePage() {
   
