@@ -5,6 +5,7 @@ const headersEnglisCarsApi = {
 const carsProperties = {
   doorCountOptions: ["2", "3", "4", "5"],
   countOfSeatsOptions: [2, 4, 5, 6, 7],
+  FuelTypes: ["Petrol", "Diesel", "CNG", "Bio-Diesel", "LPG", "Ethanol/Methanol", "Hybrid", "Electric"],
   gearBoxesList: ["Concentric", "Parallel", "Right Angle", "Shaft Mount	"],
   Year: [2020, 2021, 2022],
   engines: [
