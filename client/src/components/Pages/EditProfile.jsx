@@ -13,6 +13,8 @@ import Loading from "../Layout/Loading";
 import {
   ImageHandler,
   InitDefauleUserProperties,
+  ValidateEmail,
+  checkLanguageInput,
 } from "../authComponents/userFunctions";
 import { error403 } from "../images/projectImages";
 
@@ -41,6 +43,9 @@ export default function EditProfile({ setOpen, mobileNumber, setFlag, flag }) {
     setLoading(true);
     user._id = currentUser._id;
     let mNumber;
+    if(error){
+      return error;
+    }
     if (user.role === 1) {
       if (mobile == null){
         setMobile(user.phoneNumber);
@@ -147,6 +152,7 @@ export default function EditProfile({ setOpen, mobileNumber, setFlag, flag }) {
                 defaultValue={user.firstName}
                 value={values.firstName}
                 onChange={(e) => {
+                  checkLanguageInput(e, setError);
                   carChange(e);
                 }}
               />
@@ -159,6 +165,7 @@ export default function EditProfile({ setOpen, mobileNumber, setFlag, flag }) {
                 defaultValue={user.lastName}
                 value={values.lastName}
                 onChange={(e) => {
+                  checkLanguageInput(e, setError);
                   carChange(e);
                 }}
               />
@@ -172,6 +179,7 @@ export default function EditProfile({ setOpen, mobileNumber, setFlag, flag }) {
               defaultValue={user.email}
               value={values.email}
               onChange={(e) => {
+                ValidateEmail(e.target.value);
                 carChange(e);
               }}
             />
