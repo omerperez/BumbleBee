@@ -6,6 +6,7 @@ import {
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
 import NoResultsAlert from "../Layout/NoResultsAlert";
+import { useAuth } from "../../contexts/AuthContext";
 import {
   FormControl,
   InputLabel,
@@ -17,6 +18,7 @@ import {
 } from "@mui/material";
 
 export default function FilterCars({ carsState, carsSetState }) {
+  const { currency } = useAuth();
   const [filters, setFilters] = useState(false);
   const [allCarsObjects, setAllCarsObjects] = useState(null);
   const [companyList, setCompanyList] = useState(["All"]);
@@ -59,6 +61,7 @@ export default function FilterCars({ carsState, carsSetState }) {
         "All",
       ]);
     } else {
+      
       carsSetState(
         allCarsObjects.filter((car) => {
           return (
@@ -67,8 +70,8 @@ export default function FilterCars({ carsState, carsSetState }) {
             gearbox.indexOf(car.gearbox) != -1 &&
             car.km >= minKm &&
             car.km <= maxKm &&
-            car.price >= minPrice &&
-            car.price <= maxPrice
+            car.price * currency >= minPrice &&
+            car.price * currency <= maxPrice 
           );
         })
       );
