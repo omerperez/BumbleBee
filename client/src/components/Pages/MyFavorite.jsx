@@ -6,7 +6,7 @@ import { Alert } from "@mui/material";
 import Loading from "../Layout/Loading";
 import FilterCars from "../CarComponents/FilterCars";
 import calcNetPrice from "../../utils/calcNetPrice";
-import {Navigate} from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 export default function MyFavorite() {
   const [cars, setCars] = useState([]);
