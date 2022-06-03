@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 
 export default function FilterCars({ carsState, carsSetState }) {
-  const { currency } = useAuth();
+  const { currency, currencyValue } = useAuth();
   const [filters, setFilters] = useState(false);
   const [allCarsObjects, setAllCarsObjects] = useState(null);
   const [companyList, setCompanyList] = useState(["All"]);
@@ -61,22 +61,34 @@ export default function FilterCars({ carsState, carsSetState }) {
         "All",
       ]);
     } else {
-      
+      console.log(maxPrice);
+      console.log(currencyValue);
       carsSetState(
         allCarsObjects.filter((car) => {
+          console.log(car.price);
           return (
             company.indexOf(car.companyEnglish) != -1 &&
             engine.indexOf(car.engine) != -1 &&
             gearbox.indexOf(car.gearbox) != -1 &&
             car.km >= minKm &&
             car.km <= maxKm &&
-            car.price * currency >= minPrice &&
-            car.price * currency <= maxPrice 
+            car.price * currencyValue >= minPrice &&
+            car.price * currencyValue <= maxPrice
           );
         })
       );
     }
-  }, [company, engine, gearbox, minKm, maxKm, minPrice, maxPrice]);
+  }, [
+    company,
+    engine,
+    gearbox,
+    minKm,
+    maxKm,
+    minPrice,
+    maxPrice,
+    currency,
+    currencyValue,
+  ]);
 
   const clearFilters = () => {
      setCompany(null);
