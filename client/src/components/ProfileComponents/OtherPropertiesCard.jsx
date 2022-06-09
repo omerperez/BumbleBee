@@ -30,7 +30,7 @@ export default function OtherPropertiesCard({ user, setFlag, flag }) {
               <h2 className="col-8 col-sm-6 col-md-3 opc-8 ls-2 nowrap">
                 {user.firstName + " " + user.lastName}
               </h2>
-              <div className="m-auto col-6 col-sm-4 offset-1 col-md-3 ">
+              <div className="m-auto col-6 col-sm-4 offset-1 col-md-3 mt-4">
                 <img
                   className="border-circle border-2-black p-0"
                   width={"100%"}
