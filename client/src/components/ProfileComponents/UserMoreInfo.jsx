@@ -15,6 +15,7 @@ export default function UserMoreInfo({ user, isUserPtofile }) {
   const { currentUser } = useAuth();
   const [alert, setAlert] = useState();
   const [companies, setCompanies] = useState();
+  const [state, setState] = useState({ num: 0 });
   const [value, setValue] = useState(
     user.role === 1 && user.isSendReq ? "2" : "1"
   );
@@ -50,6 +51,29 @@ export default function UserMoreInfo({ user, isUserPtofile }) {
    useEffect(() => {
      fetchData();
    }, []);
+
+   useEffect(() => {
+       fetch(
+         `${process.env.REACT_APP_SERVER_API}/notification/client/${currentUser._id}`
+       ).then((res) =>
+         res.json().then((data) => {
+           const sortAlerts =
+             data.length > 1
+               ? data.sort((a, b) => {
+                   return (
+                     new Date(b.lastUpdateDate) - new Date(a.lastUpdateDate)
+                   );
+                 })
+               : data;
+           if (sortAlerts != alert) {
+             setAlert(sortAlerts);
+           }
+           setLoading(false);
+         })
+       );
+     const timer = setTimeout(() => setState({ num: state.num + 1 }), 10000);
+     return () => clearTimeout(timer);
+   }, [currentUser._id, state]);
 
    if(loading){
      return <Loading />
@@ -112,7 +136,7 @@ export default function UserMoreInfo({ user, isUserPtofile }) {
           >
             {alert && alert.length > 0 ? (
               alert.map((showAlert) => {
-                return <AlertLayout alert={showAlert} isDealer={false} />;
+                  return <AlertLayout alert={showAlert} isDealer={false} />;
               })
             ) : (
               <div className="m-auto w-50 pad-10">
