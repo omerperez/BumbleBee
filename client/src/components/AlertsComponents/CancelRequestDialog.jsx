@@ -15,11 +15,7 @@ export default function CancelRequestDialog({alert}) {
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { currentUser, socket } = useAuth();
-
-  useEffect(() => {
-    socket?.emit("newUser", currentUser._id);
-  }, [socket, currentUser._id]);
+  const { currentUser } = useAuth();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -39,7 +35,7 @@ export default function CancelRequestDialog({alert}) {
        step: 5,
      };
 
-     const res = await editAlertFunction(editAlert, socket);
+     const res = await editAlertFunction(editAlert);
      console.log(res);
      if (res != "Success") {
        setLoading(false);
