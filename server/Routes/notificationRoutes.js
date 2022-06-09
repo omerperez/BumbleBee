@@ -8,7 +8,7 @@ router.get("/", notificationController.getAllNotification);
 
 router.get("/client/:id", notificationController.getNotificationsByClientId);
 
-router.get("/user/:id", notificationController.getNotificationsByUserId);
+router.get("/user/:id/:currentDate", notificationController.getNotificationsByUserId);
 
 router.get(
   "/client/navigation/:id",
