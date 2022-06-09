@@ -14,16 +14,11 @@ import Loading from "../Layout/Loading";
 import { Alert } from "react-bootstrap";
 
 export default function SendDhlAndGovIlDialog({ alert }) {
-  const { socket } = useAuth();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [dhl, setDhl] = useState([]);
   const [gov, setGov] = useState([]);
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    socket?.emit("newUser", alert.dealer);
-  }, [socket, alert.dealer]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -51,7 +46,7 @@ export default function SendDhlAndGovIlDialog({ alert }) {
       isRead: false,
     };
 
-    const res = await editAlertFunction(editAlert, socket);
+    const res = await editAlertFunction(editAlert);
     if (res !== "Success") {
       setError(res);
     } else {
