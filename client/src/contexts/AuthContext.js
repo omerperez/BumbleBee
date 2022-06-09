@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect, createContext } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import { useNavigate, Navigate } from "react-router-dom";
-import { io } from "socket.io-client";
 import useLocalStorage from "../utils/useLocalStorage";
 
 const api = axios.create({ baseURL: process.env.REACT_APP_SERVER_API });
@@ -14,7 +13,6 @@ export function useAuth() {
 export default function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [socket, setSocket] = useState(io());
   const [currency, setCurrency] = useLocalStorage("currency", "1");
   const [currencyValue, setCurrencyValue] = useState(1);
   const navigate = useNavigate();
@@ -227,7 +225,6 @@ export default function AuthProvider({ children }) {
        localStorage.setItem("usd-ils", "0.29");
        console.log("error", error);
      });
-   setSocket(io());
     setLoading(false);
   }, []);
 
@@ -265,7 +262,6 @@ export default function AuthProvider({ children }) {
     editPassword,
     loading,
     addCarToFavorite,
-    socket,
     cleanCookie,
     currency,
     setCurrency,
