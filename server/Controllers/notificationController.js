@@ -3,6 +3,7 @@ const carSchema = require("../Models/car");
 const userSchema = require("../Models/user");
 const mongoose = require("mongoose");
 const {sendEmailNotification} = require("../utils/EmailFunctions");
+const e = require("express");
 
 const getAllNotification = (req, res) => {
   notificationSchema.find().then((results) => {
@@ -90,7 +91,17 @@ const getNotificationsByUserId = (req, res) => {
     const userId = req.params.id;
     notificationSchema.find({ dealer : userId }).then((results) => {
       try {
-        res.json(results);
+        if (req.params.currentDate !== "first") {
+          const date = new Date(req.params.currentDate);
+          const newAlerts = results.filter(
+            (alert) =>
+              new Date(alert.lastUpdateDate).setMilliseconds(0) > date
+          );
+          console.log(newAlerts.length)
+          res.json(newAlerts);
+        } else {
+          res.json(results);
+        }
         console.log("OK");
       } catch (err){
         res.status(400).json({
@@ -165,11 +176,9 @@ const markAsRead = async (req, res) => {
 };
 
 const editAlert = async (req, res) => {
-  
   const alertFromJason = JSON.parse(req.body.alert);
   const alertId = { _id: req.params.id };
   const alert = await notificationSchema.findById(alertId);
-
   if (
     (alertFromJason.dealer &&
       alert.dealer.valueOf() != alertFromJason.dealer) ||
@@ -179,7 +188,6 @@ const editAlert = async (req, res) => {
       message: "Access blocked - you are not owner on this request",
     });
   }
-
   if (alertFromJason.isCancelRequest && alertFromJason.isCancelRequest == true){
       let updateUser = await userSchema.findById(alert.client);
       let carToCancelProcess = await carSchema.findById(alert.car);
@@ -190,22 +198,18 @@ const editAlert = async (req, res) => {
   } else if (alertFromJason.step == 2) {
     alertFromJason.carLicenseFile = req.body.carLicenseFile;
     alertFromJason.dateOfDealerResponse = Date.now();
-    alertFromJason.lastUpdateDate = Date.now();
   }
   else if (alertFromJason.step == 3){
     alertFromJason.govIlFile = req.body.govIlFile;
     alertFromJason.dhlFile = req.body.dhlFile;
     alertFromJason.dateOfAttachFiles = Date.now();
-    alertFromJason.lastUpdateDate = Date.now(); 
   } else {
     alertFromJason.containerFiles = req.body.containerFiles;
-    alertFromJason.lastUpdateDate = Date.now();
-
     let currentCar = await carSchema.findById(alertFromJason.car);
     currentCar.isSell = true;
     await currentCar.save();
   }
-  
+  alertFromJason.lastUpdateDate = Date.now();
   try {
     const updateAlert = await notificationSchema.findOneAndUpdate(alertId, alertFromJason, { new: true });
     updateAlert.isRead = false;
