@@ -14,15 +14,10 @@ import Loading from "../Layout/Loading";
 import { Alert } from "react-bootstrap";
 
 export default function SecondRequestDialog({ alert }) {
-  const {socket} = useAuth();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState([]);
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    socket?.emit("newUser", alert.dealer);
-  }, [socket, alert.dealer]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -44,7 +39,7 @@ export default function SecondRequestDialog({ alert }) {
       step: 2,
       isRead: false,
     };
-    const res = await editAlertFunction(editAlert, socket);
+    const res = await editAlertFunction(editAlert);
     if (res.data !== "Success") {
       console.log("Filed");
       setError(res.data);
