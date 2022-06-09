@@ -56,7 +56,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function NewNavigation({socket, children }) {
+export default function NewNavigation({ children }) {
   const { currentUser, logout } = useAuth();
   const [open, setOpen] = useState(true);
   const [check, setCheck] = useState("/homepage");
@@ -149,7 +149,7 @@ export default function NewNavigation({socket, children }) {
             component="div"
             style={{ marginLeft: "auto", marginRight: 10 }}
           >
-            <Actions socket={socket} />
+            <Actions />
           </Typography>
         </Toolbar>
       </AppBar>
