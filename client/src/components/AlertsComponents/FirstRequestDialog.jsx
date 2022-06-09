@@ -18,11 +18,7 @@ export default function FirstRequestDialog({ car, showReq }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [files, setFiles] = useState([]);
-  const { currentUser, socket } = useAuth();
-  
-  useEffect(() => {
-    socket?.emit("newUser", currentUser._id);
-  }, [socket, currentUser._id]);
+  const { currentUser } = useAuth();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -42,7 +38,7 @@ export default function FirstRequestDialog({ car, showReq }) {
       car: car._id,
       payment: files,
     };
-    const res = await createAlert(alert, socket);
+    const res = await createAlert(alert);
     if (res.data !== "Success") {
       console.log("Filed");
       setError(res.data);
