@@ -14,17 +14,11 @@ import Loading from "../Layout/Loading";
 import { Alert } from "react-bootstrap";
 
 export default function ShippingRequestDialog({ alert }) {
-
-  const { socket } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
   const [files, setFiles] = useState([]);
 
-  useEffect(() => {
-    socket?.emit("newUser", alert.dealer);
-  }, [socket, alert.dealer]);
-  
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -46,7 +40,7 @@ export default function ShippingRequestDialog({ alert }) {
       step: 4,
       isRead: false,
     };
-    const res = await editAlertFunction(editAlert, socket);
+    const res = await editAlertFunction(editAlert);
     if (res !== "Success") {
       return console.log("Filed");
     } else {
