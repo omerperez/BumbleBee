@@ -13,23 +13,12 @@ import {
 } from "../Navigation/menuItems";
 
 export default function Actions() {
-
-  const { currentUser, logout, socket, currency, setCurrency } = useAuth();
+  const { currentUser, logout, currency, setCurrency } = useAuth();
   const matches = useMediaQuery("(max-width:515px)");
-  const [notifications, setNotifications] = useState([]);
   const [alertsToShow, setAlertsToShow] = useState([]);
   const [flag, setFlag] = useState(false);
+  const [state, setState] = useState({ num: 0 });
   let menu = topbarMenuItems;
-  
-  useEffect(() => {
-    if (currentUser != null) {
-      socket?.emit("newUser", currentUser._id);
-      socket?.on("getNotification", (data) => {
-        setNotifications((prev) => [...prev, data]);
-      });
-    }
-    setFlag(false);
-  }, [socket, notifications]);
 
   useEffect(() => {
     fetch(
@@ -39,7 +28,9 @@ export default function Actions() {
     )
       .then((response) => response.json())
       .then((data) => setAlertsToShow(data));
-  }, [notifications, flag, currentUser.role, currentUser._id]);
+    const timer = setTimeout(() => setState({ num: state.num + 1 }), 10000);
+    return () => clearTimeout(timer);
+  }, [state, flag]);
 
   if (currentUser.role === 2) {
     menu = topbarMenuItemsForDealer;
@@ -83,19 +74,13 @@ export default function Actions() {
           onError={error403}
         />
       </div>
-      <SnackbarAlert
-        isOpen={alertsToShow.length > 0 ? true : false}
-        step={
-          alertsToShow.length > 0
-            ? alertsToShow[alertsToShow.length - 1].step
-            : null
-        }
-        name={
-          alertsToShow.length > 0
-            ? alertsToShow[alertsToShow.length - 1].senderName
-            : null
-        }
-      />
+      {alertsToShow && alertsToShow.length > 0 ? (
+        <SnackbarAlert
+          isOpen={true}
+          step={alertsToShow[alertsToShow.length - 1].step}
+          name={alertsToShow[alertsToShow.length - 1].senderName}
+        />
+      ) : null}
     </>
   );
 }
