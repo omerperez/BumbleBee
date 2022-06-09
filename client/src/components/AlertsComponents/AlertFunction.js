@@ -10,15 +10,7 @@ import axios from "axios";
 
 const api = axios.create({ baseURL: process.env.REACT_APP_SERVER_API });
 
-const handleNotification = (socket, senderId, receiverId, step) => {
-  socket.emit("sendNotification", {
-    senderId: senderId,
-    receiverId: receiverId,
-    step: step,
-  });
-};
-
-async function createAlert(alert, socket) {
+async function createAlert(alert) {
 
   var files = alert.payment;
   const now = Date.now();
@@ -34,7 +26,6 @@ async function createAlert(alert, socket) {
   return api
     .post("/notification/create", data)
     .then((response) => {
-      handleNotification(socket, alert.client, alert.dealer, 1);
       return response;    
     })
     .catch((err) => {
@@ -43,7 +34,7 @@ async function createAlert(alert, socket) {
     });
 }
 
-async function editAlertFunction(alert, socket) {
+async function editAlertFunction(alert) {
   const now = Date.now();
   const data = new FormData();
   if(alert.isCancelRequest){
@@ -51,7 +42,6 @@ async function editAlertFunction(alert, socket) {
     return api
       .put(`/notification/update/${alert._id}`, data)
       .then(() => {
-        handleNotification(socket, alert.dealer, alert.client, 5);
         return "Success";
       })
       .catch((err) => {
@@ -91,11 +81,6 @@ async function editAlertFunction(alert, socket) {
   return api
     .put(`/notification/update/${alert._id}`, data)
     .then(() => {
-      if (alert.step === 3) {
-        handleNotification(socket, alert.client, alert.dealer, alert.step);
-      } else {
-        handleNotification(socket, alert.dealer, alert.client, alert.step);
-      }
       return "Success";
     })
     .catch((err) => {
