@@ -21,22 +21,23 @@ export default function TotalAlertStatistic({ alerts }) {
         <div className="d-flex justify-content-center row">
           <div className="col text-center m-auto br-black">
             <h1 className="f-19 fw-100">
-              {alerts.filter((alert) => alert.step == 1).length}
+              {alerts && alerts.filter((alert) => alert.step == 1).length}
             </h1>
           </div>
           <div className="col text-center m-auto br-black">
             <h1 className="f-19 fw-100">
-              {alerts.filter((alert) => alert.step == 3).length}
+              {alerts && alerts.filter((alert) => alert.step == 3).length}
             </h1>
           </div>
           <div className="col text-center m-auto br-black">
             <h1 className="f-19 fw-100">
-              {alerts.filter((alert) => alert.isCancelRequest == true).length}
+              {alerts &&
+                alerts.filter((alert) => alert.isCancelRequest == true).length}
             </h1>
           </div>
           <div className="col text-center m-auto">
             <h1 className="f-19 fw-100">
-              {alerts.filter((alert) => alert.step == 4).length}
+              {alerts && alerts.filter((alert) => alert.step == 4).length}
             </h1>
           </div>
         </div>
