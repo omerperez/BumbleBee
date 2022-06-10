@@ -11,6 +11,7 @@ import {
   topbarMenuItemsForDealer,
   topbarMenuItemsForAdmin,
 } from "../Navigation/menuItems";
+import {isShowCurrencyAction} from "../../utils/functions";
 
 export default function Actions() {
   const { currentUser, logout, currency, setCurrency } = useAuth();
@@ -18,7 +19,12 @@ export default function Actions() {
   const [alertsToShow, setAlertsToShow] = useState([]);
   const [flag, setFlag] = useState(false);
   const [state, setState] = useState({ num: 0 });
+  const [showCurrency, setShowCurrency] = useState(true);
   let menu = topbarMenuItems;
+
+  useEffect(() => {
+    setShowCurrency(isShowCurrencyAction(window.location.pathname));
+  }, [window.location.pathname]);
 
   useEffect(() => {
     fetch(
@@ -42,7 +48,9 @@ export default function Actions() {
   return (
     <>
       <div className="icons-title-pos">
-        <UserChangeCurrency currency={currency} setCurrency={setCurrency} />
+        {showCurrency ? (
+          <UserChangeCurrency currency={currency} setCurrency={setCurrency} />
+        ) : null}
         {menu.map((item, key) => {
           return (
             <Link key={key} to={item.path} className="link-in-btn">

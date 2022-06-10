@@ -11,7 +11,6 @@ import axios from "axios";
 const api = axios.create({ baseURL: process.env.REACT_APP_SERVER_API });
 
 async function createAlert(alert) {
-
   var files = alert.payment;
   const now = Date.now();
   const data = new FormData();
@@ -21,7 +20,6 @@ async function createAlert(alert) {
    data.append(`payment`, files[i], now + rnd + files[i].name);
    data.append(`paymentFiles`, now + rnd + files[i].name);
  }
-
   data.append("alert", JSON.stringify(alert));
   return api
     .post("/notification/create", data)

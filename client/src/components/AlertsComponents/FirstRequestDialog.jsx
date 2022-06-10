@@ -18,7 +18,7 @@ export default function FirstRequestDialog({ car, showReq }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [files, setFiles] = useState([]);
-  const { currentUser } = useAuth();
+  const { currentUser, cookies } = useAuth();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -43,6 +43,9 @@ export default function FirstRequestDialog({ car, showReq }) {
       console.log("Filed");
       setError(res.data);
     } else {
+      currentUser.isSendReq = true;
+      cookies.remove("connectUser");
+      cookies.set("connectUser", currentUser);
       setLoading(false);
       setOpen(false);
       return window.location.reload();

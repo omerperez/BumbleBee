@@ -1,57 +1,61 @@
-const nodemailer = require("nodemailer");
+const nodemailer = require('nodemailer');
 const userSchema = require("../Models/user");
+
+let email = `BumbleBee <bumblebeewebs@gmail.com>`;
+let transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  auth: {
+    user: "bumblebeewebs@gmail.com",
+    pass: "xtoooaxnmwhcenxa",
+  },
+});
 
 async function sendEmailNotification(clientId, dealerId, stepNumber) {
   const client = await userSchema.findById(clientId);
   const dealer = await userSchema.findById(dealerId);
-  let transporter = nodemailer.createTransport({
-    service: "hotmail",
-    auth: {
-      user: "omerperez222@gmail.com",
-      pass: "omer200198",
-    },
-  });
-
   const msg = getMessageToAlert(dealer, client, stepNumber);
 
-  transporter.sendMail(msg, function (err, info) {
+  transporter.sendMail(msg, function (err, data) {
     if (err) {
       console.log(err);
       return;
     }
-    console.log("Send: " + info.response);
+    console.log("Email Send!");
   });
 }
-
-async function sendRegistrationEmail(userEmail, fullName) {
-  let email = `BumbleBee <omerperez222@gmail.com>`;
-  let transporter = nodemailer.createTransport({
-    service: "hotmail",
-    auth: {
-      user: "omerperez222@gmail.com",
-      pass: "omer200198",
-    },
-  });
-  const msg = {
+//userEmail, 
+async function sendRegistrationEmail(clientEmail, fullName) {
+  const body =
+    `<b>Hey ${fullName}, </b>` +
+    "<br />" +
+    "<b>We're glad you've joined us!</b>" +
+    "<br />" +
+    " Waiting for you in" +
+    "<br />" +
+    "http://bumblebee.cs.colman.ac.il:3000" +
+    "<br />" +
+    "<div style='display: flex; justify-content: center; margin-top: 20px;'>" +
+    "<img width='200' src='https://bumblebee-pro.s3.eu-west-1.amazonaws.com/WhatsApp+Image+2022-05-26+at+8.55.53+PM.jpeg'> </img>" +
+    "</div>";
+      
+  const mailOptions = {
     from: email,
-    to: userEmail,
+    to: clientEmail,
     subject: "Welcome To BumbleBee",
-    text: `Hey ${fullName}  We're glad you've joined us! Waiting for you - http://bumblebee.cs.colman.ac.il:3000`,
+    html: body,
   };
 
-  transporter.sendMail(msg, function (err, info) {
+  transporter.sendMail(mailOptions, function (err, data) {
     if (err) {
       console.log(err);
       return;
     }
-    console.log("Send: " + info.response);
+    console.log("Email Send!");
   });
 }
 
 function getMessageToAlert(dealer, client, step) {
-  
-  let email = `BumbleBee <omerperez222@gmail.com>`;
-  
   if (step == 1) {
     return {
       from: email,
@@ -59,7 +63,19 @@ function getMessageToAlert(dealer, client, step) {
       subject: `BumbleBee - New License Request From ${
         client.firstName + " " + client.lastName
       }`,
-      text: `Hey ${dealer.firstName} you have new notification from ${client.firstName} to see the new request - http://bumblebee.cs.colman.ac.il:3000`,
+      html:
+        `<b>Hey ${dealer.firstName}, </b>` +
+        "<br />" +
+        "<br />" +
+        `<b>you have new notification from ${client.firstName}</b>` +
+        "<br />" +
+        "to see the new request" +
+        "<br />" +
+        "http://bumblebee.cs.colman.ac.il:3000" +
+        "<br />" +
+        "<div style='margin-top: 20px;'>" +
+        "<img width='300' src='https://bumblebee-pro.s3.eu-west-1.amazonaws.com/WhatsApp+Image+2022-05-26+at+8.55.53+PM.jpeg'> </img>" +
+        "</div>",
     };
   } else if (step == 2) {
     return {
@@ -68,7 +84,19 @@ function getMessageToAlert(dealer, client, step) {
       subject: `BumbleBee -${
         dealer.firstName + " " + dealer.lastName
       } has attach the licenses!`,
-      text: `Hey ${client.firstName} you have new notification from ${dealer.firstName} to see the new request - http://bumblebee.cs.colman.ac.il:3000`,
+      html:
+        `<b>Hey ${client.firstName}, </b>` +
+        "<br />" +
+        "<br />" +
+        `<b>you have new notification from ${dealer.firstName}</b>` +
+        "<br />" +
+        "to see the new request" +
+        "<br />" +
+        "http://bumblebee.cs.colman.ac.il:3000" +
+        "<br />" +
+        "<div style='margin-top: 20px;'>" +
+        "<img width='300' src='https://bumblebee-pro.s3.eu-west-1.amazonaws.com/WhatsApp+Image+2022-05-26+at+8.55.53+PM.jpeg'> </img>" +
+        "</div>",
     };
   } else if ( step == 3) {
     return {
@@ -77,7 +105,19 @@ function getMessageToAlert(dealer, client, step) {
       subject: `BumbleBee - Shipping Details Request From ${
         client.firstName + " " + client.lastName
       }`,
-      text: `Hey ${dealer.firstName} you have new notification from ${client.firstName} to see the new request - http://bumblebee.cs.colman.ac.il:3000`,
+      html:
+        `<b>Hey ${dealer.firstName}, </b>` +
+        "<br />" +
+        "<br />" +
+        `<b>you have new notification from ${client.firstName}</b>` +
+        "<br />" +
+        "to see the new request" +
+        "<br />" +
+        "http://bumblebee.cs.colman.ac.il:3000" +
+        "<br />" +
+        "<div style='margin-top: 20px;'>" +
+        "<img width='300' src='https://bumblebee-pro.s3.eu-west-1.amazonaws.com/WhatsApp+Image+2022-05-26+at+8.55.53+PM.jpeg'> </img>" +
+        "</div>",
     }; 
   } else {
     return {
@@ -86,7 +126,19 @@ function getMessageToAlert(dealer, client, step) {
       subject: `BumbleBee - Purchase process was completed successfully! ${
         dealer.firstName + " " + dealer.lastName
       }`,
-      text: `Hey ${client.firstName} you have new notification from ${dealer.firstName} to see the new request - http://bumblebee.cs.colman.ac.il:3000/login`,
+      html:
+        `<b>Hey ${client.firstName}, </b>` +
+        "<br />" +
+        "<br />" +
+        `<b>you have new notification from ${dealer.firstName}</b>` +
+        "<br />" +
+        "to see the new request" +
+        "<br />" +
+        "http://bumblebee.cs.colman.ac.il:3000" +
+        "<br />" +
+        "<div style='margin-top: 20px;'>" +
+        "<img width='300' src='https://bumblebee-pro.s3.eu-west-1.amazonaws.com/WhatsApp+Image+2022-05-26+at+8.55.53+PM.jpeg'> </img>" +
+        "</div>",
     }; 
   }
 }

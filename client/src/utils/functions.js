@@ -41,9 +41,19 @@ const downloadFile = (filePath, folder) => {
     });
 };
 
+function isShowCurrencyAction(path) {
+  return (
+    path.indexOf("homepage") !== -1 ||
+    path.indexOf("car-profile") !== -1 ||
+    path.indexOf("create-car") !== -1 ||
+    path.indexOf("my-favorite") !== -1 ||
+    path.indexOf("mycars") !== -1
+  );
+}
 export {
   downloadFiles,
   downloadFile,
   getTimeAvailabilityFormat,
   removeDuplicateCompany,
+  isShowCurrencyAction,
 };
