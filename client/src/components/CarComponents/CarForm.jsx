@@ -554,7 +554,7 @@ export default function CarForm() {
                 value={values.price ?? ""}
                 onChange={(e) => {
                   carChange(e);
-                  if (e.target.value < 0) {
+                  if (e.target.value <= 0) {
                     setError(
                       error.includes("Please Enter Positive Number ")
                         ? error
