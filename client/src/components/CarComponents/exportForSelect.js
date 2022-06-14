@@ -51,6 +51,7 @@ const carsProperties = {
   ],
   colorList: [
     "Black",
+    "White",
     "Gray",
     "Silver",
     "Red",
