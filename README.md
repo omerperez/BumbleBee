@@ -24,9 +24,31 @@ Once the transaction is done, Bumblebee gives you full visibility of your order 
 
 You get a safe, easy, and profitable end-to-end car import process.  
 
-
-
+<br/>
+<br/>
 
 #### Architecture / General block diagrams and modules of the system
  
 <img src="client/public/Architecture.jpg" width="600">
+
+<br/>
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
+
+### Prerequisites
+
+Install node.js on your system.<br/>
+
+
+### Installing
+
+Install the node modules by running
+    ```
+    npm install
+    ```
+
+## Running the project locally
+```
+npm start
+```
