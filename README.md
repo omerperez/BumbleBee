@@ -32,6 +32,7 @@ You get a safe, easy, and profitable end-to-end car import process.
 <img src="client/public/Architecture.jpg" width="600">
 
 <br/>
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
