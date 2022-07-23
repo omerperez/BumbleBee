@@ -49,6 +49,7 @@ Install the node modules by running
     ```
 
 ## Running the project locally
+Start the application by running
     ```
     npm start
     ```
