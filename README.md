@@ -21,3 +21,8 @@ You can communicate with them quickly and safely pass all documents needed.
 Once the transaction is done, Bumblebee gives you full visibility of your order status.
 
 You get a safe, easy, and profitable end-to-end car import process.  
+
+
+#### Sequence Diagram
+ 
+<img src="client/public/images/poster.jpeg" width="192">
