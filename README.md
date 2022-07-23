@@ -1,4 +1,4 @@
-<img src="client/public/bumblebee.jpeg" width="192">
+<img src="client/public/bumblebee.jpeg" width="300">
 
 # Bumblebee
 
@@ -29,4 +29,4 @@ You get a safe, easy, and profitable end-to-end car import process.
 
 #### Architecture / General block diagrams and modules of the system
  
-<img src="client/public/Architecture.jpg" width="400">
+<img src="client/public/Architecture.jpg" width="600">
