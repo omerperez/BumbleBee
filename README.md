@@ -1,3 +1,5 @@
+<img src="client/public/bumblebee.jpeg" width="192">
+
 # Bumblebee
 
 Today, Importing a vehicle is a very complex process.
@@ -23,6 +25,6 @@ Once the transaction is done, Bumblebee gives you full visibility of your order 
 You get a safe, easy, and profitable end-to-end car import process.  
 
 
-#### Sequence Diagram
+#### Architecture / General block diagrams and modules of the system
  
-<img src="client/public/images/poster.jpeg" width="192">
+<img src="client/public/Architecture.jpg" width="192">
